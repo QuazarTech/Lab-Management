@@ -1,0 +1,422 @@
+Lab_Space: 
+    Physical_Parameters:
+        Atmospheric_Pressure                  : NA
+        Temperature                           : NA
+        Volume                                : NA
+        Humidity                              : NA
+
+    Fan: 
+        State                                 : OFF
+        Speed                                 : 0
+
+    Tube_Light: 
+        State                                 : OFF
+
+    Windows: 
+       Window1: 
+           State                              : OFF
+           Area                               : STANDARD_WINDOW_AREA
+       Window2: 
+          State                               : OFF
+          Area                                : STANDARD_WINDOW_AREA
+       Window3: 
+          State                               : OFF
+          Area                                : STANDARD_WINDOW_AREA
+       Vent1: 
+          State                               : OFF
+          Area                                : STANDARD_VENT_AREA
+       Vent2: 
+          State                               : OFF
+          Area                                : STANDARD_VENT_AREA
+       Vent3: 
+          State                               : OFF
+          Area                                : STANDARD_VENT_AREA
+
+    Equipment: 
+ 
+        Lab_Coat: 
+            Status                            : NOT_IN_USE
+            Home_Coordinates                  : UNDER_SAMPLE_TABLE
+
+        Safety_goggles: 
+            Status                            : NOT_IN_USE
+            Home_Coordinates                  : UNDER_SAMPLE_TABLE
+
+        Mask: 
+            Status                            : NOT_IN_USE
+            Home_Coordinates                  : UNDER_SAMPLE_TABLE
+
+        Gloves: 
+            Status                            : NOT_IN_USE
+            Home_Coordinates                  : UNDER_SAMPLE_TABLE
+            Disposal_Coodinate                : TRASH
+
+    Sample_Table: 
+    
+        Status                                : NOT_IN_USE
+        Clean                                 : YES
+        Sample_Mounting_Coordinates           : SAMPLE_MOUNTING_COORDINATES
+        Puck_Screwing_Coordinates             : PUCK_SCREWING_COORDINATES
+        
+        
+        Physical_Parameters: 
+            Home_Coordinates                  : SAMPLE_TABLE
+            Length                            : 90                  #cm
+            Width                             : 60                  #cm
+            Area                              : 540                 #cm2
+        
+        Tools: 
+        
+            Polyvinyl_Alcohol: 
+              Status                          : NOT_IN_USE
+              Home_Coordinates                : SAMPLE_TABLE
+              Current_Coordinates             : SAMPLE_TABLE
+              Cap_Coordinates                 : SAMPLE_TABLE
+              Usable_Quantity                 : YES
+            
+            Ethanol: 
+              Status                          : NOT_IN_USE
+              Home_Coordinates                : SAMPLE_TABLE
+              Current_Coordinates             : SAMPLE_TABLE
+              Cap_Coordinates                 : SAMPLE_TABLE
+              Usable_Quantity                 : YES            
+            
+            Transparent_Tape: 
+              Status                          : NOT_IN_USE          
+              Home_Coordinates                : SAMPLE_TABLE
+              Current_Coordinates             : SAMPLE_TABLE
+              Usable_Quantity                 : YES
+            
+            Brown_Tape: 
+              Status                          : NOT_IN_USE
+              Home_Coordinates                : SAMPLE_TABLE
+              Current_Coordinates             : SAMPLE_TABLE
+              Usable_Quantity                 : YES
+            
+            Spatula: 
+              Status                          : NOT_IN_USE
+              Home_Coordinates                : SAMPLE_TABLE
+              Current_Coordinates             : SAMPLE_TABLE
+
+            
+            Tweezers: 
+              Status                          : NOT_IN_USE
+              Home_Coordinates                : SAMPLE_TABLE
+              Hold_Coordinates                : SAMPLE_TABLE
+              Current_Coordinates             : SAMPLE_TABLE
+            
+            Brush: 
+              Status                          : NOT_IN_USE
+              Home_Coordinates                : SAMPLE_TABLE
+              Current_Coordinates             : SAMPLE_TABLE
+              Hold_Coordinates                : SAMPLE_TABLE
+            
+            Mortar: 
+              Status                          : NOT_IN_USE
+              Home_Coordinates                : SAMPLE_TABLE
+              Current_Coordinates             : SAMPLE_TABLE
+              Clean                           : YES
+            
+            Pestle: 
+              Status                          : NOT_IN_USE
+              Home_Coordinates                : SAMPLE_TABLE
+              Current_Coordinates             : SAMPLE_TABLE
+              Clean                           : YES
+                
+        Soldering: 
+        
+            Soldering_Iron: 
+               Status                         : NOT_IN_USE
+               State                          : OFF
+               Home_Coordinates               : SOLDERING_STATION
+               Current_Coordinates            : SOLDERING_STATION
+               Hold_Coordinates               : SOLDERING_STATION
+               Exit_Coordinates               : SOLDERING_STATION
+
+            Solder: 
+               Home_Coordinates               : SOLDERING_STATION
+               Usable_Quantity                : YES
+
+            Flux: 
+               Home_Coordinates               : SOLDERING_STATION
+               Usable_Quantity                : YES
+
+            Cleaning_Pad: 
+               Home_Coordinates               : SOLDERING_STATION
+               Usable_Quantity                : YES
+
+        Sample_Boxes: 
+
+            Box_Zener: 
+            
+                State                         : CLOSED
+                Home_Coordinates              : SAMPLE_TABLE
+                Current_Coordinates         : SAMPLE_TABLE
+                Cap_Coordinates               : SAMPLE_TABLE
+                No_of_Samples                 : 3
+
+                Zener_1: 
+                  Status                      : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Part_Number                 : ZN0000
+                  Terminal_1:
+                    Soldered                  : NO
+                  Terminal_2:
+                    Soldered                  : NO
+                  
+                Zener_2: 
+                  Status                      : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Part_Number                 : ZN0000
+                  Terminal_1:
+                    Soldered                  : NO
+                  Terminal_2:
+                    Soldered                  : NO
+                    
+                Zener_3: 
+                  Status                      : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Part_Number                 : ZN0000
+                  Terminal_1:
+                    Soldered                  : NO
+                  Terminal_2:
+                    Soldered                  : NO
+
+            Box_Resistor: 
+            
+                State                         : CLOSED
+                Home_Coordinates              : SAMPLE_TABLE
+                Current_Coordinates         : SAMPLE_TABLE
+                Cap_Coordinates               : SAMPLE_TABLE
+                No_of_Samples                 : 5
+              
+                Res_1: 
+                  Status                      : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Standard_Tolerance          :
+                  Resistance                  :
+                  Terminal_1:
+                    Soldered                  : YES/NO
+                  Terminal_2:
+                    Soldered                  : YES/NO
+                  
+                Res_2: 
+                  Status                      : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Standard_Tolerance          :
+                  Resistance                  :
+                  Terminal_1:
+                    Soldered                  : YES/NO
+                  Terminal_2:
+                    Soldered                  : YES/NO
+                
+                Res_3: 
+                  Status                      : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Standard_Tolerance          :
+                  Resistance                  :
+                  Terminal_1:
+                    Soldered                  : YES/NO
+                  Terminal_2:
+                    Soldered                  : YES/NO
+                    
+                Res_4: 
+                  Status                      : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Standard_Tolerance          :
+                  Resistance                  :
+                  Terminal_1:
+                    Soldered                  : YES/NO
+                  Terminal_2:
+                    Soldered                  : YES/NO
+            
+                Res_5: 
+                  Status                      : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Standard_Tolerance          :
+                  Resistance                  :
+                  Terminal_1:
+                    Soldered                  : YES/NO
+                  Terminal_2:
+                    Soldered                  : YES/NO
+
+    PQMS: 
+          Status                              : NOT_IN_USE
+          Home_Coordinates                    : PQMS_COORDINATES
+          Current_Coordinates                 : PQMS_COORDINATES
+ 
+          Insert_RT_Puck: 
+                Home_Coordinates              :
+                Current_Coordinates           :
+ 
+                Puck: 
+                    
+                    Status                    : NOT_IN_USE
+                    Home_Coordinates          :
+                    Insert_Connection         : DISCONNECTED
+                    Puck_Board_Connection     : CONNECTED
+                    Sample_Mounted            : NO
+                    Terminal_1:
+                        Soldered              : NO
+                    Terminal_2:
+                        Soldered              : NO
+                    Terminal_3:
+                            Soldered          : NO
+                    Terminal_4:
+                            Soldered          : NO
+
+
+                Insert2Puck_Cable: 
+
+                    State                     :  DISCONNECTED
+                    Home_Coordinates          :
+
+
+          Cables: 
+          
+                 HT_Cable: 
+                     Home_Coordinates         :
+                     Cryostat_End             :
+                     PQMS_End                 :
+
+                 RT_Cable: 
+                     Home_Coordinates         :
+                     Cryostat_End             :
+                     PQMS_End                 :
+
+          XPLORE_Power_Supply: 
+
+              State                           : OFF
+              Power_Cable                     : CONNECTED
+              XSMU_Cable                      : CONNECTED
+              XTCON_Cable                     : CONNECTED
+            
+          XSMU: 
+              
+              State                           : OFF
+              Power_Cable                     : CONNECTED
+              USB_Cable                       : CONNECTED
+              XSMU_Cable                      : DISCONNECTED
+              Running                         : NO
+              Mode                            : NA/CONST_V/CONST_I
+
+          XTCON: 
+              
+              State                           : OFF
+              Power_Cable                     : CONNECTED
+              
+              Heater:
+                Status                        : ON/OFF
+                HT_Cable                      : DISCONNECTED
+                
+              Sensor:
+                RT_Cable                      : DISCONNECTED
+                USB_Cable                     : CONNECTED
+            
+              Running                         : NO
+              Mode                            : ISOTHERMAL/LINEAR_RAMP/STEPPED_RAMP
+
+          XLIA: 
+              
+              State                           : OFF
+              Power_Cable                     : CONNECTED
+              USB_Cable                       : CONNECTED
+              XLIA_Cables                     : DISCONNECTED
+              Running                         : NO
+
+          MGPS: 
+              
+              State                           : OFF
+              MGPS_CABLES                     : DISCONNECTED
+              USB_Cable                       : CONNECTED
+              Power_Cable                     : CONNECTED
+              Running                         : NO
+              Mode                            : CONST_H/CONST_I
+              
+          Cryostat_Steel: 
+           Status                             : NOT_IN_USE
+           Insert                             : NO
+           Vaccum                             : NO
+           Liquid_Nitrogen                    : NO
+           Helium                             : NO
+          
+          Cryostat_Quartz: 
+           Status                             : NOT_IN_USE
+           Insert                             : NO
+           Vaccum                             : NO
+           Liquid_Nitrogen                    : NO
+           Helium                             : NO
+
+          Pump: 
+           
+           State                              : OFF
+           Power_Cable                        : CONNECTED
+           Bellow                             : CONNECTED
+           
+   
+           Valves: 
+              Main_Valve:
+                State                         : OFF
+              Release_Valve:
+                State                         : OFF
+          
+          Pirani_Gauge: 
+              State                           : OFF
+              Power_Cable                     : CONNECTED
+
+          Cryocan: 
+            Liquid_Nitrogen_Present           : NO
+            Status                            : NOT_IN_USE
+
+          Helium: 
+          
+            Main_Valve: 
+              State                           : OFF
+            Pressure_Valve: 
+              State                           : OFF
+
+          Sample_Positioner: 
+            State                             : OFF
+            Power_Cable                       : OFF
+            USB_Cable                         : CONNECTED
+          
+          Stabilizer:
+            Power_Switch:
+             State                            : ON
+          
+          Clamp: 
+            
+            State                             : OPEN
+            Home_Coordinates:
+
+          Puck Board: 
+
+            Home_Coordinates                  :
+            Puck_Connected                    : NO
+
+
+    Computer: 
+  
+        Status                                : NOT_IN_USE
+        
+        Monitor: 
+          State                               : OFF
+          Power_Cable                         : CONNECTED
+          USB_Cable                           : CONNECTED
+
+        Mouse: 
+          USB_Cable                           : CONNECTED
+        
+        Keyboard: 
+          USB_Cable                           : CONNECTED
+        USB_Power_Adaptor:
+          State                               : OFF
+ 
