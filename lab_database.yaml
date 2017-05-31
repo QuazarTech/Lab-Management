@@ -189,7 +189,7 @@ Lab_Space:
             
                 State                         : CLOSED
                 Home_Coordinates              : SAMPLE_TABLE
-                Current_Coordinates         : SAMPLE_TABLE
+                Current_Coordinates           : SAMPLE_TABLE
                 Cap_Coordinates               : SAMPLE_TABLE
                 No_of_Samples                 : 5
               
@@ -256,9 +256,14 @@ Lab_Space:
           Insert_RT_Puck: 
                 Home_Coordinates              :
                 Current_Coordinates           :
+
+                RT_Cable_Terminal:
+                    Status                    : DISCONNECTED
+                HT_Cable_Terminal:
+                    Status                    : DISCONNECTED
  
                 Puck: 
-                    
+
                     Status                    : NOT_IN_USE
                     Home_Coordinates          :
                     Insert_Connection         : DISCONNECTED
@@ -280,27 +285,27 @@ Lab_Space:
                     Home_Coordinates          :
 
 
-          Cables: 
-          
-                 HT_Cable: 
+          Cables:
+
+                 HT_Cable:
                      Home_Coordinates         :
                      Cryostat_End             :
                      PQMS_End                 :
 
-                 RT_Cable: 
+                 RT_Cable:
                      Home_Coordinates         :
                      Cryostat_End             :
                      PQMS_End                 :
 
-          XPLORE_Power_Supply: 
+          XPLORE_Power_Supply:
 
               State                           : OFF
               Power_Cable                     : CONNECTED
               XSMU_Cable                      : CONNECTED
               XTCON_Cable                     : CONNECTED
-            
-          XSMU: 
-              
+
+          XSMU:
+
               State                           : OFF
               Power_Cable                     : CONNECTED
               USB_Cable                       : CONNECTED
@@ -308,66 +313,65 @@ Lab_Space:
               Running                         : NO
               Mode                            : NA/CONST_V/CONST_I
 
-          XTCON: 
-              
+          XTCON:
+
               State                           : OFF
               Power_Cable                     : CONNECTED
-              
+
               Heater:
                 Status                        : ON/OFF
                 HT_Cable                      : DISCONNECTED
-                
+
               Sensor:
                 RT_Cable                      : DISCONNECTED
                 USB_Cable                     : CONNECTED
-            
+
               Running                         : NO
               Mode                            : ISOTHERMAL/LINEAR_RAMP/STEPPED_RAMP
 
-          XLIA: 
-              
+          XLIA:
+
               State                           : OFF
               Power_Cable                     : CONNECTED
               USB_Cable                       : CONNECTED
               XLIA_Cables                     : DISCONNECTED
               Running                         : NO
 
-          MGPS: 
-              
+          MGPS:
+
               State                           : OFF
               MGPS_CABLES                     : DISCONNECTED
               USB_Cable                       : CONNECTED
               Power_Cable                     : CONNECTED
               Running                         : NO
               Mode                            : CONST_H/CONST_I
-              
-          Cryostat_Steel: 
-           Status                             : NOT_IN_USE
-           Insert                             : NO
-           Vaccum                             : NO
-           Liquid_Nitrogen                    : NO
-           Helium                             : NO
-          
-          Cryostat_Quartz: 
+
+          Cryostat_Steel:
            Status                             : NOT_IN_USE
            Insert                             : NO
            Vaccum                             : NO
            Liquid_Nitrogen                    : NO
            Helium                             : NO
 
-          Pump: 
-           
+          Cryostat_Quartz:
+           Status                             : NOT_IN_USE
+           Insert                             : NO
+           Vaccum                             : NO
+           Liquid_Nitrogen                    : NO
+           Helium                             : NO
+
+          Pump:
+
            State                              : OFF
            Power_Cable                        : CONNECTED
            Bellow                             : CONNECTED
-           
-   
-           Valves: 
+
+           Valves:
               Main_Valve:
                 State                         : OFF
               Release_Valve:
                 State                         : OFF
-          
+
           Pirani_Gauge: 
               State                           : OFF
               Power_Cable                     : CONNECTED
@@ -377,7 +381,7 @@ Lab_Space:
             Status                            : NOT_IN_USE
 
           Helium: 
-          
+
             Main_Valve: 
               State                           : OFF
             Pressure_Valve: 
@@ -387,13 +391,13 @@ Lab_Space:
             State                             : OFF
             Power_Cable                       : OFF
             USB_Cable                         : CONNECTED
-          
+
           Stabilizer:
             Power_Switch:
              State                            : ON
-          
+
           Clamp: 
-            
+
             State                             : OPEN
             Home_Coordinates:
 
@@ -403,18 +407,18 @@ Lab_Space:
             Puck_Connected                    : NO
 
 
-    Computer: 
-  
+    Computer:
+
         Status                                : NOT_IN_USE
-        
-        Monitor: 
+
+        Monitor:
           State                               : OFF
           Power_Cable                         : CONNECTED
           USB_Cable                           : CONNECTED
 
         Mouse: 
           USB_Cable                           : CONNECTED
-        
+
         Keyboard: 
           USB_Cable                           : CONNECTED
         USB_Power_Adaptor:
