@@ -41,7 +41,7 @@ def remove (obj1, obj2):
 	hold (obj2 + "." + obj1)
 	
 	write ("execute : With other hand hold " + obj2 + " and keep it fixed.")
-	write ("execute : Move " + obj1 + " just above current coordinates and separate from " + obj2)
+	write ("execute : Pull the " + obj1 + " and separate from " + obj2)
 
 def hold_sample(Sample, Sample_Box):
 	
@@ -69,7 +69,7 @@ def move_cursor(obj):
 
 ######################################################
 
-log = "run_data_" + time_in_ist() + "_procedure.txt"
+log = "run_data_procedure.txt"
 f = open(log, 'w')
 f.close()
 
