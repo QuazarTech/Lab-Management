@@ -1,14 +1,13 @@
 import time
-from datetime import tzinfo
 from datetime import datetime
 from pytz import timezone
 import datetime
 import yaml as yaml
-import numpy as np
 import sys
-
+import os
 import zener_experiment
-#import service_log
+import service_log
+
 
 #####################################################################
 
@@ -31,7 +30,7 @@ def get_sample_info():
             sample = raw_input("Which sample you want to load : (Zener_1,Zener_2,Zener_3)\n")
     elif(sample_box=="Box_Resistor"):
         sample = raw_input("Which sample you want to load : (Res_1,Res_2,Res_3,Res_4,Res_5)\n")
-        while((sample != "Res_1") and (sample != "Res_2") and (sample != "Res_3")):
+        while((sample != "Res_1") and (sample != "Res_2") and (sample != "Res_3") and (sample != "Res_4") and (sample != "Res_5")):
             sample = raw_input("Which sample you want to load : (Res_1,Res_2,Res_3,Res_4,Res_5)\n")
     
     sample_description = raw_input("Give a brief sample desciption:")        
@@ -39,13 +38,26 @@ def get_sample_info():
 
 
 def get_experimental_parameters():
-    V_range            = raw_input("Enter Voltage Sweep Range : \n")
-    V_step             = raw_input("Enter Voltage Step Size : \n")
-    temp_set_point     = raw_input("Enter Heater Setpoint Temperature in Kelvin : \n")
+    V_range                  = raw_input("Enter Voltage Sweep Range, comma separated for multiple runs : \n")
+    V_step                   = raw_input("Enter Voltage Step Size, comma separated for multiple runs : \n")
+    temp_set_point           = raw_input("Enter Heater Setpoint Temperature in Kelvin, comma separated for multiple runs : \n")
 
-    address            = raw_input("Give the path where you want to store experimental data :")
+    V_range_array = V_range.split(",")
+    V_step_array = V_step.split(",")
+    temp_set_point_array = temp_set_point.split(",")
 
-    return address, temp_set_point, V_range, V_step
+    while ((len(V_range_array) == len(V_step_array) == len(temp_set_point_array)) == False):
+        print("UNEQUAL NO OF VALUES FOR EACH. ONE VALUE REQUIRED FOR EACH RUN!!!")
+        V_range              = raw_input("Enter Voltage Sweep Range (V), comma separated for multiple runs : \n")
+        V_step               = raw_input("Enter Voltage Step Size (V), comma separated for multiple runs : \n")
+        temp_set_point       = raw_input("Enter Heater Setpoint Temperature in Kelvin (K), comma separated for multiple runs : \n")
+
+        V_range_array        = V_range.split(",")
+        V_step_array         = V_step.split(",")
+        temp_set_point_array = temp_set_point.split(",")
+
+    address                  = raw_input("Give the path where you want to store experimental data :")
+    return address, temp_set_point_array, V_range_array, V_step_array
 
 
 def get_experiment():
@@ -58,6 +70,11 @@ def get_experiment():
         experiment = raw_input("\nPlease enter the experiment you want to do:")
     return experiment
 
+def get_user_data():
+    robot = raw_input("Enter robot ID : ")
+    sensor = raw_input("Enter sensor ID: ")
+    observer = raw_input("Enter observer ID: ")
+    return robot, sensor, observer
 
 #####################################################################
 
@@ -65,28 +82,27 @@ def get_experiment():
 
 Sample, Sample_Box, sample_description = get_sample_info()
     
-experiment = eval(get_experiment())
-read_file =  experiment.log
-address, temperature, V_range, V_step = get_experimental_parameters()
-experiment.run(Sample, Sample_Box, V_range, V_step, temperature, sample_description, address)
+experiment  = eval(get_experiment())
+read_file   =  experiment.log
 
-#user data
-robot = raw_input("Enter robot ID : ")
-sensor = raw_input("Enter sensor ID: ")
-observer = raw_input("Enter observer ID: ")
+address, temperature_array, V_range_array, V_step_array = get_experimental_parameters()
+experiment.run(Sample, Sample_Box, V_range_array, V_step_array, temperature_array, sample_description, address)
+
+robot, sensor, observer = get_user_data()
 
 #create and init log file with user data
-log = open (read_file[:-13] + "_execution_log.txt", "w")
+log = open (read_file[:-13] + "execution_log.txt", "w")
 log.write("Robot : " + robot + "\n")
 log.write("Sensor : " + sensor + "\n")
 log.write("Observer : " + observer + "\n")
 log.write("Time : " + zener_experiment.time_in_ist() + "\n")
 log.close()
+
 time_array.append(zener_experiment.time_in_ist())
 
-diff_file = read_file[:-13] + "_diff.txt"
+diff_file = read_file[:-13] + "diff.txt"
 new_dbase = read_file[:-13] + "new_database"
-dbase = open(diff_file + ".txt", "w")
+dbase = open(diff_file, "w")
 dbase.close()
 
 
@@ -101,22 +117,28 @@ with open("lab_database.yaml", "r") as f:
 with open(read_file, "r") as fdata:
     for line in fdata:
         if (line[0:7] != 'execute'):
-            with open(diff_file + ".txt", "a") as dbase:
-                dbase.write(line[16:])
-                dbase.close()
-            fbase = open(new_dbase + ".yaml", "r")
-            data = yaml.safe_load(fbase)
-            param_array = []
-            param_array = line[16:].strip('\n').split(",")
-            print param_array
-            z = data['Lab_Space']
-            for param in param_array[1:(len(param_array) - 2)]:
-                z = z[param]
-            z[param_array[len(param_array) - 2]] = param_array[len(param_array) - 1]
-            fname = open(new_dbase + ".yaml", 'w')
-            yaml.dump(data, fname, default_flow_style=False)
-            fname.close()
-            fbase.close()
+            if(line[0:6] == 'Update'):
+                with open(diff_file, "a") as dbase:
+                    dbase.write(line[16:])
+                    dbase.close()
+                fbase = open(new_dbase + ".yaml", "r")
+                data = yaml.safe_load(fbase)
+                param_array = []
+                param_array = line[16:].strip('\n').split(",")
+                print param_array
+                z = data['Lab_Space']
+                for param in param_array[1:(len(param_array) - 2)]:
+                    z = z[param]
+                z[param_array[len(param_array) - 2]] = param_array[len(param_array) - 1]
+                fname = open(new_dbase + ".yaml", 'w')
+                yaml.dump(data, fname, default_flow_style=False)
+                fname.close()
+                fbase.close()
+            else :
+                print(line)
+                with open (log.name, "a") as log:
+                        log.write(line)
+                        log.close()
 
         else:
             if(line[10:14] != 'Read'):
@@ -155,10 +177,6 @@ with open(read_file, "r") as fdata:
                 for param in param_array[1:(len(param_array) - 1)]:
                     z = z[param]
                 param = param_array[len(param_array) - 1]
-#                dict_base = z[param]
-#                for k, v in dict_base.items():
-#                    print k,'\n', v
-#                    print '\n'
                 print yaml.dump(z[param], allow_unicode=True, default_flow_style=False)
                 user_input = raw_input("Comments, if any : (Press Enter to continue, or type end to abort) : ")
                 if(user_input == "end"):
@@ -183,5 +201,13 @@ with open(read_file, "r") as fdata:
                       with open (log.name, "a") as log:
                         log.write("Comment : " + user_input + '\n\n')
                         log.close()
+
 fdata.close()
+
+t = zener_experiment.time_in_ist()
+os.system("mkdir run_data_" + t)
+os.system("mv " + zener_experiment.log + " run_data_"+t+"/")
+os.system("mv " + read_file[:-13] + "execution_log.txt" + " run_data_"+t+"/")
+os.system("mv " + read_file[:-13] + "diff.txt" + " run_data_"+t+"/")
+os.system("mv " + new_dbase + ".yaml run_data_"+t+"/")
 #close all open files
