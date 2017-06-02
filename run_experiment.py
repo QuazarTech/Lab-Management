@@ -98,7 +98,97 @@ new_dbase = read_file[:-13] + "new_database"
 dbase = open(diff_file, "w")
 dbase.close()
 
+def update_database(line, diff_file, new_dbase):
+	with open(diff_file, "a") as dbase:
+            dbase.write(line[16:])
+        param_array, data = read_database(new_dbase, 16)
+        write_to_database(param_array, data)
 
+def read_database(base, index):
+	fbase = open(base + ".yaml", "r")
+        data = yaml.safe_load(fbase)
+        param_array = []
+        param_array = line[index:].strip('\n').split(",")
+        fbase.close()
+        return param_array, data
+
+def write_to_database(param_array, data):
+	z = data['Lab_Space']
+        for param in param_array[1:(len(param_array) - 2)]:
+            z = z[param]
+        z[param_array[len(param_array) - 2]] = param_array[len(param_array) - 1]
+        fname = open(new_dbase + ".yaml", 'w')
+        yaml.dump(data, fname, default_flow_style=False)
+        fname.close()
+
+def abort_execution(log):
+	print temp
+        string = "***********" + "\n" + "EXECUTION ABORTED" + "\n" + "***********"
+	with open (log.name, "a") as log:
+        	log.write(string + '\n')
+		log.write("Execution has come to an end due to error in line: " + line + '\n')
+	log.close()
+	put_in_folder(log.name, diff_file, new_dbase)
+	sys.exit(string)
+
+def pause_execution(log):
+	print temp
+        string = "***********" + "\n" + "EXPERIMENT PAUSED" + "\n" + "***********"
+	with open (log.name, "a") as log:
+		log.write(string + '\n')
+		log.write("Execution has been paused at: " + temp + '\n')
+	log.close()
+
+	response = raw_input("Type 'resume' to resume the experiment :")
+	while (response != 'resume'):
+		response = raw_input("Type 'resume' to resume the experiment :")
+
+	string = "***********" + "\n" + "EXPERIMENT RESUMED" + "\n" + "***********"
+	with open (log.name, "a") as log:
+		log.write(string + '\n')
+		log.write("Execution has been resumed at: " + temp + '\n')
+	log.close()
+	
+def print_states(log, line, new_dbase):
+	print(line + '\n')
+        param_array, data = read_database(new_dbase, 25)
+        z = data["Lab_Space"]
+        for param in param_array[1:(len(param_array) - 1)]:
+            z = z[param]
+        param = param_array[len(param_array) - 1]
+        print yaml.dump(z[param], allow_unicode=True, default_flow_style=False)
+        user_input = raw_input("Comments, if any : (Press Enter to continue, type 'pause' to pause, or 'end' to abort) : ")
+        temp = zener_experiment.time_in_ist()
+        
+        if(user_input == "end"):
+            abort_execution(log)
+        
+        elif (user_input == "pause"):
+            pause_execution(log)
+            
+        else:
+            print temp + '\n'
+        
+        time_array.append(zener_experiment.time_in_ist())
+        time_stamp_and_comments(log, line, temp, user_input)
+	
+
+def put_in_folder(log, diff_file, new_dbase):        
+	t = zener_experiment.time_in_ist()
+	os.system("mkdir run_data_" + t)
+	os.system("mv " + zener_experiment.log + " run_data_"+t+"/")
+	os.system("mv " + log + " run_data_"+t+"/")
+	os.system("mv " + diff_file + " run_data_"+t+"/")
+	os.system("mv " + new_dbase + ".yaml run_data_"+t+"/")
+
+def time_stamp_and_comments(log, line, temp, user_input):
+	with open (log.name, "a") as log:
+            log.write(line + 'end:\t\t\t\t' + temp + '\n\n')
+        log.close()
+        if(user_input != ""):
+            with open (log.name, "a") as log:
+                log.write("Comment : " + user_input + '\n\n')
+            log.close()
 with open("lab_database.yaml", "r") as f:
     data = yaml.load(f)
     fbase = open(new_dbase + ".yaml", "w")
@@ -111,22 +201,7 @@ with open(read_file, "r") as fdata:
     for line in fdata:
         if (line[0:7] != 'execute'):
             if(line[0:6] == 'Update'):
-                with open(diff_file, "a") as dbase:
-                    dbase.write(line[16:])
-                    dbase.close()
-                fbase = open(new_dbase + ".yaml", "r")
-                data = yaml.safe_load(fbase)
-                param_array = []
-                param_array = line[16:].strip('\n').split(",")
-                print param_array
-                z = data['Lab_Space']
-                for param in param_array[1:(len(param_array) - 2)]:
-                    z = z[param]
-                z[param_array[len(param_array) - 2]] = param_array[len(param_array) - 1]
-                fname = open(new_dbase + ".yaml", 'w')
-                yaml.dump(data, fname, default_flow_style=False)
-                fname.close()
-                fbase.close()
+            	update_database(line, diff_file, new_dbase)
             else :
                 print(line)
                 with open (log.name, "a") as log:
@@ -140,116 +215,22 @@ with open(read_file, "r") as fdata:
                 temp = zener_experiment.time_in_ist()
                 
                 if (user_input == "end"):
-                    
-                    print temp
-                    
-                    string = "***********" + "\n" + "EXECUTION ABORTED" + "\n" + "***********"
-                    with open (log.name, "a") as log:
-                        log.write(string + '\n')
-                        log.write("Execution has come to an end due to error in line: " + line + '\n')
-                    log.close()
-                    sys.exit(string)
+                    abort_execution(log)
                 
                 elif (user_input == "pause"):
-                    
-                    print temp
-                    
-                    string = "***********" + "\n" + "EXPERIMENT PAUSED" + "\n" + "***********"
-                    with open (log.name, "a") as log:
-                        log.write(string + '\n')
-                        log.write("Execution has been paused at: " + temp + '\n')
-                    log.close()
-                    
-                    response = raw_input("Type 'resume' to resume the experiment :")
-                    while (response != 'resume'):
-                        response = raw_input("Type 'resume' to resume the experiment :")
-                    
-                    string = "***********" + "\n" + "EXPERIMENT RESUMED" + "\n" + "***********"
-                    with open (log.name, "a") as log:
-                        log.write(string + '\n')
-                        log.write("Execution has been resumed at: " + temp + '\n')
-                    log.close()
+                    pause_execution(log)
                     
                 else:
                     print temp + '\n'
 
                 time_array.append(zener_experiment.time_in_ist())
-
-                with open (log.name, "a") as log:
-                    log.write(line + 'end:\t\t\t\t' + temp + '\n\n')
-                log.close()
-                if(user_input != ""):
-                    with open (log.name, "a") as log:
-                        log.write("Comment : " + user_input + '\n\n')
-                        log.close()
+		time_stamp_and_comments(log, line, temp, user_input)
 
             else:
-                print(line + '\n')
-                fbase = open(new_dbase + ".yaml", "r")
-                data = yaml.safe_load(fbase)
-                param_array = []
-                param_array = line[25:].strip('\n').split(",")
-                z = data["Lab_Space"]
-                for param in param_array[1:(len(param_array) - 1)]:
-                    z = z[param]
-                param = param_array[len(param_array) - 1]
-                print yaml.dump(z[param], allow_unicode=True, default_flow_style=False)
-                user_input = raw_input("Comments, if any : (Press Enter to continue, type 'pause' to pause, or 'end' to abort) : ")
-                temp = zener_experiment.time_in_ist()
-                
-                if(user_input == "end"):
-                    print temp
-                    string = "***********" + "\n" + "EXECUTION ABORTED" + "\n" + "***********"
-                    with open (log.name, "a") as log:
-                        log.write(string + '\n')
-                        log.write("Execution has come to an end due to error in line: " + line + '\n')
-                    log.close()
-                    t = zener_experiment.time_in_ist()
-                    os.system("mkdir run_data_" + t)
-                    os.system("mv " + zener_experiment.log + " run_data_"+t+"/")
-                    os.system("mv " + read_file[:-13] + "execution_log.txt" + " run_data_"+t+"/")
-                    os.system("mv " + read_file[:-13] + "diff.txt" + " run_data_"+t+"/")
-                    os.system("mv " + new_dbase + ".yaml run_data_"+t+"/")
-                    sys.exit(string)
-                
-                elif (user_input == "pause"):
-                    
-                    print temp
-                    
-                    string = "***********" + "\n" + "EXPERIMENT PAUSED" + "\n" + "***********"
-                    with open (log.name, "a") as log:
-                        log.write(string + '\n')
-                        log.write("Execution has been paused at: " + temp + '\n')
-                    log.close()
-                    
-                    response = raw_input("Type 'resume' to resume the experiment :")
-                    while (response != 'resume'):
-                        response = raw_input("Type 'resume' to resume the experiment :")
-                    
-                    string = "***********" + "\n" + "EXPERIMENT RESUMED" + "\n" + "***********"
-                    with open (log.name, "a") as log:
-                        log.write(string + '\n')
-                        log.write("Execution has been resumed at: " + temp + '\n')
-                    log.close()
-                    
-                else:
-                    print temp + '\n'
-                
-                time_array.append(zener_experiment.time_in_ist())
-                with open (log.name, "a") as log:
-                    log.write(line + 'end:\t\t\t\t' + temp + '\n\n')
-                log.close()
-                if(user_input != ""):
-                      with open (log.name, "a") as log:
-                        log.write("Comment : " + user_input + '\n\n')
-                        log.close()
+            	print_states(log, line, new_dbase)
 
 fdata.close()
+put_in_folder(log.name, diff_file, new_dbase)
 
-t = zener_experiment.time_in_ist()
-os.system("mkdir run_data_" + t)
-os.system("mv " + zener_experiment.log + " run_data_"+t+"/")
-os.system("mv " + read_file[:-13] + "execution_log.txt" + " run_data_"+t+"/")
-os.system("mv " + read_file[:-13] + "diff.txt" + " run_data_"+t+"/")
-os.system("mv " + new_dbase + ".yaml run_data_"+t+"/")
+
 #close all open files
