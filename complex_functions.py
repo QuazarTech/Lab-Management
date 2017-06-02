@@ -2,123 +2,157 @@ import time
 import primitive_functions
 from primitive_functions import *
 
+#####################################################################
 
-def solder(obj1,obj2, Sample, Sample_Box):
-	write("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,Status,IN_USE")
-
-	read_state('Lab_Space,Sample_Table,Soldering')
-	read_state('Lab_Space,Sample_Table,Sample_Boxes,' + Sample_Box + ',' + Sample)
-	goto('Soldering_Iron.Home_Coordinates')
-	hold('Soldering_Iron')
-	goto('Soldering_Iron.Exit_Coordinates')
-	goto('Flux.Home_Coordinates')
-	write("execute : Plunge the Tip into the Flux")
-	write("execute : Retract the Tip")
-	goto ('Solder.Home_Coordinates')
-	write("execute : Move the Soldering_Iron along the Solder")
-	write("execute : Goto juntion of "+obj1+ " and "+obj2)
-	write("execute : Wait until sensor deems soldering between " + obj1 + " and " + obj2 + " to be complete")
-	write("Update_Database Lab_Space,Sample_Table,Sample_Boxes," + Sample_Box + "," + Sample + ",Soldered,YES")
-	write("Update_Database Lab_Space,PQMS,Insert_RT_Puck," + obj2 + ",Soldered,YES")
-	goto('Cleaning_Pad.Home_Coordinates')
-	write("execute : Plunge Tip in Cleaning Pad")
-	write("execute : Retract Tip")
-	goto('Soldering_Iron.Exit_Coordinates')
-	goto('Soldering_Iron.Home_Coordinates')
-	leave('Soldering_Iron')
-	write("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,Status,NOT_IN_USE")
+def set_up_soldering_iron():
+    '''Set up soldering space and iron for use'''
     
-def clamp():
-	read_state('Lab_Space,PQMS,Clamp')
-	move('Clamp.Home_Coordinates', 'PQMS.Clamp_Coordinates')    
-	write("execute : Use the other hand to revolve the clamp till 180 degrees")
-	write("execute : Revolve the screw of the clamp till it is in closing position")
-	rotate('Screw','14 turns','clockwise')
-	write("Update_Database Lab_Space,PQMS,Clamp,Status,LOCKED")
-
-def connect_cable(obj):
-	read_state('Lab_Space,PQMS,Cables,'+obj)
-	move(obj + ".Cryostat_End", "Insert_RT_Puck."+obj + "_Terminal")
-	write("execute : Insert and fasten "+obj)
-	write("Update_Database Lab_Space,PQMS,Cables,"+obj+",Status,CONNECTED")
-	write("Update_Database Lab_Space,PQMS,Insert_RT_Puck," + obj + "_Terminal,Status,DISCONNECTED")
-	leave("Clamp")
-
-
-def unclamp():
-    read_state("Lab_Space,PQMS,Clamp")
-    read_state("Lab_Space,PQMS,Insert_RT_Puck")
-    locate("Clamp.Current_Cordinates")
-    goto("Clamp.Current_Coordinates")
-    hold("the clamp with one hand")
-    write("execute : With other hand, Rotate the screw anti-clockwise for required number of turns")
-    write("execute : Revolve the screw of the clamp till it is in opening position")
-    write("execute : Use the other hand to revolve the clamp till it's straight.")
-    write("Update_Database Lab_Space,PQMS,Clamp,Status,UNLOCKED")
-    goto("Clamp.Home_Coordinates")
-    leave("Clamp")
-
-def desolder(Sample, Sample_Box):
-    write("execute : Check if soldering station is free")
-    write("execute : if Yes,Then leave(Puck_board). if not, wait until free and then leave(Puck_board)")
-    write("execute : Switch on Soldering_Iron")
-    write("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,Power,ON")
-    write("execute : Wait for the soldering iron to heat up.")
-    read_state("Lab_Space,Sample_Table,Soldering")
-    read_state("Lab_Space,Sample_Table,Sample_Boxes,"+Sample_Box+","+Sample+",Terminal_1")
-    write("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,Status,IN_USE")
-    goto("Soldering_Iron")
-    hold("Soldering_Iron")
-    goto("Soldering_Iron.Exit_Coordinates")
-    read_state("Lab_Space,Sample_Table,Soldering")
-    goto("Flux.Home_Coordinates")
-    write("execute : Plunge the tip into the flux")
-    write("execute : Retract the tip")
-    goto (Sample +"_Terminal_1")
-    write("execute : Wait until sensor deems soldering removed")
-    goto("Cleaning_Pad.Home_Coordinates")
-    write("execute : Plunge tip in Cleaning_Pad")
-    write("execute : Retract Tip")
-    write("Update_Database Lab_Space,Sample_Table,Sample_Boxes,Box_Zener,Zener_1,Terminal_1,Soldered,NO")
-    write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Puck,Terminal_1,Soldered,NO")
-    goto (Sample+"_terminal_2")
-    write("execute : Wait until sensor deems soldering removed")
-    write("Update_Database Lab_Space,Sample_Table,Sample_Boxes,Box_Zener,Zener_1,Terminal_2,Soldered,NO")
-    write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Puck,Terminal_4,Soldered,NO")
-    write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Puck,Sample_Mounted,NO")
-    goto("Cleaning_Pad.Home_Coordinates")
-    write("execute : Plunge tip in Cleaning_Pad")
-    write("execute : Retract Tip")
-    goto("Soldering_Iron.Exit_Coordinates")
-    goto("Soldering_Iron.Home_Coordinates")
-    leave("Soldering_Iron")
-    write("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,Status,NOT_IN_USE")
-    write("execute : Switch off Soldering Iron")
-    write("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,Power,OFF")
-
-def load_sample(Sample, Sample_Box):
-    read_state('Lab_Space,Sample_Table')
-    read_state('Lab_Space,PQMS')
-
-    move('Puck_Board','Sample_Mounting_Coordinates')
-    leave('Puck_Board')
-    remove('cap',Sample_Box)
-    write("Update_Database Lab_Space,Sample_Table,Sample_Boxes,"+Sample_Box+",State,OPEN")
-
-    hold_sample(Sample, Sample_Box)
-    close_lid(Sample_Box)
-
-    write("execute : Remove Sticky Tape from "+ Sample)
-    goto('Puck_Board')
-    hold('Puck_Board')
-    #SOLDERING PROCESS STARTS
     goto('SOLDERING_STATION')
     write("execute : Check if soldering station is free or not")
     write("execute : If 'Free' then Leave Puck_Board or else wait until it gets free and then Leave Puck_Board")
     write("execute Switch On Soldering_Iron")
     write("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,Power,ON")
     write("execute : Wait for the soldering iron LED to start blinking.")
-    solder(Sample+'.Terminal_1', 'Puck,Terminal_1', Sample, Sample_Box)
+    
+def solder (terminal_a, terminal_b, Sample, Sample_Box):
+    '''Solder terminal_b onto terminal_b, given Sample from Sample_Box'''
+    
+    write("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,State,IN_USE")
+    
+    goto   ('Soldering_Iron.Home_Coordinates')
+    hold   ('Soldering_Iron')
+    goto   ('Soldering_Iron.Exit_Coordinates')
+    
+    goto   ('Flux.Home_Coordinates')
+    write  ("execute : Plunge the Tip into the Flux")
+    write  ("execute : Retract the Tip")
+    
+    goto   ('Solder.Home_Coordinates')
+    write  ("execute : Move the Soldering_Iron along the Solder")
+    
+    write  ("execute : Goto juntion of "+terminal_a+ " and "+terminal_b)
+    write  ("execute : Wait until sensor deems soldering between " + terminal_a + " and " + terminal_b + " to be complete")
+    
+    write  ("Update_Database Lab_Space,Sample_Table,Sample_Boxes," + Sample_Box + "," + terminal_a + ",Soldered,True")
+    write  ("Update_Database Lab_Space,PQMS,Insert_RT_Puck," + terminal_b + ",Soldered,True")
+    
+    goto   ('Cleaning_Pad.Home_Coordinates')
+    write  ("execute : Plunge Tip in Cleaning Pad")
+    write  ("execute : Retract Tip")
+    
+    goto   ('Soldering_Iron.Exit_Coordinates')
+    goto   ('Soldering_Iron.Home_Coordinates')
+    leave  ('Soldering_Iron')
+    
+    write  ("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,State,NOT_IN_USE")
+    
+def desolder(terminal, Sample, Sample_Box):
+    '''Desolder terminal of Sample'''
+    
+    write       ("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,State,IN_USE")
+    
+    goto        ("Soldering_Iron")
+    hold        ("Soldering_Iron")
+    goto        ("Soldering_Iron.Exit_Coordinates")
+    
+    goto        ("Flux.Home_Coordinates")
+    write       ("execute : Plunge the tip into the flux")
+    write       ("execute : Retract the tip")
+    
+    goto        (Sample + "_" + terminal)
+    write       ("execute : Wait until sensor deems desoldering complete")
+    
+    goto        ("Cleaning_Pad.Home_Coordinates")
+    write       ("execute : Plunge tip in Cleaning_Pad")
+    write       ("execute : Retract Tip")
+    
+    write       ("Update_Database Lab_Space,Sample_Table,Sample_Boxes," + Sample_Box + "," + Sample + ",Terminal_1,Soldered,False")
+    write       ("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Puck,Terminal_1,Soldered,False")
+    
+    write       ("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,State,NOT_IN_USE")
+
+
+#####################################################################
+
+
+def clamp():
+    '''Clamp PQMS insert to Cryostat'''
+    
+    read_state ('Lab_Space,PQMS,Clamp')
+    move       ('Clamp.Home_Coordinates', 'PQMS.Clamp_Coordinates')    
+    write      ("execute : Use the other hand to revolve the clamp till 180 degrees")
+    write      ("execute : Revolve the screw of the clamp till it is in closing position")
+    rotate     ('Screw','14 turns','clockwise')
+    write      ("Update_Database Lab_Space,PQMS,Clamp,State,LOCKED")
+    
+def unclamp():
+    '''Unclamp the PQMS insert to Cryostat'''
+    
+    read_state  ("Lab_Space,PQMS,Clamp")
+    read_state  ("Lab_Space,PQMS,Insert_RT_Puck")
+    locate      ("Clamp.Current_Cordinates")
+    goto        ("Clamp.Current_Coordinates")
+    hold        ("the clamp with one hand")
+    write       ("execute : With other hand, Rotate the screw anti-clockwise for required number of turns")
+    write       ("execute : Revolve the screw of the clamp till it is in opening position")
+    write       ("execute : Use the other hand to revolve the clamp till it's straight.")
+    write       ("Update_Database Lab_Space,PQMS,Clamp,State,UNLOCKED")
+    goto        ("Clamp.Home_Coordinates")
+    leave       ("Clamp")
+
+
+#####################################################################
+
+
+def connect_cable (cable, test_object):
+    '''Connects 'cable' to its respective connector on test_object.'''
+    
+    read_state  ('Lab_Space,PQMS,Cables,' + cable)
+    move        (cable + ".Cryostat_End", test_object + "." + cable + "_Terminal")
+    write       ("execute : Insert and fasten " + cable)
+    leave       (cable)
+    write       ("Update_Database Lab_Space,PQMS,Cables," + cable + ",State,CONNECTED")
+    
+
+def disconnect_cable (cable):
+    '''Disconnects 'cable' from its respective connector on any test_object.'''
+    
+    read_state  ('Lab_Space,PQMS,Cables,' + cable)
+    goto        (cable + ".Current_Coordinates")
+    hold        (cable + ".Cryostat_End")
+    
+    write       ("execute : Unfasten and remove " + cable)
+    move        (cable + ".Cryostat_End", cable + ".Home_Coordinates" )
+    write       ("Update_Database Lab_Space,PQMS,Cables," + cable + ",State,DISCONNECTED")
+    leave       (cable)
+
+
+#####################################################################
+
+
+def mount_sample_on_puck (Sample, Sample_Box):
+    '''Mount 'Sample' from 'Sample_Box' onto Puck_Board'''
+    
+    read_state  ('Lab_Space,Sample_Table')
+    read_state  ('Lab_Space,PQMS')
+
+    move        ('Puck_Board','Sample_Mounting_Coordinates')
+    leave       ('Puck_Board')
+    remove      ('cap',Sample_Box)
+    write       ("Update_Database Lab_Space,Sample_Table,Sample_Boxes,"+Sample_Box+",State,OPEN")
+
+    hold_sample (Sample, Sample_Box)
+    close_lid   (Sample_Box)
+
+    write       ("execute : Remove Sticky Tape from "+ Sample)
+    goto    ('Puck_Board')
+    hold    ('Puck_Board')
+    
+    #SOLDERING PROCESS
+    set_up_soldering_iron()
+    
+    move(Sample+'.Terminal_1', 'Puck,Terminal_1')
+    solder(Sample + ',Terminal_1', 'Puck,Terminal_1', Sample, Sample_Box)
 
     move(Sample+'.Terminal_2', 'Puck,Terminal_4')
     solder(Sample+',Terminal_2', 'Puck,Terminal_4', Sample, Sample_Box)
@@ -126,7 +160,7 @@ def load_sample(Sample, Sample_Box):
     write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Puck,Sample_Mounted,YES")
     write("execute : Switch off the soldering iron")
     write("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,Power,OFF")
-    #SOLDERING PROCESS ENDS
+    #SOLDERING PROCESS
 
     read_state('Lab_Space,Sample_Table')
     read_state('Lab_Space,PQMS')
@@ -137,108 +171,139 @@ def load_sample(Sample, Sample_Box):
     goto('Tweezers.Home_Coordinates')
     leave('Tweezers')
 
-    remove('Puck','Puck_Board')
-    write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Puck,Puck_Board_Connection,DISCONNECTED")
 
-    goto('Puck_Screwing_Coordinates')
-    leave('Puck')
-    read_state('Lab_Space,PQMS,Insert_RT_Puck')
-    move('Insert_RT_Puck', 'Insert_RT_Puck.Exit_Coordinates')
-    goto('Puck_Screwing_Coordinates')
-    hold('Puck')
-    write("execute : Align Puck for screwing")
-    rotate('Puck','14 turns','clockwise')
-    write("execute : Align Insert2Puck Cable with Puck Pins")
-    write("execute : Insert the pin_holes into the puck pins")
-    write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Puck,Insert_Connection,CONNECTED")
-    write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Insert2Puck_Cable,State,CONNECTED")
-    goto('Insert_RT_Puck.Exit_Coordinates')
-    goto('Insert_RT_Puck.Home_Coordinates')
-
-    clamp()
-    connect_cable('RT_Cable')
-    connect_cable('HT_Cable')
-
-
-def unload_sample(Sample, Sample_Box):
-    read_state("Lab_Space,Sample_Table,Sample_Boxes")
-    read_state("Lab_Space,PQMS")
-    read_state("Lab_Space,Sample_Table,Soldering")
-    locate("Insert_RT_Puck.RT_Cable_Terminal")
-    goto  ("Insert_RT_Puck.RT_Cable_Terminal")
-    hold  ("RT_Cable.Cryostat_End")
-    write("execute : Unfasten and Remove RT_Cable")
-    write("Update_Database Lab_Space,PQMS,Cables,RT_Cable,Status,DISCONNECTED")
-    write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,RT_Cable_Terminal,Status,DISCONNECTED")
-    leave("RT_Cable.Cryostat_End")
-    locate("Insert_RT_Puck.HT_Cable_Terminal")
-    goto("Insert_RT_Puck.HT_Cable_Terminal")
-    hold("HT_Cable.Cryostat_End")
-    write("execute : Unfasten and Remove HT_Cable")
-    write("Update_Database Lab_Space,PQMS,Cables,HT_Cable,Status,DISCONNECTED")
-    write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,HT_Cable_Terminal,Status,DISCONNECTED")
-    goto("HT cable.Cryostat_End.Rest_Coordinates")
-    leave("HT_Cable.Cryostat_End")
-    move("RT_Cable.Cryostat_End" , "RT_Cable.Cryostat_End.Home_Coordinates")
-    leave("RT_Cable.Cryostat_End")
-    unclamp()
-    locate("Insert_RT_Puck")
-    goto("Insert_RT_Puck")
-    hold("Insert_RT_Puck")
-    goto("Insert_RT_Puck.Exit_Coordinates")
-    goto("Sample_Table.Puck_Screwing_Coordinates")
-    remove("Insert2Puck_Cable", "Insert_RT_Puck")
-    write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Puck,Insert_Connection,DISCONNECTED")
-    write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Insert2Puck_Cable,Status,DISCONNECTED")
-    read_state("Lab_Space,PQMS,Insert_RT_Puck,Puck")
-    goto("Puck")
-    hold("Puck")
-    rotate('Puck','14 turns','anticlockwise')
-    leave("Puck")
-    goto("Insert_RT_Puck.Exit_Coordinates")
-    goto("Insert_RT_Puck.Home_Coordinates")
-    leave("Insert_RT_Puck")
-    goto("Sample_Table.Puck_Screwing_Coordinates")
-    hold("Insert_RT_Puck.Puck")
-    goto("Puck_Board.Home_Coordinates")
-    write("execute : Align Puck pins with Puck_Board")
-    write("execute : Insert Puck into Puck_Board")
-    leave("Puck")
-    write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Puck,Puck_Board_Connection,CONNECTED")
-    hold("Puck_Board")
-    goto ("Tweezers.Home_Coordinates")
-    hold("Tweezers")
-    goto(Sample + ".Terminal_1")
-    hold(Sample + ".Terminal_1")
-    goto("Soldering_Station")
-    desolder(Sample, Sample_Box)
-    locate("Puck_Board")
-    goto("Puck_Board")
-    hold("Puck_Board") 
-    goto("Puck_Board.Home_Coordinates")
-    leave("Puck_Board")
-    goto("Sample_Table.Sample_Mounting_Coordinates")
-    write("execute : straighten sample")
-    write("execute : put a sticky note on the sample")
-    leave(Sample)
-    read_state("Lab_Space,Sample_Table,Sample_Boxes,"+Sample_Box)
-    goto(Sample_Box +"'s Cap")
-    hold("The Cap")
-    write("execute : With other hand hold the " + Sample_Box + " and keep it fixed")
-    write("execute : Pull the cap, and separate it from sample_box")
-    write("Update_Database Lab_Space,Sample_Table,Sample_Boxes,Box_Zener,State,OPEN")
-    goto(Sample+"_Terminal_1")
-    hold(Sample+"_terminal_1")
-    goto(Sample_Box + ".Exit_coordinates")
-    goto(Sample+".Rest_ Coordinates")
-    leave(Sample)
-    write("Update_Database Lab_Space,Sample_Table,Sample_Boxes,Box_Zener,Zener_1,State,NOT_IN_USE")
-    goto(Sample_Box+".Exit_Coordinates")
-    write("execute : close the lid of the box")
-    write("Update_Database Lab_Space,Sample_Table,Sample_Boxes,Box_Zener,State,CLOSED")
-    goto("Tweezer.Rest_Coordinates")
-    leave("Tweezer")
+def load_sample(Sample, Sample_Box, test_object):
     
+    if (test_object == "Insert_RT_Puck"):
+        remove('Puck','Puck_Board')
+        write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Puck,Puck_Board_Connection,DISCONNECTED")
+
+        goto('Puck_Screwing_Coordinates')
+        leave('Puck')
+        read_state('Lab_Space,PQMS,Insert_RT_Puck')
+        move('Insert_RT_Puck', 'Insert_RT_Puck.Exit_Coordinates')
+        goto('Puck_Screwing_Coordinates')
+        hold('Puck')
+        write("execute : Align Puck for screwing")
+        rotate('Puck','14 turns','clockwise')
+        write("execute : Align Insert2Puck Cable with Puck Pins")
+        write("execute : Insert the pin_holes into the puck pins")
+        write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Puck,Insert_Connection,CONNECTED")
+        write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Insert2Puck_Cable,State,CONNECTED")
+        goto('Insert_RT_Puck.Exit_Coordinates')
+        goto('Insert_RT_Puck.Home_Coordinates')
+
+        clamp()
+        
+        connect_cable('RT_Cable', test_object)
+        connect_cable('HT_Cable', test_object)
+        
+    elif (test_object == "Puck_Board"):
+        
+        connect_cable('RT_Cable', test_object)
+        
+        
+def unmount_sample_from_puck (Sample, Sample_Box):
+    '''Unmount Sample from puck and replace in Sample_Box'''
+    
+    goto    ("Puck_Board")
+    hold    ("Puck_Board")
+    goto    ("Tweezers.Home_Coordinates")
+    hold    ("Tweezers")
+    
+    # Desoldering process
+    set_up_soldering_iron()
+    
+    goto    (Sample + ".Terminal_1")
+    hold    (Sample + ".Terminal_1")
+    desolder("Terminal_1", Sample, Sample_Box)
+    
+    goto    (Sample + ".Terminal_2")
+    hold    (Sample + ".Terminal_2")
+    desolder("Terminal_2", Sample, Sample_Box)
+    
+    write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Puck,Sample_Mounted,NO")
+    
+    write   ("execute : Switch off Soldering Iron")
+    write   ("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,Power,OFF")
+    #Desoldering Process
+    
+    move    ("Puck_Board", "Puck_Board.Home_Coordinates")
+    leave   ("Puck_Board")
+    
+    goto    ("Sample_Table.Sample_Mounting_Coordinates")
+    write   ("execute : straighten sample")
+    write   ("execute : put a sticky note on the sample")
+    leave   (Sample)
+    
+    read_state("Lab_Space,Sample_Table,Sample_Boxes,"+Sample_Box)
+    
+    goto    (Sample_Box +"'s Cap")
+    hold    ("The Cap")
+    write   ("execute : With other hand hold the " + Sample_Box + " and keep it fixed")
+    write   ("execute : Pull the cap, and separate it from sample_box")
+    write   ("Update_Database Lab_Space,Sample_Table,Sample_Boxes,Box_Zener,State,OPEN")
+    goto    (Sample+"_Terminal_1")
+    hold    (Sample+"_terminal_1")
+    goto    (Sample_Box + ".Exit_coordinates")
+    goto    (Sample+".Rest_ Coordinates")
+    leave   (Sample)
+    
+    write   ("Update_Database Lab_Space,Sample_Table,Sample_Boxes,"+Sample_Box+","+Sample+",State,NOT_IN_USE")
+    goto    (Sample_Box+".Exit_Coordinates")
+    write   ("execute : close the lid of the box")
+    write   ("Update_Database Lab_Space,Sample_Table,Sample_Boxes,Box_Zener,State,CLOSED")
+    goto    ("Tweezer.Rest_Coordinates")
+    leave   ("Tweezer")
+
+
+def unload_sample(Sample, Sample_Box, test_object):
+    
+    if (test_object == "Insert_RT_Puck"):
+        
+        disconnect_cable("RT_Cable")
+        disconnect_cable("HT_Cable")
+        unclamp()
+        
+        locate("Insert_RT_Puck")
+        goto("Insert_RT_Puck")
+        hold("Insert_RT_Puck")
+      
+        goto("Insert_RT_Puck.Exit_Coordinates")
+        goto("Sample_Table.Puck_Screwing_Coordinates")
+        remove("Insert2Puck_Cable", "Insert_RT_Puck")
+        
+        write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Puck,Insert_Connection,DISCONNECTED")
+        write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Insert2Puck_Cable,State,DISCONNECTED")
+        read_state("Lab_Space,PQMS,Insert_RT_Puck,Puck")
+        
+        goto("Puck")
+        hold("Puck")
+        rotate('Puck','14 turns','anticlockwise')
+        leave("Puck")
+        
+        goto("Insert_RT_Puck.Exit_Coordinates")
+        goto("Insert_RT_Puck.Home_Coordinates")
+        leave("Insert_RT_Puck")
+        
+        goto("Sample_Table.Puck_Screwing_Coordinates")
+        hold("Insert_RT_Puck.Puck")
+        goto("Puck_Board.Home_Coordinates")
+        write("execute : Align Puck pins with Puck_Board")
+        write("execute : Insert Puck into Puck_Board")
+        leave("Puck")
+        
+        write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Puck,Puck_Board_Connection,CONNECTED")
+        
+    elif (test_object == "Puck_Board"):
+        
+        disconnect_cable("RT_Cable")
+        move ("Puck_Board", "Puck_Board.Home_Coordinates")
+        
+
+#####################################################################
+
+
 def switch_on_PQMS_modules():
     read_state("Lab_Space,PQMS")
     
@@ -263,8 +328,6 @@ def switch_on_PQMS_modules():
     write  ("execute : Switch on Pump.Power_Cable")
     write  ("Update_Database Lab_Space,PQMS,Pump,State,ON")
     
-    
-        
     #goto ("PQMS.Pirani_Gauge.Power_Cable")
     #write ("execute : Switch on Pirani_Gauge.Power_Cable")
     #write ("Update_Database Lab_Space,PQMS,Pump,State,ON")
@@ -323,30 +386,36 @@ def configure_XTCON(set_point):
     click('File')
     click('Apply')
     write ("Update_Database Lab_Space,PQMS,XTCON,Mode,ISOTHERMAL")
-    write ("Update_Database Lab_Space,PQMS,XTCON,Running,YES")
+    write ("Update_Database Lab_Space,PQMS,XTCON,Running,True")
     click('Start Button')
     write("execute : Wait till sample temperature stabilizes")
 
-def start_IV_run (V_range , V_step):
+def start_IV_run (V_range , V_step, I_max, I_step, power):
     click('I-V Source and measurement unit Window')
     move_cursor('Run Mode')
     click('Drop down menu')
     click('I-V')
-    set_measurement_settings(V_range, V_step)
+    set_measurement_settings(V_range, V_step, I_max, I_step, power)
     write("Update_Database Lab_Space,PQMS,XSMU,Mode,I-V")
     click ('Start Button')
-    write ("Update_Database Lab_Space,PQMS,XSMU,Running,YES")
+    write ("Update_Database Lab_Space,PQMS,XSMU,Running,True")
     write ("execute : Wait until graph comes to an end")
+    write ("Update_Database Lab_Space,PQMS,XSMU,Running,False")
+    write ("execute : Stop Temperature Controller Run")
+    write ("Update_Database Lab_Space,PQMS,XTCON,Running,False")
     save_graph()
     
-def set_measurement_settings(V_range, V_step):
+def set_measurement_settings(V_range, V_step, I_max, I_step, power):
     #write ("execute : In the top menu, click on \'Settings->Source Parameters\'")
     #from the drop down menu, click on constant voltage
     #click on file, and then done
     move_cursor ("Top menu")
     click ("\'Settings->I-V Measurement Settings\'")
-    write ("execute : Set voltage range as " + V_range + " V")
-    write ("execute : Set voltage step size as " + V_step + " V")
+    write ("execute : Set voltage max as " + V_range + " mV")
+    write ("execute : Set voltage step size as " + V_step + " mV")
+    write ("execute : Set current max as " + I_max + " uA")
+    write ("execute : Set current step size as " + I_step + " uA")
+    write ("execute : Set power max as " + power + " mW")
     write ("execute : Ensure that Bipolar option is set to \'Yes\'")
     move_cursor ("Top menu")
     click ("\'File->Done\'")
@@ -387,3 +456,4 @@ def set_save_folder (sample_name, sample_number, sample_description, address):
     click ("'File->Apply'")
 
 
+#####################################################################
