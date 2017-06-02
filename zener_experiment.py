@@ -1,31 +1,11 @@
 from complex_functions import *
 
-TEST_OBJECTS = ["Insert_RT_Puck", "Puck_Board"]
+TEST_OBJECTS = ["Insert_RT_Puck", "Insert_RT_Old", "Puck_Board"]
 
 def run (Sample, Sample_Box, sample_description, address):
-        
-    mount_sample_on_puck (Sample, Sample_Box)
     
-    print "\n\n Available Test Objects : "
-    print "______________________________\n"
-    
-    for item in TEST_OBJECTS:
-        print item
-    
-    print "______________________________\n"
-    test_object = raw_input ("Load Sample to which test_object? : \n")
-    
-    while (test_object not in TEST_OBJECTS):
-        
-        print "\n\n Available Test Objects : "
-        print "______________________________\n"
-        
-        for item in TEST_OBJECTS:
-            print item
-        
-        print "______________________________\n"
-        test_object = raw_input ("Load Sample to which test_object? : \n")
-    
+    test_object = select_test_object()
+    prepare_sample (Sample, Sample_Box, test_object)
     load_sample (Sample, Sample_Box, test_object)
     
     print("\nGenerating procedural steps for experiment.  .  .  .\n")
@@ -50,19 +30,21 @@ def run (Sample, Sample_Box, sample_description, address):
     print ("\nReady for execution.\n")
         
     unload_sample (Sample, Sample_Box, test_object)
-    unmount_sample_from_puck (Sample, Sample_Box)
     
+    remove_sample (Sample, Sample_Box, test_object)
+    
+    switch_off_computer()
 
 ###############################################################################
 
 
 def get_experimental_parameters():
-    V_range                    = raw_input("Enter Voltage Sweep Max (mV) : \n")
+    V_range                  = raw_input("Enter Voltage Sweep Max (mV) : \n")
     V_step                   = raw_input("Enter Voltage Step Size (mV) : \n")
-    I_range                    = raw_input("Enter Current Sweep Max (uA) : \n")
+    I_range                  = raw_input("Enter Current Sweep Max (uA) : \n")
     I_step                   = raw_input("Enter Current Step Size (uA) : \n")
-    max_power                    = raw_input("Enter Max Power (mW): \n")
-    temperature_set_point           = raw_input("Enter Heater Setpoint Temperature (K) : \n")
+    max_power                = raw_input("Enter Max Power (mW): \n")
+    temperature_set_point    = raw_input("Enter Heater Setpoint Temperature (K) : \n")
 
     return temperature_set_point, V_range, V_step, I_range, I_step, max_power
 
@@ -80,4 +62,56 @@ def PQMS_IV_run (temperature_set_point, V_range, V_step, I_range, I_step, max_po
     write("                   Run ends")
     write("##############################################################\n")
 
-            
+
+def prepare_sample (Sample, Sample_Box, test_object):
+    
+    mounted = raw_input( "\nIs the sample mounted on the puck? : y/n \n")
+    while ((mounted != 'y') and (mounted != 'n')):
+        
+        mounted = raw_input( "\nIs the sample mounted on the puck? : y/n \n")
+        
+    if (mounted == 'n'):
+        mount_sample (Sample, Sample_Box, test_object)
+        
+    elif (mounted == 'y'):
+        print ("\nSample already mounted. Continue to next step.\n")
+        sample_is_mounted()
+        
+
+def select_test_object ():
+    print "\n\n Available Test Objects : "
+    print "______________________________\n"
+    
+    for item in TEST_OBJECTS:
+        print item
+    
+    print "______________________________\n"
+    test_object = raw_input ("Load Sample to which test_object? : \n")
+    
+    while (test_object not in TEST_OBJECTS):
+        
+        print "\n\n Available Test Objects : "
+        print "______________________________\n"
+        
+        for item in TEST_OBJECTS:
+            print item
+        
+        print "______________________________\n"
+        test_object = raw_input ("Load Sample to which test_object? : \n")
+        
+    return test_object
+
+
+def remove_sample (Sample, Sample_Box, test_object):
+    
+    unmount = raw_input ("\nDo you want to unmount the sample from the Puck after the measurements? : y/n \n")
+    while ((unmount != 'y') and (unmount != 'n')):
+        
+        unmount = raw_input ("\nDo you want to unmount the sample from the Puck after the measurements? : y/n\n")
+        
+    if (unmount == 'n'):
+        print ("\n Not unmounting the sample from the puck.\n")
+        do_not_unmount()
+        
+    elif (unmount == 'y'):
+        unmount_sample (Sample, Sample_Box, test_object)

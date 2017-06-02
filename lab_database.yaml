@@ -35,25 +35,25 @@ Lab_Space:
     Equipment: 
  
         Lab_Coat: 
-            Status                            : NOT_IN_USE
+            State                             : NOT_IN_USE
             Home_Coordinates                  : UNDER_SAMPLE_TABLE
 
         Safety_goggles: 
-            Status                            : NOT_IN_USE
+            State                             : NOT_IN_USE
             Home_Coordinates                  : UNDER_SAMPLE_TABLE
 
         Mask: 
-            Status                            : NOT_IN_USE
+            State                             : NOT_IN_USE
             Home_Coordinates                  : UNDER_SAMPLE_TABLE
 
         Gloves: 
-            Status                            : NOT_IN_USE
+            State                             : NOT_IN_USE
             Home_Coordinates                  : UNDER_SAMPLE_TABLE
             Disposal_Coodinate                : TRASH
 
     Sample_Table: 
     
-        Status                                : NOT_IN_USE
+        State                                 : NOT_IN_USE
         Clean                                 : YES
         Sample_Mounting_Coordinates           : SAMPLE_MOUNTING_COORDINATES
         Puck_Screwing_Coordinates             : PUCK_SCREWING_COORDINATES
@@ -68,57 +68,57 @@ Lab_Space:
         Tools: 
         
             Polyvinyl_Alcohol: 
-              Status                          : NOT_IN_USE
+              State                           : NOT_IN_USE
               Home_Coordinates                : SAMPLE_TABLE
               Current_Coordinates             : SAMPLE_TABLE
               Cap_Coordinates                 : SAMPLE_TABLE
               Usable_Quantity                 : YES
             
             Ethanol: 
-              Status                          : NOT_IN_USE
+              State                           : NOT_IN_USE
               Home_Coordinates                : SAMPLE_TABLE
               Current_Coordinates             : SAMPLE_TABLE
               Cap_Coordinates                 : SAMPLE_TABLE
               Usable_Quantity                 : YES            
             
             Transparent_Tape: 
-              Status                          : NOT_IN_USE          
+              State                           : NOT_IN_USE          
               Home_Coordinates                : SAMPLE_TABLE
               Current_Coordinates             : SAMPLE_TABLE
               Usable_Quantity                 : YES
             
             Brown_Tape: 
-              Status                          : NOT_IN_USE
+              State                           : NOT_IN_USE
               Home_Coordinates                : SAMPLE_TABLE
               Current_Coordinates             : SAMPLE_TABLE
               Usable_Quantity                 : YES
             
             Spatula: 
-              Status                          : NOT_IN_USE
+              State                           : NOT_IN_USE
               Home_Coordinates                : SAMPLE_TABLE
               Current_Coordinates             : SAMPLE_TABLE
 
             
             Tweezers: 
-              Status                          : NOT_IN_USE
+              State                           : NOT_IN_USE
               Home_Coordinates                : SAMPLE_TABLE
               Hold_Coordinates                : SAMPLE_TABLE
               Current_Coordinates             : SAMPLE_TABLE
             
             Brush: 
-              Status                          : NOT_IN_USE
+              State                           : NOT_IN_USE
               Home_Coordinates                : SAMPLE_TABLE
               Current_Coordinates             : SAMPLE_TABLE
               Hold_Coordinates                : SAMPLE_TABLE
             
             Mortar: 
-              Status                          : NOT_IN_USE
+              State                           : NOT_IN_USE
               Home_Coordinates                : SAMPLE_TABLE
               Current_Coordinates             : SAMPLE_TABLE
               Clean                           : YES
             
             Pestle: 
-              Status                          : NOT_IN_USE
+              State                          : NOT_IN_USE
               Home_Coordinates                : SAMPLE_TABLE
               Current_Coordinates             : SAMPLE_TABLE
               Clean                           : YES
@@ -126,8 +126,8 @@ Lab_Space:
         Soldering: 
         
             Soldering_Iron: 
-               Status                         : NOT_IN_USE
-               State                          : OFF
+               State                          : NOT_IN_USE
+               Power                          : OFF
                Home_Coordinates               : SOLDERING_STATION
                Current_Coordinates            : SOLDERING_STATION
                Hold_Coordinates               : SOLDERING_STATION
@@ -151,12 +151,12 @@ Lab_Space:
             
                 State                         : CLOSED
                 Home_Coordinates              : SAMPLE_TABLE
-                Current_Coordinates         : SAMPLE_TABLE
+                Current_Coordinates           : SAMPLE_TABLE
                 Cap_Coordinates               : SAMPLE_TABLE
                 No_of_Samples                 : 3
 
                 Zener_1: 
-                  Status                      : NOT_IN_USE
+                  State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
                   Part_Number                 : ZN0000
@@ -166,7 +166,7 @@ Lab_Space:
                     Soldered                  : NO
                   
                 Zener_2: 
-                  Status                      : NOT_IN_USE
+                  State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
                   Part_Number                 : ZN0000
@@ -176,7 +176,7 @@ Lab_Space:
                     Soldered                  : NO
                     
                 Zener_3: 
-                  Status                      : NOT_IN_USE
+                  State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
                   Part_Number                 : ZN0000
@@ -194,7 +194,7 @@ Lab_Space:
                 No_of_Samples                 : 5
               
                 Res_1: 
-                  Status                      : NOT_IN_USE
+                  State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
                   Standard_Tolerance          :
@@ -205,7 +205,7 @@ Lab_Space:
                     Soldered                  : YES/NO
                   
                 Res_2: 
-                  Status                      : NOT_IN_USE
+                  State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
                   Standard_Tolerance          :
@@ -216,7 +216,7 @@ Lab_Space:
                     Soldered                  : YES/NO
                 
                 Res_3: 
-                  Status                      : NOT_IN_USE
+                  State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
                   Standard_Tolerance          :
@@ -227,7 +227,7 @@ Lab_Space:
                     Soldered                  : YES/NO
                     
                 Res_4: 
-                  Status                      : NOT_IN_USE
+                  State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
                   Standard_Tolerance          :
@@ -238,7 +238,7 @@ Lab_Space:
                     Soldered                  : YES/NO
             
                 Res_5: 
-                  Status                      : NOT_IN_USE
+                  State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
                   Standard_Tolerance          :
@@ -248,23 +248,51 @@ Lab_Space:
                   Terminal_2:
                     Soldered                  : YES/NO
 
-    PQMS: 
-          Status                              : NOT_IN_USE
+    PQMS:  
+          State                               : NOT_IN_USE
           Home_Coordinates                    : PQMS_COORDINATES
           Current_Coordinates                 : PQMS_COORDINATES
- 
+          
+          Insert_RT_Old: 
+                Home_Coordinates              :
+                Current_Coordinates           :
+
+                RT_Cable_Terminal:
+                    State                     : DISCONNECTED
+                HT_Cable_Terminal:
+                    State                     : DISCONNECTED
+                Sample_Mounted                : NO
+                Terminal_1:
+                    Soldered                  : NO
+                Terminal_2:
+                    Soldered                  : NO
+                Terminal_3:
+                    Soldered                  : NO
+                Terminal_4:
+                    Soldered                  : NO
+
+          Insert_AC_Susceptibility: 
+                Home_Coordinates              :
+                Current_Coordinates           :
+
+                RT_Cable_Terminal:
+                    State                     : DISCONNECTED
+                HT_Cable_Terminal:
+                    State                     : DISCONNECTED
+                Sample_Mounted                : NO
+          
           Insert_RT_Puck: 
                 Home_Coordinates              :
                 Current_Coordinates           :
 
                 RT_Cable_Terminal:
-                    Status                    : DISCONNECTED
+                    State                     : DISCONNECTED
                 HT_Cable_Terminal:
-                    Status                    : DISCONNECTED
+                    State                     : DISCONNECTED
  
                 Puck: 
 
-                    Status                    : NOT_IN_USE
+                    State                     : NOT_IN_USE
                     Home_Coordinates          :
                     Insert_Connection         : DISCONNECTED
                     Puck_Board_Connection     : CONNECTED
@@ -272,11 +300,11 @@ Lab_Space:
                     Terminal_1:
                         Soldered              : NO
                     Terminal_2:
-                        Soldered              : NO
+                        Soldered              : 
                     Terminal_3:
-                            Soldered          : NO
+                        Soldered              : NO
                     Terminal_4:
-                            Soldered          : NO
+                        Soldered              : NO
 
 
                 Insert2Puck_Cable: 
@@ -319,7 +347,7 @@ Lab_Space:
               Power_Cable                     : CONNECTED
 
               Heater:
-                Status                        : ON/OFF
+                State                         : OFF
                 HT_Cable                      : DISCONNECTED
 
               Sensor:
@@ -347,14 +375,14 @@ Lab_Space:
               Mode                            : CONST_H/CONST_I
 
           Cryostat_Steel:
-           Status                             : NOT_IN_USE
+           State                              : NOT_IN_USE
            Insert                             : NO
            Vaccum                             : NO
            Liquid_Nitrogen                    : NO
            Helium                             : NO
 
           Cryostat_Quartz:
-           Status                             : NOT_IN_USE
+           State                              : NOT_IN_USE
            Insert                             : NO
            Vaccum                             : NO
            Liquid_Nitrogen                    : NO
@@ -378,7 +406,7 @@ Lab_Space:
 
           Cryocan: 
             Liquid_Nitrogen_Present           : NO
-            Status                            : NOT_IN_USE
+            State                             : NOT_IN_USE
 
           Helium: 
 
@@ -398,7 +426,7 @@ Lab_Space:
 
           Clamp: 
 
-            State                             : OPEN
+            State                             : UNLOCKED
             Home_Coordinates:
 
           Puck Board: 
@@ -409,7 +437,7 @@ Lab_Space:
 
     Computer:
 
-        Status                                : NOT_IN_USE
+        State                                 : NOT_IN_USE
 
         Monitor:
           State                               : OFF
