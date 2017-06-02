@@ -6,7 +6,7 @@ import yaml as yaml
 import sys
 import os
 import zener_experiment
-import service_log
+#import service_log
 
 
 #####################################################################
@@ -18,75 +18,68 @@ time_array = []
 
 #####################################################################
 
+#response = raw_input ("Run again? : y/n")
+#     while (response != 'n') or (response != 'y'):
+#         response = raw_input ("Run again? : y/n")def get_sample_info():
+
+#####################################################################             
 
 def get_sample_info():
-    sample_box = raw_input("Which Sample box : (Box_Zener, Box_Resistor)")
+    
+    sample_box = raw_input("\nSelect Sample box : (Box_Zener, Box_Resistor)\n")
     while((sample_box != "Box_Zener") and (sample_box != "Box_Resistor")):
-        sample_box = raw_input("Which Sample box : (Box_Zener, Box_Resistor)")
+        sample_box = raw_input("\nSelect Sample box : (Box_Zener, Box_Resistor)\n")
 
     if(sample_box=="Box_Zener"):
-        sample = raw_input("Which sample you want to load : (Zener_1,Zener_2,Zener_3)\n")
+        sample = raw_input("\nSelect sample : (Zener_1, Zener_2, Zener_3)\n")
         while((sample != "Zener_1") and (sample != "Zener_2") and (sample != "Zener_3")):
-            sample = raw_input("Which sample you want to load : (Zener_1,Zener_2,Zener_3)\n")
+            sample = raw_input("\nSelect sample : (Zener_1, Zener_2, Zener_3)\n")
     elif(sample_box=="Box_Resistor"):
-        sample = raw_input("Which sample you want to load : (Res_1,Res_2,Res_3,Res_4,Res_5)\n")
+        sample = raw_input("\nSelect sample : (Res_1,Res_2,Res_3,Res_4,Res_5)\n")
         while((sample != "Res_1") and (sample != "Res_2") and (sample != "Res_3") and (sample != "Res_4") and (sample != "Res_5")):
-            sample = raw_input("Which sample you want to load : (Res_1,Res_2,Res_3,Res_4,Res_5)\n")
+            sample = raw_input("\nSelect sample : (Res_1,Res_2,Res_3,Res_4,Res_5)\n")
     
-    sample_description = raw_input("Give a brief sample desciption:")        
-    return sample, sample_box, sample_description
-
-
-def get_experimental_parameters():
-    V_range                  = raw_input("Enter Voltage Sweep Range, comma separated for multiple runs : \n")
-    V_step                   = raw_input("Enter Voltage Step Size, comma separated for multiple runs : \n")
-    temp_set_point           = raw_input("Enter Heater Setpoint Temperature in Kelvin, comma separated for multiple runs : \n")
-
-    V_range_array = V_range.split(",")
-    V_step_array = V_step.split(",")
-    temp_set_point_array = temp_set_point.split(",")
-
-    while ((len(V_range_array) == len(V_step_array) == len(temp_set_point_array)) == False):
-        print("UNEQUAL NO OF VALUES FOR EACH. ONE VALUE REQUIRED FOR EACH RUN!!!")
-        V_range              = raw_input("Enter Voltage Sweep Range (V), comma separated for multiple runs : \n")
-        V_step               = raw_input("Enter Voltage Step Size (V), comma separated for multiple runs : \n")
-        temp_set_point       = raw_input("Enter Heater Setpoint Temperature in Kelvin (K), comma separated for multiple runs : \n")
-
-        V_range_array        = V_range.split(",")
-        V_step_array         = V_step.split(",")
-        temp_set_point_array = temp_set_point.split(",")
-
-    address                  = raw_input("Give the path where you want to store experimental data :")
-    return address, temp_set_point_array, V_range_array, V_step_array
+    sample_description  = raw_input("\nGive a brief sample desciption: \n")
+    address             = raw_input("\nGive the path where you want to store experimental data : \n")
+    return address, sample, sample_box, sample_description
 
 
 def get_experiment():
-    print ""
+    
+    print "\n\n Available Experiments: "
+    print "______________________________\n"
     for item in experiments:
         print item
-    experiment = raw_input("\nPlease enter the experiment you want to do:")
+    print "______________________________\n"
+    experiment = raw_input("Please select the experiment you want to do : \n")
+    
     while (experiment not in experiments):
         print "Experiment not in list."
-        experiment = raw_input("\nPlease enter the experiment you want to do:")
+        print "\n\n Available Experiments: "
+        print "______________________________\n"
+        for item in experiments:
+            print item
+        print "______________________________\n"
+        experiment = raw_input("Please select the experiment you want to do : \n")
+    
     return experiment
 
 def get_user_data():
-    robot = raw_input("Enter robot ID : ")
-    sensor = raw_input("Enter sensor ID: ")
-    observer = raw_input("Enter observer ID: ")
+    robot = raw_input("\nEnter robot ID : \n")
+    sensor = raw_input("\nEnter sensor ID: \n")
+    observer = raw_input("\nEnter observer ID: \n")
     return robot, sensor, observer
 
 #####################################################################
 
 #user inputs
 
-Sample, Sample_Box, sample_description = get_sample_info()
+address, Sample, Sample_Box, sample_description = get_sample_info()
     
 experiment  = eval(get_experiment())
 read_file   =  experiment.log
 
-address, temperature_array, V_range_array, V_step_array = get_experimental_parameters()
-experiment.run(Sample, Sample_Box, V_range_array, V_step_array, temperature_array, sample_description, address)
+experiment.run(Sample, Sample_Box, sample_description, address)
 
 robot, sensor, observer = get_user_data()
 
@@ -143,18 +136,41 @@ with open(read_file, "r") as fdata:
         else:
             if(line[10:14] != 'Read'):
                 print(line + '\n')
-                user_input = raw_input("Comments, if any : (Press Enter to continue, or type end to abort) : ")
-                if(user_input == "end"):
-                    temp = zener_experiment.time_in_ist()
+                user_input = raw_input("Comments, if any : (Press Enter to continue, type 'pause' to pause or 'end' to abort) : ")
+                temp = zener_experiment.time_in_ist()
+                
+                if (user_input == "end"):
+                    
                     print temp
+                    
                     string = "***********" + "\n" + "EXECUTION ABORTED" + "\n" + "***********"
                     with open (log.name, "a") as log:
                         log.write(string + '\n')
                         log.write("Execution has come to an end due to error in line: " + line + '\n')
                     log.close()
                     sys.exit(string)
+                
+                elif (user_input == "pause"):
+                    
+                    print temp
+                    
+                    string = "***********" + "\n" + "EXPERIMENT PAUSED" + "\n" + "***********"
+                    with open (log.name, "a") as log:
+                        log.write(string + '\n')
+                        log.write("Execution has been paused at: " + temp + '\n')
+                    log.close()
+                    
+                    response = raw_input("Type 'resume' to resume the experiment :")
+                    while (response != 'resume'):
+                        response = raw_input("Type 'resume' to resume the experiment :")
+                    
+                    string = "***********" + "\n" + "EXPERIMENT RESUMED" + "\n" + "***********"
+                    with open (log.name, "a") as log:
+                        log.write(string + '\n')
+                        log.write("Execution has been resumed at: " + temp + '\n')
+                    log.close()
+                    
                 else:
-                    temp = zener_experiment.time_in_ist()
                     print temp + '\n'
 
                 time_array.append(zener_experiment.time_in_ist())
@@ -178,22 +194,48 @@ with open(read_file, "r") as fdata:
                     z = z[param]
                 param = param_array[len(param_array) - 1]
                 print yaml.dump(z[param], allow_unicode=True, default_flow_style=False)
-                user_input = raw_input("Comments, if any : (Press Enter to continue, or type end to abort) : ")
+                user_input = raw_input("Comments, if any : (Press Enter to continue, type 'pause' to pause, or 'end' to abort) : ")
+                temp = zener_experiment.time_in_ist()
+                
                 if(user_input == "end"):
-                    temp = zener_experiment.time_in_ist()
                     print temp
                     string = "***********" + "\n" + "EXECUTION ABORTED" + "\n" + "***********"
                     with open (log.name, "a") as log:
                         log.write(string + '\n')
                         log.write("Execution has come to an end due to error in line: " + line + '\n')
                     log.close()
+                    t = zener_experiment.time_in_ist()
+                    os.system("mkdir run_data_" + t)
+                    os.system("mv " + zener_experiment.log + " run_data_"+t+"/")
+                    os.system("mv " + read_file[:-13] + "execution_log.txt" + " run_data_"+t+"/")
+                    os.system("mv " + read_file[:-13] + "diff.txt" + " run_data_"+t+"/")
+                    os.system("mv " + new_dbase + ".yaml run_data_"+t+"/")
                     sys.exit(string)
+                
+                elif (user_input == "pause"):
+                    
+                    print temp
+                    
+                    string = "***********" + "\n" + "EXPERIMENT PAUSED" + "\n" + "***********"
+                    with open (log.name, "a") as log:
+                        log.write(string + '\n')
+                        log.write("Execution has been paused at: " + temp + '\n')
+                    log.close()
+                    
+                    response = raw_input("Type 'resume' to resume the experiment :")
+                    while (response != 'resume'):
+                        response = raw_input("Type 'resume' to resume the experiment :")
+                    
+                    string = "***********" + "\n" + "EXPERIMENT RESUMED" + "\n" + "***********"
+                    with open (log.name, "a") as log:
+                        log.write(string + '\n')
+                        log.write("Execution has been resumed at: " + temp + '\n')
+                    log.close()
+                    
                 else:
-                    temp = zener_experiment.time_in_ist()
                     print temp + '\n'
-
+                
                 time_array.append(zener_experiment.time_in_ist())
-
                 with open (log.name, "a") as log:
                     log.write(line + 'end:\t\t\t\t' + temp + '\n\n')
                 log.close()
