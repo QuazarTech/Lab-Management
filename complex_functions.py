@@ -186,6 +186,10 @@ def mount_sample (Sample, Sample_Box, test_object):
 
         write       ("execute : Remove Sticky Tape from "+ Sample)
         
+        locate  ("Insert_RT_Old")
+        goto    ("Insert_RT_Old")
+        hold    ("Insert_RT_Old")
+        
         #SOLDERING PROCESS
         set_up_soldering_iron()
         
@@ -195,10 +199,12 @@ def mount_sample (Sample, Sample_Box, test_object):
         move(Sample+'.Terminal_2', 'Insert_RT_Old,Terminal_4')
         solder(Sample+',Terminal_2', 'Insert_RT_Old,Terminal_4', Sample, Sample_Box)
 
-        write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Puck,Sample_Mounted,YES")
+        write("Update_Database Lab_Space,PQMS,Insert_RT_Old,Sample_Mounted,YES")
         write("execute : Switch off the soldering iron")
         write("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,Power,OFF")
         #SOLDERING PROCESS
+        
+        write("execute : Skick Zener Diode body with tape")
         
     
     goto('Tweezers.Home_Coordinates')
@@ -327,6 +333,8 @@ def unmount_sample (Sample, Sample_Box, test_object):
         write   ("execute : Switch off Soldering Iron")
         write   ("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,Power,OFF")
         #Desoldering Process
+        
+        write   ("execute : Remove tape from Zener Diode")
         
         move    ("Insert_RT_Old", "Insert_RT_Old.Home_Coordinates")
         
