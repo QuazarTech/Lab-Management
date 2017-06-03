@@ -189,13 +189,17 @@ def time_stamp_and_comments(log, line, temp, user_input):
             with open (log.name, "a") as log:
                 log.write("Comment : " + user_input + '\n\n')
             log.close()
-with open("lab_database.yaml", "r") as f:
-    data = yaml.load(f)
-    fbase = open(new_dbase + ".yaml", "w")
-    yaml.dump(data, fbase, default_flow_style=False)
-    fbase.close()
-    f.close()
+
+def initilize_database(database_name):
+	with open(database_name+".yaml", "r") as f:
+    		data = yaml.load(f)
+    		fbase = open(new_dbase + ".yaml", "w")
+    		yaml.dump(data, fbase, default_flow_style=False)
+    		fbase.close()
+    		f.close()
 #read, execute and update log for each step of the experiment procedure
+database_name = raw_input("Enter database to start from:")
+initialize_database(database_name)
 
 with open(read_file, "r") as fdata:
     for line in fdata:
