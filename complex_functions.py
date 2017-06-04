@@ -481,6 +481,7 @@ def switch_off_computer():
     
     write ("execute : Exit Qrius")
     write("execute : Shutdown Computer")
+    write("execute : Switch off the USB_Power_Adaptor")
     write("execute : Wait for computer to Shutdown")
     locate('Computer.Switch')
     write ("execute : Switch off Computer.Switch")
@@ -488,13 +489,6 @@ def switch_off_computer():
     
 def configure_XTCON(set_point):
     click('Temperature Controller Window')
-    move_cursor('Toolbar')
-    click('Settings')
-    click('Isothermal Settings')
-    write("execute : Set 'Heater Set point' Temperature to "+set_point + " K")
-    move_cursor('Toolbar')
-    click('File')
-    click('Apply')
     move_cursor('Control mode')
     click('drop down menu')
     click('Isothermal')
@@ -506,11 +500,20 @@ def configure_XTCON(set_point):
     click('R-T insert with heater and sample puck')
     click('File')
     click('Apply')
-    write ("Update_Database Lab_Space,PQMS,XTCON,Mode,ISOTHERMAL")
     write ("Update_Database Lab_Space,PQMS,XTCON,Running,True")
     click('Start Button')
     write("execute : Wait till sample temperature stabilizes")
 
+def start_TCON_run(temperature_set_point):
+    move_cursor('Toolbar')
+    click('Settings')
+    click('Isothermal Settings')
+    write ("Update_Database Lab_Space,PQMS,XTCON,Mode,ISOTHERMAL")
+    write("execute : Set 'Heater Set point' Temperature to "+set_point + " K")
+    move_cursor('Toolbar')
+    click('File')
+    click('Apply')
+	
 def start_IV_run (V_range , V_step, I_max, I_step, power):
     click('I-V Source and measurement unit Window')
     move_cursor('Run Mode')
