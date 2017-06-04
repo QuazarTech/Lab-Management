@@ -1,6 +1,8 @@
 import yaml
 
-with open("run_data_12:25:52/run_data_new_database.yaml", "r") as f:
+folder_name = raw_input("Enter folder name:")
+
+with open(folder_name+"/run_data_new_database.yaml", "r") as f:
     data = yaml.load(f)
     with open("lab_database.yaml", "r") as fo:
         data_original = yaml.load(fo)
