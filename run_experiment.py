@@ -6,12 +6,13 @@ import yaml as yaml
 import sys
 import os
 import zener_experiment
+import practice_experiments
 #import service_log
 
 
 #####################################################################
 
-experiments = ["service_log", "zener_experiment"]
+experiments = ["service_log", "zener_experiment", "practice_experiments"]
 
 #create and init and array for timestamps
 time_array = []
@@ -180,6 +181,7 @@ def put_in_folder(log, diff_file, new_dbase):
 	os.system("mv " + log + " run_data_"+t+"/")
 	os.system("mv " + diff_file + " run_data_"+t+"/")
 	os.system("mv " + new_dbase + ".yaml run_data_"+t+"/")
+	create_duration_log(t)
 
 def time_stamp_and_comments(log, line, temp, user_input):
 	with open (log.name, "a") as log:
@@ -190,13 +192,30 @@ def time_stamp_and_comments(log, line, temp, user_input):
                 log.write("Comment : " + user_input + '\n\n')
             log.close()
 
-def initilize_database(database_name):
+def initialize_database(database_name):
 	with open(database_name+".yaml", "r") as f:
     		data = yaml.load(f)
     		fbase = open(new_dbase + ".yaml", "w")
     		yaml.dump(data, fbase, default_flow_style=False)
     		fbase.close()
     		f.close()
+
+def create_duration_log(t):
+	f = open("run_data_"+t+"/run_data_procedure.txt", "r")
+	fnew = open("run_data_"+t+"/duration_log.txt", "w")
+	fnew.write("PQMS Data Run Time\n\n")
+	i = 0
+	for line in f:
+		if (line == 'execute : Wait till sample temperature stabilizes\n'):
+			a = time_array[i] + "-" + time_array[i]
+			fnew.write("Temperature Stabilization time:" + str(a) + "\n\n")
+		elif (line == 'execute : Wait until graph comes to an end\n'):
+			a = time_array[i] + "-" + time_array[i]
+			fnew.write("I_V run time:" + str(a) + "\n\n")
+	 	i = i + 1 
+ 	fnew.close()
+ 	f.close()
+			
 #read, execute and update log for each step of the experiment procedure
 database_name = raw_input("Enter database to start from:")
 initialize_database(database_name)
@@ -235,6 +254,5 @@ with open(read_file, "r") as fdata:
 
 fdata.close()
 put_in_folder(log.name, diff_file, new_dbase)
-
 
 #close all open files
