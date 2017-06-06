@@ -16,6 +16,7 @@ def run (Sample, Sample_Box, sample_description, address):
     set_save_folder(Sample_Box, Sample, sample_description, address)
     set_up_PQMS_modules()
     temperature_set_point, V_range, V_step, I_range, I_step, max_power = get_experimental_parameters()
+
     init_XTCON_isothermal (test_object)
     
   #  while (True):
@@ -25,7 +26,9 @@ def run (Sample, Sample_Box, sample_description, address):
         
   #      if (response == 'n'):
   #          break
+
     stop_XTCON_run()
+    
     switch_off_PQMS_modules()
     
     print("\nProcedure has been created. Filename : " + procedure)
@@ -59,7 +62,7 @@ def PQMS_IV_run (temperature_set_point, V_range, V_step, I_range, I_step, max_po
 
     set_XTCON_temp (temperature_set_point)
     start_IV_run (V_range, V_step, I_range, I_step, max_power)
-        
+
     write("\n##############################################################")
     write("                   Run ends")
     write("##############################################################\n")

@@ -404,9 +404,17 @@ Lab_Space:
               State                           : OFF
               Power_Cable                     : CONNECTED
 
-          Cryocan: 
+          Cryocan_Insert_RT_Puck: 
             Liquid_Nitrogen_Present           : NO
             State                             : NOT_IN_USE
+          
+          Cryocan_Insert_RT_Old: 
+            Liquid_Nitrogen_Present           : NO
+            State                             : NOT_IN_USE
+          
+          Ladle:
+            State                             : NOT_IN_USE
+            Home_Coordinates                  :
 
           Helium: 
 

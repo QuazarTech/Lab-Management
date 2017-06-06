@@ -164,7 +164,6 @@ def put_in_folder (experiment, log, diff_file, new_dbase):
 	os.system("mv " + new_dbase + ".yaml " + folder_name + "/")
 	create_duration_log (folder_name)
 
-
 def time_stamp_and_comments(log, line, temp, user_input):
 	with open (log.name, "a") as log:
             log.write(line + 'end:\t\t\t\t' + temp + '\n\n')
@@ -174,7 +173,6 @@ def time_stamp_and_comments(log, line, temp, user_input):
                 log.write("Comment : " + user_input + '\n\n')
             log.close()
 
-
 def initialize_database(database_name):
 	with open(database_name+".yaml", "r") as f:
     		data = yaml.load(f)
@@ -182,7 +180,6 @@ def initialize_database(database_name):
     		yaml.dump(data, fbase, default_flow_style=False)
     		fbase.close()
     		f.close()
-
 
 def create_duration_log (folder_name):
 	f = open(folder_name + "/run_data_procedure.txt", "r")
@@ -231,6 +228,8 @@ dbase.close()
 
 database = "lab_database"
 initialize_database (database)
+			
+#read, execute and update log for each step of the experiment procedure
 
 with open(read_file, "r") as fdata:
     for line in fdata:
@@ -265,6 +264,7 @@ with open(read_file, "r") as fdata:
             	print_states(experiment, log, line, new_dbase)
 
 fdata.close()
+
 put_in_folder(experiment, log.name, diff_file, new_dbase)
 
 #close all open files

@@ -482,7 +482,6 @@ def switch_off_computer():
     write("execute : Wait for computer to Shutdown")
     write ("execute : Switch off Computer.Switch")
 
-    
 def init_XTCON_isothermal(test_object):
     
     click       ('Temperature Controller Window')
@@ -515,7 +514,7 @@ def stop_XTCON_run():
     click   ('Temperature Controller Window')
     write   ("execute : Stop Temperature Controller Run")
     write   ("Update_Database Lab_Space,PQMS,XTCON,Running,False")
-	
+    	
 def start_IV_run (V_range , V_step, I_max, I_step, power):
     click('I-V Source and measurement unit Window')
     move_cursor('Run Mode')
