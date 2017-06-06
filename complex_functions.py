@@ -111,7 +111,7 @@ def connect_cable (cable, test_object):
     
     read_state  ('Lab_Space,PQMS,Cables,' + cable)
     move        (cable + ".Cryostat_End", test_object + "." + cable + "_Terminal")
-    write       ("Align " + cable + "'s connector with "  + test_object + "'s connector")
+    write       ("execute : Align " + cable + "'s connector with "  + test_object + "'s connector")
     write       ("execute : Insert and fasten " + cable)
     leave       (cable)
     write       ("Update_Database Lab_Space,PQMS,Cables," + cable + ",State,CONNECTED")
@@ -438,13 +438,91 @@ def switch_on_PQMS_modules():
     write  ("execute : Switch on XTCON.Power_Cable")
     write  ("Update_Database Lab_Space,PQMS,XTCON,State,ON")
     
-    goto   ("PQMS.Pump.Power_Cable")
-    write  ("execute : Switch on Pump.Power_Cable")
-    write  ("Update_Database Lab_Space,PQMS,Pump,State,ON")
+    goto    ("PQMS.Pump.Power_Cable")
+    write   ("execute : Switch on Pump.Power_Cable")
+    write   ("Update_Database Lab_Space,PQMS,Pump,State,ON")
     
-    #goto ("PQMS.Pirani_Gauge.Power_Cable")
-    #write ("execute : Switch on Pirani_Gauge.Power_Cable")
-    #write ("Update_Database Lab_Space,PQMS,Pump,State,ON")
+    goto    ("PQMS.Pirani_Gauge.Power_Cable")
+    write   ("execute : Switch on Pirani_Gauge.Power_Cable")
+    write   ("Update_Database Lab_Space,PQMS,Pump,State,ON")
+    
+def set_up_pump ():
+    
+    write   ("execute : Ensure that any Insert is in the cryostat, and clamp is tightly fixed.")
+    write   ("execute : Ensure that Pump.Release_Valve, Pump.Main_Valve, Sample_Chamber.Flush_Valve, Sample_Chamber.Evacuation_Valve, \
+                        Heater_Chamber.Flush_Valve and Heater_Chamber.Evacuation_Valve are closed and all other valves connected to the pump are closed.")
+    goto    ("Pump.Main_Valve")
+    write   ("execute : Rotate Pump.Main_Valve in anticlockwise direction to turn the valve on.")
+    write   ("execute : Update_Database Lab_Space,PQMS,Pump,Main_Valve,State,ON")
+
+def create_vaccum (chamber):
+    
+    write   ("execute : Turn on " + chamber + ".Vaccum_Valve by rotating in anticlockwise direction.")
+    write   ("execute : Observe the Pirani Guage needle, and let it stabilize.")
+    write   ("Update_Database Lab_Space,PQMS,Cryostat_Steel,Vaccum,YES")
+    
+def release_pressure (chamber):
+    
+        
+    write   ("execute : Ensure that Pump.Release_Valve, Pump.Main_Valve, Sample_Chamber.Flush_Valve, Sample_Chamber.Evacuation_Valve, \
+                    Heater_Chamber.Flush_Valve, Heater_Chamber.Evacuation_Valve and all other valves connected to Helium_Cylinder are closed")
+    goto    ("Pump.Main_Valve")
+    write   ("execute : Turn off Pump.Main_Valve by rotating it in clockwise direction.")
+    write   ("execute : Turn on " + chamber + ".Vaccum_Valve by rotating in clockwise direction")
+    write   ("execute : Open Pump.Release_Valve by turning in anticlockwise direction.")
+    write   ("execute : Close the Pump.Release_Valve by turning in clockwise direction.")
+    write   ("execute : Turn off " + chamber + ".Vaccum_Valve by rotating in anticlockwise direction")
+    write   ("execute : Turn on Pump.Main_Valve by rotating it in anticlockwise direction.")
+    write   ("Update_Database Lab_Space,PQMS,Cryostat_Steel,Vaccum,NO")
+    write   ("Update_Database Lab_Space,PQMS,Cryostat_Steel,Helium,NO")
+    
+    
+def flush_helium (chamber):
+    
+    create_vaccum (chamber)
+    write   ("execute : Ensure that any Insert is in the cryostat, and clamp is tightly fixed.")
+    write   ("execute : Ensure that Pump.Release_Valve, Pump.Main_Valve, Sample_Chamber.Flush_Valve, Sample_Chamber.Evacuation_Valve, \
+                        Heater_Chamber.Flush_Valve, Heater_Chamber.Evacuation_Valve and all other valves connected to Helium_Cylinder are closed")
+    
+    goto    ("Helium_Cylinder.Main_Valve")
+    write   ("execute : Ensure that Helium_Cylinder.Pressure_Valve is closed (completely unscrewed loose in anticlockwise direction).")
+    write   ("execute : Open Helium_Cylinder.Main_Valve by rotating in anticlockwise direction.")
+    write   ("execute : Turn the Helium_Cylinder.Pressure_Valve anticlockwise slightly until pressure guage reads about 20 psi.")
+    
+    write   ("execute : Open " + chamber + ".Flush_Valve by rotating in anticlockwise direction.")
+    write   ("execute : After 2 seconds, turn off " + chamber + ".Flush_Valve by rotating in clockwise direction")
+    
+    write   ("execute : Open " + chamber + ".Evacuation_Valve by rotating in anticlockwise direction.")
+    write   ("execute : Open Pump.Release_Valve by turning in anticlockwise direction.")
+    write   ("execute : Immediately, close the Pump.Release_Valve by turning in clockwise direction.")
+    write   ("Update_Database Lab_Space,PQMS,Cryostat_Steel,Helium,YES")
+    
+    
+    
+    
+def pour_liquid_nitrogen ():
+    
+    goto    ("Cryocan_BA11.Home_Coordinates")
+    hold    ("Cryocan_BA11.Cap")
+    write   ("execute : Remove the lid and cap from the cryocan")
+    goto    ("Puck_Screwing_Coordinates")
+    leave   ("Cryocan_BA11.Cap")
+    
+    write   ("execute : Check if there is liquid nitrogen in the BA11 cryocan: If yes, continue. If no, sample can't be cooled; abort")
+    
+    hold    ("Cryocan_BA11")
+    goto    ("PQMS.Funnel")
+    write   ("execute : Tilt the cryocan onto the funnel to pour liquid nitrogen into the funnel")
+    write   ("execute : Fill the required amount of Liquid nitrogen")
+    
+    write   ("Update_Database Lab_Space,PQMS,Cryostat_Steel,Cryocan,Liquid_Nitrogen,YES")
+    
+    goto    ("Cryocan_BA11.Home_Coordinates")
+    leave   ("Cryocan_BA11")
+    goto    ("Puck_Screwing_Coordinates")
+    hold    ("Cryocan_BA11.Cap")
+    goto    ("Cryocan_BA11.Home_Coordinates")
+    write   ("execute : Replace _Ba11.Cap")
 
 def switch_off_PQMS_modules():
     read_state ("Lab_Space,PQMS")
@@ -461,10 +539,14 @@ def switch_off_PQMS_modules():
     goto   ("PQMS.Pump.Power_Cable")
     write  ("execute : Switch off Pump.Power_Cable")
     write  ("Update_Database Lab_Space,PQMS,Pump,State,OFF")
+    write  ("Update_Database Lab_Space,PQMS,Pirani_Gauge,State,OFF")
+    
     
     goto   ('Stabilizer.Power_Switch')
     write  ("execute : Switch OFF Stabilizer.Power_Switch")
     write  ("Update_Database Lab_Space,PQMS,Stabilizer,Power_Switch,State,OFF")
+    
+    write   ("execute : Close the Helium_Cylinder.Main_Valve")
     
 def switch_on_computer():
     

@@ -378,15 +378,17 @@ Lab_Space:
            State                              : NOT_IN_USE
            Insert                             : NO
            Vaccum                             : NO
-           Liquid_Nitrogen                    : NO
            Helium                             : NO
+           Cryocan:
+              Liquid_Nitrogen                 : NO
 
           Cryostat_Quartz:
            State                              : NOT_IN_USE
            Insert                             : NO
            Vaccum                             : NO
-           Liquid_Nitrogen                    : NO
            Helium                             : NO
+           Cryocan:
+              Liquid_Nitrogen                 : NO
 
           Pump:
 
@@ -404,13 +406,7 @@ Lab_Space:
               State                           : OFF
               Power_Cable                     : CONNECTED
 
-          Cryocan_Insert_RT_Puck: 
-            Liquid_Nitrogen_Present           : NO
-            State                             : NOT_IN_USE
-          
-          Cryocan_Insert_RT_Old: 
-            Liquid_Nitrogen_Present           : NO
-            State                             : NOT_IN_USE
+          Cryocan_BA11: 
           
           Ladle:
             State                             : NOT_IN_USE

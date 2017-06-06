@@ -1,6 +1,7 @@
 from complex_functions import *
 
 TEST_OBJECTS = ["Insert_RT_Puck", "Insert_RT_Old", "Puck_Board"]
+CHAMBERS = ["Sample_Chamber", "Heater_Chamber"]
 name = "zener_experiment"
 
 def run (Sample, Sample_Box, sample_description, address):
@@ -12,11 +13,17 @@ def run (Sample, Sample_Box, sample_description, address):
     print("\nGenerating procedural steps for experiment.  .  .  .\n")
     
     switch_on_PQMS_modules()
+    set_up_pump()
+    
+    flush_helium ("Sample_Chamber")
+    flush_helium ("Heater_Chamber")
+    
     switch_on_computer()
     set_save_folder(Sample_Box, Sample, sample_description, address)
     set_up_PQMS_modules()
     temperature_set_point, V_range, V_step, I_range, I_step, max_power = get_experimental_parameters()
-
+    
+    pour_liquid_nitrogen()
     init_XTCON_isothermal (test_object)
     
   #  while (True):
@@ -28,17 +35,16 @@ def run (Sample, Sample_Box, sample_description, address):
   #          break
 
     stop_XTCON_run()
-    
+    release_PQMS_vaccum ()
     switch_off_PQMS_modules()
-    
-    print("\nProcedure has been created. Filename : " + procedure)
-    print ("\nReady for execution.\n")
         
     unload_sample (Sample, Sample_Box, test_object)
-    
     remove_sample (Sample, Sample_Box, test_object)
     
     switch_off_computer()
+    
+    print("\nProcedure has been created. Filename : " + procedure)
+    print ("\nReady for execution.\n")
 
 ###############################################################################
 
@@ -125,3 +131,23 @@ def remove_sample (Sample, Sample_Box, test_object):
         
     elif (unmount == 'y'):
         unmount_sample (Sample, Sample_Box, test_object)
+
+def release_PQMS_vaccum ():
+    
+    print ("\nIt is NOT reccomended to release vaccum if there is still liquid nitrogen left in the cryocan.")
+    response = raw_input ("Do you want to release vaccum? : y/n\n")
+    
+    while ((response != 'y') and (response != 'n')):
+        print ("\nIt is NOT reccomended to release vaccum if there is still liquid nitrogen left in the cryocan.")
+        response = raw_input ("Do you want to release vaccum? : y/n\n")
+        
+        if (response == 'y'):
+            for chamber in CHAMBERS :
+                sure = raw_input ("\nAre you SURE you want to release vaccum in " + chamber + " ? : y/n\n")
+                while ((sure != 'y') and (sure != 'n')):
+                    sure = raw_input ("\nAre you SURE you want to release vaccum in " + chamber + " ? : y/n\n")
+                    if (sure == 'y'):
+                        release_vaccum (chamber)
+                        
+        elif (response == 'n'):
+            break

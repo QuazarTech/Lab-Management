@@ -188,12 +188,12 @@ def create_duration_log (folder_name):
 	i = 0
 	for line in f:
 		if (line == 'execute : Wait till sample temperature stabilizes\n'):
-			a = time_array[i] + "-" + time_array[i]
+			a = str(time_array[i]) + "-" + str(time_array[i+1])
 			fnew.write("Temperature Stabilization time:" + str(a) + "\n\n")
 		elif (line == 'execute : Wait until graph comes to an end\n'):
-			a = time_array[i] + "-" + time_array[i]
+			a = str(time_array[i]) + "-" + str(time_array[i+1])
 			fnew.write("I_V run time:" + str(a) + "\n\n")
-	 	i = i + 1 
+	 	i += 1 
  	fnew.close()
  	f.close()
 
