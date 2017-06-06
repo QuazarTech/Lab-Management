@@ -480,10 +480,13 @@ def release_pressure (chamber):
 def flush_helium (chamber):
     
     create_vaccum (chamber)
-    write   ("execute : Turn off "+chamber+" Vacuum_Valve by rotating it in clockwise direction")
     write   ("execute : Ensure that any Insert is in the cryostat, and clamp is tightly fixed.")
     write   ("execute : Ensure that Pump.Release_Valve, Pump.Main_Valve, Sample_Chamber.Flush_Valve, Sample_Chamber.Evacuation_Valve, \
                         Heater_Chamber.Flush_Valve, Heater_Chamber.Evacuation_Valve and all other valves connected to Helium_Cylinder are closed")
+    
+    write   ("execute : Open " + chamber + ".Flush_Valve by rotating in anticlockwise direction.")
+    write   ("execute : Open " + chamber + ".Evacuation_Valve by rotating in anticlockwise direction.")
+    write   ("execute : Turn off Pump.Main_Valve by rotating it in clockwise direction.")
     
     goto    ("Helium_Cylinder.Main_Valve")
     write   ("execute : Ensure that Helium_Cylinder.Pressure_Valve is closed (completely unscrewed loose in anticlockwise direction).")
@@ -496,6 +499,10 @@ def flush_helium (chamber):
     write   ("execute : Open " + chamber + ".Evacuation_Valve by rotating in anticlockwise direction.")
     write   ("execute : Open Pump.Release_Valve by turning in anticlockwise direction.")
     write   ("execute : Immediately, close the Pump.Release_Valve by turning in clockwise direction.")
+    
+    write   ("execute : Close " + chamber + ".Flush_Valve by rotating in clockwise direction")
+    write   ("execute : Turn on Pump.Main_Valve by rotating it in anticlockwise direction.")
+    
     write   ("Update_Database Lab_Space,PQMS,Cryostat_Steel,Helium,YES")
     
     

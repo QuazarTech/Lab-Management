@@ -396,11 +396,10 @@ Lab_Space:
            Power_Cable                        : CONNECTED
            Bellow                             : CONNECTED
 
-           Valves:
-              Main_Valve:
-                State                         : OFF
-              Release_Valve:
-                State                         : OFF
+           Main_Valve:
+             State                             : OFF
+           Release_Valve:
+             State                             : OFF
 
           Pirani_Gauge: 
               State                           : OFF
