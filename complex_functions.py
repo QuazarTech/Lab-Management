@@ -453,7 +453,7 @@ def set_up_pump ():
                         Heater_Chamber.Flush_Valve and Heater_Chamber.Evacuation_Valve are closed and all other valves connected to the pump are closed.")
     goto    ("Pump.Main_Valve")
     write   ("execute : Rotate Pump.Main_Valve in anticlockwise direction to turn the valve on.")
-    write   ("execute : Update_Database Lab_Space,PQMS,Pump,Main_Valve,State,ON")
+    write   ("Update_Database Lab_Space,PQMS,Pump,Main_Valve,State,ON")
 
 def create_vaccum (chamber):
     
@@ -480,6 +480,7 @@ def release_pressure (chamber):
 def flush_helium (chamber):
     
     create_vaccum (chamber)
+    write   ("execute : Turn off "+chamber+" Vacuum_Valve by rotating it in clockwise direction")
     write   ("execute : Ensure that any Insert is in the cryostat, and clamp is tightly fixed.")
     write   ("execute : Ensure that Pump.Release_Valve, Pump.Main_Valve, Sample_Chamber.Flush_Valve, Sample_Chamber.Evacuation_Valve, \
                         Heater_Chamber.Flush_Valve, Heater_Chamber.Evacuation_Valve and all other valves connected to Helium_Cylinder are closed")
