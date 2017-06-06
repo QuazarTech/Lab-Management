@@ -1,6 +1,7 @@
 from complex_functions import *
 
 TEST_OBJECTS = ["Insert_RT_Puck", "Insert_RT_Old", "Puck_Board"]
+name = "zener_experiment"
 
 def run (Sample, Sample_Box, sample_description, address):
     
@@ -14,19 +15,20 @@ def run (Sample, Sample_Box, sample_description, address):
     switch_on_computer()
     set_save_folder(Sample_Box, Sample, sample_description, address)
     set_up_PQMS_modules()
+    temperature_set_point, V_range, V_step, I_range, I_step, max_power = get_experimental_parameters()
+    init_XTCON_isothermal (test_object)
     
-    while (True):
+  #  while (True):
         
-        temperature_set_point, V_range, V_step, I_range, I_step, max_power = get_experimental_parameters()
-        PQMS_IV_run (temperature_set_point, V_range, V_step, I_range, I_step, max_power)
-        response = raw_input("Do you want to do another run? : y/n \n")
+    PQMS_IV_run (temperature_set_point, V_range, V_step, I_range, I_step, max_power)
+  #      response = raw_input("Do you want to do another run? : y/n \n")
         
-        if (response == 'n'):
-            break
-    
+  #      if (response == 'n'):
+  #          break
+    stop_XTCON_run()
     switch_off_PQMS_modules()
     
-    print("\nProcedure has been created. Filename : " + log)
+    print("\nProcedure has been created. Filename : " + procedure)
     print ("\nReady for execution.\n")
         
     unload_sample (Sample, Sample_Box, test_object)
@@ -54,13 +56,18 @@ def PQMS_IV_run (temperature_set_point, V_range, V_step, I_range, I_step, max_po
     write("\n##############################################################")
     write("                   Run starts")
     write("##############################################################\n")
-    
-    configure_XTCON(temperature_set_point)
-    start_IV_run(V_range, V_step, I_range, I_step, max_power)
-    
+
+    set_XTCON_temp (temperature_set_point)
+    start_IV_run (V_range, V_step, I_range, I_step, max_power)
+        
     write("\n##############################################################")
     write("                   Run ends")
     write("##############################################################\n")
+    
+    response = raw_input("Do you want to do another run? : y/n \n")
+    if (response == 'y'):
+    	 temperature_set_point, V_range, V_step, I_range, I_step, max_power = get_experimental_parameters()
+    	 PQMS_IV_run(temperature_set_point, V_range, V_step, I_range, I_step, max_power)
 
 
 def prepare_sample (Sample, Sample_Box, test_object):

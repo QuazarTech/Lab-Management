@@ -7,8 +7,8 @@ import datetime
 
 time_zone = timezone("Asia/Kolkata")
 
-log = "run_data_procedure.txt"
-f = open(log, 'w')
+procedure = "run_data_procedure.txt"
+f = open(procedure, 'w')
 f.close()
 
 ######################################################
@@ -31,14 +31,10 @@ def hold(obj):
 def leave(obj):
     write ("execute : Leave "+ obj)
 
-def locate(obj):
-    write ("execute : Locate "+ obj)
-
 def rotate(obj, number_of_turns, direction):
     write ("execute : Rotate "+ obj + " by " + number_of_turns + " in " + direction + " direction.")
 
 def move(obj, position):
-    locate (obj)
     goto (obj)
     hold (obj)
     goto (position)
@@ -48,7 +44,6 @@ def remove (obj1, obj2):
     
     read_state ('Lab_Space,Sample_Table')
 
-    locate (obj2 + "." + obj1)
     goto (obj2 + "." + obj1)
     hold (obj2 + "." + obj1)
 
@@ -57,9 +52,6 @@ def remove (obj1, obj2):
 
 def hold_sample(Sample, Sample_Box):
 	
-    locate(Sample)
-
-    locate('Tweezers')
     goto  ('Tweezers')
     hold  ('Tweezers')
 
@@ -77,9 +69,9 @@ def click(obj):
     write("execute : Click on "+ obj)
 
 def move_cursor(obj):
-    write("execute : Move Cursor to"+ obj)
+    write("execute : Move Cursor to "+ obj)
 
 def write (command):
-    with open(log, 'a') as f:
+    with open(procedure, 'a') as f:
         f.write(command + '\n')
     f.close()

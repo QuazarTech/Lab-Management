@@ -15,7 +15,7 @@ def set_up_soldering_iron():
     
     goto('SOLDERING_STATION')
     write("execute : Check if soldering station is free or not")
-    write("execute : If 'Free' then Leave Puck_Board or else wait until it gets free and then Leave Puck_Board")
+    write("execute : If 'Free' then Leave test_object or else wait until it gets free and then Leave test_object")
     write("execute Switch On Soldering_Iron")
     write("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,Power,ON")
     write("execute : Wait for the soldering iron LED to start blinking.")
@@ -27,7 +27,6 @@ def solder (terminal_a, terminal_b, Sample, Sample_Box):
     
     goto   ('Soldering_Iron.Home_Coordinates')
     hold   ('Soldering_Iron')
-    goto   ('Soldering_Iron.Exit_Coordinates')
     
     goto   ('Flux.Home_Coordinates')
     write  ("execute : Plunge the Tip into the Flux")
@@ -46,7 +45,6 @@ def solder (terminal_a, terminal_b, Sample, Sample_Box):
     write  ("execute : Plunge Tip in Cleaning Pad")
     write  ("execute : Retract Tip")
     
-    goto   ('Soldering_Iron.Exit_Coordinates')
     goto   ('Soldering_Iron.Home_Coordinates')
     leave  ('Soldering_Iron')
     
@@ -59,7 +57,6 @@ def desolder(terminal, Sample, Sample_Box):
     
     goto        ("Soldering_Iron")
     hold        ("Soldering_Iron")
-    goto        ("Soldering_Iron.Exit_Coordinates")
     
     goto        ("Flux.Home_Coordinates")
     write       ("execute : Plunge the tip into the flux")
@@ -96,7 +93,6 @@ def unclamp():
     
     read_state  ("Lab_Space,PQMS,Clamp")
     read_state  ("Lab_Space,PQMS,Insert_RT_Puck")
-    locate      ("Clamp.Current_Cordinates")
     goto        ("Clamp.Current_Coordinates")
     hold        ("the clamp with one hand")
     write       ("execute : With other hand, Rotate the screw anti-clockwise for required number of turns")
@@ -115,6 +111,7 @@ def connect_cable (cable, test_object):
     
     read_state  ('Lab_Space,PQMS,Cables,' + cable)
     move        (cable + ".Cryostat_End", test_object + "." + cable + "_Terminal")
+    write       ("Align " + cable + "'s connector with "  + test_object + "'s connector")
     write       ("execute : Insert and fasten " + cable)
     leave       (cable)
     write       ("Update_Database Lab_Space,PQMS,Cables," + cable + ",State,CONNECTED")
@@ -159,11 +156,13 @@ def mount_sample (Sample, Sample_Box, test_object):
         #SOLDERING PROCESS
         set_up_soldering_iron()
         
-        move(Sample+'.Terminal_1', 'Insert_RT_Puck,Puck,Terminal_1')
-        solder(Sample + ',Terminal_1', 'Insert_RT_Puck,Puck,Terminal_1', Sample, Sample_Box)
+        move(Sample+'.Terminal_1', 'Insert_RT_Puck,Puck,Terminal_4')
+        solder(Sample +',Terminal_1', 'Insert_RT_Puck,Puck,Terminal_4', Sample, Sample_Box)
+        
+        write ("execute : Bend " + Sample + "'s terminals as required.")
 
-        move(Sample+'.Terminal_2', 'Insert_RT_Puck,Puck,Terminal_4')
-        solder(Sample +',Terminal_2', 'Insert_RT_Puck,Puck,Terminal_4', Sample, Sample_Box)
+        move(Sample+"'s Terminal_2", "Insert_RT_Puck,Puck,Terminal_1")
+        solder(Sample + "'s,Terminal_2", "Insert_RT_Puck,Puck,Terminal_1", Sample, Sample_Box)
 
         write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Puck,Sample_Mounted,YES")
         write("execute : Switch off the soldering iron")
@@ -186,7 +185,6 @@ def mount_sample (Sample, Sample_Box, test_object):
 
         write       ("execute : Remove Sticky Tape from "+ Sample)
         
-        locate  ("Insert_RT_Old")
         goto    ("Insert_RT_Old")
         hold    ("Insert_RT_Old")
         
@@ -195,6 +193,8 @@ def mount_sample (Sample, Sample_Box, test_object):
         
         move(Sample+'.Terminal_1', 'Insert_RT_Old,Terminal_1')
         solder(Sample + ',Terminal_1', 'Insert_RT_Old,Terminal_1', Sample, Sample_Box)
+        
+        write ("execute : Bend " + Sample + "'s terminals as required.")
 
         move(Sample+'.Terminal_2', 'Insert_RT_Old,Terminal_4')
         solder(Sample+',Terminal_2', 'Insert_RT_Old,Terminal_4', Sample, Sample_Box)
@@ -204,7 +204,7 @@ def mount_sample (Sample, Sample_Box, test_object):
         write("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,Power,OFF")
         #SOLDERING PROCESS
         
-        write("execute : Skick Zener Diode body with tape")
+        write("execute : Stick " + Sample + "'s body to the mounting surface with Kapton tape")
         
     
     goto('Tweezers.Home_Coordinates')
@@ -276,6 +276,9 @@ def unmount_sample (Sample, Sample_Box, test_object):
         hold    (Sample + ".Terminal_2")
         desolder("Terminal_2", Sample, Sample_Box)
         
+        goto   ('Soldering_Iron.Home_Coordinates')
+        leave  ('Soldering_Iron')
+        
         write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Puck,Sample_Mounted,NO")
         
         write   ("execute : Switch off Soldering Iron")
@@ -328,6 +331,9 @@ def unmount_sample (Sample, Sample_Box, test_object):
         hold    (Sample + ".Terminal_2")
         desolder("Terminal_2", Sample, Sample_Box)
         
+        goto   ('Soldering_Iron.Home_Coordinates')
+        leave  ('Soldering_Iron')
+        
         write("Update_Database Lab_Space,PQMS,Insert_RT_Old,Sample_Mounted,NO")
         
         write   ("execute : Switch off Soldering Iron")
@@ -372,7 +378,6 @@ def unload_sample(Sample, Sample_Box, test_object):
         disconnect_cable("HT_Cable")
         unclamp()
         
-        locate("Insert_RT_Puck")
         goto("Insert_RT_Puck")
         hold("Insert_RT_Puck")
       
@@ -410,7 +415,8 @@ def unload_sample(Sample, Sample_Box, test_object):
         
     elif (test_object == "Insert_RT_Old"):
         disconnect_cable("RT_Cable")
-        move ("Insert_RT_Old", "Sample_Mounting_Coordinates")
+        move ("Insert_RT_Old", "Insert_RT_Old.Exit_Coordinates")
+        goto ("Sample_Mounting_Coordinates")
         
 
 #####################################################################
@@ -419,23 +425,19 @@ def unload_sample(Sample, Sample_Box, test_object):
 def switch_on_PQMS_modules():
     read_state("Lab_Space,PQMS")
     
-    locate ('Stabilizer.Power_Switch')
     goto   ('Stabilizer.Power_Switch')
     write  ("execute : Switch On Stabilizer.Power_Switch")
     write  ("Update_Database Lab_Space,PQMS,Stabilizer,Power_Switch,State,ON")
     
-    locate ("PQMS.XPLORE_Power_Supply.Power_Cable")
     goto   ("PQMS.XPLORE_Power_Supply.Power_Cable")
     write  ("execute : Switch on XPLORE_Power_Supply.Power_Cable")
     write  ("Update_Database Lab_Space,PQMS,XPLORE_Power_Supply,State,ON")
     write  ("Update_Database Lab_Space,PQMS,XSMU,State,ON")
     
-    locate ("PQMS.XTCON.Power_Cable")
     goto   ("PQMS.XTCON.Power_Cable")
     write  ("execute : Switch on XTCON.Power_Cable")
     write  ("Update_Database Lab_Space,PQMS,XTCON,State,ON")
     
-    locate ("PQMS.Pump.Power_Cable")
     goto   ("PQMS.Pump.Power_Cable")
     write  ("execute : Switch on Pump.Power_Cable")
     write  ("Update_Database Lab_Space,PQMS,Pump,State,ON")
@@ -447,70 +449,73 @@ def switch_on_PQMS_modules():
 def switch_off_PQMS_modules():
     read_state ("Lab_Space,PQMS")
 
-    locate ("PQMS.XPLORE_Power_Supply.Power_Cable")
     goto   ("PQMS.XPLORE_Power_Supply.Power_Cable")
     write  ("execute : Switch off XPLORE_Power_Supply.Power_Cable")
     write  ("Update_Database Lab_Space,PQMS,XPLORE_Power_Supply,State,OFF")
     write  ("Update_Database Lab_Space,PQMS,XSMU,State,OFF")
-
-    locate ("PQMS.XTCON.Power_Cable")
+    
     goto   ("PQMS.XTCON.Power_Cable")
     write  ("execute : Switch off XTCON.Power_Cable")
     write  ("Update_Database Lab_Space,PQMS,XTCON,State,OFF")
     
-    locate ("PQMS.Pump.Power_Cable")
     goto   ("PQMS.Pump.Power_Cable")
     write  ("execute : Switch off Pump.Power_Cable")
     write  ("Update_Database Lab_Space,PQMS,Pump,State,OFF")
     
-    locate ('Stabilizer.Power_Switch')
     goto   ('Stabilizer.Power_Switch')
     write  ("execute : Switch OFF Stabilizer.Power_Switch")
     write  ("Update_Database Lab_Space,PQMS,Stabilizer,Power_Switch,State,OFF")
     
 def switch_on_computer():
-    locate('Computer.Switch')
+    
     write ("execute : Switch on Computer.Switch")
     write("execute : Press CPU Power Button")
     write("execute : Switch on the USB_Power_Adaptor")
     write("execute : Login to user account")
-    locate ('Qrius')
     write("execute : Open Qrius ")
     
 def switch_off_computer():
     
     write ("execute : Exit Qrius")
     write("execute : Shutdown Computer")
+    write("execute : Switch off the USB_Power_Adaptor")
     write("execute : Wait for computer to Shutdown")
-    locate('Computer.Switch')
     write ("execute : Switch off Computer.Switch")
 
     
-def configure_XTCON(set_point):
-    click('Temperature Controller Window')
-    move_cursor('Toolbar')
-    click('Settings')
-    click('Isothermal Settings')
-    write("execute : Set 'Heater Set point' Temperature to "+set_point + " K")
-    move_cursor('Toolbar')
-    click('File')
-    click('Apply')
-    move_cursor('Control mode')
-    click('drop down menu')
-    click('Isothermal')
-    move_cursor('Instrument Control')
-    click('Cryostat and Insert')
-    click('Cryostat Type')
-    click('Double Walled Steel Cryostat')
-    click('Insert Type')
-    click('R-T insert with heater and sample puck')
-    click('File')
-    click('Apply')
-    write ("Update_Database Lab_Space,PQMS,XTCON,Mode,ISOTHERMAL")
-    write ("Update_Database Lab_Space,PQMS,XTCON,Running,True")
-    click('Start Button')
-    write("execute : Wait till sample temperature stabilizes")
+def init_XTCON_isothermal(test_object):
+    
+    click       ('Temperature Controller Window')
+    move_cursor ('Control mode')
+    click       ('drop down menu')
+    click       ('Isothermal')
+    move_cursor ('Instrument Control')
+    click       ('Cryostat and Insert')
+    click       ('Cryostat Type')
+    click       ('Double Walled Steel Cryostat')
+    click       ('Insert Type')
+    click       (test_object)
+    click       ('File->Hide')
+    click       ('Start Button')
+    write       ("Update_Database Lab_Space,PQMS,XTCON,Running,True")
 
+def set_XTCON_temp (temperature_set_point):
+    
+    click       ('Temperature Controller Window')
+    move_cursor ('Toolbar')
+    click       ('Settings')
+    click       ('Isothermal Settings')
+    write       ("Update_Database Lab_Space,PQMS,XTCON,Mode,ISOTHERMAL")
+    write       ("execute : Set 'Heater Set point' Temperature to " + temperature_set_point + " K")
+    move_cursor ('Toolbar')
+    click       ('File->Apply')
+    write       ("execute : Wait till sample temperature stabilizes")
+
+def stop_XTCON_run():
+    click   ('Temperature Controller Window')
+    write   ("execute : Stop Temperature Controller Run")
+    write   ("Update_Database Lab_Space,PQMS,XTCON,Running,False")
+	
 def start_IV_run (V_range , V_step, I_max, I_step, power):
     click('I-V Source and measurement unit Window')
     move_cursor('Run Mode')
@@ -522,10 +527,8 @@ def start_IV_run (V_range , V_step, I_max, I_step, power):
     write ("Update_Database Lab_Space,PQMS,XSMU,Running,True")
     write ("execute : Wait until graph comes to an end")
     write ("Update_Database Lab_Space,PQMS,XSMU,Running,False")
-    write ("execute : Stop Temperature Controller Run")
-    write ("Update_Database Lab_Space,PQMS,XTCON,Running,False")
     save_graph()
-    
+        
 def set_measurement_settings(V_range, V_step, I_max, I_step, power):
     #write ("execute : In the top menu, click on \'Settings->Source Parameters\'")
     #from the drop down menu, click on constant voltage
