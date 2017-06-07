@@ -65,7 +65,8 @@ def PQMS_IV_run (temperature_set_point, V_range, V_step, I_range, I_step, max_po
     write("\n##############################################################")
     write("                   Run starts")
     write("##############################################################\n")
-
+    
+    check_peak_temperature(temperature_set_point, "Heater_Chamber")
     set_XTCON_temp (temperature_set_point)
     start_IV_run (V_range, V_step, I_range, I_step, max_power)
 
@@ -74,6 +75,8 @@ def PQMS_IV_run (temperature_set_point, V_range, V_step, I_range, I_step, max_po
     write("##############################################################\n")
     
     response = raw_input("Do you want to do another run? : y/n \n")
+    while (response != 'y' and response != 'n'):
+    	response = raw_input("Do you want to do another run? : y/n \n")
     if (response == 'y'):
     	 temperature_set_point, V_range, V_step, I_range, I_step, max_power = get_experimental_parameters()
     	 PQMS_IV_run(temperature_set_point, V_range, V_step, I_range, I_step, max_power)
