@@ -500,12 +500,20 @@ def flush_helium (chamber):
     write   ("execute : Open Pump.Release_Valve by turning in anticlockwise direction.")
     write   ("execute : Immediately, close the Pump.Release_Valve by turning in clockwise direction.")
     
-    write   ("execute : Close " + chamber + ".Flush_Valve by rotating in clockwise direction")
+    write   ("execute : Close " + chamber + ".Evacuation_Valve by rotating in clockwise direction")
     write   ("execute : Turn on Pump.Main_Valve by rotating it in anticlockwise direction.")
     
     write   ("Update_Database Lab_Space,PQMS,Cryostat_Steel,Helium,YES")
     
-    
+def check_peak_temperature(temperature_set_point, chamber):
+    if (eval(temperature_set_point) > 150.0):
+        response = raw_input("Is there vacuum in " + chamber +" ?")
+        while((response != 'n') and (response != 'y')):
+    		response = raw_input("Is there vacuum in " + chamber +" ?")
+        if (response == 'n'):
+    		create_vaccum(chamber)
+    	else:
+    		break
     
     
 def pour_liquid_nitrogen ():
