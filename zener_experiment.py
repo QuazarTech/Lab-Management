@@ -23,7 +23,7 @@ def run (Sample, Sample_Box, sample_description, address):
     set_up_PQMS_modules()
     temperature_set_point, V_range, V_step, I_range, I_step, max_power = get_experimental_parameters()
     
-    pour_liquid_nitrogen()
+    need_liquid_nitrogen()
     init_XTCON_isothermal (test_object)
     
   #  while (True):
@@ -56,7 +56,7 @@ def get_experimental_parameters():
     I_step                   = raw_input("Enter Current Step Size (uA) : \n")
     max_power                = raw_input("Enter Max Power (mW): \n")
     temperature_set_point    = raw_input("Enter Heater Setpoint Temperature (K) : \n")
-
+    
     return temperature_set_point, V_range, V_step, I_range, I_step, max_power
 
 
@@ -154,3 +154,12 @@ def release_PQMS_vaccum ():
                         
         elif (response == 'n'):
             break
+
+
+def need_liquid_nitrogen ():
+    response = raw_input ("\nDo you want to pour liquid nitrogen? : y/n\n")
+    while ((response!='y') and (response!='n')):
+        response = raw_input ("\nDo you want to pour liquid nitrogen? : y/n\n")
+    if (response == 'y'):
+        pour_liquid_nitrogen()
+        

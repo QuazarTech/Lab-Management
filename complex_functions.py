@@ -484,7 +484,6 @@ def flush_helium (chamber):
     write   ("execute : Ensure that Pump.Release_Valve, Pump.Main_Valve, Sample_Chamber.Flush_Valve, Sample_Chamber.Evacuation_Valve, \
                         Heater_Chamber.Flush_Valve, Heater_Chamber.Evacuation_Valve and all other valves connected to Helium_Cylinder are closed")
     
-    write   ("execute : Open " + chamber + ".Flush_Valve by rotating in anticlockwise direction.")
     write   ("execute : Open " + chamber + ".Evacuation_Valve by rotating in anticlockwise direction.")
     write   ("execute : Turn off Pump.Main_Valve by rotating it in clockwise direction.")
     
@@ -496,7 +495,10 @@ def flush_helium (chamber):
     write   ("execute : Open " + chamber + ".Flush_Valve by rotating in anticlockwise direction.")
     write   ("execute : After 2 seconds, turn off " + chamber + ".Flush_Valve by rotating in clockwise direction")
     
-    write   ("execute : Open " + chamber + ".Evacuation_Valve by rotating in anticlockwise direction.")
+    goto    ("Helium_Cylinder.Main_Valve")
+    write   ("execute : Close Helium_Cylinder.Pressure_Valve by rotating in anticlockwise direction until completely unscrewed loose.")
+    write   ("execute : Close Helium_Cylinder.Main_Valve by rotating in anticlockwise direction.")
+    
     write   ("execute : Open Pump.Release_Valve by turning in anticlockwise direction.")
     write   ("execute : Immediately, close the Pump.Release_Valve by turning in clockwise direction.")
     
@@ -506,14 +508,12 @@ def flush_helium (chamber):
     write   ("Update_Database Lab_Space,PQMS,Cryostat_Steel,Helium,YES")
     
 def check_peak_temperature(temperature_set_point, chamber):
-    if (eval(temperature_set_point) > 150.0):
-        response = raw_input("Is there vacuum in " + chamber +" ?")
+    if ( float(temperature_set_point) > 150.0):
+        response = raw_input("\nIs there vacuum in " + chamber +" ? : y/n\n")
         while((response != 'n') and (response != 'y')):
-    		response = raw_input("Is there vacuum in " + chamber +" ?")
+    		response = raw_input("\nIs there vacuum in " + chamber +" ?\n")
         if (response == 'n'):
-    		create_vaccum(chamber)
-    	else:
-    		break
+    		create_vaccum (chamber)
     
     
 def pour_liquid_nitrogen ():
