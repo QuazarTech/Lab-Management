@@ -15,13 +15,18 @@ def run (Sample, Sample_Box, sample_description, address):
     switch_on_PQMS_modules()
     set_up_pump()
     
+    temperature_set_point, V_range, V_step, I_range, I_step, max_power = get_experimental_parameters()
+    
     flush_helium ("Sample_Chamber")
-    flush_helium ("Heater_Chamber")
+    
+    if(check_temperature(temperature_set_point) == 'n'):
+    	flush_helium ("Heater_Chamber")
+    else:
+    	create_vaccum("Heater_Chamber")
     
     switch_on_computer()
     set_save_folder(Sample_Box, Sample, sample_description, address)
     set_up_PQMS_modules()
-    temperature_set_point, V_range, V_step, I_range, I_step, max_power = get_experimental_parameters()
     
     need_liquid_nitrogen()
     init_XTCON_isothermal (test_object)
@@ -66,7 +71,6 @@ def PQMS_IV_run (temperature_set_point, V_range, V_step, I_range, I_step, max_po
     write("                   Run starts")
     write("##############################################################\n")
     
-    check_peak_temperature(temperature_set_point, "Heater_Chamber")
     set_XTCON_temp (temperature_set_point)
     start_IV_run (V_range, V_step, I_range, I_step, max_power)
 
@@ -79,6 +83,8 @@ def PQMS_IV_run (temperature_set_point, V_range, V_step, I_range, I_step, max_po
     	response = raw_input("Do you want to do another run? : y/n \n")
     if (response == 'y'):
     	 temperature_set_point, V_range, V_step, I_range, I_step, max_power = get_experimental_parameters()
+    	 if(check_temperature(temperature_set_point) = "same"):
+    	 	create_vaccum("Heater_Chamber")
     	 PQMS_IV_run(temperature_set_point, V_range, V_step, I_range, I_step, max_power)
 
 
@@ -162,4 +168,11 @@ def need_liquid_nitrogen ():
         response = raw_input ("\nDo you want to pour liquid nitrogen? : y/n\n")
     if (response == 'y'):
         pour_liquid_nitrogen()
-        
+
+def check_temperature(temperature_set_point):
+	if(float(temperature_set_point) > 150.0):
+		return 'y'
+        elif(float(temperature_set_point) == 150.0):
+        	return "same"
+        else:
+        	return 'n'
