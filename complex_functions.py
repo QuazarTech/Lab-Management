@@ -507,14 +507,6 @@ def flush_helium (chamber):
     
     write   ("Update_Database Lab_Space,PQMS,Cryostat_Steel,Helium,YES")
     
-def check_peak_temperature(temperature_set_point, chamber):
-    if ( float(temperature_set_point) > 150.0):
-        response = raw_input("\nIs there vacuum in " + chamber +" ? : y/n\n")
-        while((response != 'n') and (response != 'y')):
-    		response = raw_input("\nIs there vacuum in " + chamber +" ?\n")
-        if (response == 'n'):
-    		create_vaccum (chamber)
-    
     
 def pour_liquid_nitrogen ():
     
