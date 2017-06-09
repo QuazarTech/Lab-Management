@@ -4,6 +4,37 @@ from primitive_functions import *
 
 #####################################################################
 
+def move(obj, position):
+    goto (obj)
+    hold (obj)
+    goto (position)
+
+def remove (obj1, obj2):
+    '''Removes/separates obj1 from obj2'''
+    
+    read_state ('Lab_Space,Sample_Table')
+
+    goto (obj2 + "." + obj1)
+    hold (obj2 + "." + obj1)
+
+    write ("execute : With other hand hold " + obj2 + " and keep it fixed.")
+    write ("execute : Pull the " + obj1 + " and separate from " + obj2)
+
+def hold_sample(Sample, Sample_Box):
+	
+    goto  ('Tweezers')
+    hold  ('Tweezers')
+
+    write ("execute : Goto " + Sample + ".Home_Coordinates")
+    write ("execute : Hold " + Sample + ".Terminal_1")
+    goto  ("Sample_Mounting_Coordinates")
+
+    write ("Update_Database Lab_Space,Sample_Table,Sample_Boxes," + Sample_Box + "," + Sample + ",State,IN_USE")
+
+def close_lid(obj1):
+    write ("execute : Close the lid of " + obj1)
+    write ("Update_Database Lab_Space,Sample_Table,Sample_Boxes,Box_Zener,State,CLOSED")
+
 def sample_is_mounted():
     write ("Sample is already mounted. Continuing to next step...") 
 
@@ -35,7 +66,7 @@ def solder (terminal_a, terminal_b, Sample, Sample_Box):
     goto   ('Solder.Home_Coordinates')
     write  ("execute : Move the Soldering_Iron along the Solder")
     
-    write  ("execute : Goto juntion of " + terminal_a + " and "+terminal_b)
+    write  ("execute : Goto juntion of " + terminal_a + " and " + terminal_b)
     write  ("execute : Wait until sensor deems soldering between " + terminal_a + " and " + terminal_b + " to be complete")
     
     write  ("Update_Database Lab_Space,Sample_Table,Sample_Boxes," + Sample_Box + "," + terminal_a + ",Soldered,YES")
