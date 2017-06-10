@@ -2,8 +2,67 @@ import time
 import primitive_functions
 from primitive_functions import *
 
+TEST_OBJECTS    = ["Insert_RT_Puck", "Insert_RT_Old", "Puck_Board"]
+CHAMBERS        = ["Sample_Chamber", "Heater_Chamber"]
 #####################################################################
 
+def get_experimental_parameters_IV():
+
+    V_range                  = raw_input("Enter Voltage Sweep Max (mV) : \n")
+    V_step                   = raw_input("Enter Voltage Step Size (mV) : \n")
+    I_range                  = raw_input("Enter Current Sweep Max (uA) : \n")
+    I_step                   = raw_input("Enter Current Step Size (uA) : \n")
+    max_power                = raw_input("Enter Max Power (mW): \n")
+    temperature_set_point    = raw_input("Enter Heater Setpoint Temperature (K) : \n")
+    
+    return temperature_set_point, V_range, V_step, I_range, I_step, max_power
+
+def get_experimental_parameters_R_Time():
+   
+    run_mode                  = raw_input("Enter the R-Time run mode (current/voltage):\n")
+    value_of_constant_source  = raw_input("Enter the value of the constant " + run_mode+", with units:\n")
+    temperature_set_point    = raw_input("Enter Heater Setpoint Temperature (K) : \n")
+    
+    return run_mode, value_of_constant_source, temperature_set_point
+	
+def prepare_sample (Sample, Sample_Box, test_object):
+    
+    mounted = raw_input( "\nIs the sample mounted on the puck? : y/n \n")
+    while ((mounted != 'y') and (mounted != 'n')):
+        mounted = raw_input( "\nIs the sample mounted on the puck? : y/n \n")
+        
+    if (mounted == 'n'):
+        mount_sample (Sample, Sample_Box, test_object)
+        
+    elif (mounted == 'y'):
+        print ("\nSample already mounted. Continue to next step.\n")
+        sample_is_mounted()
+        
+
+def select_test_object ():
+
+    print "\n\n Available Test Objects : "
+    print "______________________________\n"
+    
+    for item in TEST_OBJECTS:
+        print item
+    
+    print "______________________________\n"
+    test_object = raw_input ("Load Sample to which test_object? : \n")    
+    
+    while (test_object not in TEST_OBJECTS):
+        
+        print "\n\n Available Test Objects : "
+        print "______________________________\n"
+        
+        for item in TEST_OBJECTS:
+            print item
+        
+        print "______________________________\n"
+        test_object = raw_input ("Load Sample to which test_object? : \n")
+        
+    return test_object
+    
 def sample_is_mounted():
     write ("Sample is already mounted. Continuing to next step...") 
 
@@ -419,6 +478,20 @@ def unload_sample(Sample, Sample_Box, test_object):
         goto ("Sample_Mounting_Coordinates")
         
 
+def remove_sample (Sample, Sample_Box, test_object):
+    
+    unmount = raw_input ("\nDo you want to unmount the sample from the Puck after the measurements? : y/n \n")
+    while ((unmount != 'y') and (unmount != 'n')):
+        
+        unmount = raw_input ("\nDo you want to unmount the sample from the Puck after the measurements? : y/n\n")
+        
+    if (unmount == 'n'):
+        print ("\n Not unmounting the sample from the puck.\n")
+        do_not_unmount()
+        
+    elif (unmount == 'y'):
+        unmount_sample (Sample, Sample_Box, test_object)
+
 #####################################################################
 
 
@@ -506,7 +579,14 @@ def flush_helium (chamber):
     write   ("execute : Turn on Pump.Main_Valve by rotating it in anticlockwise direction.")
     
     write   ("Update_Database Lab_Space,PQMS,Cryostat_Steel,Helium,YES")
-    
+
+def need_liquid_nitrogen ():
+    response = raw_input ("\nDo you want to pour liquid nitrogen? : y/n\n")
+    while ((response!='y') and (response!='n')):
+        response = raw_input ("\nDo you want to pour liquid nitrogen? : y/n\n")
+    if (response == 'y'):
+        pour_liquid_nitrogen()
+            
     
 def pour_liquid_nitrogen ():
     
@@ -531,6 +611,26 @@ def pour_liquid_nitrogen ():
     hold    ("Cryocan_BA11.Cap")
     goto    ("Cryocan_BA11.Home_Coordinates")
     write   ("execute : Replace _Ba11.Cap")
+
+def release_PQMS_vaccum ():
+    
+    print ("\nIt is NOT reccomended to release vaccum if there is still liquid nitrogen left in the cryocan.")
+    response = raw_input ("Do you want to release vaccum? : y/n\n")
+    
+    while ((response != 'y') and (response != 'n')):
+        print ("\nIt is NOT reccomended to release vaccum if there is still liquid nitrogen left in the cryocan.")
+        response = raw_input ("Do you want to release vaccum? : y/n\n")
+        
+        if (response == 'y'):
+            for chamber in CHAMBERS :
+                sure = raw_input ("\nAre you SURE you want to release vaccum in " + chamber + " ? : y/n\n")
+                while ((sure != 'y') and (sure != 'n')):
+                    sure = raw_input ("\nAre you SURE you want to release vaccum in " + chamber + " ? : y/n\n")
+                    if (sure == 'y'):
+                        release_vaccum (chamber)
+                        
+        elif (response == 'n'):
+            break
 
 def switch_off_PQMS_modules():
     read_state ("Lab_Space,PQMS")
@@ -610,15 +710,37 @@ def start_IV_run (V_range , V_step, I_max, I_step, power):
     move_cursor('Run Mode')
     click('Drop down menu')
     click('I-V')
-    set_measurement_settings(V_range, V_step, I_max, I_step, power)
+    set_IV_measurement_settings(V_range, V_step, I_max, I_step, power)
     write("Update_Database Lab_Space,PQMS,XSMU,Mode,I-V")
     click ('Start Button')
     write ("Update_Database Lab_Space,PQMS,XSMU,Running,True")
     write ("execute : Wait until graph comes to an end")
     write ("Update_Database Lab_Space,PQMS,XSMU,Running,False")
     save_graph()
+
+def start_R_Time(value_of_constant_source, run_mode):
+    click('I-V Source and measurement unit Window')
+    move_cursor('Run Mode')
+    click('Drop down menu')
+    click('R-Time')
+    set_R_Time_measurement_settings(value_of_constant_source, run_mode)
+    write("Update_Database Lab_Space,PQMS,XSMU,Mode,R-Time")
+    click ('Start Button')
+    write ("Update_Database Lab_Space,PQMS,XSMU,Running,True")
+    write ("execute : Wait until graph comes to an end")
+    write ("Update_Database Lab_Space,PQMS,XSMU,Running,False")
+    save_graph()
+
+def set_R_Time_measurement_settings(value_of_constant_source, run_mode):
+    move_cursor("Top Menu")
+    click ("Settings->Source Parametres")
+    write ("execute : Set mode as constant " + run_mode)
+    write ("execute : Set Auto-Range to No")
+    write ("execute : Set " + run_mode + " value as " + value_of_constant_source)
+    move_cursor("Top Menu")
+    click("File->Done")
         
-def set_measurement_settings(V_range, V_step, I_max, I_step, power):
+def set_IV_measurement_settings(V_range, V_step, I_max, I_step, power):
     #write ("execute : In the top menu, click on \'Settings->Source Parameters\'")
     #from the drop down menu, click on constant voltage
     #click on file, and then done
