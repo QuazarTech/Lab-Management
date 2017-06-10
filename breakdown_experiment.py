@@ -11,34 +11,63 @@ def run(Sample, Sample_Box, sample_description, address):
     switch_on_PQMS_modules()
     set_up_pump()
     
-    temperature_set_point, V_range, V_step, I_range, I_step, max_power = get_experimental_parameters()
-    experimental_temperature = temperature_set_point
+    run_mode, value_of_constant_source, temperature_set_point = get_experimental_parameters_R_Time()
     
     flush_helium ("Sample_Chamber")
-    create_vaccum("Heater_Chamber")
+    if(check_set_point(temperature_set_point) == True):
+    	flush_helium("Heater_Chamber")
+    else:
+        create_vaccum("Heater_Chamber")
     
+    need_liquid_nitrogen()
     switch_on_computer()
     set_save_folder(Sample_Box, Sample, sample_description, address)
     set_up_PQMS_modules()
     init_XTCON_isothermal ("Insert_RT_Old")
-    do_break_down_run(experimental_temperature, V_range, V_step, I_range, I_step, max_power)
-    set_upper_temperature()
-    do_break_down_run(experimental_temperature, V_range, V_step, I_range, I_step, max_power)
+    PQMS_R_Time_Run(run_mode, value_of_constant_source, temperature_set_point)
+    
+    stop_XTCON_run()
+    release_PQMS_vaccum ()
+    switch_off_PQMS_modules()
+        
+    unload_sample (Sample, Sample_Box, test_object)
+    remove_sample (Sample, Sample_Box, test_object)
+    
+    switch_off_computer()
+    
+    print("\nProcedure has been created. Filename : " + procedure)
+    print ("\nReady for execution.\n")
 
-def set_iterations():
-  iterations = raw_input("How many iterations do you want to do for the 1 set_point?")
-  return int(iterations)
+####################################################################################################
 
-def repeated_IV_run(V_range, V_step, I_range, I_step, max_power, iterations):
-    for i in range(0, iterations):
-      start_IV_run (V_range, V_step, I_range, I_step, max_power)
-
-def do_break_down_run(temperature_set_point, V_range, V_step, I_range, I_step, max_power):
-    need_liquid_nitrogen()
+def PQMS_R_Time_Run(run_mode, value_of_constant_source, temperature_set_point):
+    
+    write("\n##############################################################")
+    write("                   Run starts")
+    write("##############################################################\n")
+    
     set_XTCON_temp (temperature_set_point)
-    iterations = set_iterations()
-    repeated_IV_run(V_range, V_step, I_range, I_step, max_power, iterations)
+    previous_set_point = temperature_set_point
+    start_R_Time(value_of_constant_source, run_mode)
 
-def set_upper_temperature():
-  temperature_set_point = raw_input("Set a upper set-point to cool down from:\n")
-  set_XTCON_temp(temperature_set_point)
+    write("\n##############################################################")
+    write("                   Run ends")
+    write("##############################################################\n")
+    
+    response = raw_input("Do you want to do another run? : y/n \n")
+    while (response != 'y' and response != 'n'):
+    	response = raw_input("Do you want to do another run? : y/n \n")
+    if (response == 'y'):
+    	 run_mode,value_of_constant_source,temperature_set_point = get_experimental_parameters_R_Time()
+    	 if(check_set_point(temperature_set_point) == True and check_set_point(previous_set_point) == False):
+    	 	flush_helium("Heater_Chamber")
+    	 elif(check_set_point(temperature_set_point) == False and check_set_point(previous_set_point) == True):
+    	 	create_vacuum("Heater_Chamber")
+    	 PQMS_R_Time_run(run_mode, value_of_constant_source, temperature_set_point)
+    	 
+
+def check_set_point(temperature_set_point):
+    if(float(temperature_set_point) < 150.0):
+    	return True
+    else:
+    	return False
