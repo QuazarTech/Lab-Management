@@ -12,7 +12,7 @@ def run (Sample, Sample_Box, sample_description, address):
     switch_on_PQMS_modules()
     set_up_pump()
     
-    temperature_set_point, V_range, V_step, I_range, I_step, max_power = get_experimental_parameters()
+    temperature_set_point, V_range, V_step, I_range, I_step, max_power = get_experimental_parameters_IV()
     
     flush_helium ("Sample_Chamber")
     
@@ -68,32 +68,11 @@ def PQMS_IV_run (temperature_set_point, V_range, V_step, I_range, I_step, max_po
     while (response != 'y' and response != 'n'):
     	response = raw_input("Do you want to do another run? : y/n \n")
     if (response == 'y'):
-    	 temperature_set_point, V_range, V_step, I_range, I_step, max_power = get_experimental_parameters()
+    	 temperature_set_point, V_range, V_step, I_range, I_step, max_power = get_experimental_parameters_IV()
     	 if(check_temperature(temperature_set_point) == "same"):
     	 	create_vaccum("Heater_Chamber")
     	 PQMS_IV_run(temperature_set_point, V_range, V_step, I_range, I_step, max_power)
 
-
-
-def release_PQMS_vaccum ():
-    
-    print ("\nIt is NOT reccomended to release vaccum if there is still liquid nitrogen left in the cryocan.")
-    response = raw_input ("Do you want to release vaccum? : y/n\n")
-    
-    while ((response != 'y') and (response != 'n')):
-        print ("\nIt is NOT reccomended to release vaccum if there is still liquid nitrogen left in the cryocan.")
-        response = raw_input ("Do you want to release vaccum? : y/n\n")
-        
-        if (response == 'y'):
-            for chamber in CHAMBERS :
-                sure = raw_input ("\nAre you SURE you want to release vaccum in " + chamber + " ? : y/n\n")
-                while ((sure != 'y') and (sure != 'n')):
-                    sure = raw_input ("\nAre you SURE you want to release vaccum in " + chamber + " ? : y/n\n")
-                    if (sure == 'y'):
-                        release_vaccum (chamber)
-                        
-        elif (response == 'n'):
-            break
 
 
 def check_temperature(temperature_set_point):
