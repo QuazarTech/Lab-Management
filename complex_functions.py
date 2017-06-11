@@ -244,8 +244,8 @@ def mount_sample (Sample, Sample_Box, test_object):
 
         write       ("execute : Remove Sticky Tape from "+ Sample)
         
-        goto    ("Insert_RT_Old")
-        hold    ("Insert_RT_Old")
+        goto        ("Insert_RT_Old")
+        hold        ("Insert_RT_Old")
         
         #SOLDERING PROCESS
         set_up_soldering_iron()
@@ -264,7 +264,7 @@ def mount_sample (Sample, Sample_Box, test_object):
         #SOLDERING PROCESS
         
         write("execute : Stick " + Sample + "'s body to the mounting surface with Kapton tape")
-        
+        goto("Insert_RT_Old.Home_Coordinates")
     
     goto('Tweezers.Home_Coordinates')
     leave('Tweezers')
@@ -304,13 +304,19 @@ def load_sample(Sample, Sample_Box, test_object):
     
     elif (test_object == "Insert_RT_Old"):
         
-        move('Insert_RT_Old', 'Insert_RT_Puck.Exit_Coordinates')
-        goto('Insert_RT_Puck.Home_Coordinates')
+        switch_on_PQMS_modules()
+        set_up_pump()
+        release_pressure("Sample_Chamber")
+        release_pressure("Heater_Chamber")
+        unclamp()
+        move("Insert_RT_Old.Home_Coordinates", "Cryostat_Old.Exit_Coordinates")
+        write("execute : Remove cap from the cryostat entrance")
+        goto('Cryostat.Home_Coordinates')
         
         clamp()
-        
+        create_vaccum("Sample_Chamber")
+        create_vaccum("Heater_Chamber")
         connect_cable('RT_Cable', test_object)
-        connect_cable('HT_Cable', test_object)
         
         
         
@@ -474,7 +480,14 @@ def unload_sample(Sample, Sample_Box, test_object):
         
     elif (test_object == "Insert_RT_Old"):
         disconnect_cable("RT_Cable")
-        move ("Insert_RT_Old", "Insert_RT_Old.Exit_Coordinates")
+        release_pressure("Sample_Chamber")
+        release_pressure("Heater_Chamber")
+        unclamp()
+        move  ("Insert_RT_Old", "Insert_RT_Old.Exit_Coordinates")
+        write ("execute : Put the Insert_RT_Old Cap on the cryostat entrance")
+        clamp()
+        create_vaccum("Sample_Chamber")
+        create_vaccum("Heater_Chamber")
         goto ("Sample_Mounting_Coordinates")
         
 
@@ -627,7 +640,7 @@ def release_PQMS_vaccum ():
                 while ((sure != 'y') and (sure != 'n')):
                     sure = raw_input ("\nAre you SURE you want to release vaccum in " + chamber + " ? : y/n\n")
                     if (sure == 'y'):
-                        release_vaccum (chamber)
+                        release_pressure (chamber)
                         
         elif (response == 'n'):
             break
@@ -739,6 +752,11 @@ def set_R_Time_measurement_settings(value_of_constant_source, run_mode):
     write ("execute : Set " + run_mode + " value as " + value_of_constant_source)
     move_cursor("Top Menu")
     click("File->Done")
+    move_cursor("Top Menu")
+    click("Settings->Resistance Measurement Settings")
+    write("execute : Set Bipolar as No")
+    move_cursor("Top Menu")
+    click('File->Done')
         
 def set_IV_measurement_settings(V_range, V_step, I_max, I_step, power):
     #write ("execute : In the top menu, click on \'Settings->Source Parameters\'")
