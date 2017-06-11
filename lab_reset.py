@@ -1,5 +1,6 @@
 import yaml
 
+array_of_keys     = []
 def lab_reset(folder_name):
 
 	with open(folder_name+"/run_data_new_database.yaml", "r") as f:
@@ -8,7 +9,6 @@ def lab_reset(folder_name):
         		original_data = yaml.load(fo)
     		fo.close()
 	f.close()
-
 	database_original = []
 	new_database      = []
 	get_differences(new_data, new_database)
@@ -19,12 +19,12 @@ def lab_reset(folder_name):
 	print list(set(new_database) - set(database_original))
 	print "#####################################################\n"
 
+
 def get_differences(d, val_array):
     for k,v in d.items():
-        if((v == type(str)) or (v == type(bool))):
-            val_array.append(k + "," + str(v))
-        else:
             try:
+                array_of_keys.append(k)
                 get_differences(v , val_array)
             except AttributeError:
-                val_array.append(k + "," + str(v))
+                property_key = array_of_keys[-2]
+                val_array.append(property_key + " " + k + "," + str(v))
