@@ -8,9 +8,7 @@ def run (Sample, Sample_Box, sample_description, address):
     load_sample (Sample, Sample_Box, test_object)
     
     print("\nGenerating procedural steps for experiment.  .  .  .\n")
-    
-    switch_on_PQMS_modules()
-    set_up_pump()
+   
     
     temperature_set_point, V_range, V_step, I_range, I_step, max_power = get_experimental_parameters_IV()
     
