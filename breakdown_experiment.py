@@ -7,9 +7,7 @@ def run(Sample, Sample_Box, sample_description, address):
     load_sample (Sample, Sample_Box, test_object)
     
     print("\nGenerating procedural steps for experiment.  .  .  .\n")
-    
-    switch_on_PQMS_modules()
-    set_up_pump()
+
     
     run_mode, value_of_constant_source, temperature_set_point = get_experimental_parameters_R_Time()
     
@@ -63,7 +61,7 @@ def PQMS_R_Time_Run(run_mode, value_of_constant_source, temperature_set_point):
     	 	flush_helium("Heater_Chamber")
     	 elif(check_set_point(temperature_set_point) == False and check_set_point(previous_set_point) == True):
     	 	create_vacuum("Heater_Chamber")
-    	 PQMS_R_Time_run(run_mode, value_of_constant_source, temperature_set_point)
+    	 PQMS_R_Time_Run(run_mode, value_of_constant_source, temperature_set_point)
     	 
 
 def check_set_point(temperature_set_point):
