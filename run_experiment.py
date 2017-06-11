@@ -5,13 +5,14 @@ import os
 import zener_experiment
 import breakdown_experiment
 import lab_reset
+import unload_sample_experiment
 #import practice_experiments
 #import service_log
 
 
 #####################################################################
 
-experiments = ["service_log", "zener_experiment", "practice_experiments", "breakdown_experiment"]
+experiments = ["service_log", "zener_experiment", "practice_experiments", "breakdown_experiment", "unload_sample_experiment"]
 
 #create and init and array for timestamps
 time_array = []
@@ -105,6 +106,7 @@ def abort_execution(experiment, log):
         	log.write(string + '\n')
 		log.write("Execution has come to an end due to error in line: " + line + '\n')
 	log.close()
+	return string
 
 
 def pause_execution(log):
@@ -247,7 +249,7 @@ with open(read_file, "r") as fdata:
                 temp = experiment.time_in_ist()
                 
                 if (user_input == "end"):
-                    abort_execution(experiment, log)
+                    string = abort_execution(experiment, log)
                     put_in_folder(experiment, log.name, diff_file, new_dbase)
                     sys.exit(string)
                 
