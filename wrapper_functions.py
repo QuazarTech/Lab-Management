@@ -12,7 +12,7 @@ def get_experimental_parameters():
     I_range                  = raw_input("Enter Current Sweep Max (uA) : \n")
     I_step                   = raw_input("Enter Current Step Size (uA) : \n")
     max_power                = raw_input("Enter Max Power (mW): \n")
-    temperature_set_point    = raw_input("Enter Heater Setpoint Temperature (K) : \n")
+    temperature_set_point    = float(raw_input("Enter Heater Setpoint Temperature (K) : \n"))
     
     return temperature_set_point, V_range, V_step, I_range, I_step, max_power
 
@@ -22,10 +22,20 @@ def get_experimental_parameters_R_Time():
     V_range                  = raw_input("Enter Voltage Sweep Max (mV) : \n")
     I_range                  = raw_input("Enter Current Sweep Max (uA) : \n")
     max_power                = raw_input("Enter Max Power (mW): \n")
-    temperature_set_point    = raw_input("Enter Heater Setpoint Temperature (K) : \n")
+    temperature_set_point    = float(raw_input("Enter Heater Setpoint Temperature (K) : \n"))
     
     return temperature_set_point, V_range, I_range, max_power, run_mode
 
+def get_experimental_parameters_linear_ramp():
+   
+    run_mode                  = raw_input("Enter the R-Time run mode (current/voltage):\n")
+    ramp_rate                 = raw_input("Enter Ramp rate : \n")
+    initial_temperature       = float(raw_input("Enter the starting temperature (K):\n"))
+    V_range                   = raw_input("Enter Voltage Sweep Max (mV) : \n")
+    I_range                   = raw_input("Enter Current Sweep Max (uA) : \n")
+    max_power                 = raw_input("Enter Max Power (mW): \n")
+    
+    return initial_temperature, ramp_rate, run_mode, I_range, V_range, max_power, ramp_rate
 
 def PQMS_IV_run (temperature_set_point, V_range, V_step, I_range, I_step, max_power):
     
@@ -155,4 +165,59 @@ def cryostat_environment_setup(previous_run_temperature, current_run_temperature
     
     elif (previous_run_temperature > 150 and current_run_temperature <= 150):
         flush_helium ("Heater_Chamber")        
-    
+
+
+def init_linear_ramp(initial_temperature, ramp_rate, run_mode, I_range, V_range, max_power):
+    click       ('Measurement Mode settings')
+    click       ('Electrical DC Conductivity')
+    move_cursor ('Run control')
+    click       ('drop down menu')
+    click       ('R-T (linear ramp)')
+    move_cursor ('Toolbar')
+    click       ('Settings->Temperature controller')
+    click       ('Linear ramp settings')
+    write       ("execute : Set Initial Temperature to " + initial_temperature)
+    write       ("execute : Set Ramp rate to " + ramp_rate + " K/min")
+    click       ('File->Apply')
+    move_cursor ('Toolbar')
+    click       ('Settings->I-V Source and Measurement Unit')
+    click       ("Settings->Source Parametres")
+    write       ("execute : Set mode as constant " + run_mode)
+    move_cursor ("Top Menu")
+    click       ("File->Done")
+    move_cursor ("Top Menu")
+    click       ("Settings->Resistance Measurement Settings")
+    write       ("execute : Set voltage limit as " + V_range)
+    write       ("execute : Set current limit as " + I_range)
+    write       ("execute : Set max_power as " + max_power)
+    write       ("execute : Set Bipolar as No")
+    move_cursor ("Top Menu")
+    click       ('File->Done')
+
+def start_linear_ramp():
+    click       ('Electrical DC Conductivity Window')
+    write       ("Update_Database Lab_Space,PQMS,XSMU,Mode,R-Time")
+    move_cursor ('Run Control')
+    click       ('Start')
+    write       ("Update_Database Lab_Space,PQMS,XTCON,Running,True")
+    write       ("Update_Database Lab_Space,PQMS,XSMU,Running,True")
+    write       ("execute : Wait until graph comes to an end")
+    write       ("Update_Database Lab_Space,PQMS,XTCON,Running,False")
+    write       ("Update_Database Lab_Space,PQMS,XSMU,Running,False")
+    save_graph()
+
+def is_the_sample_loaded (Sample, Sample_Box, test_object):
+  
+  response = raw_input ("\nIs the insert with sample loaded into the cryostat? : y/n \n")
+  while ((response != 'y') and (response != 'n')):
+    response = raw_input ("\nIs the insert with sample loaded into the cryostat? : y/n \n")
+    if (response == 'n'):
+      load_sample (Sample, Sample_Box, test_object)
+
+def is_helium_flushed(previous_run_temperature, temperature_set_point):
+
+  response = raw_input("Do you want to reset the cryostat environment?\n")
+  while ((response != 'y') and (response != 'n')):
+    response = raw_input ("Do you want to reset the cryostat environment?\n")
+  if(response == 'y'):
+  	cryostat_environment_setup(previous_run_temperature, temperature_set_point)
