@@ -65,22 +65,5 @@ def check_set_point(temperature_set_point):
     	return True
     else:
     	return False
-
-def is_the_sample_loaded (Sample, Sample_Box, test_object):
-  
-  response = raw_input ("\nIs the insert with sample loaded into the cryostat? : y/n \n")
-  while ((response != 'y') and (response != 'n')):
-    response = raw_input ("\nIs the insert with sample loaded into the cryostat? : y/n \n")
-    if (response == 'n'):
-      load_sample (Sample, Sample_Box, test_object)
-
-def is_helium_flushed(previous_run_temperature, temperature_set_point):
-
-  previous_run_temperature = ""
-  response = raw_input("Do you want to reset the cryostat environment?\n")
-  while ((response != 'y') and (response != 'n')):
-    response = raw_input ("Do you want to reset the cryostat environment?\n")
-  if(response == 'y'):
-  	cryostat_environment_setup(previous_run_temperature, current_run_temperature)
   	
   	
