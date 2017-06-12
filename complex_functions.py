@@ -602,7 +602,7 @@ def switch_off_computer():
     write("execute : Wait for computer to Shutdown")
     write ("execute : Switch off Computer.Switch")
 
-def init_XTCON_isothermal(test_object):
+def init_XTCON_isothermal (test_object):
     
     click       ('Temperature Controller Window')
     move_cursor ('Control mode')
@@ -618,7 +618,7 @@ def init_XTCON_isothermal(test_object):
     click       ('Start Button')
     write       ("Update_Database Lab_Space,PQMS,XTCON,Running,True")
 
-def set_XTCON_temp (temperature_set_point):
+def set_XTCON_temperature (temperature_set_point):
     
     click       ('Temperature Controller Window')
     move_cursor ('Toolbar')
