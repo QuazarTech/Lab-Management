@@ -304,8 +304,6 @@ def load_sample(Sample, Sample_Box, test_object):
     
     elif (test_object == "Insert_RT_Old"):
         
-        switch_on_PQMS_modules()
-        set_up_pump()
         release_pressure("Sample_Chamber")
         release_pressure("Heater_Chamber")
         unclamp()
@@ -748,12 +746,11 @@ def set_R_Time_measurement_settings(value_of_constant_source, run_mode):
     move_cursor("Top Menu")
     click ("Settings->Source Parametres")
     write ("execute : Set mode as constant " + run_mode)
-    write ("execute : Set Auto-Range to No")
-    write ("execute : Set " + run_mode + " value as " + value_of_constant_source)
     move_cursor("Top Menu")
     click("File->Done")
     move_cursor("Top Menu")
     click("Settings->Resistance Measurement Settings")
+    write ("execute : Set " + run_mode + " value as " + value_of_constant_source)
     write("execute : Set Bipolar as No")
     move_cursor("Top Menu")
     click('File->Done')
