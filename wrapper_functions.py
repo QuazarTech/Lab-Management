@@ -16,6 +16,15 @@ def get_experimental_parameters():
     
     return temperature_set_point, V_range, V_step, I_range, I_step, max_power
 
+def get_experimental_parameters_R_Time():
+
+    run_mode                 = raw_input("Which mode do you want to do the run in (constant current/voltage):\n")
+    V_range                  = raw_input("Enter Voltage Sweep Max (mV) : \n")
+    I_range                  = raw_input("Enter Current Sweep Max (uA) : \n")
+    max_power                = raw_input("Enter Max Power (mW): \n")
+    temperature_set_point    = raw_input("Enter Heater Setpoint Temperature (K) : \n")
+    
+    return temperature_set_point, V_range, I_range, max_power, run_mode
 
 
 def PQMS_IV_run (temperature_set_point, V_range, V_step, I_range, I_step, max_power):
