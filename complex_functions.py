@@ -648,12 +648,12 @@ def start_IV_run (V_range , V_step, I_max, I_step, power):
     write ("Update_Database Lab_Space,PQMS,XSMU,Running,False")
     save_graph()
 
-def start_R_Time(value_of_constant_source, run_mode):
+def start_R_Time( I_range, V_range, max_power, run_mode):
     click('I-V Source and measurement unit Window')
     move_cursor('Run Mode')
     click('Drop down menu')
     click('R-Time')
-    set_R_Time_measurement_settings(value_of_constant_source, run_mode)
+    set_R_Time_measurement_settings( I_range, V_range, max_power, run_mode)
     write("Update_Database Lab_Space,PQMS,XSMU,Mode,R-Time")
     click ('Start Button')
     write ("Update_Database Lab_Space,PQMS,XSMU,Running,True")
@@ -661,7 +661,7 @@ def start_R_Time(value_of_constant_source, run_mode):
     write ("Update_Database Lab_Space,PQMS,XSMU,Running,False")
     save_graph()
 
-def set_R_Time_measurement_settings(value_of_constant_source, run_mode):
+def set_R_Time_measurement_settings( I_range, V_range, max_power, run_mode):
     move_cursor("Top Menu")
     click ("Settings->Source Parametres")
     write ("execute : Set mode as constant " + run_mode)
@@ -669,7 +669,9 @@ def set_R_Time_measurement_settings(value_of_constant_source, run_mode):
     click("File->Done")
     move_cursor("Top Menu")
     click("Settings->Resistance Measurement Settings")
-    write ("execute : Set " + run_mode + " value as " + value_of_constant_source)
+    write ("execute : Set voltage limit as " + V_range)
+    write ("execute : Set current limit as " + I_range)
+    write ("execute : Set max_power as " + max_power)
     write("execute : Set Bipolar as No")
     move_cursor("Top Menu")
     click('File->Done')
