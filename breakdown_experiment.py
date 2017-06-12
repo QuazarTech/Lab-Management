@@ -4,7 +4,9 @@ name = "breakdown_experiment"
 def run(Sample, Sample_Box, sample_description, address):
     test_object = select_test_object()
     prepare_sample (Sample, Sample_Box, test_object)
-    load_sample (Sample, Sample_Box, test_object)
+    switch_on_PQMS_modules()
+    set_up_pump()
+    is_the_sample_loaded (Sample, Sample_Box, test_object)
     
     print("\nGenerating procedural steps for experiment.  .  .  .\n")
 
@@ -69,3 +71,11 @@ def check_set_point(temperature_set_point):
     	return True
     else:
     	return False
+
+def is_the_sample_loaded (Sample, Sample_Box, test_object):
+  
+  response = raw_input ("\nIs the insert with sample loaded into the cryostat? : y/n \n")
+  while ((response != 'y') and (response != 'n')):
+    response = raw_input ("\nIs the insert with sample loaded into the cryostat? : y/n \n")
+    if (response == 'n'):
+      load_sample (Sample, Sample_Box, test_object)
