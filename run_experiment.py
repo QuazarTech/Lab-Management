@@ -1,18 +1,18 @@
 import time
-from datetime import datetime
-from pytz import timezone
-import datetime
 import yaml as yaml
 import sys
 import os
 import zener_experiment
+import breakdown_experiment
+import lab_reset
+import unload_sample_experiment
 #import practice_experiments
 #import service_log
 
 
 #####################################################################
 
-experiments = ["service_log", "zener_experiment", "practice_experiments"]
+experiments = ["service_log", "zener_experiment", "practice_experiments", "breakdown_experiment", "unload_sample_experiment"]
 
 #create and init and array for timestamps
 time_array = []
@@ -132,6 +132,7 @@ def abort_execution(experiment, log):
         	log.write(string + '\n')
 		log.write("Execution has come to an end due to error in line: " + line + '\n')
 	log.close()
+	return string
 
 
 def pause_execution(log):
@@ -162,7 +163,8 @@ def put_in_folder (experiment, log, diff_file, new_dbase):
 	os.system("mv " + log + " " + folder_name + "/")
 	os.system("mv " + diff_file + " " + folder_name + "/")
 	os.system("mv " + new_dbase + ".yaml " + folder_name + "/")
-	create_duration_log (folder_name)
+	lab_reset.lab_reset(folder_name)
+	create_duration_log (experiment, folder_name)
 
 def time_stamp_and_comments(log, line, temp, user_input):
 	with open (log.name, "a") as log:
@@ -181,8 +183,8 @@ def initialize_database(database_name):
     		fbase.close()
     		f.close()
 
-def create_duration_log (folder_name):
-	f = open(folder_name + "/run_data_procedure.txt", "r")
+def create_duration_log (experiment, folder_name):
+	f = open(folder_name + "/" + experiment.procedure, "r")
 	fnew = open(folder_name + "/duration_log.txt", "w")
 	fnew.write ("PQMS Data Run Time\n\n")
 	i = 0
@@ -252,7 +254,7 @@ with open(read_file, "r") as fdata:
                 temp = experiment.time_in_ist()
                 
                 if (user_input == "end"):
-                    abort_execution(experiment, log)
+                    string = abort_execution(experiment, log)
                     put_in_folder(experiment, log.name, diff_file, new_dbase)
                     sys.exit(string)
                 

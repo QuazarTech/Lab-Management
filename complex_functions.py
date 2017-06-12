@@ -236,7 +236,7 @@ def mount_sample (Sample, Sample_Box, test_object):
         #SOLDERING PROCESS
         
         write("execute : Stick " + Sample + "'s body to the mounting surface with Kapton tape")
-        
+        goto("Insert_RT_Old.Home_Coordinates")
     
     goto('Tweezers.Home_Coordinates')
     leave('Tweezers')
@@ -538,15 +538,6 @@ def flush_helium (chamber):
     
     write   ("Update_Database Lab_Space,PQMS,Cryostat_Steel,Helium,YES")
     
-def check_peak_temperature(temperature_set_point, chamber):
-    if ( float(temperature_set_point) > 150.0):
-        response = raw_input("\nIs there vacuum in " + chamber +" ? : y/n\n")
-        while((response != 'n') and (response != 'y')):
-    		response = raw_input("\nIs there vacuum in " + chamber +" ?\n")
-        if (response == 'n'):
-    		create_vaccum (chamber)
-    
-    
 def pour_liquid_nitrogen ():
     
     goto    ("Cryocan_BA11.Home_Coordinates")
@@ -649,15 +640,41 @@ def start_IV_run (V_range , V_step, I_max, I_step, power):
     move_cursor('Run Mode')
     click('Drop down menu')
     click('I-V')
-    set_measurement_settings(V_range, V_step, I_max, I_step, power)
+    set_IV_measurement_settings(V_range, V_step, I_max, I_step, power)
     write("Update_Database Lab_Space,PQMS,XSMU,Mode,I-V")
     click ('Start Button')
     write ("Update_Database Lab_Space,PQMS,XSMU,Running,True")
     write ("execute : Wait until graph comes to an end")
     write ("Update_Database Lab_Space,PQMS,XSMU,Running,False")
     save_graph()
+
+def start_R_Time(value_of_constant_source, run_mode):
+    click('I-V Source and measurement unit Window')
+    move_cursor('Run Mode')
+    click('Drop down menu')
+    click('R-Time')
+    set_R_Time_measurement_settings(value_of_constant_source, run_mode)
+    write("Update_Database Lab_Space,PQMS,XSMU,Mode,R-Time")
+    click ('Start Button')
+    write ("Update_Database Lab_Space,PQMS,XSMU,Running,True")
+    write ("execute : Wait until graph comes to an end")
+    write ("Update_Database Lab_Space,PQMS,XSMU,Running,False")
+    save_graph()
+
+def set_R_Time_measurement_settings(value_of_constant_source, run_mode):
+    move_cursor("Top Menu")
+    click ("Settings->Source Parametres")
+    write ("execute : Set mode as constant " + run_mode)
+    move_cursor("Top Menu")
+    click("File->Done")
+    move_cursor("Top Menu")
+    click("Settings->Resistance Measurement Settings")
+    write ("execute : Set " + run_mode + " value as " + value_of_constant_source)
+    write("execute : Set Bipolar as No")
+    move_cursor("Top Menu")
+    click('File->Done')
         
-def set_measurement_settings(V_range, V_step, I_max, I_step, power):
+def set_IV_measurement_settings(V_range, V_step, I_max, I_step, power):
     #write ("execute : In the top menu, click on \'Settings->Source Parameters\'")
     #from the drop down menu, click on constant voltage
     #click on file, and then done

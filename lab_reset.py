@@ -1,30 +1,30 @@
 import yaml
 
-folder_name = raw_input("Enter folder name:")
+array_of_keys     = []
+def lab_reset(folder_name):
 
-with open(folder_name+"/run_data_new_database.yaml", "r") as f:
-    data = yaml.load(f)
-    with open("lab_database.yaml", "r") as fo:
-        data_original = yaml.load(fo)
-    fo.close()
-f.close()
+	with open(folder_name+"/run_data_new_database.yaml", "r") as f:
+    		new_data      = yaml.load(f)
+    		with open("lab_database.yaml", "r") as fo:
+        		original_data = yaml.load(fo)
+    		fo.close()
+	f.close()
+	database_original = []
+	new_database      = []
+	get_differences(new_data, new_database)
+	get_differences(original_data, database_original)
 
-val_array_original = []
-val_array_data = []
+	print "The difference between the new and old databases are"
+	print "#####################################################\n"
+	print list(set(new_database) - set(database_original))
+	print "#####################################################\n"
 
 
-def get_val_array(d, val_array):
+def get_differences(d, val_array):
     for k,v in d.items():
-        if((v == type(str)) or (v == type(bool))):
-            val_array.append(k + "," + str(v))
-        else:
             try:
-                get_val_array(v , val_array)
+                array_of_keys.append(k)
+                get_differences(v , val_array)
             except AttributeError:
-                val_array.append(k + "," + str(v))
-
-get_val_array(data, val_array_data)
-get_val_array(data_original, val_array_original)
-
-print len(val_array_data), len(val_array_original)
-print list(set(val_array_data) - set(val_array_original))
+                property_key = array_of_keys[-2]
+                val_array.append(property_key + " " + k + "," + str(v))
