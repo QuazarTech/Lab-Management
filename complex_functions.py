@@ -565,8 +565,7 @@ def set_XTCON_temperature (temperature_set_point):
     
     click       ('Temperature Controller Window')
     move_cursor ('Toolbar')
-    click       ('Settings')
-    click       ('Isothermal Settings')
+    click       ('Settings->Isothermal Settings')
     write       ("Update_Database Lab_Space,PQMS,XTCON,Mode,ISOTHERMAL")
     write       ("execute : Set 'Heater Set point' Temperature to " + str(temperature_set_point) + " K")
     move_cursor ('Toolbar')
@@ -639,24 +638,26 @@ def start_IV_step_ramp_run (initial_temperature, final_temperature, temperature_
 ###############################################################################
 #R_Tme_linear_ramp functions
 
-def set_R_Time_linear_ramp_measurement_settings (initial_temperature, ramp_rate, run_mode, I_range, V_range, max_power):
-    click       ('Measurement Mode settings')
-    click       ('Electrical DC Conductivity')
+def set_RT_linear_ramp_measurement_settings (final_temperature, ramp_rate, run_mode, I_range, V_range, max_power):
+    
     move_cursor ('Run control')
     click       ('drop down menu')
     click       ('R-T (linear ramp)')
+    
     move_cursor ('Toolbar')
     click       ('Settings->Temperature controller')
     click       ('Linear ramp settings')
-    write       ("execute : Set Initial Temperature to " + str(initial_temperature))
+    write       ("execute : Set Final Temperature to " + str(final_temperature))
     write       ("execute : Set Ramp rate to " + ramp_rate + " K/min")
     click       ('File->Apply')
+   
     move_cursor ('Toolbar')
     click       ('Settings->I-V Source and Measurement Unit')
-    click       ("Settings->Source Parametres")
+    click       ("Settings->Source Parameters")
     write       ("execute : Set mode as constant " + run_mode)
     move_cursor ("Top Menu")
     click       ("File->Done")
+    
     move_cursor ("Top Menu")
     click       ("Settings->Resistance Measurement Settings")
     write       ("execute : Set voltage limit as " + V_range)
@@ -666,15 +667,24 @@ def set_R_Time_linear_ramp_measurement_settings (initial_temperature, ramp_rate,
     move_cursor ("Top Menu")
     click       ('File->Done')
 
-def start_R_Time_linear_ramp():
+def start_RT_linear_ramp (initial_temperature, final_temperature, ramp_rate, run_mode, I_range, V_range, max_power):
     
-    click       ('Electrical DC Conductivity Window')
-    write       ("Update_Database Lab_Space,PQMS,XSMU,Mode,R-Time")
-    move_cursor ('Run Control')
+    goto        ("Qrius Main Window")
+    click       ('Measurement Mode settings')
+    click       ('Electrical DC Conductivity')
+    
+    set_RT_linear_ramp_measurement_settings (final_temperature, ramp_rate, run_mode, I_range, V_range, max_power)
+    write("Update_Database Lab_Space,PQMS,XSMU,Mode,RT")
+    write("Update_Database Lab_Space,PQMS,XTCON,Mode,Linear_Ramp")
+    
+    write       ("execute : Wait for heater temperature to reach"  + str(initial_temperature))
+    
     click       ('Start')
     write       ("Update_Database Lab_Space,PQMS,XTCON,Running,True")
     write       ("Update_Database Lab_Space,PQMS,XSMU,Running,True")
+    
     write       ("execute : Wait until graph comes to an end")
+    
     write       ("Update_Database Lab_Space,PQMS,XTCON,Running,False")
     write       ("Update_Database Lab_Space,PQMS,XSMU,Running,False")
     save_graph()
@@ -682,7 +692,7 @@ def start_R_Time_linear_ramp():
 ###############################################################################
 #R_Tme_isothermal functions
 
-def set_R_Time_isothermal_measurement_settings( I_range, V_range, max_power, run_mode):
+def set_R_Time_isothermal_measurement_settings (I_range, V_range, max_power, run_mode):
     move_cursor("Top Menu")
     click ("Settings->Source Parametres")
     write ("execute : Set mode as constant " + run_mode)

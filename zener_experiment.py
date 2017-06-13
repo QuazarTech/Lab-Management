@@ -31,10 +31,7 @@ def run (Sample, Sample_Box, sample_description, address):
     #####################
     
     release_PQMS_vaccum ()
-    switch_off_PQMS_modules()
-        
-    unload_sample (Sample, Sample_Box, test_object)
-    remove_sample (Sample, Sample_Box, test_object)
     
+    switch_off_PQMS_modules()
     switch_off_computer()
     

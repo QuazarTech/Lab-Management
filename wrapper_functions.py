@@ -71,6 +71,7 @@ def PQMS_IV_run (initial_temperature, final_temperature, temperature_step, V_ran
 def PQMS_R_Time_run_isothermal (run_mode,  I_range, V_range, max_power, temperature_set_point, number_of_measurements):
     
     for i in range(number_of_measurements):
+
 	    write("\n##############################################################")
 	    write("                   Run starts")
 	    write("##############################################################\n")
@@ -81,6 +82,19 @@ def PQMS_R_Time_run_isothermal (run_mode,  I_range, V_range, max_power, temperat
 	    write("\n##############################################################")
 	    write("                   Run ends")
 	    write("##############################################################\n")
+
+def PQMS_RT_run_linear_ramp (initial_temperature, final_temperature, ramp_rate, run_mode, I_range, V_range, max_power):
+    
+    write("\n##############################################################")
+    write("                   Run starts")
+    write("##############################################################\n")
+    
+    start_RT_linear_ramp (initial_temperature, final_temperature, ramp_rate, run_mode, I_range, V_range, max_power)
+    
+    write("\n##############################################################")
+    write("                   Run ends")
+    write("##############################################################\n")
+
 
 ###############################################################################
 
