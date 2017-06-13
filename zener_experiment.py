@@ -17,15 +17,18 @@ def run (Sample, Sample_Box, sample_description, address):
     set_save_folder(Sample_Box, Sample, sample_description, address)
     set_up_PQMS_modules()
     
-    
-    initial_temperature, final_temperature, temperature_step, V_range, V_step, I_range, I_step, max_power = get_experimental_parameters_IV_stepped_ramp()
     previous_run_temperature = ""
+    initial_temperature, final_temperature, temperature_step, V_range, V_step, I_range, I_step, max_power = get_experimental_parameters_IV_stepped_ramp()
     current_run_temperature = initial_temperature
-    cryostat_environment_setup (previous_run_temperature, current_run_temperature)
+    reset_cryostat_environment (previous_run_temperature, current_run_temperature)
     
     need_liquid_nitrogen()
-        
+    
+    #####################
+      
     PQMS_IV_run (initial_temperature, final_temperature, temperature_step, V_range, V_step, I_range, I_step, max_power)
+    
+    #####################
     
     release_PQMS_vaccum ()
     switch_off_PQMS_modules()

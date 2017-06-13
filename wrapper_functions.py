@@ -68,19 +68,21 @@ def PQMS_IV_run (initial_temperature, final_temperature, temperature_step, V_ran
     	 #PQMS_IV_run(temperature_set_point, V_range, V_step, I_range, I_step, max_power)
 
 
-def prepare_sample (Sample, Sample_Box, test_object):
+def PQMS_R_Time_run_isothermal (run_mode,  I_range, V_range, max_power, temperature_set_point, number_of_measurements):
     
-    mounted = raw_input( "\nIs the sample mounted on the puck? : y/n \n")
-    while ((mounted != 'y') and (mounted != 'n')):
-        mounted = raw_input( "\nIs the sample mounted on the puck? : y/n \n")
-        
-    if (mounted == 'n'):
-        mount_sample (Sample, Sample_Box, test_object)
-        
-    elif (mounted == 'y'):
-        print ("\nSample already mounted. Continue to next step.\n")
-        sample_is_mounted()
-        
+    for i in range(number_of_measurements):
+	    write("\n##############################################################")
+	    write("                   Run starts")
+	    write("##############################################################\n")
+	    
+	    set_XTCON_temperature (temperature_set_point)
+	    start_R_Time_isothermal( I_range, V_range, max_power,  run_mode)
+
+	    write("\n##############################################################")
+	    write("                   Run ends")
+	    write("##############################################################\n")
+
+###############################################################################
 
 def select_test_object ():
 
@@ -107,7 +109,36 @@ def select_test_object ():
     return test_object
 
 
+def prepare_sample (Sample, Sample_Box, test_object):
+    
+    '''Asks the user if the sample is already soldered onto the test_object or is to be mounted during procedure'''
+    
+    mounted = raw_input( "\nIs the sample mounted on the puck? : y/n \n")
+    while ((mounted != 'y') and (mounted != 'n')):
+        mounted = raw_input( "\nIs the sample mounted on the puck? : y/n \n")
+        
+    if (mounted == 'n'):
+        mount_sample (Sample, Sample_Box, test_object)
+        
+    elif (mounted == 'y'):
+        print ("\nSample already mounted. Continue to next step.\n")
+        sample_is_mounted()
+
+
+def is_the_sample_loaded (Sample, Sample_Box, test_object):
+    
+    '''Asks the user if the sample with the insert is already loaded in the cryostat or is to be loaded during procedure'''
+  
+    response = raw_input ("\nIs the insert with sample loaded into the cryostat? : y/n \n")
+    while ((response != 'y') and (response != 'n')):
+        response = raw_input ("\nIs the insert with sample loaded into the cryostat? : y/n \n")
+        if (response == 'n'):
+            load_sample (Sample, Sample_Box, test_object)
+
+
 def remove_sample (Sample, Sample_Box, test_object):
+    
+    '''Asks the user if the sample the sample is to be desoldered from the test_object after completion of the procedure'''
     
     unmount = raw_input ("\nDo you want to unmount the sample from the Puck after the measurements? : y/n \n")
     while ((unmount != 'y') and (unmount != 'n')):
@@ -121,6 +152,7 @@ def remove_sample (Sample, Sample_Box, test_object):
     elif (unmount == 'y'):
         unmount_sample (Sample, Sample_Box, test_object)
 
+###############################################################################
 
 def need_liquid_nitrogen ():
     response = raw_input ("\nDo you want to pour liquid nitrogen? : y/n\n")
@@ -128,9 +160,9 @@ def need_liquid_nitrogen ():
         response = raw_input ("\nDo you want to pour liquid nitrogen? : y/n\n")
     if (response == 'y'):
         pour_liquid_nitrogen()
-        
 
-def cryostat_environment_setup(previous_run_temperature, current_run_temperature):
+
+def cryostat_environment_setup (previous_run_temperature, current_run_temperature):
     
     #first run cases
     if   (previous_run_temperature == "" and current_run_temperature <= 150):
@@ -149,22 +181,16 @@ def cryostat_environment_setup(previous_run_temperature, current_run_temperature
     elif (previous_run_temperature > 150 and current_run_temperature <= 150):
         flush_helium ("Heater_Chamber")        
 
-def is_the_sample_loaded (Sample, Sample_Box, test_object):
-  
-  response = raw_input ("\nIs the insert with sample loaded into the cryostat? : y/n \n")
-  while ((response != 'y') and (response != 'n')):
-    response = raw_input ("\nIs the insert with sample loaded into the cryostat? : y/n \n")
-    if (response == 'n'):
-      load_sample (Sample, Sample_Box, test_object)
 
-
-def is_helium_flushed(previous_run_temperature, temperature_set_point):
+def reset_cryostat_environment (previous_run_temperature, temperature_set_point):
 
   response = raw_input("Do you want to reset the cryostat environment?\n")
   while ((response != 'y') and (response != 'n')):
     response = raw_input ("Do you want to reset the cryostat environment?\n")
   if(response == 'y'):
   	cryostat_environment_setup(previous_run_temperature, temperature_set_point)
+        
+
 
 def release_PQMS_vaccum ():
     

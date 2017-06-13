@@ -703,7 +703,7 @@ def start_R_Time_isothermal( I_range, V_range, max_power, run_mode):
     move_cursor('Run Mode')
     click('Drop down menu')
     click('R-Time')
-    set_R_Time_measurement_settings( I_range, V_range, max_power, run_mode)
+    set_R_Time_isothermal_measurement_settings( I_range, V_range, max_power, run_mode)
     write("Update_Database Lab_Space,PQMS,XSMU,Mode,R-Time")
     click ('Start Button')
     write ("Update_Database Lab_Space,PQMS,XSMU,Running,True")
