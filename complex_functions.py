@@ -625,7 +625,7 @@ def set_XTCON_temperature (temperature_set_point):
     click       ('Settings')
     click       ('Isothermal Settings')
     write       ("Update_Database Lab_Space,PQMS,XTCON,Mode,ISOTHERMAL")
-    write       ("execute : Set 'Heater Set point' Temperature to " + temperature_set_point + " K")
+    write       ("execute : Set 'Heater Set point' Temperature to " + str(temperature_set_point) + " K")
     move_cursor ('Toolbar')
     click       ('File->Apply')
     write       ("execute : Wait till sample temperature stabilizes")
