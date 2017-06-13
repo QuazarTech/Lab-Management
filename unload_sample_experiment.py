@@ -1,12 +1,20 @@
 from complex_functions import *
-name="unload_sample_experiment"
+from wrapper_functions import *
+
+name="unload_sample"
 
 def run(Sample, Sample_Box, sample_description, address):
+    
     test_object = select_test_object()
+    
     switch_on_PQMS_modules()
     set_up_pump()
+    
+    release_PQMS_vaccum()
+    
     unload_sample (Sample, Sample_Box, test_object)
+    liquid_nitrogen_remaining()
+    switch_off_PQMS_modules()
+    
     remove_sample (Sample, Sample_Box, test_object)
-    print("\nProcedure has been created. Filename : " + procedure)
-    print ("\nReady for execution.\n")
-
+    

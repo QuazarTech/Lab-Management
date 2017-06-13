@@ -211,3 +211,13 @@ def release_PQMS_vaccum ():
                         
         elif (response == 'n'):
             break
+
+def liquid_nitrogen_remaining ():
+    
+    response = raw_input ("Is liquid nitrogen left in the cryocan? : y/n\n")
+    
+    while ((response != 'y') and (response != 'n')):
+        response = raw_input ("Is liquid nitrogen left in the cryocan? : y/n\n")
+        
+    if (response == 'y'):
+        restore_vaccum ()

@@ -744,6 +744,14 @@ def release_pressure (chamber):
     write   ("Update_Database Lab_Space,PQMS,Cryostat_Steel,Vaccum,NO")
     write   ("Update_Database Lab_Space,PQMS,Cryostat_Steel,Helium,NO")
     
+def restore_vaccum ():
+    
+    goto    ("Cryostat Cover")
+    hold    ("Cryostat Cover")
+    write   ("execute : Fix Cryostat cover on the cryostat opening")
+    clamp   ()
+    create_vaccum ("Sample_Chamber")
+    create_vaccum ("Heater_Chamber")
     
 def flush_helium (chamber):
     

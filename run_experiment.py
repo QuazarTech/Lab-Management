@@ -10,7 +10,7 @@ import linear_ramp
 
 #####################################################################
 
-experiments = ["service_log", "zener_experiment", "practice_experiments", "breakdown_experiment", "unload_sample_experiment", "linear_ramp"]
+experiments = ["service_log", "zener_experiment", "breakdown_experiment", "unload_sample_experiment", "linear_ramp"]
 
 #create and init and array for timestamps
 time_array = []
