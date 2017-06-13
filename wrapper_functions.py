@@ -30,12 +30,12 @@ def get_experimental_parameters_linear_ramp():
    
     run_mode                  = raw_input("Enter the R-Time run mode (current/voltage):\n")
     ramp_rate                 = raw_input("Enter Ramp rate : \n")
-    initial_temperature       = float(raw_input("Enter the starting temperature (K):\n"))
+    final_temperature       = float(raw_input("Enter the ending temperature (K):\n"))
     V_range                   = raw_input("Enter Voltage Sweep Max (mV) : \n")
     I_range                   = raw_input("Enter Current Sweep Max (uA) : \n")
     max_power                 = raw_input("Enter Max Power (mW): \n")
     
-    return initial_temperature, ramp_rate, run_mode, I_range, V_range, max_power, ramp_rate
+    return final_temperature, ramp_rate, run_mode, I_range, V_range, max_power, ramp_rate
 
 def PQMS_IV_run (temperature_set_point, V_range, V_step, I_range, I_step, max_power):
     
@@ -176,7 +176,7 @@ def init_linear_ramp(initial_temperature, ramp_rate, run_mode, I_range, V_range,
     move_cursor ('Toolbar')
     click       ('Settings->Temperature controller')
     click       ('Linear ramp settings')
-    write       ("execute : Set Initial Temperature to " + initial_temperature)
+    write       ("execute : Set Initial Temperature to " + str(initial_temperature))
     write       ("execute : Set Ramp rate to " + ramp_rate + " K/min")
     click       ('File->Apply')
     move_cursor ('Toolbar')
