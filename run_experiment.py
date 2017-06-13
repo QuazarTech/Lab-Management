@@ -2,15 +2,16 @@ import time
 import yaml as yaml
 import sys
 import os
-import zener_experiment
-import breakdown_experiment
+
+import IV_stepped_ramp
+import R_Time_isothermal
+import RT_linear_ramp
+import unload_sample
 import lab_reset
-import unload_sample_experiment
-import linear_ramp
 
 #####################################################################
 
-experiments = ["service_log", "zener_experiment", "breakdown_experiment", "unload_sample_experiment", "linear_ramp"]
+experiments = ["IV_stepped_ramp", "R_Time_isothermal", "unload_sample", "RT_linear_ramp"]
 
 #create and init and array for timestamps
 time_array = []

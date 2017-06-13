@@ -1,7 +1,7 @@
 from complex_functions import *
 from wrapper_functions import *
 
-name = "breakdown_experiment"
+name = "R_Time_isothermal"
 
 def run(Sample, Sample_Box, sample_description, address):
     

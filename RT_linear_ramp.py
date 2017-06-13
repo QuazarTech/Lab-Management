@@ -1,7 +1,7 @@
 from complex_functions import *
 from wrapper_functions import *
 
-name = "linear_ramp"
+name = "RT_linear_ramp"
 
 def run (Sample, Sample_Box, sample_description, address):
    
