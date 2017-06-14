@@ -269,6 +269,16 @@ def load_sample(Sample, Sample_Box, test_object):
         write("execute : Insert the pin_holes into the puck pins")
         write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Puck,Insert_Connection,CONNECTED")
         write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Insert2Puck_Cable,State,CONNECTED")
+        
+        release_pressure('Sample_Chamber')
+    	release_pressure('Heater_Chamber')
+    	unclamp()
+        
+        
+        write('execute : Remove Cryostat_Cover')
+    	goto('Cryostat_Cover.Home_Coordinates')
+    	leave('Cryostat_Cover')
+        
         goto('Insert_RT_Puck.Exit_Coordinates')
         goto('Insert_RT_Puck.Home_Coordinates')
 
@@ -285,13 +295,19 @@ def load_sample(Sample, Sample_Box, test_object):
     
     elif (test_object == "Insert_RT_Old"):
         
-        move('Insert_RT_Old', 'Insert_RT_Puck.Exit_Coordinates')
-        goto('Insert_RT_Puck.Home_Coordinates')
+        release_pressure('Sample_Chamber')
+    	release_pressure('Heater_Chamber')
+    	unclamp()
+    	
+        write('execute : Remove Cryostat_Cover')
+    	goto('Cryostat_Cover.Home_Coordinates')
+    	
+    	leave('Cryostat_Cover')
+        move('Insert_RT_Old', 'Cryostat.Exit_Coordinates')
         
         clamp()
         
         connect_cable('RT_Cable', test_object)
-        connect_cable('HT_Cable', test_object)
         
         
         
@@ -455,6 +471,7 @@ def unload_sample(Sample, Sample_Box, test_object):
         
     elif (test_object == "Insert_RT_Old"):
         disconnect_cable("RT_Cable")
+        unclamp()
         move ("Insert_RT_Old", "Insert_RT_Old.Exit_Coordinates")
         goto ("Sample_Mounting_Coordinates")
         
@@ -597,9 +614,9 @@ def set_IV_step_ramp_measurement_settings(initial_temperature, final_temperature
     write       ("execute : Temperature Step to " + str(temperature_step) + " K")
     
     write       ("execute : Set Pre-stabilization Delay to 100 seconds")
-    write       ("execute : Set Post-stabilization Delay to 300 seconds")
-    write       ("execute : Set Temperature Tolerance to 1 K")
-    write       ("execute : Set Monitoring Period to 18000 seconds")
+    write       ("execute : Set Post-stabilization Delay to 100 seconds")
+    write       ("execute : Set Temperature Tolerance to 0.5 K")
+    write       ("execute : Set Monitoring Period to 300 seconds")
     
     ################################
     click       ('File->Apply')
