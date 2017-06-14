@@ -3,15 +3,16 @@ from wrapper_functions import *
 
 name = "R_Time_isothermal"
 
-def run(Sample, Sample_Box, sample_description, address):
+def run (Sample, Sample_Box, sample_description, address):
     
     
     test_object = select_test_object()
     prepare_sample (Sample, Sample_Box, test_object)
-    is_the_sample_loaded (Sample, Sample_Box, test_object)
     
     switch_on_PQMS_modules()
     set_up_pump()
+    
+    is_the_sample_loaded (Sample, Sample_Box, test_object)
     
     switch_on_computer()
     set_save_folder(Sample_Box, Sample, sample_description, address)
