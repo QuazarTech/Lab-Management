@@ -13,15 +13,15 @@ def run (Sample, Sample_Box, sample_description, address):
     set_up_pump()
     
     is_the_sample_loaded (Sample, Sample_Box, test_object)
-    
-    switch_on_computer()
-    set_save_folder(Sample_Box, Sample, sample_description, address)
-    set_up_PQMS_modules()
 
     previous_run_temperature = ""
     temperature_set_point, V_range, I_range, max_power, run_mode  = get_experimental_parameters_R_Time_isothermal()
     current_run_temperature = temperature_set_point
     reset_cryostat_environment (previous_run_temperature, current_run_temperature)
+    
+    switch_on_computer()
+    set_save_folder(Sample_Box, Sample, sample_description, address)
+    set_up_PQMS_modules()
     
     need_liquid_nitrogen()
     
