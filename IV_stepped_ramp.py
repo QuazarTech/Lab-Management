@@ -8,11 +8,13 @@ def run (Sample, Sample_Box, sample_description, address):
     
     test_object = select_test_object()
     prepare_sample (Sample, Sample_Box, test_object)
-    is_the_sample_loaded (Sample, Sample_Box, test_object)
     
     switch_on_PQMS_modules()
     set_up_pump()
     
+    is_the_sample_loaded (Sample, Sample_Box, test_object)
+    
+
     switch_on_computer()
     set_save_folder(Sample_Box, Sample, sample_description, address)
     set_up_PQMS_modules()
