@@ -146,8 +146,8 @@ def is_the_sample_loaded (Sample, Sample_Box, test_object):
     response = raw_input ("\nIs the insert with sample loaded into the cryostat? : y/n \n")
     while ((response != 'y') and (response != 'n')):
         response = raw_input ("\nIs the insert with sample loaded into the cryostat? : y/n \n")
-        if (response == 'n'):
-            load_sample (Sample, Sample_Box, test_object)
+    if (response == 'n'):
+        load_sample (Sample, Sample_Box, test_object)
 
 
 def remove_sample (Sample, Sample_Box, test_object):
@@ -215,16 +215,15 @@ def release_PQMS_vaccum ():
         print ("\nIt is NOT reccomended to release vaccum if there is still liquid nitrogen left in the cryocan.")
         response = raw_input ("Do you want to release vaccum? : y/n\n")
         
-        if (response == 'y'):
-            for chamber in CHAMBERS :
+    if (response == 'y'):
+        for chamber in CHAMBERS :
+            sure = raw_input ("\nAre you SURE you want to release vaccum in " + chamber + " ? : y/n\n")
+            while ((sure != 'y') and (sure != 'n')):
                 sure = raw_input ("\nAre you SURE you want to release vaccum in " + chamber + " ? : y/n\n")
-                while ((sure != 'y') and (sure != 'n')):
-                    sure = raw_input ("\nAre you SURE you want to release vaccum in " + chamber + " ? : y/n\n")
-                    if (sure == 'y'):
-                        release_vaccum (chamber)
+            if (sure == 'y'):
+                release_pressure (chamber)
                         
-        elif (response == 'n'):
-            break
+ 
 
 def liquid_nitrogen_remaining ():
     
