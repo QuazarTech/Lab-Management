@@ -590,9 +590,56 @@ def set_XTCON_temperature (temperature_set_point):
     write       ("execute : Wait till sample temperature stabilizes")
 
 def stop_XTCON_run():
-    click   ('Temperature Controller Window')
-    write   ("execute : Stop Temperature Controller Run")
-    write   ("Update_Database Lab_Space,PQMS,XTCON,Running,False")
+    click       ('Temperature Controller Window')
+    write       ("execute : Stop Temperature Controller Run")
+    write       ("Update_Database Lab_Space,PQMS,XTCON,Running,False")
+
+##############################################################################
+# CV_isothermal functions
+
+def init_XSMU_constant_volatge (test_object):
+    click       ('IV Source and Measureent Unit Window')
+    move_cursor ('Run mode')
+    click       ('drop down menu')
+    click       ('V-Time')
+    click       ('Start Button')
+    write       ("Update_Database Lab_Space,PQMS,XSMU,Running,True")
+
+
+def set_XSMU_constant_volatge(voltage_set_point)
+    click       ('IV Source and Measureent Unit Window')
+    move_cursor ('Toolbar')
+    click       ('Settings->Source Parameters')
+    write       ("execute : Set 'Source Mode'  to constant voltage")
+    write       ("execute : Set 'Voltage Vakue'  to "+ str(voltage_set_point) +"mV")
+    move_cursor ('Toolbar')
+    click       ('File->Apply')
+    write       ("execute : Wait till Voltage stabilizes")
+
+def init_XLIA_isothermal_constant_voltage(test_object):
+    click('Lock-In Amplifier Window')
+    move_cursor ('Run mode')
+    click       ('drop down menu')
+    click       ('V-F')
+
+
+def set_XLIA_isothermal_constant_voltage(initial_frequency,final_frequency,frequency_step,reference_amplitude,reference_frequency,reference_phase,run_mode):
+    click       ('Lock-In Amplifier Window')
+    move_cursor ('Toolbar')
+    click       ('Settings -> V-F Ramp Settings')
+    write       ("execute : Set 'Initial Frequency'  to " + str(initial_frequency) + " Hz" )
+    write       ("execute : Set 'Final Frequency'  to "   + str(final_frequency)   + " Hz" )
+    write       ("execute : Set 'Frequency step'  to "    + str(frequency_step)    + " Hz" )
+    click       ('File -> Apply')
+    move_cursor ('Toolbar')
+    click       ('Settings -> Reference Settings')
+    write       ("execute : Set 'Amplitude'  to " + str(reference_amplitude) + " mV" )    
+    write       ("execute : Set 'Frequency'  to " + str(reference_frequency) + " Hz" )
+    write       ("execute : Set 'Phase'  to "     + str(reference_phase)     + " degrees" )
+    click       ('File -> Apply')
+    move_cursor ('Run control')
+    click       ('Start Button')
+
     	
 ###############################################################################
 #IV_step_ramp functions functions

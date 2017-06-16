@@ -11,7 +11,7 @@ import lab_reset
 
 #####################################################################
 
-experiments = ["IV_stepped_ramp", "R_Time_isothermal", "unload_sample", "RT_linear_ramp"]
+experiments = ["IV_stepped_ramp", "R_Time_isothermal", "unload_sample", "RT_linear_ramp","CV_isothermal"]
 
 #create and init and array for timestamps
 time_array = []
