@@ -6,11 +6,19 @@ name = "IV_stepped_ramp"
 def run (Sample, Sample_Box, sample_description, address):
     
     
+    #####################
+    #select the test object and mount the sample on it
+    
     test_object = select_test_object()
     prepare_sample (Sample, Sample_Box, test_object)
     
+    #####################
+    #switch on PQMS
+    
     switch_on_PQMS_modules()
     set_up_pump()
+    
+    #####################
     
     is_the_sample_loaded (Sample, Sample_Box, test_object)
     
@@ -26,6 +34,7 @@ def run (Sample, Sample_Box, sample_description, address):
     need_liquid_nitrogen()
     
     #####################
+    #Actual measurements take place here
       
     PQMS_IV_run (initial_temperature, final_temperature, temperature_step, V_range, V_step, I_range, I_step, max_power)
     
