@@ -528,17 +528,17 @@ def switch_off_PQMS_modules():
     write  ("execute : Switch off XTCON.Power_Cable")
     write  ("Update_Database Lab_Space,PQMS,XTCON,State,OFF")
     
+    write   ("execute : Ensure that Pump.Release_Valve, Pump.Main_Valve, Sample_Chamber.Flush_Valve, Sample_Chamber.Evacuation_Valve, \
+                    Heater_Chamber.Flush_Valve, Heater_Chamber.Evacuation_Valve and all other valves connected to Helium_Cylinder are closed")
+    
     goto   ("PQMS.Pump.Power_Cable")
     write  ("execute : Switch off Pump.Power_Cable")
     write  ("Update_Database Lab_Space,PQMS,Pump,State,OFF")
     write  ("Update_Database Lab_Space,PQMS,Pirani_Gauge,State,OFF")
     
-    
     goto   ('Stabilizer.Power_Switch')
     write  ("execute : Switch OFF Stabilizer.Power_Switch")
     write  ("Update_Database Lab_Space,PQMS,Stabilizer,Power_Switch,State,OFF")
-    
-    write   ("execute : Close the Helium_Cylinder.Main_Valve")
     
 ###############################################################################    
 #Computer functions
@@ -793,17 +793,19 @@ def flush_helium (chamber):
     goto    ("Helium_Cylinder.Main_Valve")
     write   ("execute : Ensure that Helium_Cylinder.Pressure_Valve is closed (completely unscrewed loose in anticlockwise direction).")
     write   ("execute : Open Helium_Cylinder.Main_Valve by rotating in anticlockwise direction.")
-    write   ("execute : Turn the Helium_Cylinder.Pressure_Valve anticlockwise slightly until pressure guage reads about 20 psi.")
+    write   ("execute : Turn the Helium_Cylinder.Pressure_Valve clockwise slightly until pressure guage reads about 20 psi.")
     
+    rapid_movement()
     write   ("execute : Open " + chamber + ".Flush_Valve by rotating in anticlockwise direction.")
     write   ("execute : After 2 seconds, turn off " + chamber + ".Flush_Valve by rotating in clockwise direction")
-    
+
     goto    ("Helium_Cylinder.Main_Valve")
     write   ("execute : Close Helium_Cylinder.Pressure_Valve by rotating in anticlockwise direction until completely unscrewed loose.")
     write   ("execute : Close Helium_Cylinder.Main_Valve by rotating in anticlockwise direction.")
     
     write   ("execute : Open Pump.Release_Valve by turning in anticlockwise direction.")
     write   ("execute : Immediately, close the Pump.Release_Valve by turning in clockwise direction.")
+    end_rapid_movement()
     
     write   ("execute : Close " + chamber + ".Evacuation_Valve by rotating in clockwise direction")
     write   ("execute : Turn on Pump.Main_Valve by rotating it in anticlockwise direction.")
