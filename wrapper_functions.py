@@ -48,7 +48,13 @@ def get_experimental_parameters_CV_isothermal():
     reference_amplitude       = raw_input("Enter the amplitude of the sine wave signal generated across the terminals of the REF OUT port. Its range is 0 - 1000mV : \n")
     reference_frequency       = raw_input("Enter the frequency of the sine wave signal generated across the terminals of the REF OUT port. Its range in 10 - 10000 Hz : \n")
     reference_phase           = raw_input("Enter the phase difference in degrees of the sine wave signal generated across the terminals of the REF OUT port with respect to the internal reference. : \n")
+    temperature_set_point    = float(raw_input("Enter Heater Setpoint Temperature (K) : \n"))
 
+
+def get_experimental_parameters_bias_DC_voltage_measure():
+    voltage_set_point    = float(raw_input("Enter Voltage Setpoint : \n"))
+
+    return voltage_set_point
 
 
 ###############################################################################

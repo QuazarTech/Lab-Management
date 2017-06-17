@@ -606,7 +606,7 @@ def init_XSMU_constant_volatge (test_object):
     write       ("Update_Database Lab_Space,PQMS,XSMU,Running,True")
 
 
-def set_XSMU_constant_volatge(voltage_set_point)
+def set_XSMU_constant_volatge(voltage_set_point):
     click       ('IV Source and Measureent Unit Window')
     move_cursor ('Toolbar')
     click       ('Settings->Source Parameters')
