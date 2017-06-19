@@ -1,6 +1,7 @@
 from complex_functions import *
 
 TEST_OBJECTS    = ["Insert_RT_Puck", "Insert_RT_Old", "Puck_Board"]
+CRYOSTATS       = ["Quartz", "Double_Walled_Steel"]
 CHAMBERS        = ["Sample_Chamber", "Heater_Chamber"]
 
 ###############################################################################
@@ -147,6 +148,31 @@ def select_test_object ():
     return test_object
 
 
+def select_cryostat ():
+
+    print "\n\n Available Cryostats : "
+    print "______________________________\n"
+    
+    for item in CRYOSTATS:
+        print item
+    
+    print "______________________________\n"
+    cryostat = raw_input ("Load Insert to which Cryostat? : \n")    
+    
+    while (cryostat not in CRYOSTATS):
+        
+        print "\n\n Available Cryostats : "
+        print "______________________________\n"
+        
+        for item in CRYOSTATS:
+            print item
+        
+        print "______________________________\n"
+        cryostat = raw_input ("Load Insert to which Cryostat? : \n")
+        
+    return cryostat
+
+
 def prepare_sample (Sample, Sample_Box, test_object):
     
     '''Asks the user if the sample is already soldered onto the test_object or is to be mounted during procedure'''
@@ -163,7 +189,7 @@ def prepare_sample (Sample, Sample_Box, test_object):
         sample_is_mounted()
 
 
-def is_the_sample_loaded (Sample, Sample_Box, test_object):
+def is_the_sample_loaded (Sample, Sample_Box, test_object, cryostat):
     
     '''Asks the user if the sample with the insert is already loaded in the cryostat or is to be loaded during procedure'''
   
@@ -171,7 +197,7 @@ def is_the_sample_loaded (Sample, Sample_Box, test_object):
     while ((response != 'y') and (response != 'n')):
         response = raw_input ("\nIs the insert with sample loaded into the cryostat? : y/n \n")
     if (response == 'n'):
-        load_sample (Sample, Sample_Box, test_object)
+        load_sample (Sample, Sample_Box, test_object, cryostat)
 
 
 def remove_sample (Sample, Sample_Box, test_object):
@@ -200,7 +226,7 @@ def need_liquid_nitrogen ():
         pour_liquid_nitrogen()
 
 
-def cryostat_environment_setup (previous_run_temperature, current_run_temperature):
+def double_walled_steel_cryostat_environment_setup (previous_run_temperature, current_run_temperature):
     
     #first run cases
     if   (previous_run_temperature == "" and current_run_temperature <= 150):
@@ -219,33 +245,58 @@ def cryostat_environment_setup (previous_run_temperature, current_run_temperatur
     elif (previous_run_temperature > 150 and current_run_temperature <= 150):
         flush_helium ("Heater_Chamber")        
 
+def quartz_cryostat_environment_setup(previous_run_temperature, current_run_temperature):
+    
+    if   (previous_run_temperature == "" and current_run_temperature <= 150):
+        
+        flush_helium ("Sample_Chamber")
+        
+    elif (previous_run_temperature == "" and current_run_temperature > 150):
+        create_vaccum ("Sample_Chamber")
+    
+    #switch cases
+    elif (previous_run_temperature <=150 and current_run_temperature > 150):
+        create_vaccum ("Sample_Chamber")
+    
+    elif (previous_run_temperature > 150 and current_run_temperature <= 150):
+        flush_helium ("Sample_Chamber")        
 
-def reset_cryostat_environment (previous_run_temperature, temperature_set_point):
+    
+
+def reset_cryostat_environment (previous_run_temperature, temperature_set_point, cryostat):
 
   response = raw_input("Do you want to reset the cryostat environment?\n")
   while ((response != 'y') and (response != 'n')):
     response = raw_input ("Do you want to reset the cryostat environment?\n")
-  if(response == 'y'):
-  	cryostat_environment_setup(previous_run_temperature, temperature_set_point)
-        
+  if(response == 'y') and (cryostat == "Double_Walled_Steel"):
+  	double_walled_steel_cryostat_environment_setup(previous_run_temperature, temperature_set_point)
+  if(response == 'y') and (cryostat == "Quartz"):
+  	quartz_cryostat_environment_setup(previous_run_temperature, temperature_set_point)      
 
 
-def release_PQMS_vaccum ():
+def release_PQMS_vaccum (cryostat):
     
     print ("\nIt is NOT reccomended to release vaccum if there is still liquid nitrogen left in the cryocan.")
     response = raw_input ("Do you want to release vaccum? : y/n\n")
     
-    while ((response != 'y') and (response != 'n')):
-        print ("\nIt is NOT reccomended to release vaccum if there is still liquid nitrogen left in the cryocan.")
-        response = raw_input ("Do you want to release vaccum? : y/n\n")
+    if (cryostat == "Double_Walled_Steel"):
         
-    if (response == 'y'):
-        for chamber in CHAMBERS :
-            sure = raw_input ("\nAre you SURE you want to release vaccum in " + chamber + " ? : y/n\n")
-            while ((sure != 'y') and (sure != 'n')):
+        while ((response != 'y') and (response != 'n')):
+            print ("\nIt is NOT reccomended to release vaccum if there is still liquid nitrogen left in the cryocan.")
+            response = raw_input ("Do you want to release vaccum? : y/n\n")
+        
+        if (response == 'y'):
+            for chamber in CHAMBERS[0:2] :
                 sure = raw_input ("\nAre you SURE you want to release vaccum in " + chamber + " ? : y/n\n")
-            if (sure == 'y'):
-                release_pressure (chamber)
+                while ((sure != 'y') and (sure != 'n')):
+                    sure = raw_input ("\nAre you SURE you want to release vaccum in " + chamber + " ? : y/n\n")
+                if (sure == 'y'):
+                    release_pressure (chamber)
+                    
+    elif (cryostat == "Quartz"):
+        
+        release_pressure ("Sample_Chamber")
+        
                         
  
 

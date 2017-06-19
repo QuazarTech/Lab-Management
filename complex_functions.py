@@ -251,36 +251,43 @@ def mount_sample (Sample, Sample_Box, test_object):
     leave('Tweezers')
 
 
-def load_sample(Sample, Sample_Box, test_object):
+def load_sample(Sample, Sample_Box, test_object, cryostat):
+    
+    write ("execute : Insert is being loaded to " + cryostat + " cryostat...")
     
     if (test_object == "Insert_RT_Puck"):
-        remove('Puck','Puck_Board')
-        write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Puck,Puck_Board_Connection,DISCONNECTED")
+        
+        response = raw_input ("\nIs the puck connected to the insert? : y/n \n")
+        while ((response != 'y') and (response != 'n')):
+            response = raw_input ("\nIs the puck connected to the insert? : y/n \n")
+        
+        if (response == 'n'):    
+            remove('Puck','Puck_Board')
+            write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Puck,Puck_Board_Connection,DISCONNECTED")
 
-        goto('Puck_Screwing_Coordinates')
-        leave('Puck')
-        read_state('Lab_Space,PQMS,Insert_RT_Puck')
-        move('Insert_RT_Puck', 'Insert_RT_Puck.Exit_Coordinates')
-        goto('Puck_Screwing_Coordinates')
-        hold('Puck')
-        write("execute : Align Puck for screwing")
-        rotate('Puck','14 turns','clockwise')
-        write("execute : Align Insert2Puck Cable with Puck Pins")
-        write("execute : Insert the pin_holes into the puck pins")
-        write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Puck,Insert_Connection,CONNECTED")
-        write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Insert2Puck_Cable,State,CONNECTED")
+            goto('Puck_Screwing_Coordinates')
+            leave('Puck')
+            read_state('Lab_Space,PQMS,Insert_RT_Puck')
+            move(test_object, 'Cryostat.Exit_Coordinates')
+            goto('Puck_Screwing_Coordinates')
+            hold('Puck')
+            write("execute : Align Puck for screwing")
+            rotate('Puck','14 turns','clockwise')
+            write("execute : Align Insert2Puck Cable with Puck Pins")
+            write("execute : Insert the pin_holes into the puck pins")
+            write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Puck,Insert_Connection,CONNECTED")
+            write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Insert2Puck_Cable,State,CONNECTED")
         
         release_pressure('Sample_Chamber')
-    	release_pressure('Heater_Chamber')
+        if (cryostat == "Double_Walled_Steel"):
+            release_pressure('Heater_Chamber')
     	unclamp()
-        
         
         write('execute : Remove Cryostat_Cover')
     	goto('Cryostat_Cover.Home_Coordinates')
     	leave('Cryostat_Cover')
-        
-        goto('Insert_RT_Puck.Exit_Coordinates')
-        goto('Insert_RT_Puck.Home_Coordinates')
+        move (test_object, 'Cryostat.Exit_Coordinates')
+        goto('Cryostat.Home_Coordinates')
 
         clamp()
         
@@ -296,14 +303,16 @@ def load_sample(Sample, Sample_Box, test_object):
     elif (test_object == "Insert_RT_Old"):
         
         release_pressure('Sample_Chamber')
-    	release_pressure('Heater_Chamber')
+        if (cryostat == "Double_Walled_Steel"):
+            release_pressure('Heater_Chamber')
     	unclamp()
     	
         write('execute : Remove Cryostat_Cover')
     	goto('Cryostat_Cover.Home_Coordinates')
-    	
     	leave('Cryostat_Cover')
-        move('Insert_RT_Old', 'Cryostat.Exit_Coordinates')
+    	
+        move(test_object, 'Cryostat.Exit_Coordinates')
+        goto ("Cryostat.Home_Coordinates")
         
         clamp()
         
@@ -358,15 +367,13 @@ def unmount_sample (Sample, Sample_Box, test_object):
         write   ("Update_Database Lab_Space,Sample_Table,Sample_Boxes,Box_Zener,State,OPEN")
         goto    (Sample+"_Terminal_1")
         hold    (Sample+"_terminal_1")
-        goto    (Sample_Box + ".Exit_Coordinates")
-        goto    (Sample+".Rest_ Coordinates")
+        goto    (Sample+".Home_Coordinates")
         leave   (Sample)
         
         write   ("Update_Database Lab_Space,Sample_Table,Sample_Boxes,"+Sample_Box+","+Sample+",State,NOT_IN_USE")
-        goto    (Sample_Box+".Exit_Coordinates")
         write   ("execute : close the lid of the box")
         write   ("Update_Database Lab_Space,Sample_Table,Sample_Boxes,Box_Zener,State,CLOSED")
-        goto    ("Tweezer.Rest_Coordinates")
+        goto    ("Tweezer.Home_Coordinates")
         leave   ("Tweezer")
 
     elif (test_object == "Insert_RT_Old"):
@@ -412,17 +419,15 @@ def unmount_sample (Sample, Sample_Box, test_object):
         write   ("execute : With other hand hold the " + Sample_Box + " and keep it fixed")
         write   ("execute : Pull the cap, and separate it from sample_box")
         write   ("Update_Database Lab_Space,Sample_Table,Sample_Boxes,Box_Zener,State,OPEN")
-        goto    (Sample+"_Terminal_1")
-        hold    (Sample+"_terminal_1")
-        goto    (Sample_Box + ".Exit_Coordinates")
-        goto    (Sample+".Rest_ Coordinates")
+        goto    (Sample + "_Terminal_1")
+        hold    (Sample + "_terminal_1")
+        goto    (Sample + ".Home_Coordinates")
         leave   (Sample)
         
         write   ("Update_Database Lab_Space,Sample_Table,Sample_Boxes,"+Sample_Box+","+Sample+",State,NOT_IN_USE")
-        goto    (Sample_Box+".Exit_Coordinates")
         write   ("execute : close the lid of the box")
         write   ("Update_Database Lab_Space,Sample_Table,Sample_Boxes,Box_Zener,State,CLOSED")
-        goto    ("Tweezer.Rest_Coordinates")
+        goto    ("Tweezer.Home_Coordinates")
         leave   ("Tweezer")
 
 
@@ -437,7 +442,7 @@ def unload_sample(Sample, Sample_Box, test_object):
         goto("Insert_RT_Puck")
         hold("Insert_RT_Puck")
       
-        goto("Insert_RT_Puck.Exit_Coordinates")
+        goto("Cryostat.Exit_Coordinates")
         goto("Sample_Table.Puck_Screwing_Coordinates")
         remove("Insert2Puck_Cable", "Insert_RT_Puck")
         
@@ -450,7 +455,6 @@ def unload_sample(Sample, Sample_Box, test_object):
         rotate('Puck','14 turns','anticlockwise')
         leave("Puck")
         
-        goto("Insert_RT_Puck.Exit_Coordinates")
         goto("Insert_RT_Puck.Home_Coordinates")
         leave("Insert_RT_Puck")
         
@@ -467,13 +471,12 @@ def unload_sample(Sample, Sample_Box, test_object):
         
         disconnect_cable("RT_Cable")
         disconnect_cable("HT_Cable")
-        move ("Puck_Board", "Puck_Board.Home_Coordinates")
+        move (test_object, test_object + ".Home_Coordinates")
         
     elif (test_object == "Insert_RT_Old"):
         disconnect_cable("RT_Cable")
         unclamp()
-        move ("Insert_RT_Old", "Insert_RT_Old.Exit_Coordinates")
-        goto ("Sample_Mounting_Coordinates")
+        move (test_object, test_object + ".Home_Coordinates")
         
 
 #####################################################################
@@ -571,7 +574,7 @@ def init_XTCON_isothermal (test_object):
     move_cursor ('Instrument Control')
     click       ('Cryostat and Insert')
     click       ('Cryostat Type')
-    click       ('Double Walled Steel Cryostat')
+    write       ('execute : select appropriate cryostat')
     click       ('Insert Type')
     click       (test_object)
     click       ('File->Hide')
@@ -845,14 +848,16 @@ def flush_helium (chamber):
     rapid_movement()
     write   ("execute : Open " + chamber + ".Flush_Valve by rotating in anticlockwise direction.")
     write   ("execute : After 2 seconds, turn off " + chamber + ".Flush_Valve by rotating in clockwise direction")
-
+    
     goto    ("Helium_Cylinder.Main_Valve")
     write   ("execute : Close Helium_Cylinder.Pressure_Valve by rotating in anticlockwise direction until completely unscrewed loose.")
-    write   ("execute : Close Helium_Cylinder.Main_Valve by rotating in anticlockwise direction.")
     
     write   ("execute : Open Pump.Release_Valve by turning in anticlockwise direction.")
     write   ("execute : Immediately, close the Pump.Release_Valve by turning in clockwise direction.")
     end_rapid_movement()
+    
+    goto    ("Helium_Cylinder.Main_Valve")
+    write   ("execute : Close Helium_Cylinder.Main_Valve by rotating in anticlockwise direction.")
     
     write   ("execute : Close " + chamber + ".Evacuation_Valve by rotating in clockwise direction")
     write   ("execute : Turn on Pump.Main_Valve by rotating it in anticlockwise direction.")
