@@ -2,19 +2,15 @@ import time
 import yaml as yaml
 import sys
 import os
+import zener_experiment
+import breakdown_experiment
+#import practice_experiments
+#import service_log
 
-import IV_stepped_ramp
-import R_Time_isothermal
-import RT_linear_ramp
-import unload_sample
-import lab_reset
-import bias_DC_voltage_measure
-import CV_isothermal
-import AC_voltage_measure
 
 #####################################################################
 
-experiments = ["IV_stepped_ramp", "R_Time_isothermal", "unload_sample", "RT_linear_ramp","CV_isothermal","bias_DC_voltage_measure","AC_voltage_measure"]
+experiments = ["service_log", "zener_experiment", "practice_experiments", "breakdown_experiment"]
 
 #create and init and array for timestamps
 time_array = []
@@ -25,13 +21,13 @@ time_array = []
 #     while (response != 'n') or (response != 'y'):
 #         response = raw_input ("Run again? : y/n")def get_sample_info():
 
-#####################################################################
+#####################################################################             
 
 def get_sample_info():
     
-    sample_box = raw_input("\nSelect Sample box : (Box_Zener, Box_Resistor, YBCO)\n")
-    while((sample_box != "Box_Zener") and (sample_box != "Box_Resistor") and (sample_box != "YBCO")):
-        sample_box = raw_input("\nSelect Sample box : (Box_Zener, Box_Resistor, YBCO)\n")
+    sample_box = raw_input("\nSelect Sample box : (Box_Zener, Box_Resistor)\n")
+    while((sample_box != "Box_Zener") and (sample_box != "Box_Resistor")):
+        sample_box = raw_input("\nSelect Sample box : (Box_Zener, Box_Resistor)\n")
 
     if(sample_box=="Box_Zener"):
         sample = raw_input("\nSelect sample : (Zener_1, Zener_2, Zener_3)\n")
@@ -41,11 +37,7 @@ def get_sample_info():
         sample = raw_input("\nSelect sample : (Res_1,Res_2,Res_3,Res_4,Res_5)\n")
         while((sample != "Res_1") and (sample != "Res_2") and (sample != "Res_3") and (sample != "Res_4") and (sample != "Res_5")):
             sample = raw_input("\nSelect sample : (Res_1,Res_2,Res_3,Res_4,Res_5)\n")
-    elif (sample_box == "YBCO"):
-        sample = raw_input("\nSelect sample : (YBCO_1,YBCO_2)\n")
-        while((sample != "YBCO_1") and (sample != "YBCO_2")):
-            sample = raw_input("\nSelect sample : (YBCO_1,YBCO_2)\n")
-            
+    
     sample_description  = raw_input("\nGive a brief sample desciption: \n")
     address             = raw_input("\nGive the path where you want to store experimental data : \n")
     return address, sample, sample_box, sample_description
@@ -85,7 +77,6 @@ def update_database(line, diff_file, new_dbase):
         param_array, data = read_database(new_dbase, 16)
         write_to_database(param_array, data)
 
-#####################################################################
 
 def read_database(base, index):
 	fbase = open(base + ".yaml", "r")
@@ -104,32 +95,7 @@ def write_to_database(param_array, data):
         fname = open(new_dbase + ".yaml", 'w')
         yaml.dump(data, fname, default_flow_style=False)
         fname.close()
-        
-def print_states (experiment, log, line, new_dbase):
-	print(line + '\n')
-        param_array, data = read_database(new_dbase, 25)
-        z = data["Lab_Space"]
-        for param in param_array[1:(len(param_array) - 1)]:
-            z = z[param]
-        param = param_array[len(param_array) - 1]
-        print yaml.dump(z[param], allow_unicode=True, default_flow_style=False)
-        user_input = raw_input("Comments, if any : (Press Enter to continue, type \
-            'pause' to pause, or 'end' to abort) : ")
-        temp = experiment.time_in_ist()
-        
-        if(user_input == "end"):
-            abort_execution(experiment, log)
-        
-        elif (user_input == "pause"):
-            pause_execution(log)
-            
-        else:
-            print temp + '\n'
-        
-        time_array.append(experiment.time_in_ist())
-        time_stamp_and_comments(log, line, temp, user_input)
 
-#####################################################################
 
 def abort_execution(experiment, log):
 	print temp
@@ -138,7 +104,6 @@ def abort_execution(experiment, log):
         	log.write(string + '\n')
 		log.write("Execution has come to an end due to error in line: " + line + '\n')
 	log.close()
-	return string
 
 
 def pause_execution(log):
@@ -159,7 +124,31 @@ def pause_execution(log):
 		log.write("Execution has been resumed at: " + temp + '\n')
 	log.close()
 	
-#####################################################################	
+
+def print_states (experiment, log, line, new_dbase):
+	print(line + '\n')
+        param_array, data = read_database(new_dbase, 25)
+        z = data["Lab_Space"]
+        for param in param_array[1:(len(param_array) - 1)]:
+            z = z[param]
+        param = param_array[len(param_array) - 1]
+        print yaml.dump(z[param], allow_unicode=True, default_flow_style=False)
+        user_input = raw_input("Comments, if any : (Press Enter to continue, type 'pause' to pause, or 'end' to abort) : ")
+        temp = experiment.time_in_ist()
+        
+        if(user_input == "end"):
+            abort_execution(experiment, log)
+        
+        elif (user_input == "pause"):
+            pause_execution(log)
+            
+        else:
+            print temp + '\n'
+        
+        time_array.append(experiment.time_in_ist())
+        time_stamp_and_comments(log, line, temp, user_input)
+	
+
 
 def put_in_folder (experiment, log, diff_file, new_dbase):        
 	t = experiment.time_in_ist()
@@ -169,7 +158,6 @@ def put_in_folder (experiment, log, diff_file, new_dbase):
 	os.system("mv " + log + " " + folder_name + "/")
 	os.system("mv " + diff_file + " " + folder_name + "/")
 	os.system("mv " + new_dbase + ".yaml " + folder_name + "/")
-	lab_reset.lab_reset(folder_name)
 	create_duration_log (experiment, folder_name)
 
 def time_stamp_and_comments(log, line, temp, user_input):
@@ -201,8 +189,6 @@ def create_duration_log (experiment, folder_name):
 		elif (line == 'execute : Wait until graph comes to an end\n'):
 			a = str(time_array[i]) + "-" + str(time_array[i+1])
 			fnew.write("I_V run time:" + str(a) + "\n\n")
-	        if(i == len(time_array) - 1):
-	        	break
 	 	i += 1 
  	fnew.close()
  	f.close()
@@ -217,6 +203,7 @@ address, Sample, Sample_Box, sample_description = get_sample_info()
 experiment  = eval(get_experiment())
 read_file   =  experiment.procedure
 
+experiment.run(Sample, Sample_Box, sample_description, address)
 
 robot, sensor, observer = get_user_data()
 
@@ -238,10 +225,6 @@ dbase.close()
 database = "lab_database"
 initialize_database (database)
 			
-experiment.run(Sample, Sample_Box, sample_description, address)
-
-#####################################################################
-
 #read, execute and update log for each step of the experiment procedure
 
 with open(read_file, "r") as fdata:
@@ -262,7 +245,7 @@ with open(read_file, "r") as fdata:
                 temp = experiment.time_in_ist()
                 
                 if (user_input == "end"):
-                    string = abort_execution(experiment, log)
+                    abort_execution(experiment, log)
                     put_in_folder(experiment, log.name, diff_file, new_dbase)
                     sys.exit(string)
                 
