@@ -498,6 +498,10 @@ def switch_on_PQMS_modules():
     write  ("execute : Switch on XTCON.Power_Cable")
     write  ("Update_Database Lab_Space,PQMS,XTCON,State,ON")
     
+    goto   ("PQMS.XLIA.Power_Cable")
+    write  ("execute : Switch on XLIA.Power_Cable")
+    write  ("Update_Database Lab_Space,PQMS,XLIA,State,ON")
+    
     goto    ("PQMS.Pump.Power_Cable")
     write   ("execute : Switch on Pump.Power_Cable")
     write   ("Update_Database Lab_Space,PQMS,Pump,State,ON")
@@ -518,6 +522,10 @@ def set_up_PQMS_modules ():
     write("execute : Check if XSMU PC Connection has been established")
     write("execute : If No, then click on 'File->Connect'. If Yes, do nothing.")
 
+    click ("Lockin Amplifier")
+    write("execute : Check if XLIA PC Connection has been established")
+    write("execute : If No, then click on 'File->Connect'. If Yes, do nothing.")
+    
 
 def switch_off_PQMS_modules():
     read_state ("Lab_Space,PQMS")
