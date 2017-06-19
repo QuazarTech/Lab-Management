@@ -248,6 +248,38 @@ Lab_Space:
                   Terminal_2:
                     Soldered                  : YES/NO
 
+              Dessicator:
+                YBCO_1:
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Standard_Tolerance          :
+                  Resistance                  :
+                  Terminal_1:
+                    Soldered                  : YES/NO
+                  Terminal_2:
+                    Soldered                  : YES/NO
+                  Terminal_3:
+                    Soldered                  : YES/NO
+                  Terminal_4:
+                    Soldered                  : YES/NO
+                
+                YBCO_2:
+                  YBCO_1:
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Standard_Tolerance          :
+                  Resistance                  :
+                  Terminal_1:
+                    Soldered                  : YES/NO
+                  Terminal_2:
+                    Soldered                  : YES/NO
+                  Terminal_3:
+                    Soldered                  : YES/NO
+                  Terminal_4:
+                    Soldered                  : Yes/NO
+                
     PQMS:  
           State                               : NOT_IN_USE
           Home_Coordinates                    : PQMS_COORDINATES
