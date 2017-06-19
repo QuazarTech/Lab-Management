@@ -309,3 +309,23 @@ def liquid_nitrogen_remaining ():
         
     if (response == 'y'):
         restore_vaccum ()
+
+def turn_off_computer ():
+    
+    response = raw_input ("Do you want to turn off the computer? : y/n\n")
+    
+    while ((response != 'y') and (response != 'n')):
+        response = raw_input ("Do you want to turn off the computer? : y/n\n")
+        
+    if (response == 'y'):
+        switch_off_computer()
+        
+def turn_on_computer():
+    
+    response = raw_input ("Is the Computer already on? : y/n\n")
+    
+    while ((response != 'y') and (response != 'n')):
+        response = raw_input ("Is the Computer already on? : y/n\n")
+        
+    if (response == 'n'):
+        switch_on_computer()
