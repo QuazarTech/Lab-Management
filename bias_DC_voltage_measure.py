@@ -15,17 +15,17 @@ def run (Sample, Sample_Box, sample_description, address):
     
 
     ###################
-
+    write       ("execute : goto Pump.Cable")
+    write       ("execute : Switch off Pump")
     write       ("execute : Goto Multimeter.Coordinates")
     write       ("execute : Hold Multimeter.Coordinates")
     write       ("execute : Goto PQMS.XSMU")
     write       ("execute : Insert Multimeter.Positive terminal to XSMU.Source.Positive terminal")
     write       ("execute : Insert Multimeter.Negative terminal to XSMU.Source.Negative terminal")
     write       ("execute : Put the Multimeter to appropriate mode")
-    write       ("execute : Press ctrl+alt+T")
-    write       ("execute : Change directory to the folder containing 'capacitance.py'")
-    write       ("execute : type 'python capacitance.py'")
-
+    write       ("execute : Open Terminal")
+    write       ("execute : change directory to Capacitance.py")
+    write       ("execute : run Capacitance.py")
 
     ###################
     switch_off_PQMS_modules()
