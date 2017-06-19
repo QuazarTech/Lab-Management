@@ -204,22 +204,14 @@ def need_liquid_nitrogen ():
 
 def double_walled_steel_cryostat_environment_setup (previous_run_temperature, current_run_temperature):
     
-    #first run cases
-    if   (previous_run_temperature == "" and current_run_temperature <= 150):
         
-        flush_helium ("Sample_Chamber")
-        flush_helium ("Heater_Chamber")
-        
-    elif (previous_run_temperature == "" and current_run_temperature > 150):
-        flush_helium ("Sample_Chamber")
+    if (previous_run_temperature == "" and current_run_temperature > 150):
         create_vaccum ("Heater_Chamber")
     
     #switch cases
     elif (previous_run_temperature <=150 and current_run_temperature > 150):
         create_vaccum ("Heater_Chamber")
     
-    elif (previous_run_temperature > 150 and current_run_temperature <= 150):
-        flush_helium ("Heater_Chamber")        
 
 def quartz_cryostat_environment_setup(previous_run_temperature, current_run_temperature):
     

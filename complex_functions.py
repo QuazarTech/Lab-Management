@@ -58,7 +58,7 @@ def set_up_soldering_iron():
     write("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,Power,ON")
     write("execute : Wait for the soldering iron LED to start blinking.")
     
-def solder (terminal_a, terminal_b, Sample, Sample_Box):
+def solder (terminal_a, terminal_b):
     '''Solder terminal_b onto terminal_b, given Sample from Sample_Box'''
     
     write("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,State,IN_USE")
@@ -75,9 +75,6 @@ def solder (terminal_a, terminal_b, Sample, Sample_Box):
     
     write  ("execute : Goto juntion of " + terminal_a + " and " + terminal_b)
     write  ("execute : Wait until sensor deems soldering between " + terminal_a + " and " + terminal_b + " to be complete")
-    
-    write  ("Update_Database Lab_Space,Sample_Table,Sample_Boxes," + Sample_Box + "," + terminal_a + ",Soldered,YES")
-    write  ("Update_Database Lab_Space,PQMS," + terminal_b + ",Soldered,YES")
     
     goto   ('Cleaning_Pad.Home_Coordinates')
     write  ("execute : Plunge Tip in Cleaning Pad")
