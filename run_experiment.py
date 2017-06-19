@@ -198,6 +198,8 @@ def create_duration_log (experiment, folder_name):
 		elif (line == 'execute : Wait until graph comes to an end\n'):
 			a = str(time_array[i]) + "-" + str(time_array[i+1])
 			fnew.write("I_V run time:" + str(a) + "\n\n")
+	        if(i == len(time_array) - 1):
+	        	break
 	 	i += 1 
  	fnew.close()
  	f.close()
