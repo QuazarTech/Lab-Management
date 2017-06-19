@@ -21,7 +21,7 @@ def run (Sample, Sample_Box, sample_description, address):
     current_run_temperature = initial_temperature
     reset_cryostat_environment (previous_run_temperature, current_run_temperature, cryostat)
     
-    switch_on_computer()
+    turn_on_computer()
     set_save_folder(Sample_Box, Sample, sample_description, address)
     set_up_PQMS_modules()
     
@@ -37,4 +37,4 @@ def run (Sample, Sample_Box, sample_description, address):
     release_PQMS_vaccum (cryostat)
     
     switch_off_PQMS_modules()
-    switch_off_computer()
+    turn_off_computer()

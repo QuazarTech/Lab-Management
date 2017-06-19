@@ -33,13 +33,37 @@ def get_experimental_parameters_R_Time_linear_ramp():
    
     run_mode                  = raw_input("Enter the R-Time run mode (current/voltage):\n")
     ramp_rate                 = raw_input("Enter Ramp rate : \n")
-    initial_temperature         = float(raw_input("Enter the starting temperature (K):\n"))
+    initial_temperature       = float(raw_input("Enter the starting temperature (K):\n"))
     final_temperature         = float(raw_input("Enter the ending temperature (K):\n"))
     V_range                   = raw_input("Enter Voltage Sweep Max (mV) : \n")
     I_range                   = raw_input("Enter Current Sweep Max (uA) : \n")
     max_power                 = raw_input("Enter Max Power (mW): \n")
     
     return initial_temperature, final_temperature, ramp_rate, run_mode, I_range, V_range, max_power, ramp_rate
+
+def get_experimental_parameters_CV_isothermal():
+    run_mode                  = raw_input("Enter the CV run mode (V-Time / ):\n")
+    initial_frequency         = float(raw_input("Enter the starting frequency (Hz):\n"))
+    final_frequency           = float(raw_input("Enter the ending frequency (Hz):\n"))
+    frequency_step            = raw_input("Enter frequency Step Size (Hz) : \n")
+    reference_amplitude       = raw_input("Enter the amplitude of the sine wave signal generated across the terminals of the REF OUT port. Its range is 0 - 1000mV : \n")
+    reference_frequency       = raw_input("Enter the frequency of the sine wave signal generated across the terminals of the REF OUT port. Its range in 10 - 10000 Hz : \n")
+    reference_phase           = raw_input("Enter the phase difference in degrees of the sine wave signal generated across the terminals of the REF OUT port with respect to the internal reference. : \n")
+    temperature_set_point    = float(raw_input("Enter Heater Setpoint Temperature (K) : \n"))
+    
+
+def get_experimental_parameters_bias_DC_voltage_measure():
+    voltage_set_point    = float(raw_input("Enter Voltage Setpoint : \n"))
+
+    return voltage_set_point
+
+def get_experimental_parameters_AC_volatage_measure():
+    reference_amplitude       = raw_input("Enter the amplitude of the sine wave signal generated across the terminals of the REF OUT port. Its range is 0 - 1000mV : \n")
+    reference_frequency       = raw_input("Enter the frequency of the sine wave signal generated across the terminals of the REF OUT port. Its range in 10 - 10000 Hz : \n")
+    reference_phase           = raw_input("Enter the phase difference in degrees of the sine wave signal generated across the terminals of the REF OUT port with respect to the internal reference. : \n")
+    
+    return reference_amplitude,reference_frequency,reference_phase
+
 
 ###############################################################################
 
@@ -277,3 +301,23 @@ def liquid_nitrogen_remaining ():
         
     if (response == 'y'):
         restore_vaccum ()
+
+def turn_off_computer ():
+    
+    response = raw_input ("Do you want to turn off the computer? : y/n\n")
+    
+    while ((response != 'y') and (response != 'n')):
+        response = raw_input ("Do you want to turn off the computer? : y/n\n")
+        
+    if (response == 'y'):
+        switch_off_computer()
+        
+def turn_on_computer():
+    
+    response = raw_input ("Is the Computer already on? : y/n\n")
+    
+    while ((response != 'y') and (response != 'n')):
+        response = raw_input ("Is the Computer already on? : y/n\n")
+        
+    if (response == 'n'):
+        switch_on_computer()
