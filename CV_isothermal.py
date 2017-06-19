@@ -5,7 +5,7 @@ name = "CV_isothermal"
 
 def run (Sample, Sample_Box, sample_description, address):
 
-	test_object = select_test_object()
+    test_object = select_test_object()
     prepare_sample (Sample, Sample_Box, test_object)
     
     switch_on_PQMS_modules()
@@ -15,7 +15,7 @@ def run (Sample, Sample_Box, sample_description, address):
 
     temperature_set_point,voltage_set_point,initial_frequency,final_frequency,frequency_step,reference_amplitude,reference_frequency,reference_phase,run_mode = get_experimental_parameters_CV_isothermal()
 
-    switch_on_computer()
+    turn_on_computer()
     set_save_folder(Sample_Box, Sample, sample_description, address)
     set_up_PQMS_modules()
     
@@ -36,7 +36,7 @@ def run (Sample, Sample_Box, sample_description, address):
 
     release_PQMS_vaccum ()
     switch_off_PQMS_modules()
-    switch_off_computer()
+    turn_off_computer()
 
 #####################################################################################
     
