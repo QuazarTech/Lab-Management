@@ -368,7 +368,8 @@ Lab_Space:
 
               State                           : OFF
               Power_Cable                     : CONNECTED
-              USB_Cable                       : CONNECTED
+              USB_Cable_Computer              : CONNECTED
+              USB_Cable_Module                : CONNECTED
               XSMU_Cable                      : DISCONNECTED
               Running                         : NO
               Mode                            : NA/CONST_V/CONST_I
@@ -384,7 +385,8 @@ Lab_Space:
 
               Sensor:
                 RT_Cable                      : DISCONNECTED
-                USB_Cable                     : CONNECTED
+                USB_Cable_Computer            : CONNECTED
+              	USB_Cable_Module              : CONNECTED
 
               Running                         : NO
               Mode                            : ISOTHERMAL/LINEAR_RAMP/STEPPED_RAMP
@@ -393,7 +395,8 @@ Lab_Space:
 
               State                           : OFF
               Power_Cable                     : CONNECTED
-              USB_Cable                       : CONNECTED
+              USB_Cable_Computer              : CONNECTED
+              USB_Cable_Module                : CONNECTED
               XLIA_Cables                     : DISCONNECTED
               Running                         : NO
 
@@ -401,7 +404,8 @@ Lab_Space:
 
               State                           : OFF
               MGPS_CABLES                     : DISCONNECTED
-              USB_Cable                       : CONNECTED
+              USB_Cable_Computer              : CONNECTED
+              USB_Cable_Module                : CONNECTED
               Power_Cable                     : CONNECTED
               Running                         : NO
               Mode                            : CONST_H/CONST_I
