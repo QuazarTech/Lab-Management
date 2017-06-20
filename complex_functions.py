@@ -499,6 +499,10 @@ def switch_on_PQMS_modules():
     write  ("execute : Switch on XLIA.Power_Cable")
     write  ("Update_Database Lab_Space,PQMS,XLIA,State,ON")
     
+    goto   ("PQMS.Sample_Positioner.Power_Cable")
+    write  ("execute : Switch on Sample_Positioner.Power_Cable")
+    write  ("Update_Database Lab_Space,PQMS,Sample_Positioner,State,ON")
+    
     goto    ("PQMS.Pump.Power_Cable")
     write   ("execute : Switch on Pump.Power_Cable")
     write   ("Update_Database Lab_Space,PQMS,Pump,State,ON")
@@ -535,6 +539,14 @@ def switch_off_PQMS_modules():
     goto   ("PQMS.XTCON.Power_Cable")
     write  ("execute : Switch off XTCON.Power_Cable")
     write  ("Update_Database Lab_Space,PQMS,XTCON,State,OFF")
+    
+    goto   ("PQMS.XLIA.Power_Cable")
+    write  ("execute : Switch off XLIA.Power_Cable")
+    write  ("Update_Database Lab_Space,PQMS,XLIA,State,OFF")
+    
+    goto   ("PQMS.Sample_Positioner.Power_Cable")
+    write  ("execute : Switch off Sample_Positioner.Power_Cable")
+    write  ("Update_Database Lab_Space,PQMS,Sample_Positioner,State,OFF")
     
     write   ("execute : Ensure that Pump.Release_Valve, Pump.Main_Valve, Sample_Chamber.Flush_Valve, Sample_Chamber.Evacuation_Valve, \
                     Heater_Chamber.Flush_Valve, Heater_Chamber.Evacuation_Valve and all other valves connected to Helium_Cylinder are closed")
