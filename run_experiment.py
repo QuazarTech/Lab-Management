@@ -13,10 +13,11 @@ import bias_DC_voltage_measure
 import CV_isothermal
 import AC_voltage_measure
 import XLIA_service
+import susceptibility_experiment
 
 #####################################################################
 
-experiments = ["IV_stepped_ramp", "RT_stepped_ramp", "R_Time_isothermal", "unload_sample", "RT_linear_ramp","CV_isothermal","bias_DC_voltage_measure","AC_voltage_measure", "XLIA_service"]
+experiments = ["IV_stepped_ramp", "RT_stepped_ramp", "R_Time_isothermal", "unload_sample", "RT_linear_ramp","CV_isothermal","bias_DC_voltage_measure","AC_voltage_measure", "XLIA_service", "susceptibility_experiment"]
 
 #create and init and array for timestamps
 time_array = []
