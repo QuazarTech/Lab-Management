@@ -6,6 +6,24 @@ CHAMBERS        = ["Sample_Chamber", "Heater_Chamber"]
 
 ###############################################################################
 
+def get_experimental_parameters_XL():
+
+    step_size                   = raw_input("Enter step size : \n")
+    max_depth                   = raw_input("Enter max_depth : \n")
+  
+    return step_size, max_depth
+
+def get_experimental_parameters_XT_linear_ramp():
+
+    frequency                = raw_input("Enter frequency (Hz) : \n")
+    amplitude                = raw_input("Enter amplitude (mV) : \n")
+    phase                    = raw_input("Enter phase     (degrees) : \n")
+    
+    initial_temperature      = float(raw_input("Enter Initial Temperature (K) : \n"))
+    final_temperature        = float(raw_input("Enter Final Setpoint Temperature (K) : \n"))
+    ramp_rate                = raw_input("Enter Ramp rate : \n")
+    return initial_temperature, final_temperature, ramp_rate, frequency, amplitude, phase
+    
 def get_experimental_parameters_IV_stepped_ramp():
 
     V_range                  = raw_input("Enter Voltage Sweep Max (mV) : \n")
