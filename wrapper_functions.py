@@ -19,6 +19,18 @@ def get_experimental_parameters_IV_stepped_ramp():
     temperature_step         = float(raw_input("Enter Temperature Step (K) : \n"))
     return initial_temperature, final_temperature, temperature_step, V_range, V_step, I_range, I_step, max_power
 
+def get_experimental_parameters_RT_stepped_ramp():
+    
+    V_range                  = raw_input("Enter Voltage Sweep Max (mV) : \n")
+    I_range                  = raw_input("Enter Current Sweep Max (uA) : \n")
+    max_power                = raw_input("Enter Max Power (mW): \n")
+    
+    initial_temperature      = float(raw_input("Enter Initial Temperature (K) : \n"))
+    final_temperature        = float(raw_input("Enter Final Setpoint Temperature (K) : \n"))
+    temperature_step         = float(raw_input("Enter Temperature Step (K) : \n"))
+    return initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power
+    
+
 def get_experimental_parameters_R_Time_isothermal():
 
     run_mode                 = raw_input("Which mode do you want to do the run in (constant current/voltage):\n")
@@ -92,6 +104,17 @@ def PQMS_IV_run (initial_temperature, final_temperature, temperature_step, V_ran
     	 
     	 #PQMS_IV_run(temperature_set_point, V_range, V_step, I_range, I_step, max_power)
 
+def PQMS_RT_run_stepped_ramp (initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power):
+    
+    write("\n##############################################################")
+    write("                   Run starts")
+    write("##############################################################\n")
+    
+    start_RT_step_ramp_run  (initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power)
+
+    write("\n##############################################################")
+    write("                   Run ends")
+    write("##############################################################\n")
 
 def PQMS_R_Time_run_isothermal (run_mode,  I_range, V_range, max_power, temperature_set_point, number_of_measurements):
     
@@ -239,19 +262,13 @@ def double_walled_steel_cryostat_environment_setup (previous_run_temperature, cu
 
 def quartz_cryostat_environment_setup(previous_run_temperature, current_run_temperature):
     
-    if   (previous_run_temperature == "" and current_run_temperature <= 150):
         
-        flush_helium ("Sample_Chamber")
-        
-    elif (previous_run_temperature == "" and current_run_temperature > 150):
+    if (previous_run_temperature == "" and current_run_temperature > 150):
         create_vaccum ("Sample_Chamber")
     
     #switch cases
     elif (previous_run_temperature <=150 and current_run_temperature > 150):
         create_vaccum ("Sample_Chamber")
-    
-    elif (previous_run_temperature > 150 and current_run_temperature <= 150):
-        flush_helium ("Sample_Chamber")        
 
     
 

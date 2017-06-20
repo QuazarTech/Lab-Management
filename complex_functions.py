@@ -687,7 +687,7 @@ def set_IV_step_ramp_measurement_settings(initial_temperature, final_temperature
     write       ("execute : Set power max as " + power + " mW")
     write       ("execute : Ensure that Bipolar option is set to \'Yes\'")
     move_cursor ("Top menu")
-    click       ("\'File->Done\'")
+    click       ("\'File->Done\'")    
 
 
 def start_IV_step_ramp_run (initial_temperature, final_temperature, temperature_step, V_range, V_step, I_max, I_step, power):
@@ -706,6 +706,65 @@ def start_IV_step_ramp_run (initial_temperature, final_temperature, temperature_
     
     write ("Update_Database Lab_Space,PQMS,XSMU,Running,False")
     save_graph()
+
+###############################################################################
+# RT_stepped ramp functions
+
+def set_IV_step_ramp_measurement_settings(initial_temperature, final_temperature, temperature_step, V_range, I_max, power):
+    
+    move_cursor ('Run control')
+    click       ('drop down menu')
+    click       ('R-T (Step ramp)')
+    
+    move_cursor ('Toolbar')
+    click       ('Settings->Temperature controller-Step ramp settings')
+    
+    #####       set step ramp settings here
+    
+    write       ("execute : Set Ramp index as '0'.")
+    write       ("execute : Set Initial Temperature to " + str(initial_temperature) + " K")
+    write       ("execute : Set Final Temperature to " + str(final_temperature) + " K")
+    write       ("execute : Temperature Step to " + str(temperature_step) + " K")
+    
+    write       ("execute : Set Pre-stabilization Delay to 100 seconds")
+    write       ("execute : Set Post-stabilization Delay to 100 seconds")
+    write       ("execute : Set Temperature Tolerance to 0.5 K")
+    write       ("execute : Set Monitoring Period to 300 seconds")
+    
+    ################################
+    click       ('File->Apply')
+    
+    
+    move_cursor ('Toolbar')
+    click       ('Settings->I-V Source and Measurement Unit')
+    click       ("Settings-IV Source and Meaurement Unit->Resistance Measurement Settings")
+    write       ("execute : Set voltage max as " + V_range + " mV")
+    write       ("execute : Set current max as " + I_max + " uA")
+    write       ("execute : Set power max as " + power + " mW")
+    write       ("execute : Ensure that Bipolar option is set to \'Yes\'")
+    move_cursor ("Top menu")
+    click       ("\'File->Done\'")    
+
+
+def start_RT_step_ramp_run (initial_temperature, final_temperature, temperature_step, V_range, I_max, power):
+    
+    goto        ("Qrius Main Window")
+    click       ('Measurement Mode settings')
+    click       ('Electrical DC Conductivity')
+    
+    set_IV_step_ramp_measurement_settings(initial_temperature, final_temperature, temperature_step, V_range, I_max, power)
+    write("Update_Database Lab_Space,PQMS,XSMU,Mode,R-T")
+    write("Update_Database Lab_Space,PQMS,XTCON,Mode,Stepped_Ramp")
+    
+    click ('Start Button')
+    write ("Update_Database Lab_Space,PQMS,XSMU,Running,True")
+    write ("execute : Wait until graph comes to an end")
+    
+    write ("Update_Database Lab_Space,PQMS,XSMU,Running,False")
+    save_graph()
+
+
+
 
 ###############################################################################
 #R_Tme_linear_ramp functions

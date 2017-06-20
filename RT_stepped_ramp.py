@@ -1,7 +1,7 @@
 from complex_functions import *
 from wrapper_functions import *
 
-name = "IV_stepped_ramp"
+name = "RT_stepped_ramp"
 
 def run (Sample, Sample_Box, sample_description, address):
     
@@ -24,7 +24,7 @@ def run (Sample, Sample_Box, sample_description, address):
     is_the_sample_loaded (Sample, Sample_Box, test_object, cryostat)
     
     previous_run_temperature = ""
-    initial_temperature, final_temperature, temperature_step, V_range, V_step, I_range, I_step, max_power = get_experimental_parameters_IV_stepped_ramp()
+    initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power = get_experimental_parameters_RT_stepped_ramp()
     current_run_temperature = initial_temperature
     
     flush_helium("Sample_Chamber")
@@ -41,7 +41,7 @@ def run (Sample, Sample_Box, sample_description, address):
     
     #####################
     #Actual measurements take place here
-    PQMS_IV_run (initial_temperature, final_temperature, temperature_step, V_range, V_step, I_range, I_step, max_power)
+    PQMS_RT_run_stepped_ramp (initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power)
     
     #####################
     
