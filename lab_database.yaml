@@ -282,7 +282,6 @@ Lab_Space:
                     Soldered                  : YES/NO
                 
                 YBCO_2:
-                  YBCO_1:
                   State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
@@ -404,7 +403,7 @@ Lab_Space:
               Sensor:
                 RT_Cable                      : DISCONNECTED
                 USB_Cable_Computer            : CONNECTED
-              	USB_Cable_Module              : CONNECTED
+                USB_Cable_Module              : CONNECTED
 
               Running                         : NO
               Mode                            : ISOTHERMAL/LINEAR_RAMP/STEPPED_RAMP
