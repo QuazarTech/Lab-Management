@@ -648,7 +648,91 @@ def set_XLIA_isothermal_constant_voltage(initial_frequency,final_frequency,frequ
     move_cursor ('Run control')
     click       ('Start Button')
 
-    	
+###############################################################################
+#XT_step_ramp_functions
+
+def set_XL_measurement_settings(final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase):
+    
+    move_cursor ('Run control')
+    click       ('drop down menu')
+    click       ('X-L')
+    
+    move_cursor ('Toolbar')
+    click       ('Settings->XL Acquisition Settings')
+    
+    write       ("execute : Set max_depth as " + max_depth)
+    write       ("execute : Set step_size as " + step_size)
+    
+    click       ('File->Apply')
+    
+    move_cursor ('Toolbar')
+    click       ('Settings->Lock-In Amplifier->Reference Settings')
+    write       ("execute : Set frequency as " + frequency + " Hz")
+    write       ("execute : Set amplitude as " + amplitude + " mV")
+    write       ("execute : Set phase as " + phase + " degrees")
+    move_cursor ("Top menu")
+    click       ("\'File->Apply\'")    
+
+
+def set_XT_linear_ramp_measurement_settings(final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase):
+    #####       set linear ramp settings here
+    
+    move_cursor ('Run control')
+    click       ('drop down menu')
+    click       ('X-T (linear ramp)')
+    
+    move_cursor ('Toolbar')
+    click       ('Settings->Temperature controller')
+    click       ('Linear ramp settings')
+    write       ("execute : Set Final Temperature to " + str(final_temperature))
+    write       ("execute : Set Ramp rate to " + ramp_rate + " K/min")
+    click       ('File->Apply')
+    
+    move_cursor ('Toolbar')
+    click       ('Settings->Lock-In Amplifier->Reference Settings')
+    write       ("execute : Set frequency as " + frequency + " Hz")
+    write       ("execute : Set amplitude as " + amplitude + " mV")
+    write       ("execute : Set phase as " + phase + " degrees")
+    move_cursor ("Top menu")
+    click       ("\'File->Apply\'")  
+    
+    ################################
+    
+    
+
+def start_XL_run (final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase):
+    
+    goto        ("Qrius Main Window")
+    click       ('Measurement Mode settings')
+    click       ('Electrical AC Susceptibility')
+    
+    set_XL_measurement_settings(final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase)
+    write("Update_Database Lab_Space,PQMS,XTCON,Mode,Linear_Ramp")
+    
+    click ('Start Button')
+    write ("Update_Database Lab_Space,PQMS,XLIA,Running,True")
+    write ("execute : Wait until run comes to an end")
+    
+    write ("Update_Database Lab_Space,PQMS,XLIA,Running,False")
+    save_graph()
+
+def start_XT_linear_ramp_run (final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase):
+    
+    goto        ("Qrius Main Window")
+    click       ('Measurement Mode settings')
+    click       ('Electrical AC Susceptibility')
+    
+    set_XT_linear_ramp_measurement_settings(final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase)
+    write("Update_Database Lab_Space,PQMS,XTCON,Mode,Linear_Ramp")
+    
+    click ('Start Button')
+    write ("Update_Database Lab_Space,PQMS,XLIA,Running,True")
+    write ("execute : Wait until run comes to an end")
+    
+    write ("Update_Database Lab_Space,PQMS,XSMU,Running,False")
+    save_graph()
+	
+	
 ###############################################################################
 #IV_step_ramp functions functions
 
