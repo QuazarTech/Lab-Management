@@ -160,6 +160,8 @@ Lab_Space:
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
                   Part_Number                 : ZN0000
+                  Length                      :
+                  Diameter                    :
                   Terminal_1:
                     Soldered                  : NO
                   Terminal_2:
@@ -170,6 +172,8 @@ Lab_Space:
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
                   Part_Number                 : ZN0000
+                  Length                      :
+                  Diameter                    :
                   Terminal_1:
                     Soldered                  : NO
                   Terminal_2:
@@ -180,6 +184,8 @@ Lab_Space:
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
                   Part_Number                 : ZN0000
+                  Length                      :
+                  Diameter                    :
                   Terminal_1:
                     Soldered                  : NO
                   Terminal_2:
@@ -199,6 +205,8 @@ Lab_Space:
                   Current_Coordinates         : SAMPLE_TABLE
                   Standard_Tolerance          :
                   Resistance                  :
+                  Length                      :
+                  Diameter                    :
                   Terminal_1:
                     Soldered                  : YES/NO
                   Terminal_2:
@@ -210,6 +218,8 @@ Lab_Space:
                   Current_Coordinates         : SAMPLE_TABLE
                   Standard_Tolerance          :
                   Resistance                  :
+                  Length                      :
+                  Diameter                    :
                   Terminal_1:
                     Soldered                  : YES/NO
                   Terminal_2:
@@ -221,6 +231,8 @@ Lab_Space:
                   Current_Coordinates         : SAMPLE_TABLE
                   Standard_Tolerance          :
                   Resistance                  :
+                  Length                      :
+                  Diameter                    :
                   Terminal_1:
                     Soldered                  : YES/NO
                   Terminal_2:
@@ -232,6 +244,8 @@ Lab_Space:
                   Current_Coordinates         : SAMPLE_TABLE
                   Standard_Tolerance          :
                   Resistance                  :
+                  Length                      :
+                  Diameter                    :
                   Terminal_1:
                     Soldered                  : YES/NO
                   Terminal_2:
@@ -243,6 +257,8 @@ Lab_Space:
                   Current_Coordinates         : SAMPLE_TABLE
                   Standard_Tolerance          :
                   Resistance                  :
+                  Length                      :
+                  Diameter                    :
                   Terminal_1:
                     Soldered                  : YES/NO
                   Terminal_2:
@@ -252,9 +268,10 @@ Lab_Space:
                 YBCO_1:
                   State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
-                  Current_Coordinates         : SAMPLE_TABLE
+                  Current_Coordinates         : WITH_NISHANT
                   Standard_Tolerance          :
-                  Resistance                  :
+                  Diameter                    :
+                  Thickness                   :
                   Terminal_1:
                     Soldered                  : YES/NO
                   Terminal_2:
@@ -270,7 +287,8 @@ Lab_Space:
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
                   Standard_Tolerance          :
-                  Resistance                  :
+                  Diameter                    :
+                  Thickness                   :
                   Terminal_1:
                     Soldered                  : YES/NO
                   Terminal_2:
