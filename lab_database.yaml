@@ -248,7 +248,7 @@ Lab_Space:
                   Terminal_2:
                     Soldered                  : YES/NO
 
-              Dessicator:
+            Dessicator:
                 YBCO_1:
                   State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
