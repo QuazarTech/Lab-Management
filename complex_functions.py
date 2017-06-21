@@ -314,6 +314,25 @@ def load_sample(Sample, Sample_Box, test_object, cryostat):
         clamp()
         
         connect_cable('RT_Cable', test_object)
+    
+    elif (test_object == "Insert_Susceptibility"):
+        
+        release_pressure('Sample_Chamber')
+        if (cryostat == "Double_Walled_Steel"):
+            release_pressure('Heater_Chamber')
+    	unclamp()
+    	
+        write('execute : Remove Cryostat_Cover')
+    	goto('Cryostat_Cover.Home_Coordinates')
+    	leave('Cryostat_Cover')
+    	
+        move(test_object, 'Cryostat.Exit_Coordinates')
+        goto ("Cryostat.Home_Coordinates")
+        
+        clamp()
+        
+        write("execute : Insert the sample platform into the Susceptibility insert")
+        connect_cable('RT_Cable', test_object)
         
         
         

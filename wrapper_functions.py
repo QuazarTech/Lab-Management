@@ -1,6 +1,6 @@
 from complex_functions import *
 
-TEST_OBJECTS    = ["Insert_RT_Puck", "Insert_RT_Old", "Puck_Board"]
+TEST_OBJECTS    = ["Insert_Susceptibility", "Insert_RT_Puck", "Insert_RT_Old", "Puck_Board"]
 CRYOSTATS       = ["Quartz", "Double_Walled_Steel"]
 CHAMBERS        = ["Sample_Chamber", "Heater_Chamber"]
 
