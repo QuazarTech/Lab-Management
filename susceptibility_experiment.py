@@ -37,10 +37,6 @@ def run (Sample, Sample_Box, sample_description, address):
     need_liquid_nitrogen()
     reset_cryostat_environment (previous_run_temperature, current_run_temperature, cryostat)
     
-    ###
-    set_XTCON_temperature(80)
-    init_XTCON_isothermal(test_object)
-    
     is_XL_run_needed(final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase, delay, filter_length, drive_mode, drive_value)
     start_XT_linear_ramp_run(final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase, delay, filter_length, drive_mode, drive_value)
     ###
