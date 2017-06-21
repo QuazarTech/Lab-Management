@@ -26,11 +26,8 @@ def run (Sample, Sample_Box, sample_description, address):
     previous_run_temperature = ""
     step_size, max_depth  = get_experimental_parameters_XL()
     initial_temperature, final_temperature, ramp_rate, frequency, amplitude, phase  = get_experimental_parameters_XT_linear_ramp()
+    drive_mode, drive_value, delay, filter_length   = get_lockin_aquisition_settings()
     current_run_temperature = initial_temperature
-    
-    flush_helium("Sample_Chamber")
-    if (cryostat == "Double_Walled_Steel"):
-        flush_helium("Heater_Chamber")
     
     
     turn_on_computer()
@@ -43,8 +40,9 @@ def run (Sample, Sample_Box, sample_description, address):
     ###
     set_XTCON_temperature(80)
     init_XTCON_isothermal(test_object)
-    start_XL_run(final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase)
-    start_XT_linear_ramp_run(final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase)
+    
+    is_XL_run_needed(final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase, delay, filter_length, drive_mode, drive_value)
+    start_XT_linear_ramp_run(final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase, delay, filter_length, drive_mode, drive_value)
     ###
     
     create_vaccum("Sample_Chamber")
