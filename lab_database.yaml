@@ -456,6 +456,18 @@ Lab_Space:
 
           Cables:
 
+                 PQMS_Voltage_Adder_Cable:
+                     Home_Coordinates         :
+                     Cryostat_End             :
+                     PQMS_End                 :
+
+
+                 XLIA_Sus_Cable:
+                     Home_Coordinates         :
+                     Cryostat_End             :
+                     PQMS_End                 :
+
+
                  HT_Cable:
                      Home_Coordinates         :
                      Cryostat_End             :
