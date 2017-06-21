@@ -275,9 +275,9 @@ def load_sample(Sample, Sample_Box, test_object, cryostat):
             write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Puck,Insert_Connection,CONNECTED")
             write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Insert2Puck_Cable,State,CONNECTED")
         
-        release_pressure('Sample_Chamber')
+        flush_helium('Sample_Chamber')
         if (cryostat == "Double_Walled_Steel"):
-            release_pressure('Heater_Chamber')
+            flush_helium('Heater_Chamber')
     	unclamp()
         
         write('execute : Remove Cryostat_Cover')
@@ -299,9 +299,9 @@ def load_sample(Sample, Sample_Box, test_object, cryostat):
     
     elif (test_object == "Insert_RT_Old"):
         
-        release_pressure('Sample_Chamber')
+        flush_helium('Sample_Chamber')
         if (cryostat == "Double_Walled_Steel"):
-            release_pressure('Heater_Chamber')
+            flush_helium('Heater_Chamber')
     	unclamp()
     	
         write('execute : Remove Cryostat_Cover')
@@ -317,9 +317,9 @@ def load_sample(Sample, Sample_Box, test_object, cryostat):
     
     elif (test_object == "Insert_Susceptibility"):
         
-        release_pressure('Sample_Chamber')
+        flush_helium('Sample_Chamber')
         if (cryostat == "Double_Walled_Steel"):
-            release_pressure('Heater_Chamber')
+            flush_helium('Heater_Chamber')
     	unclamp()
     	
         write('execute : Remove Cryostat_Cover')
@@ -331,8 +331,13 @@ def load_sample(Sample, Sample_Box, test_object, cryostat):
         
         clamp()
         
-        write("execute : Insert the sample platform into the Susceptibility insert")
-        connect_cable('RT_Cable', test_object)
+        write("execute : Ensure that the sample positioner collar is in place")
+        write("execute : Insert the sample platform into the Susceptibility insert, through the collar")
+        move ("Collar_Screw, Sample_Positioner_Collar")
+        write("execute : Fasten the collar with the screw")
+        set_positioner(60)
+        connect_cable('RT_Cable', test_object + "RT_Terminal")
+        connect_cable('XLIA_Cable', test_object+ "XLIA_Terminal")
         
         
         
@@ -597,6 +602,16 @@ def switch_off_computer():
     write("execute : Switch off the USB_Power_Adaptor")
     write("execute : Wait for computer to Shutdown")
     write ("execute : Switch off Computer.Switch")
+###############################################################################
+#Sample Positioner Functions
+
+def set_positioner(final_position):
+
+    click       ('Sample Positioner Window')
+    move_cursor ('Toolbar')
+    click       ('Tools')
+    click       ('Move Absolute')
+    write       ('execute : Set the value to' + str(final_position))
 
 ###############################################################################
 #Temperature controller functions
@@ -632,6 +647,14 @@ def stop_XTCON_run():
     click       ('Temperature Controller Window')
     write       ("execute : Stop Temperature Controller Run")
     write       ("Update_Database Lab_Space,PQMS,XTCON,Running,False")
+
+def start_XTCON_monitor():
+    click       ('Temperature Controller Window')
+    move_cursor ('Control mode')
+    click       ('drop down menu')
+    click       ('Monitor')
+    click       ('Start Button')
+    write       ("Update_Database Lab_Space,PQMS,XTCON,Running,True")
 
 ##############################################################################
 # CV_isothermal functions
@@ -1047,6 +1070,7 @@ def flush_helium (chamber):
     
 def pour_liquid_nitrogen ():
     
+    start_XTCON_monitor()
     goto    ("Cryocan_BA11.Home_Coordinates")
     hold    ("Cryocan_BA11.Cap")
     write   ("execute : Remove the lid and cap from the cryocan")
