@@ -121,7 +121,7 @@ def clamp():
     move       ('Clamp.Home_Coordinates', 'PQMS.Clamp_Coordinates')    
     write      ("execute : Use the other hand to revolve the clamp till 180 degrees")
     write      ("execute : Revolve the screw of the clamp till it is in closing position")
-    rotate     ('Screw','14 turns','clockwise')
+    rotate     ('Screw','required turns','clockwise')
     write      ("Update_Database Lab_Space,PQMS,Clamp,State,LOCKED")
     
 def unclamp():
@@ -656,6 +656,12 @@ def start_XTCON_monitor():
     click       ('Start Button')
     write       ("Update_Database Lab_Space,PQMS,XTCON,Running,True")
 
+def end_XTCON_monitor():
+    click       ('Temperature Controller Window')
+    move_cursor ('Finish Button')
+    click       ('Finish')
+
+
 ##############################################################################
 # CV_isothermal functions
 
@@ -705,7 +711,7 @@ def set_XLIA_isothermal_constant_voltage(initial_frequency,final_frequency,frequ
 ###############################################################################
 #XT_step_ramp_functions
 
-def set_XL_measurement_settings(final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase):
+def set_XL_measurement_settings(final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase, delay, filter_length, drive_mode, drive_value):
     
     move_cursor ('Run control')
     click       ('drop down menu')
@@ -724,11 +730,18 @@ def set_XL_measurement_settings(final_temperature, ramp_rate, max_depth, step_si
     write       ("execute : Set frequency as " + frequency + " Hz")
     write       ("execute : Set amplitude as " + amplitude + " mV")
     write       ("execute : Set phase as " + phase + " degrees")
+    
+    click       ('Settings->Lock-In Amplifier->Acquisition Settings')
+    write       ("execute : Set delay as " + delay + " s")
+    write       ("execute : Set filter_length as " + filter_length)
+    write       ("execute : Set drive mode as " + drive_mode)
+    write       ("execute : Set " + drive_mode + " value as " + drive_value)
+    
     move_cursor ("Top menu")
     click       ("\'File->Apply\'")    
 
 
-def set_XT_linear_ramp_measurement_settings(final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase):
+def set_XT_linear_ramp_measurement_settings(final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase, delay, filter_length, drive_mode, drive_value):
     #####       set linear ramp settings here
     
     move_cursor ('Run control')
@@ -747,20 +760,29 @@ def set_XT_linear_ramp_measurement_settings(final_temperature, ramp_rate, max_de
     write       ("execute : Set frequency as " + frequency + " Hz")
     write       ("execute : Set amplitude as " + amplitude + " mV")
     write       ("execute : Set phase as " + phase + " degrees")
+    
+    click       ("\'File->Apply\'")  
+    
     move_cursor ("Top menu")
+    click       ('Settings->Lock-In Amplifier->Acquisition Settings')
+    write       ("execute : Set delay as " + delay + " s")
+    write       ("execute : Set filter_length as " + filter_length)
+    write       ("execute : Set drive mode as " + drive_mode)
+    write       ("execute : Set " + drive_mode + " value as " + drive_value)
+    
     click       ("\'File->Apply\'")  
     
     ################################
     
     
 
-def start_XL_run (final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase):
+def start_XL_run (final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase, delay, filter_length, drive_mode, drive_value):
     
     goto        ("Qrius Main Window")
     click       ('Measurement Mode settings')
-    click       ('Electrical AC Susceptibility')
+    click       ('Magnetic AC Susceptibility')
     
-    set_XL_measurement_settings(final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase)
+    set_XL_measurement_settings(final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase, delay, filter_length, drive_mode, drive_value)
     write("Update_Database Lab_Space,PQMS,XTCON,Mode,Linear_Ramp")
     
     click ('Start Button')
@@ -770,13 +792,13 @@ def start_XL_run (final_temperature, ramp_rate, max_depth, step_size, amplitude,
     write ("Update_Database Lab_Space,PQMS,XLIA,Running,False")
     save_graph()
 
-def start_XT_linear_ramp_run (final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase):
+def start_XT_linear_ramp_run (final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase, delay, filter_length, drive_mode, drive_value):
     
     goto        ("Qrius Main Window")
     click       ('Measurement Mode settings')
-    click       ('Electrical AC Susceptibility')
+    click       ('Magnetic AC Susceptibility')
     
-    set_XT_linear_ramp_measurement_settings(final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase)
+    set_XT_linear_ramp_measurement_settings(final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase, delay, filter_length, drive_mode, drive_value)
     write("Update_Database Lab_Space,PQMS,XTCON,Mode,Linear_Ramp")
     
     click ('Start Button')
@@ -785,6 +807,12 @@ def start_XT_linear_ramp_run (final_temperature, ramp_rate, max_depth, step_size
     
     write ("Update_Database Lab_Space,PQMS,XSMU,Running,False")
     save_graph()
+
+def is_XL_run_needed(final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase, delay, filter_length, drive_mode, drive_value):
+
+    condition = raw_input("Do you want to do X-L run? (y/n): \n")
+    if (condition == 'y'):
+    	start_XL_run(final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase, delay, filter_length, drive_mode, drive_value)
 	
 	
 ###############################################################################
@@ -1044,6 +1072,8 @@ def flush_helium (chamber):
     
     goto    ("Helium_Cylinder.Main_Valve")
     write   ("execute : Ensure that Helium_Cylinder.Pressure_Valve is closed (completely unscrewed loose in anticlockwise direction).")
+    write   ("execute : Open the "+chamber+".Flush_Valve to relese residual pressure")
+    write   ("execute : Close the "+chamber+".Flush_Valve when helium pressure gauge reads 0 psi") 
     write   ("execute : Open Helium_Cylinder.Main_Valve by rotating in anticlockwise direction.")
     write   ("execute : Turn the Helium_Cylinder.Pressure_Valve clockwise slightly until pressure guage reads about 20 psi.")
     
@@ -1092,6 +1122,7 @@ def pour_liquid_nitrogen ():
     hold    ("Cryocan_BA11.Cap")
     goto    ("Cryocan_BA11.Home_Coordinates")
     write   ("execute : Replace _Ba11.Cap")
+    end_XTCON_monitor()
 
 #####################################################################
 #misc qrius utilities
