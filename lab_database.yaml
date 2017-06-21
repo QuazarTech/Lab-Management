@@ -158,46 +158,58 @@ Lab_Space:
                 Zener_1: 
                   State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
-                  Current_Coordinates         : SAMPLE_TABLE
+                  Current_Coordinates         : Insert_RT_Old
                   Part_Number                 : ZN0000
-                  Length                      :
+                  Length                      : 
                   Diameter                    :
                   Terminal_1:
                     Soldered                  : NO
+                    Length                    : 
+                    Diameter                  : 
                   Terminal_2:
                     Soldered                  : NO
-                  
+                    Length                    : 
+                    Diameter                  : 
+                    
                 Zener_2: 
                   State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
                   Part_Number                 : ZN0000
-                  Length                      :
-                  Diameter                    :
+                  Length                      : 3.11 mm
+                  Diameter                    : 1.62 mm
                   Terminal_1:
                     Soldered                  : NO
+                    Length                    : 9.91 mm
+                    Diameter                  : 0.5 mm
                   Terminal_2:
                     Soldered                  : NO
-                    
+                    Length                    : 9.8  mm
+                    Diameter                  : 0.47 mm
+                  
                 Zener_3: 
                   State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
-                  Current_Coordinates         : SAMPLE_TABLE
+                  Current_Coordinates         : 
                   Part_Number                 : ZN0000
-                  Length                      :
+                  Length                      : 
                   Diameter                    :
                   Terminal_1:
                     Soldered                  : NO
+                    Length                    : 
+                    Diameter                  : 
                   Terminal_2:
                     Soldered                  : NO
-
+                    Length                    : 
+                    Diameter                  : 
+                
             Box_Resistor: 
             
                 State                         : CLOSED
                 Home_Coordinates              : SAMPLE_TABLE
                 Current_Coordinates           : SAMPLE_TABLE
                 Cap_Coordinates               : SAMPLE_TABLE
-                No_of_Samples                 : 5
+                No_of_Samples                 : 6
               
                 Res_1: 
                   State                       : NOT_IN_USE
@@ -205,8 +217,8 @@ Lab_Space:
                   Current_Coordinates         : SAMPLE_TABLE
                   Standard_Tolerance          :
                   Resistance                  :
-                  Length                      :
-                  Diameter                    :
+                  Length                      : 6.5 mm
+                  Diameter                    : 1.8 mm 
                   Terminal_1:
                     Soldered                  : YES/NO
                   Terminal_2:
@@ -218,8 +230,8 @@ Lab_Space:
                   Current_Coordinates         : SAMPLE_TABLE
                   Standard_Tolerance          :
                   Resistance                  :
-                  Length                      :
-                  Diameter                    :
+                  Length                      : 6.52 mm
+                  Diameter                    : 1.9 mm
                   Terminal_1:
                     Soldered                  : YES/NO
                   Terminal_2:
@@ -231,8 +243,8 @@ Lab_Space:
                   Current_Coordinates         : SAMPLE_TABLE
                   Standard_Tolerance          :
                   Resistance                  :
-                  Length                      :
-                  Diameter                    :
+                  Length                      : 6.3 mm
+                  Diameter                    : 1.74 mm
                   Terminal_1:
                     Soldered                  : YES/NO
                   Terminal_2:
@@ -244,8 +256,8 @@ Lab_Space:
                   Current_Coordinates         : SAMPLE_TABLE
                   Standard_Tolerance          :
                   Resistance                  :
-                  Length                      :
-                  Diameter                    :
+                  Length                      : 6.52 mm
+                  Diameter                    : 1.85 mm
                   Terminal_1:
                     Soldered                  : YES/NO
                   Terminal_2:
@@ -257,8 +269,21 @@ Lab_Space:
                   Current_Coordinates         : SAMPLE_TABLE
                   Standard_Tolerance          :
                   Resistance                  :
-                  Length                      :
-                  Diameter                    :
+                  Length                      : 6.21 mm
+                  Diameter                    : 1.86 mm
+                  Terminal_1:
+                    Soldered                  : YES/NO
+                  Terminal_2:
+                    Soldered                  : YES/NO
+                    
+                Res_6: 
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Standard_Tolerance          :
+                  Resistance                  :
+                  Length                      : 6.77 mm
+                  Diameter                    : 1.83 mm
                   Terminal_1:
                     Soldered                  : YES/NO
                   Terminal_2:
@@ -266,36 +291,72 @@ Lab_Space:
 
             Dessicator:
                 YBCO_1:
-                  State                       : NOT_IN_USE
+                  State                       : CUT INTO YBCO_1_A , YBCO_1_B
                   Home_Coordinates            : SAMPLE_TABLE
-                  Current_Coordinates         : WITH_NISHANT
-                  Standard_Tolerance          :
-                  Diameter                    :
-                  Thickness                   :
+                  Current_Coordinates         : DOES NOT EXIST
+                  Shape                       : CIRCULAR
+                  Diameter                    : 9.89 mm
+                  Thickness:
+                    Centre                    : 1.50 mm
+                    Edge                      : 1.60 mm
                   Terminal_1:
-                    Soldered                  : YES/NO
+                    Soldered                  : NO
                   Terminal_2:
-                    Soldered                  : YES/NO
+                    Soldered                  : NO
                   Terminal_3:
-                    Soldered                  : YES/NO
+                    Soldered                  : NO
                   Terminal_4:
-                    Soldered                  : YES/NO
+                    Soldered                  : NO
                 
                 YBCO_2:
-                  State                       : NOT_IN_USE
-                  Home_Coordinates            : SAMPLE_TABLE
-                  Current_Coordinates         : SAMPLE_TABLE
-                  Standard_Tolerance          :
-                  Diameter                    :
-                  Thickness                   :
+                  State                       : IN_USE (R-Time)
+                  Home_Coordinates            : DESSICATOR
+                  Current_Coordinates         : Insert_RT_New
+                  Shape                       : CIRCULAR
+                  Diameter                    : NOT_MEASURED
+                  Thickness                   : NOT_MEASURED
                   Terminal_1:
-                    Soldered                  : YES/NO
+                    Soldered                  : YES
                   Terminal_2:
-                    Soldered                  : YES/NO
+                    Soldered                  : YES
                   Terminal_3:
-                    Soldered                  : YES/NO
+                    Soldered                  : YES
                   Terminal_4:
-                    Soldered                  : Yes/NO
+                    Soldered                  : Yes
+                
+                YBCO_1_A:
+                  State                       : IN_USE (Magnetic Susceptibility)
+                  Home_Coordinates            : DESSICATOR
+                  Current_Coordinates         : Insert_AC_Susceptibility
+                  Shape                       : SEMI_CIRCULAR
+                  Outer_Length                : 9.34 mm
+                  Width                       : 3.50 mm
+                  Thickness                   : 1.60 mm
+                  Terminal_1:
+                    Soldered                  : NO
+                  Terminal_2:
+                    Soldered                  : NO
+                  Terminal_3:
+                    Soldered                  : NO
+                  Terminal_4:
+                    Soldered                  : NO
+                
+                YBCO_1_B:
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : DESSICATOR
+                  Current_Coordinates         : DESSICATOR
+                  Shape                       : SEMI_CIRCULAR
+                  Outer_Length                : 9.86 mm
+                  Width                       : 6.12 mm
+                  Thickness                   : 1.60 mm
+                  Terminal_1:
+                    Soldered                  : NO
+                  Terminal_2:
+                    Soldered                  : NO
+                  Terminal_3:
+                    Soldered                  : NO
+                  Terminal_4:
+                    Soldered                  : NO
                 
     PQMS:  
           State                               : NOT_IN_USE
@@ -303,6 +364,24 @@ Lab_Space:
           Current_Coordinates                 : PQMS_COORDINATES
           
           Insert_RT_Old: 
+                Home_Coordinates              :
+                Current_Coordinates           :
+
+                RT_Cable_Terminal:
+                    State                     : DISCONNECTED
+                HT_Cable_Terminal:
+                    State                     : DISCONNECTED
+                Sample_Mounted                : NO
+                Terminal_1:
+                    Soldered                  : NO
+                Terminal_2:
+                    Soldered                  : NO
+                Terminal_3:
+                    Soldered                  : NO
+                Terminal_4:
+                    Soldered                  : NO
+          
+          Insert_RT_New: 
                 Home_Coordinates              :
                 Current_Coordinates           :
 
