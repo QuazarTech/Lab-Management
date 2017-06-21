@@ -737,6 +737,9 @@ def set_XL_measurement_settings(final_temperature, ramp_rate, max_depth, step_si
     write       ("execute : Set drive mode as " + drive_mode)
     write       ("execute : Set " + drive_mode + " value as " + drive_value)
     
+    click       ('Settings->Lock-In Amplifier->Measurement Settings')
+    write       ("execute : Set coupling as AC")
+    
     move_cursor ("Top menu")
     click       ("\'File->Apply\'")    
 
@@ -769,6 +772,9 @@ def set_XT_linear_ramp_measurement_settings(final_temperature, ramp_rate, max_de
     write       ("execute : Set filter_length as " + filter_length)
     write       ("execute : Set drive mode as " + drive_mode)
     write       ("execute : Set " + drive_mode + " value as " + drive_value)
+    
+    click       ('Settings->Lock-In Amplifier->Measurement Settings')
+    write       ("execute : Set coupling as AC")
     
     click       ("\'File->Apply\'")  
     
