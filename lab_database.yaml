@@ -162,6 +162,7 @@ Lab_Space:
                   Part_Number                 : ZN0000
                   Length                      : 
                   Diameter                    :
+                  Photo                       : NOT_CLICKED
                   Terminal_1:
                     Soldered                  : NO
                     Length                    : 
@@ -178,6 +179,7 @@ Lab_Space:
                   Part_Number                 : ZN0000
                   Length                      : 3.11 mm
                   Diameter                    : 1.62 mm
+                  Photo                       : Sample Photo/Zener_2.jpg
                   Terminal_1:
                     Soldered                  : NO
                     Length                    : 9.91 mm
@@ -190,10 +192,11 @@ Lab_Space:
                 Zener_3: 
                   State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
-                  Current_Coordinates         : 
+                  Current_Coordinates         : SAMPLE_TABLE
                   Part_Number                 : ZN0000
                   Length                      : 
                   Diameter                    :
+                  Photo                       : NOT_CLICKED
                   Terminal_1:
                     Soldered                  : NO
                     Length                    : 
@@ -219,6 +222,7 @@ Lab_Space:
                   Resistance                  :
                   Length                      : 6.5 mm
                   Diameter                    : 1.8 mm 
+                  Photo                       : Sample Photo/Resistor_1.jpg
                   Terminal_1:
                     Soldered                  : YES/NO
                   Terminal_2:
@@ -232,6 +236,7 @@ Lab_Space:
                   Resistance                  :
                   Length                      : 6.52 mm
                   Diameter                    : 1.9 mm
+                  Photo                       : Sample Photo/Resistor_2.jpg
                   Terminal_1:
                     Soldered                  : YES/NO
                   Terminal_2:
@@ -245,6 +250,7 @@ Lab_Space:
                   Resistance                  :
                   Length                      : 6.3 mm
                   Diameter                    : 1.74 mm
+                  Photo                       : Sample Photo/Resistor_3.jpg
                   Terminal_1:
                     Soldered                  : YES/NO
                   Terminal_2:
@@ -258,6 +264,7 @@ Lab_Space:
                   Resistance                  :
                   Length                      : 6.52 mm
                   Diameter                    : 1.85 mm
+                  Photo                       : Sample Photo/Resistor_4.jpg
                   Terminal_1:
                     Soldered                  : YES/NO
                   Terminal_2:
@@ -271,6 +278,7 @@ Lab_Space:
                   Resistance                  :
                   Length                      : 6.21 mm
                   Diameter                    : 1.86 mm
+                  Photo                       : Sample Photo/Resistor_5.jpg
                   Terminal_1:
                     Soldered                  : YES/NO
                   Terminal_2:
@@ -284,6 +292,7 @@ Lab_Space:
                   Resistance                  :
                   Length                      : 6.77 mm
                   Diameter                    : 1.83 mm
+                  Photo                       : Sample Photo/Resistor_6.jpg
                   Terminal_1:
                     Soldered                  : YES/NO
                   Terminal_2:
@@ -299,6 +308,7 @@ Lab_Space:
                   Thickness:
                     Centre                    : 1.50 mm
                     Edge                      : 1.60 mm
+                  Photo                       : Sample Photo/YBCO_1.jpg
                   Terminal_1:
                     Soldered                  : NO
                   Terminal_2:
@@ -315,6 +325,7 @@ Lab_Space:
                   Shape                       : CIRCULAR
                   Diameter                    : NOT_MEASURED
                   Thickness                   : NOT_MEASURED
+                  Photo                       : NOT_CLICKED
                   Terminal_1:
                     Soldered                  : YES
                   Terminal_2:
@@ -332,6 +343,7 @@ Lab_Space:
                   Outer_Length                : 9.34 mm
                   Width                       : 3.50 mm
                   Thickness                   : 1.60 mm
+                  Photo                       : Sample Photo/YBCO_1_A.jpg
                   Terminal_1:
                     Soldered                  : NO
                   Terminal_2:
@@ -349,6 +361,7 @@ Lab_Space:
                   Outer_Length                : 9.86 mm
                   Width                       : 6.12 mm
                   Thickness                   : 1.60 mm
+                  Photo                       : Sample Photo/YBCO_1_B.jpg
                   Terminal_1:
                     Soldered                  : NO
                   Terminal_2:
