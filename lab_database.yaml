@@ -562,7 +562,9 @@ Lab_Space:
               State                           : OFF
               Power_Cable                     : CONNECTED
 
-          Cryocan_BA11: 
+          Cryocan_BA11:
+            Home_Coordinates                  : Cryocan_BA11.HOME
+            Current_Coordinates               : With Nishant
           
           Ladle:
             State                             : NOT_IN_USE
