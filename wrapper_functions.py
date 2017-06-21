@@ -13,6 +13,15 @@ def get_experimental_parameters_XL():
   
     return step_size, max_depth
 
+def get_lockin_aquisition_settings():
+
+    drive_mode                  = raw_input("Enter the drive mode (current/voltage) : \n")
+    drive_value                 = raw_input("Enter the " +drive_mode + " value : \n")
+    delay                       = raw_input("Enter the delay time : \n")
+    filter_length               = raw_input("Enter the filter length: \n")
+  
+    return drive_mode, drive_value, delay, filter_length
+
 def get_experimental_parameters_XT_linear_ramp():
 
     frequency                = raw_input("Enter frequency (Hz) : \n")
@@ -269,6 +278,8 @@ def need_liquid_nitrogen ():
 
 def double_walled_steel_cryostat_environment_setup (previous_run_temperature, current_run_temperature):
     
+    flush_helium("Sample_Chamber")
+    flush_helium("Heater_Chamber")
         
     if (previous_run_temperature == "" and current_run_temperature > 150):
         create_vaccum ("Heater_Chamber")
@@ -280,6 +291,7 @@ def double_walled_steel_cryostat_environment_setup (previous_run_temperature, cu
 
 def quartz_cryostat_environment_setup(previous_run_temperature, current_run_temperature):
     
+    flush_helium("Sample_Chamber")
         
     if (previous_run_temperature == "" and current_run_temperature > 150):
         create_vaccum ("Sample_Chamber")
