@@ -18,8 +18,9 @@ def run (Sample, Sample_Box, sample_description, address):
     voltage_set_point = get_experimental_parameters_bias_DC_voltage_measure()
     reference_amplitude,reference_frequency,reference_phase = get_experimental_parameters_AC_volatage_measure()
     
-    
+    write        ("execute : Disconnect the XSMU R_Cable")
     write        ("execute : connect PQMS.Voltage_Adder_Cable 5 pin connector to XSMU")
+    write        ("execute : Disconnect the Lock-In Ref Out Cable")
     write        ("execute : connect PQMS.Voltage_Adder_Cable 1 pin connector to Lockin Ref Out")
     
     ###################
@@ -28,10 +29,11 @@ def run (Sample, Sample_Box, sample_description, address):
     write       ("execute : Hold Oscilloscope.Probes")
     goto        ("PQMS.Voltage_Adder_Cable 8 pin connector")
     write       ("execute : Put the Oscilloscope to appropriate mode")
-    write       ("execute : Connect Oscilloscope to Pin number")
     write       ("execute : Open Terminal")
     write       ("execute : Change directory to 'work/svn/XPLORE/Qrius/tag/latest/ppsel/Capacitance'")
     write       ("execute : type 'python capacitance.py'")
+    write       ("execute : Connect positive probe of the oscilloscope to Pin number 6 of the 8 pin connector")
+    write       ("execute : Connect the negative probe of the oscilloscope to Pin number 7 of the 8 pin connector")
     
     ###################
     #
