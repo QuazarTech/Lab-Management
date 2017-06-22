@@ -9,6 +9,12 @@ def run (Sample, Sample_Box, sample_description, address):
     turn_on_PQMS_modules()
     set_up_PQMS_modules()
     
+    ##################
+    
+    write        ("execute : Exit Qrius")
+    
+    ##################
+    
     voltage_set_point = get_experimental_parameters_bias_DC_voltage_measure()
     reference_amplitude,reference_frequency,reference_phase = get_experimental_parameters_AC_volatage_measure()
     
@@ -28,19 +34,19 @@ def run (Sample, Sample_Box, sample_description, address):
     write       ("execute : type 'python capacitance.py'")
     
     ###################
-    
-    measured_DC_V  = raw_input ("What is the DC offset of the signal? \n")
-    measured_AC_V  = raw_input ("What is the AC amplitude? \n")
-    measured_freq  = raw_input ("What is the measured frequency? \n")
-    measured_phase = raw_input ("What is the measured phase? \n")
-
+    #
+    # measured_DC_V  = raw_input ("What is the DC offset of the signal? \n")
+    # measured_AC_V  = raw_input ("What is the AC amplitude? \n")
+    # measured_freq  = raw_input ("What is the measured frequency? \n")
+    # measured_phase = raw_input ("What is the measured phase? \n")
+    #
     ###################
-    
-    write("Measured DC V : " + measured_DC_V ) 
-    write("Measured AC V : " + measured_AC_V )
-    write("Measured freq : " + measured_freq )
-    write("Measured phase: " + measured_phase)
-   
+    #
+    # write("Measured DC V : " + measured_DC_V ) 
+    # write("Measured AC V : " + measured_AC_V )
+    # write("Measured freq : " + measured_freq )
+    # write("Measured phase: " + measured_phase)
+    #   
     ###################
    
     turn_off_PQMS_modules()
