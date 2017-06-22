@@ -116,7 +116,7 @@ def print_states (experiment, log, line, new_dbase):
         print yaml.dump(z[param], allow_unicode=True, default_flow_style=False)
         user_input = raw_input("Comments, if any : (Press Enter to continue, type \
             'pause' to pause, or 'end' to abort) : ")
-        temp = experiment.time_in_ist()
+        temp = experiment.time_in_ist('%H:%M:%S')
         
         if(user_input == "end"):
             abort_execution(experiment, log)
@@ -127,7 +127,7 @@ def print_states (experiment, log, line, new_dbase):
         else:
             print temp + '\n'
         
-        time_array.append(experiment.time_in_ist())
+        time_array.append(experiment.time_in_ist('%H:%M:%S'))
         time_stamp_and_comments(log, line, temp, user_input)
 
 #####################################################################
@@ -163,7 +163,7 @@ def pause_execution(log):
 #####################################################################	
 
 def put_in_folder (experiment, log, diff_file, new_dbase):        
-	t = experiment.time_in_ist()
+	t = experiment.time_in_ist('%Y_%m_%d_%H:%M:%S')
 	folder_name = "run_data_" + experiment.name + "_" + t
 	os.system("mkdir " + folder_name)
 	os.system("mv " + experiment.procedure + " " + folder_name + "/")
@@ -226,10 +226,10 @@ log = open (read_file[:-13] + "execution_log.txt", "w")
 log.write("Robot : " + robot + "\n")
 log.write("Sensor : " + sensor + "\n")
 log.write("Observer : " + observer + "\n")
-log.write("Time : " + experiment.time_in_ist() + "\n")
+log.write("Time : " + experiment.time_in_ist('%H:%M:%S') + "\n")
 log.close()
 
-time_array.append(experiment.time_in_ist())
+time_array.append(experiment.time_in_ist('%H:%M:%S'))
 
 diff_file = read_file[:-13] + "diff.txt"
 new_dbase = read_file[:-13] + "new_database"
@@ -260,7 +260,7 @@ with open(read_file, "r") as fdata:
             if(line[10:14] != 'Read'):
                 print(line + '\n')
                 user_input = raw_input("Comments, if any : (Press Enter to continue, type 'pause' to pause or 'end' to abort) : ")
-                temp = experiment.time_in_ist()
+                temp = experiment.time_in_ist('%H:%M:%S')
                 
                 if (user_input == "end"):
                     string = abort_execution(experiment, log)
@@ -273,7 +273,7 @@ with open(read_file, "r") as fdata:
                 else:
                     print temp + '\n'
 
-                time_array.append (experiment.time_in_ist())
+                time_array.append (experiment.time_in_ist('%H:%M:%S'))
 		time_stamp_and_comments(log, line, temp, user_input)
 
             else:
