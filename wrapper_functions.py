@@ -287,14 +287,14 @@ def cables_connected_check (test_object, cryostat):
                 throw_exception ("Can't use heater with " + cryostat + " cryostat and " + test_object)
             
             connect_cable('RT_Cable', test_object + "RT_Terminal")
-            connect_cable('XLIA_Susceptibility_Cable', test_object + "XLIA_Susceptibility_Cable_Connector")
+            connect_cable('XLIA_Sus_Cable', test_object + "XLIA_Sus_Terminal")
 
 def cables_disconnected_check (test_object, cryostat):
     
     response = raw_input ("Do you want to disconnect all cables after the experiment? : y/n\n")
     
     while (response != 'y' and response != 'n'):
-    response = raw_input ("Do you want to disconnect all cables after the experiment? : y/n\n")
+    	response = raw_input ("Do you want to disconnect all cables after the experiment? : y/n\n")
     
     if (response == 'y'):
         
@@ -306,7 +306,9 @@ def cables_disconnected_check (test_object, cryostat):
             disconnect_cable ("Puck_Board")
         
         elif (test_object == "Insert_Susceptibility"):
-            
+            disconnect_cable("RT_Cable")
+            disconnect_cable("HT_Cable")
+            disconnect_cable("XLIA_Sus_Cable")
             
     
 def remove_sample (Sample, Sample_Box, test_object):
