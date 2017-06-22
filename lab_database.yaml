@@ -308,6 +308,7 @@ Lab_Space:
                   Thickness:
                     Centre                    : 1.50 mm
                     Edge                      : 1.60 mm
+                   Weight                     : 0.58 g
                   Photo                       : Sample Photo/YBCO_1.jpg
                   Terminal_1:
                     Soldered                  : NO
@@ -343,6 +344,7 @@ Lab_Space:
                   Outer_Length                : 9.34 mm
                   Width                       : 3.50 mm
                   Thickness                   : 1.60 mm
+                  Weight                      : 0.16 g
                   Photo                       : Sample Photo/YBCO_1_A.jpg
                   Terminal_1:
                     Soldered                  : NO
@@ -361,6 +363,7 @@ Lab_Space:
                   Outer_Length                : 9.86 mm
                   Width                       : 6.12 mm
                   Thickness                   : 1.60 mm
+                  Weight                      : 0.34 g
                   Photo                       : Sample Photo/YBCO_1_B.jpg
                   Terminal_1:
                     Soldered                  : NO
