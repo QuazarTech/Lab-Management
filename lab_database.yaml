@@ -299,6 +299,7 @@ Lab_Space:
                     Soldered                  : YES/NO
 
             Dessicator:
+            
                 YBCO_1:
                   State                       : CUT INTO YBCO_1_A , YBCO_1_B
                   Home_Coordinates            : SAMPLE_TABLE
@@ -308,7 +309,7 @@ Lab_Space:
                   Thickness:
                     Centre                    : 1.50 mm
                     Edge                      : 1.60 mm
-                   Weight                     : 0.58 g
+                  Weight                      : 0.58 g
                   Photo                       : Sample Photo/YBCO_1.jpg
                   Terminal_1:
                     Soldered                  : NO
