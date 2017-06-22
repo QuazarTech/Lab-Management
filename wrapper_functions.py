@@ -249,18 +249,77 @@ def is_the_sample_loaded (Sample, Sample_Box, test_object, cryostat):
     if (response == 'n'):
         load_sample (Sample, Sample_Box, test_object, cryostat)
 
+def cables_connected_check (test_object, cryostat):
+    
+    response = raw_input ("Are the required cables already connected? : y/n\n")
+    
+    while (response != 'y' and response != 'n'):
+        response = raw_input ("Are the required cables already connected? : y/n\n")
+    
+    if (response == 'y'):
+        
+        if (test_object == "Insert_RT_Puck"):
+            
+            connect_cable('RT_Cable', test_object)
+            connect_cable('HT_Cable', test_object)
+        
+        elif (test_object == "Puck_Board"):
+            
+            connect_cable('RT_Cable', test_object)
+        
+        elif (test_object == "Insert_RT_Old"):
+            
+            
+            if (cryostat == "Double_Walled_Steel"):
+                connect_cable('HT_Cable', cryostat + " cryostat's HT connector")
+            
+            elif (cryostat == "Quartz" ):
+                throw_exception ("Can't use heater with " + cryostat + " cryostat and " + test_object)
+            
+            connect_cable('RT_Cable', test_object)
+        
+        elif (test_object == "Insert_Susceptibility"):
+            
+            if (cryostat == "Double_Walled_Steel"):
+                connect_cable('HT_Cable', cryostat + " cryostat's HT connector")
+            
+            elif (cryostat == "Quartz" ):
+                throw_exception ("Can't use heater with " + cryostat + " cryostat and " + test_object)
+            
+            connect_cable('RT_Cable', test_object + "RT_Terminal")
+            connect_cable('XLIA_Susceptibility_Cable', test_object + "XLIA_Susceptibility_Cable_Connector")
 
+def cables_disconnected_check (test_object, cryostat):
+    
+    response = raw_input ("Do you want to disconnect all cables after the experiment? : y/n\n")
+    
+    while (response != 'y' and response != 'n'):
+    response = raw_input ("Do you want to disconnect all cables after the experiment? : y/n\n")
+    
+    if (response == 'y'):
+        
+        if ((test_object == "Insert_RT_Puck") or (test_object == "Insert_RT_Old")):
+            disconnect_cable("RT_Cable")
+            disconnect_cable("HT_Cable")
+            
+        elif (test_object == "Puck_Board"):
+            disconnect_cable ("Puck_Board")
+        
+        elif (test_object == "Insert_Susceptibility"):
+            
+            
+    
 def remove_sample (Sample, Sample_Box, test_object):
     
     '''Asks the user if the sample the sample is to be desoldered from the test_object after completion of the procedure'''
     
-    unmount = raw_input ("\nDo you want to unmount the sample from the Puck after the measurements? : y/n \n")
+    unmount = raw_input ("\nDo you want to unmount the sample from the " + test_object + " after the measurements? : y/n \n")
     while ((unmount != 'y') and (unmount != 'n')):
         
-        unmount = raw_input ("\nDo you want to unmount the sample from the Puck after the measurements? : y/n\n")
+        unmount = raw_input ("\nDo you want to unmount the sample from the " + test_object + " after the measurements? : y/n\n")
         
     if (unmount == 'n'):
-        print ("\n Not unmounting the sample from the puck.\n")
+        print ("\n Not unmounting the sample from the " + test_object + ".\n")
         do_not_unmount()
         
     elif (unmount == 'y'):
@@ -335,9 +394,7 @@ def release_PQMS_vaccum (cryostat):
     elif (cryostat == "Quartz"):
         
         release_pressure ("Sample_Chamber")
-        
                         
- 
 
 def liquid_nitrogen_remaining ():
     
@@ -348,6 +405,26 @@ def liquid_nitrogen_remaining ():
         
     if (response == 'y'):
         restore_vaccum ()
+
+def turn_on_PQMS_modules():
+    
+    response = raw_input ("Is the PQMS already on? : y/n\n")
+    
+    while ((response != 'y') and (response != 'n')):
+        response = raw_input ("Is the PQMS already on? : y/n\n")
+        
+    if (response == 'n'):
+        switch_on_PQMS_modules()
+    
+def turn_off_PQMS_modules():
+    
+    response = raw_input ("Do you want to turn off the PQMS? : y/n\n")
+    
+    while ((response != 'y') and (response != 'n')):
+        response = raw_input ("Do you want to turn off the PQMS? : y/n\n")
+        
+    if (response == 'y'):
+        switch_off_PQMS_modules()
 
 def turn_off_computer ():
     

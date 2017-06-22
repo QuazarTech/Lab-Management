@@ -45,6 +45,11 @@ def sample_is_mounted():
 def do_not_unmount():
     write ("Not unmounting the sample")
     
+def throw_exception (error):
+    write ("\n########### ERROR ###########\n")
+    write (error)
+    write ("\n#############################\n")
+    
 #####################################################################
 #soldering iron related functions
 
@@ -288,14 +293,11 @@ def load_sample(Sample, Sample_Box, test_object, cryostat):
 
         clamp()
         
-        connect_cable('RT_Cable', test_object)
-        connect_cable('HT_Cable', test_object)
         
     elif (test_object == "Puck_Board"):
         
         write ("Sample Puck is already connected to Puck_Board")
         move ("Puck_Board", "PQMS.Home_Coordinates")
-        connect_cable('RT_Cable', test_object)
     
     elif (test_object == "Insert_RT_Old"):
         
@@ -312,8 +314,6 @@ def load_sample(Sample, Sample_Box, test_object, cryostat):
         goto ("Cryostat.Home_Coordinates")
         
         clamp()
-        
-        connect_cable('RT_Cable', test_object)
     
     elif (test_object == "Insert_Susceptibility"):
         
@@ -332,12 +332,10 @@ def load_sample(Sample, Sample_Box, test_object, cryostat):
         clamp()
         
         write("execute : Ensure that the sample positioner collar is in place")
-        write("execute : Insert the sample platform into the Susceptibility insert, through the collar")
+        write("execute : Insert the " + test_object + " sample platform into the " + test_object + ", through the collar")
         move ("Collar_Screw, Sample_Positioner_Collar")
-        write("execute : Fasten the collar with the screw")
+        write("execute : Fasten the collar screw with the LN Key")
         set_positioner(60)
-        connect_cable('RT_Cable', test_object + "RT_Terminal")
-        connect_cable('XLIA_Cable', test_object+ "XLIA_Terminal")
         
         
         
@@ -456,8 +454,6 @@ def unload_sample(Sample, Sample_Box, test_object):
     
     if (test_object == "Insert_RT_Puck"):
         
-        disconnect_cable("RT_Cable")
-        disconnect_cable("HT_Cable")
         unclamp()
         
         goto("Insert_RT_Puck")
@@ -490,14 +486,39 @@ def unload_sample(Sample, Sample_Box, test_object):
         
     elif (test_object == "Puck_Board"):
         
-        disconnect_cable("RT_Cable")
-        disconnect_cable("HT_Cable")
         move (test_object, test_object + ".Home_Coordinates")
         
     elif (test_object == "Insert_RT_Old"):
-        disconnect_cable("RT_Cable")
+        
         unclamp()
         move (test_object, test_object + ".Home_Coordinates")
+        
+    elif (test_object == "Insert_Susceptibility"):
+        
+        flush_helium('Sample_Chamber')
+        if (cryostat == "Double_Walled_Steel"):
+            flush_helium('Heater_Chamber')
+    	unclamp()
+    	
+        write("execute : Remove the " + test_object + " sample platform from the " + test_object + ", through the collar")
+        write("execute : Unfasten the collar screw with the LN Key")
+        move ("Collar_Screw, ", "away from Sample_Positioner_Collar")
+        write("execute : Remove the sample positioner collar")
+        
+        move(test_object, 'Cryostat.Exit_Coordinates')
+        goto ("Cryostat.Home_Coordinates")
+        
+    	goto('Cryostat_Cover.Home_Coordinates')
+        write('execute : Replace Cryostat_Cover on opening')
+    	leave('Cryostat_Cover')
+    	
+    	create_vaccum ("Sample_Chamber")
+    	if (cryostat == "Double_Walled_Steel"):
+            create_vaccum('Heater_Chamber')
+        
+        clamp()
+        
+        set_positioner(60)
         
 
 #####################################################################
@@ -551,6 +572,10 @@ def set_up_PQMS_modules ():
     write("execute : Check if XLIA PC Connection has been established")
     write("execute : If No, then click on 'File->Connect'. If Yes, do nothing.")
     
+    click ("Sample Positioner")
+    write("execute : Check if Sample_Positioner PC Connection has been established")
+    write("execute : If No, then click on 'File->Connect'. If Yes, do nothing.")
+    
 
 def switch_off_PQMS_modules():
     read_state ("Lab_Space,PQMS")
@@ -602,16 +627,16 @@ def switch_off_computer():
     write("execute : Switch off the USB_Power_Adaptor")
     write("execute : Wait for computer to Shutdown")
     write ("execute : Switch off Computer.Switch")
+    
 ###############################################################################
 #Sample Positioner Functions
 
-def set_positioner(final_position):
+def set_positioner(position):
 
-    click       ('Sample Positioner Window')
+    click       ('Qrius Window->Modules Manager->Sample Positioner Window')
     move_cursor ('Toolbar')
-    click       ('Tools')
-    click       ('Move Absolute')
-    write       ('execute : Set the value to' + str(final_position))
+    click       ('Tools->Move Absolute')
+    write       ('execute : Set the value to' + str(position))
 
 ###############################################################################
 #Temperature controller functions
