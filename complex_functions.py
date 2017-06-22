@@ -529,8 +529,8 @@ def unload_sample(Sample, Sample_Box, test_object, cryostat):
         
         write ("execute : ROBOT_2 : Remove the sample from the sleeve by gently pulling with tweezer")
         
-        write ("execute : ROBOT_1 : Open the Dessicator Lid \n \ 
-                          ROBOT_2 : Leave sample stage, Place the sample in its pouch, put it the dessicator and close the lid of the dessicator")
+        write ("execute : ROBOT_1 : Open the Dessicator Lid \n \
+ROBOT_2 : Leave sample stage, Place the sample in its pouch, put it the dessicator and close the lid of the dessicator")
         
         write ("execute : ROBOT_1 : Move insert to Insert_Susceptibility.Home_Coordinates")
         
@@ -867,7 +867,7 @@ def is_XL_run_needed(final_temperature, ramp_rate, max_depth, step_size, amplitu
 ###############################################################################
 #IV_step_ramp functions functions
 
-def set_IV_step_ramp_measurement_settings(initial_temperature, final_temperature, temperature_step, V_range, V_step, I_max, I_step, power):
+def set_IV_step_ramp_measurement_settings(initial_temperature, final_temperature, temperature_step, V_range, V_step, I_range, I_step, max_power):
     
     move_cursor ('Run control')
     click       ('drop down menu')
@@ -897,21 +897,21 @@ def set_IV_step_ramp_measurement_settings(initial_temperature, final_temperature
     click       ("Settings-IV Source and Meaurement Unit->IV Measurement Settings")
     write       ("execute : Set voltage max as " + V_range + " mV")
     write       ("execute : Set voltage step size as " + V_step + " mV")
-    write       ("execute : Set current max as " + I_max + " uA")
+    write       ("execute : Set current max as " + I_range + " uA")
     write       ("execute : Set current step size as " + I_step + " uA")
-    write       ("execute : Set power max as " + power + " mW")
+    write       ("execute : Set power max as " + max_power + " mW")
     write       ("execute : Ensure that Bipolar option is set to \'Yes\'")
     move_cursor ("Top menu")
     click       ("\'File->Done\'")    
 
 
-def start_IV_step_ramp_run (initial_temperature, final_temperature, temperature_step, V_range, V_step, I_max, I_step, power):
+def start_IV_step_ramp_run (initial_temperature, final_temperature, temperature_step, V_range, V_step, I_range, I_step, max_power):
     
     goto        ("Qrius Main Window")
     click       ('Measurement Mode settings')
     click       ('Electrical DC Conductivity')
     
-    set_IV_step_ramp_measurement_settings(initial_temperature, final_temperature, temperature_step, V_range, V_step, I_max, I_step, power)
+    set_IV_step_ramp_measurement_settings(initial_temperature, final_temperature, temperature_step, V_range, V_step, I_range, I_step, max_power)
     write("Update_Database Lab_Space,PQMS,XSMU,Mode,I-V")
     write("Update_Database Lab_Space,PQMS,XTCON,Mode,Stepped_Ramp")
     
@@ -925,7 +925,7 @@ def start_IV_step_ramp_run (initial_temperature, final_temperature, temperature_
 ###############################################################################
 # RT_stepped ramp functions
 
-def set_IV_step_ramp_measurement_settings(initial_temperature, final_temperature, temperature_step, V_range, I_max, power):
+def set_RT_step_ramp_measurement_settings(initial_temperature, final_temperature, temperature_step, V_range, I_max, power):
     
     move_cursor ('Run control')
     click       ('drop down menu')
@@ -967,7 +967,7 @@ def start_RT_step_ramp_run (initial_temperature, final_temperature, temperature_
     click       ('Measurement Mode settings')
     click       ('Electrical DC Conductivity')
     
-    set_IV_step_ramp_measurement_settings(initial_temperature, final_temperature, temperature_step, V_range, I_max, power)
+    set_RT_step_ramp_measurement_settings(initial_temperature, final_temperature, temperature_step, V_range, I_max, power)
     write("Update_Database Lab_Space,PQMS,XSMU,Mode,R-T")
     write("Update_Database Lab_Space,PQMS,XTCON,Mode,Stepped_Ramp")
     
