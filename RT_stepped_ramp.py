@@ -32,9 +32,9 @@ def run (Sample, Sample_Box, sample_description, address):
     initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power = get_experimental_parameters_RT_stepped_ramp()
     current_run_temperature = initial_temperature
     
-
-    need_liquid_nitrogen()
     reset_cryostat_environment (previous_run_temperature, current_run_temperature, cryostat)
+    need_liquid_nitrogen()
+    
     
     #####################
     #Actual measurements take place here
