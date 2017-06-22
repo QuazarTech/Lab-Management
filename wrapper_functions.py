@@ -256,7 +256,7 @@ def cables_connected_check (test_object, cryostat):
     while (response != 'y' and response != 'n'):
         response = raw_input ("Are the required cables already connected? : y/n\n")
     
-    if (response == 'y'):
+    if (response == 'n'):
         
         if (test_object == "Insert_RT_Puck"):
             
