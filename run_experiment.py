@@ -263,12 +263,12 @@ with open(read_file, "r") as fdata:
                 temp = experiment.time_in_ist('%H:%M:%S')
                 
                 if (user_input == "end"):
-                    string = abort_execution(experiment, log)
+                    string = abort_execution(experiment, log, temp)
                     put_in_folder(experiment, log.name, diff_file, new_dbase)
                     sys.exit(string)
                 
                 elif (user_input == "pause"):
-                    pause_execution(log)
+                    pause_execution(log, temp)
                     
                 else:
                     print temp + '\n'
