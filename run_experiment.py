@@ -119,10 +119,10 @@ def print_states (experiment, log, line, new_dbase):
         temp = experiment.time_in_ist('%H:%M:%S')
         
         if(user_input == "end"):
-            abort_execution(experiment, log)
+            abort_execution(experiment, log, temp)
         
         elif (user_input == "pause"):
-            pause_execution(log)
+            pause_execution(log, temp)
             
         else:
             print temp + '\n'
@@ -132,7 +132,7 @@ def print_states (experiment, log, line, new_dbase):
 
 #####################################################################
 
-def abort_execution(experiment, log):
+def abort_execution(experiment, log, temp):
 	print temp
         string = "***********" + "\n" + "EXECUTION ABORTED" + "\n" + "***********"
 	with open (log.name, "a") as log:
@@ -142,7 +142,7 @@ def abort_execution(experiment, log):
 	return string
 
 
-def pause_execution(log):
+def pause_execution(log, temp):
 	print temp
         string = "***********" + "\n" + "EXPERIMENT PAUSED" + "\n" + "***********"
 	with open (log.name, "a") as log:

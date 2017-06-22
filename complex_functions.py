@@ -450,7 +450,7 @@ def unmount_sample (Sample, Sample_Box, test_object):
         leave   ("Tweezer")
 
 
-def unload_sample(Sample, Sample_Box, test_object):
+def unload_sample(Sample, Sample_Box, test_object, cryostat):
     
     if (test_object == "Insert_RT_Puck"):
         
@@ -497,28 +497,46 @@ def unload_sample(Sample, Sample_Box, test_object):
         
         flush_helium('Sample_Chamber')
         if (cryostat == "Double_Walled_Steel"):
-            flush_helium('Heater_Chamber')
+            create_vaccum('Heater_Chamber')
+    	
+        
+        move ("Collar_Screw, ", "away from Sample_Positioner_Collar")
+        write("execute : Unfasten the collar screw with the LN Key")
+    	
     	unclamp()
     	
-        write("execute : Remove the " + test_object + " sample platform from the " + test_object + ", through the collar")
-        write("execute : Unfasten the collar screw with the LN Key")
-        move ("Collar_Screw, ", "away from Sample_Positioner_Collar")
-        write("execute : Remove the sample positioner collar")
-        
-        move(test_object, 'Cryostat.Exit_Coordinates')
-        goto ("Cryostat.Home_Coordinates")
-        
-    	goto('Cryostat_Cover.Home_Coordinates')
-        write('execute : Replace Cryostat_Cover on opening')
-    	leave('Cryostat_Cover')
     	
-    	create_vaccum ("Sample_Chamber")
+    	################################
+    	
+    	write ("execute : Attention : 2 ROBOTS needed to complete procedure below. ROBOT_2 Must wear gloves!")
+    	write ("execute : ROBOT_2   : Place a tissue paper on the Sample Mounting coordinates ")
+    	
+    	write("execute : ROBOT_1 : Hold the sample positioner collar")
+        
+        write("execute : ROBOT_1 : Remove the " + test_object + " sample platform from the " + test_object + ", through the collar\n")
+        
+        write("execute : ROBOT_1 : Hand Over the sample platform to ROBOT_2\n \
+                         ROBOT_2 : Goto Sample Mounting coordinates and immediately dry the sample and insert by wrapping delicately in tissue wipe.\n \
+                         ROBOT_1 : Remove the sample positioner collar\n \
+                         ROBOT_1 : Move "  + test_object + "Cryostat.Exit_Coordinates\n \
+                         ROBOT_1 : Place the cryostat cover on the opening ")
+        
+        create_vaccum ("Sample_Chamber")
     	if (cryostat == "Double_Walled_Steel"):
             create_vaccum('Heater_Chamber')
         
         clamp()
         
-        set_positioner(60)
+        write ("execute : ROBOT_2 : Remove the sample from the sleeve by gently pulling with tweezer")
+        
+        write ("execute : ROBOT_1 : Open the Dessicator Lid \n \ 
+                          ROBOT_2 : Leave sample stage, Place the sample in its pouch, put it the dessicator and close the lid of the dessicator")
+        
+        write ("execute : ROBOT_1 : Move insert to Insert_Susceptibility.Home_Coordinates")
+        
+    	write ("execute : ROBOT_2 move sample stage to Insert_Susceptibility.Home_Coordinates")
+    	
+    	################################
         
 
 #####################################################################
