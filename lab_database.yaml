@@ -420,6 +420,8 @@ Lab_Space:
                     State                     : DISCONNECTED
                 HT_Cable_Terminal:
                     State                     : DISCONNECTED
+                XLIA_Sus_Terminal:
+                    State                     : DISCONNECTED
                 Sample_Mounted                : NO
           
           Insert_RT_Puck: 
