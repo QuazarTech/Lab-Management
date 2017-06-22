@@ -11,10 +11,10 @@ f.close()
 
 time_zone = timezone("Asia/Kolkata")
 
-def time_in_ist():
-    now_utc = datetime.datetime.now(timezone("UTC"))
+def time_in_ist(param):
+    now_utc   = datetime.datetime.now(timezone("UTC"))
     now_india = now_utc.astimezone(time_zone)
-    return now_india.strftime('%H:%M:%S')
+    return now_india.strftime(param)
 
 ###############################################################################
 
