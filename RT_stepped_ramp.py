@@ -30,6 +30,9 @@ def run (Sample, Sample_Box, sample_description, address):
     
     previous_run_temperature = ""
     initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power = get_experimental_parameters_RT_stepped_ramp()
+    
+    pre_stabilization_delay, post_stabilization_delay, monitoring_period, tolerance = get_step_ramp_details()
+    
     current_run_temperature = initial_temperature
     
     reset_cryostat_environment (previous_run_temperature, current_run_temperature, cryostat)
@@ -38,7 +41,7 @@ def run (Sample, Sample_Box, sample_description, address):
     
     #####################
     #Actual measurements take place here
-    PQMS_RT_run_stepped_ramp (initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power)
+    PQMS_RT_run_stepped_ramp (initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power, pre_stabilization_delay, post_stabilization_delay, monitoring_period, tolerance)
     
     #####################
 
