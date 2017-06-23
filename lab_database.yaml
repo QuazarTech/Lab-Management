@@ -61,10 +61,16 @@ Lab_Space:
         
         Physical_Parameters: 
             Home_Coordinates                  : SAMPLE_TABLE
-            Length                            : 90                  #cm
-            Width                             : 60                  #cm
-            Area                              : 540                 #cm2
+            Length                            : 90 cm
+            Width                             : 60 cm
+            Area                              : 540 cm2
         
+        Sample_Photography_Area:
+            Length                            : 10 cm 
+            Width                             : 10 cm
+            Cell_Length                       : 0.1 cm
+            Cell_Width                        : 0.1 cm
+                            
         Tools: 
         
             Polyvinyl_Alcohol: 
