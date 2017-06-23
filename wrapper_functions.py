@@ -140,13 +140,13 @@ def PQMS_IV_run (initial_temperature, final_temperature, temperature_step, V_ran
     	 
     	 #PQMS_IV_run(temperature_set_point, V_range, V_step, I_range, I_step, max_power)
 
-def PQMS_RT_run_stepped_ramp (initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power):
+def PQMS_RT_run_stepped_ramp (initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power, pre_stabilization_delay, post_stabilization_delay, monitoring_period, tolerance):
     
     write("\n##############################################################")
     write("                   Run starts")
     write("##############################################################\n")
     
-    start_RT_step_ramp_run  (initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power)
+    start_RT_step_ramp_run  (initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power, pre_stabilization_delay, post_stabilization_delay, monitoring_period, tolerance)
 
     write("\n##############################################################")
     write("                   Run ends")
