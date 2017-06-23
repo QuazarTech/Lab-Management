@@ -100,7 +100,7 @@ Lab_Space:
 
             
             Tweezers: 
-              State                           : NOT_IN_USE
+              State                           : With Nishant
               Home_Coordinates                : SAMPLE_TABLE
               Hold_Coordinates                : SAMPLE_TABLE
               Current_Coordinates             : SAMPLE_TABLE
@@ -303,7 +303,7 @@ Lab_Space:
                 YBCO_1:
                   State                       : CUT INTO YBCO_1_A , YBCO_1_B
                   Home_Coordinates            : SAMPLE_TABLE
-                  Current_Coordinates         : DOES NOT EXIST
+                  Current_Coordinates         : YBCO_1_B in SAMPLE_TABLE, YBCO_1_A with Nishant
                   Shape                       : CIRCULAR
                   Diameter                    : 9.89 mm
                   Thickness:
