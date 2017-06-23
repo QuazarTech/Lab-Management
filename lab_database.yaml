@@ -346,18 +346,56 @@ Lab_Space:
                   Terminal_3:
                     Soldered                  : YES
                   Terminal_4:
-                    Soldered                  : Yes
+                    Soldered                  : YES
                 
                 YBCO_1_A:
-                  State                       : IN_USE (Magnetic Susceptibility)
+                  State                       : Broken into YBCO_1_Aa and YBCO_1Ab
                   Home_Coordinates            : DESSICATOR
-                  Current_Coordinates         : Insert_AC_Susceptibility
+                  Current_Coordinates         : DESSICATOR
                   Shape                       : SEMI_CIRCULAR
                   Outer_Length                : 9.34 mm
                   Width                       : 3.50 mm
                   Thickness                   : 1.60 mm
                   Weight                      : 0.16 g
                   Photo                       : Sample Photo/YBCO_1_A.jpg
+                  Terminal_1:
+                    Soldered                  : NO
+                  Terminal_2:
+                    Soldered                  : NO
+                  Terminal_3:
+                    Soldered                  : NO
+                  Terminal_4:
+                    Soldered                  : NO
+                
+                YBCO_1_Aa:
+                  State                       :
+                  Home_Coordinates            : DESSICATOR
+                  Current_Coordinates         : DESSICATOR
+                  Shape                       : HALF_SEMI_CIRCULAR
+                  Outer_Length                :
+                  Width                       :
+                  Thickness                   :
+                  Weight                      :
+                  Photo                       :
+                  Terminal_1:
+                    Soldered                  : NO
+                  Terminal_2:
+                    Soldered                  : NO
+                  Terminal_3:
+                    Soldered                  : NO
+                  Terminal_4:
+                    Soldered                  : NO
+
+                YBCO_1_Ab:
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : DESSICATOR
+                  Current_Coordinates         : QUARTZ_CRYOSTAT_IN_WORKSHOP
+                  Shape                       : HALF_SEMI_CIRCULAR
+                  Outer_Length                :
+                  Width                       :
+                  Thickness                   :
+                  Weight                      :
+                  Photo                       :
                   Terminal_1:
                     Soldered                  : NO
                   Terminal_2:
