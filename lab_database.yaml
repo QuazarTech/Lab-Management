@@ -305,6 +305,11 @@ Lab_Space:
                     Soldered                  : YES/NO
 
             Dessicator:
+            	
+                Silica_Crystals:
+                  State                       :
+                  Home_Coordinates            :
+                  Amount                      :
             
                 YBCO_1:
                   State                       : CUT INTO YBCO_1_A , YBCO_1_B
