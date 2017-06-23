@@ -307,9 +307,9 @@ Lab_Space:
             Dessicator:
             	
                 Silica_Crystals:
-                  State                       :
-                  Home_Coordinates            :
-                  Amount                      :
+                  State                       : PUT IN DESSICATOR 
+                  Home_Coordinates            : Sample_Table
+                  Amount                      : 500 gms
             
                 YBCO_1:
                   State                       : CUT INTO YBCO_1_A , YBCO_1_B
