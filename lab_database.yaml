@@ -305,7 +305,7 @@ Lab_Space:
                     Soldered                  : YES/NO
 
             Dessicator:
-            	
+                 
                 Silica_Crystals:
                   State                       : PUT IN DESSICATOR 
                   Home_Coordinates            : Sample_Table
