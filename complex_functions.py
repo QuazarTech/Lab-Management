@@ -1124,7 +1124,7 @@ def flush_helium (chamber):
     write   ("execute : Open the "+chamber+".Flush_Valve to relese residual pressure")
     write   ("execute : Close the "+chamber+".Flush_Valve when helium pressure gauge reads 0 psi") 
     write   ("execute : Open Helium_Cylinder.Main_Valve by rotating in anticlockwise direction.")
-    write   ("execute : Turn the Helium_Cylinder.Pressure_Valve clockwise slightly until pressure guage reads about 20 psi.")
+    write   ("execute : Turn the Helium_Cylinder.Pressure_Valve clockwise slightly until pressure guage reads about 10 psi.")
     
     rapid_movement()
     
