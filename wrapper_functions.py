@@ -269,18 +269,55 @@ def cables_connected_check (test_object, cryostat):
         
         if (test_object == "Insert_RT_Puck"):
             
-            connect_cable('RT_Cable', test_object)
-            connect_cable('HT_Cable', test_object)
+             conn = raw_input("Are the cables connected elsewhere?")
+                
+        	while (conn != 'y' and conn != 'n'):
+    			conn = raw_input ("Are the required cables already connected? : y/n\n")
+        	
+        	if (conn == 'n'):
+            	connect_cable('RT_Cable', test_object)
+            	connect_cable('HT_Cable', test_object)
+            
+            else:
+            	disconnect_cable("RT_Cable")
+            	disconnect_cable("HT_Cable")
+            	connect_cable('RT_Cable', test_object)
+            	connect_cable('HT_Cable', test_object)
         
         elif (test_object == "Puck_Board"):
             
-            connect_cable('RT_Cable', test_object)
+            conn = raw_input("Are the cables connected elsewhere?")
+                
+        	while (conn != 'y' and conn != 'n'):
+    			conn = raw_input ("Are the required cables already connected? : y/n\n")
+        	
+        	if (conn == 'n'):
+            	connect_cable('RT_Cable', test_object)
+            
+            else:
+            	disconnect_cable("RT_Cable")
+            	connect_cable('RT_Cable', test_object)
+            
         
         elif (test_object == "Insert_RT_Old"):
             
             
             if (cryostat == "Double_Walled_Steel"):
-                connect_cable('HT_Cable', cryostat + " cryostat's HT connector")
+                conn = raw_input("Are the cables connected elsewhere?")
+                
+                while (conn != 'y' and conn != 'n'):
+        			conn = raw_input ("Are the required cables already connected? : y/n\n")
+                
+                if (conn == 'n'):
+                	connect_cable('HT_Cable', cryostat + " cryostat's HT connector")
+                	connect_cable('RT_Cable', cryostat + " cryostat's RT connector")
+                
+                else:
+                	disconnect_cable("HT_Cable")
+                	connect_cable('HT_Cable', cryostat + " cryostat's HT connector")
+                	disconnect_cable("RT_Cable")
+                	connect_cable('RT_Cable', cryostat + " cryostat's RT connector")
+                	
             
             elif (cryostat == "Quartz" ):
                 throw_exception ("Can't use heater with " + cryostat + " cryostat and " + test_object)
