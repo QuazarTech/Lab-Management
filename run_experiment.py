@@ -12,10 +12,11 @@ import lab_reset
 import CV_isothermal
 import AC_voltage_measure
 import susceptibility_experiment
+import remove_sample_from_cryostat
 
 #####################################################################
 
-experiments = ["IV_stepped_ramp", "RT_stepped_ramp", "R_Time_isothermal", "unload_sample", "RT_linear_ramp","CV_isothermal","AC_voltage_measure", "susceptibility_experiment"]
+experiments = ["IV_stepped_ramp", "RT_stepped_ramp", "R_Time_isothermal", "unload_sample", "RT_linear_ramp","CV_isothermal","AC_voltage_measure", "susceptibility_experiment", "remove_sample_from_cryostat"]
 
 #create and init and array for timestamps
 time_array = []
