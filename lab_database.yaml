@@ -61,10 +61,16 @@ Lab_Space:
         
         Physical_Parameters: 
             Home_Coordinates                  : SAMPLE_TABLE
-            Length                            : 90                  #cm
-            Width                             : 60                  #cm
-            Area                              : 540                 #cm2
+            Length                            : 90 cm
+            Width                             : 60 cm
+            Area                              : 540 cm2
         
+        Sample_Photography_Area:
+            Length                            : 10 cm 
+            Width                             : 10 cm
+            Cell_Length                       : 0.1 cm
+            Cell_Width                        : 0.1 cm
+                            
         Tools: 
         
             Polyvinyl_Alcohol: 
@@ -100,7 +106,7 @@ Lab_Space:
 
             
             Tweezers: 
-              State                           : NOT_IN_USE
+              State                           : With Nishant
               Home_Coordinates                : SAMPLE_TABLE
               Hold_Coordinates                : SAMPLE_TABLE
               Current_Coordinates             : SAMPLE_TABLE
@@ -299,15 +305,22 @@ Lab_Space:
                     Soldered                  : YES/NO
 
             Dessicator:
+                 
+                Silica_Crystals:
+                  State                       : PUT IN DESSICATOR 
+                  Home_Coordinates            : Sample_Table
+                  Amount                      : 500 gms
+            
                 YBCO_1:
                   State                       : CUT INTO YBCO_1_A , YBCO_1_B
                   Home_Coordinates            : SAMPLE_TABLE
-                  Current_Coordinates         : DOES NOT EXIST
+                  Current_Coordinates         : YBCO_1_B in SAMPLE_TABLE, YBCO_1_A with Nishant
                   Shape                       : CIRCULAR
                   Diameter                    : 9.89 mm
                   Thickness:
                     Centre                    : 1.50 mm
                     Edge                      : 1.60 mm
+                  Weight                      : 0.58 g
                   Photo                       : Sample Photo/YBCO_1.jpg
                   Terminal_1:
                     Soldered                  : NO
@@ -333,17 +346,56 @@ Lab_Space:
                   Terminal_3:
                     Soldered                  : YES
                   Terminal_4:
-                    Soldered                  : Yes
+                    Soldered                  : YES
                 
                 YBCO_1_A:
-                  State                       : IN_USE (Magnetic Susceptibility)
+                  State                       : Broken into YBCO_1_Aa and YBCO_1Ab
                   Home_Coordinates            : DESSICATOR
-                  Current_Coordinates         : Insert_AC_Susceptibility
+                  Current_Coordinates         : DESSICATOR
                   Shape                       : SEMI_CIRCULAR
                   Outer_Length                : 9.34 mm
                   Width                       : 3.50 mm
                   Thickness                   : 1.60 mm
+                  Weight                      : 0.16 g
                   Photo                       : Sample Photo/YBCO_1_A.jpg
+                  Terminal_1:
+                    Soldered                  : NO
+                  Terminal_2:
+                    Soldered                  : NO
+                  Terminal_3:
+                    Soldered                  : NO
+                  Terminal_4:
+                    Soldered                  : NO
+                
+                YBCO_1_Aa:
+                  State                       :
+                  Home_Coordinates            : DESSICATOR
+                  Current_Coordinates         : DESSICATOR
+                  Shape                       : HALF_SEMI_CIRCULAR
+                  Outer_Length                :
+                  Width                       :
+                  Thickness                   :
+                  Weight                      :
+                  Photo                       :
+                  Terminal_1:
+                    Soldered                  : NO
+                  Terminal_2:
+                    Soldered                  : NO
+                  Terminal_3:
+                    Soldered                  : NO
+                  Terminal_4:
+                    Soldered                  : NO
+
+                YBCO_1_Ab:
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : DESSICATOR
+                  Current_Coordinates         : QUARTZ_CRYOSTAT_IN_WORKSHOP
+                  Shape                       : HALF_SEMI_CIRCULAR
+                  Outer_Length                :
+                  Width                       :
+                  Thickness                   :
+                  Weight                      :
+                  Photo                       :
                   Terminal_1:
                     Soldered                  : NO
                   Terminal_2:
@@ -361,6 +413,7 @@ Lab_Space:
                   Outer_Length                : 9.86 mm
                   Width                       : 6.12 mm
                   Thickness                   : 1.60 mm
+                  Weight                      : 0.34 g
                   Photo                       : Sample Photo/YBCO_1_B.jpg
                   Terminal_1:
                     Soldered                  : NO

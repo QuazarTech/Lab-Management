@@ -529,8 +529,8 @@ def unload_sample(Sample, Sample_Box, test_object, cryostat):
         
         write ("execute : ROBOT_2 : Remove the sample from the sleeve by gently pulling with tweezer")
         
-        write ("execute : ROBOT_1 : Open the Dessicator Lid \n \ 
-                          ROBOT_2 : Leave sample stage, Place the sample in its pouch, put it the dessicator and close the lid of the dessicator")
+        write ("execute : ROBOT_1 : Open the Dessicator Lid \n \
+ROBOT_2 : Leave sample stage, Place the sample in its pouch, put it the dessicator and close the lid of the dessicator")
         
         write ("execute : ROBOT_1 : Move insert to Insert_Susceptibility.Home_Coordinates")
         
@@ -867,7 +867,7 @@ def is_XL_run_needed(final_temperature, ramp_rate, max_depth, step_size, amplitu
 ###############################################################################
 #IV_step_ramp functions functions
 
-def set_IV_step_ramp_measurement_settings(initial_temperature, final_temperature, temperature_step, V_range, V_step, I_max, I_step, power):
+def set_IV_step_ramp_measurement_settings(initial_temperature, final_temperature, temperature_step, V_range, V_step, I_range, I_step, max_power, pre_stabilization_delay, post_stabilization_delay, monitoring_period, tolerance):
     
     move_cursor ('Run control')
     click       ('drop down menu')
@@ -883,10 +883,10 @@ def set_IV_step_ramp_measurement_settings(initial_temperature, final_temperature
     write       ("execute : Set Final Temperature to " + str(final_temperature) + " K")
     write       ("execute : Temperature Step to " + str(temperature_step) + " K")
     
-    write       ("execute : Set Pre-stabilization Delay to 100 seconds")
-    write       ("execute : Set Post-stabilization Delay to 100 seconds")
-    write       ("execute : Set Temperature Tolerance to 0.5 K")
-    write       ("execute : Set Monitoring Period to 300 seconds")
+    write       ("execute : Set Pre-stabilization Delay to " + str(pre_stabilization_delay))
+    write       ("execute : Set Post-stabilization Delay to " + str(post_stabilization_delay))
+    write       ("execute : Set Temperature Tolerance to " + str(tolerance))
+    write       ("execute : Set Monitoring Period to " + str(monitoring_period))
     
     ################################
     click       ('File->Apply')
@@ -897,21 +897,21 @@ def set_IV_step_ramp_measurement_settings(initial_temperature, final_temperature
     click       ("Settings-IV Source and Meaurement Unit->IV Measurement Settings")
     write       ("execute : Set voltage max as " + V_range + " mV")
     write       ("execute : Set voltage step size as " + V_step + " mV")
-    write       ("execute : Set current max as " + I_max + " uA")
+    write       ("execute : Set current max as " + I_range + " uA")
     write       ("execute : Set current step size as " + I_step + " uA")
-    write       ("execute : Set power max as " + power + " mW")
+    write       ("execute : Set power max as " + max_power + " mW")
     write       ("execute : Ensure that Bipolar option is set to \'Yes\'")
     move_cursor ("Top menu")
     click       ("\'File->Done\'")    
 
 
-def start_IV_step_ramp_run (initial_temperature, final_temperature, temperature_step, V_range, V_step, I_max, I_step, power):
+def start_IV_step_ramp_run (initial_temperature, final_temperature, temperature_step, V_range, V_step, I_range, I_step, max_power, pre_stabilization_delay, post_stabilization_delay, monitoring_period, tolerance):
     
     goto        ("Qrius Main Window")
     click       ('Measurement Mode settings')
     click       ('Electrical DC Conductivity')
     
-    set_IV_step_ramp_measurement_settings(initial_temperature, final_temperature, temperature_step, V_range, V_step, I_max, I_step, power)
+    set_IV_step_ramp_measurement_settings(initial_temperature, final_temperature, temperature_step, V_range, V_step, I_range, I_step, max_power, pre_stabilization_delay, post_stabilization_delay, monitoring_period, tolerance)
     write("Update_Database Lab_Space,PQMS,XSMU,Mode,I-V")
     write("Update_Database Lab_Space,PQMS,XTCON,Mode,Stepped_Ramp")
     
@@ -925,7 +925,7 @@ def start_IV_step_ramp_run (initial_temperature, final_temperature, temperature_
 ###############################################################################
 # RT_stepped ramp functions
 
-def set_IV_step_ramp_measurement_settings(initial_temperature, final_temperature, temperature_step, V_range, I_max, power):
+def set_RT_step_ramp_measurement_settings(initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power, pre_stabilization_delay, post_stabilization_delay, monitoring_period, tolerance):
     
     move_cursor ('Run control')
     click       ('drop down menu')
@@ -941,10 +941,10 @@ def set_IV_step_ramp_measurement_settings(initial_temperature, final_temperature
     write       ("execute : Set Final Temperature to " + str(final_temperature) + " K")
     write       ("execute : Temperature Step to " + str(temperature_step) + " K")
     
-    write       ("execute : Set Pre-stabilization Delay to 100 seconds")
-    write       ("execute : Set Post-stabilization Delay to 100 seconds")
-    write       ("execute : Set Temperature Tolerance to 0.5 K")
-    write       ("execute : Set Monitoring Period to 300 seconds")
+    write       ("execute : Set Pre-stabilization Delay to " + str(pre_stabilization_delay))
+    write       ("execute : Set Post-stabilization Delay to " + str(post_stabilization_delay))
+    write       ("execute : Set Temperature Tolerance to " + str(tolerance))
+    write       ("execute : Set Monitoring Period to " + str(monitoring_period))
     
     ################################
     click       ('File->Apply')
@@ -954,20 +954,20 @@ def set_IV_step_ramp_measurement_settings(initial_temperature, final_temperature
     click       ('Settings->I-V Source and Measurement Unit')
     click       ("Settings-IV Source and Meaurement Unit->Resistance Measurement Settings")
     write       ("execute : Set voltage max as " + V_range + " mV")
-    write       ("execute : Set current max as " + I_max + " uA")
-    write       ("execute : Set power max as " + power + " mW")
+    write       ("execute : Set current max as " + I_range + " uA")
+    write       ("execute : Set power max as " + max_power + " mW")
     write       ("execute : Ensure that Bipolar option is set to \'Yes\'")
     move_cursor ("Top menu")
     click       ("\'File->Done\'")    
 
 
-def start_RT_step_ramp_run (initial_temperature, final_temperature, temperature_step, V_range, I_max, power):
+def start_RT_step_ramp_run (initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power, pre_stabilization_delay, post_stabilization_delay, monitoring_period, tolerance):
     
     goto        ("Qrius Main Window")
     click       ('Measurement Mode settings')
     click       ('Electrical DC Conductivity')
     
-    set_IV_step_ramp_measurement_settings(initial_temperature, final_temperature, temperature_step, V_range, I_max, power)
+    set_RT_step_ramp_measurement_settings(initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power, pre_stabilization_delay, post_stabilization_delay, monitoring_period, tolerance)
     write("Update_Database Lab_Space,PQMS,XSMU,Mode,R-T")
     write("Update_Database Lab_Space,PQMS,XTCON,Mode,Stepped_Ramp")
     
@@ -1124,7 +1124,7 @@ def flush_helium (chamber):
     write   ("execute : Open the "+chamber+".Flush_Valve to relese residual pressure")
     write   ("execute : Close the "+chamber+".Flush_Valve when helium pressure gauge reads 0 psi") 
     write   ("execute : Open Helium_Cylinder.Main_Valve by rotating in anticlockwise direction.")
-    write   ("execute : Turn the Helium_Cylinder.Pressure_Valve clockwise slightly until pressure guage reads about 20 psi.")
+    write   ("execute : Turn the Helium_Cylinder.Pressure_Valve clockwise slightly until pressure guage reads about 10 psi.")
     
     rapid_movement()
     

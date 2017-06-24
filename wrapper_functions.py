@@ -58,6 +58,15 @@ def get_experimental_parameters_RT_stepped_ramp():
     return initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power
     
 
+def get_step_ramp_details():
+
+    pre_stabilization_delay   = float(raw_input("Enter the pre-stabilization delay (in s):\n "))
+    post_stabilization_delay  = float(raw_input("Enter the post-stabilization delay (in s):\n "))
+    monitoring_period         = float(raw_input("Enter the monitoring period (in s):\n "))
+    tolerance                 = float(raw_input("Enter the temperature tolerance (in K):\n "))
+    
+    return pre_stabilization_delay, post_stabilization_delay, monitoring_period, tolerance
+
 def get_experimental_parameters_R_Time_isothermal():
 
     run_mode                 = raw_input("Which mode do you want to do the run in (constant current/voltage):\n")
@@ -106,13 +115,13 @@ def get_experimental_parameters_AC_volatage_measure():
 
 ###############################################################################
 
-def PQMS_IV_run (initial_temperature, final_temperature, temperature_step, V_range, V_step, I_range, I_step, max_power):
+def PQMS_IV_run (initial_temperature, final_temperature, temperature_step, V_range, V_step, I_range, I_step, max_power, pre_stabilization_delay, post_stabilization_delay, monitoring_period, tolerance):
     
     write("\n##############################################################")
     write("                   Run starts")
     write("##############################################################\n")
     
-    start_IV_step_ramp_run  (initial_temperature, final_temperature, temperature_step, V_range, V_step, I_range, I_step, max_power)
+    start_IV_step_ramp_run  (initial_temperature, final_temperature, temperature_step, V_range, V_step, I_range, I_step, max_power, pre_stabilization_delay, post_stabilization_delay, monitoring_period, tolerance)
 
     write("\n##############################################################")
     write("                   Run ends")
@@ -131,13 +140,13 @@ def PQMS_IV_run (initial_temperature, final_temperature, temperature_step, V_ran
     	 
     	 #PQMS_IV_run(temperature_set_point, V_range, V_step, I_range, I_step, max_power)
 
-def PQMS_RT_run_stepped_ramp (initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power):
+def PQMS_RT_run_stepped_ramp (initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power, pre_stabilization_delay, post_stabilization_delay, monitoring_period, tolerance):
     
     write("\n##############################################################")
     write("                   Run starts")
     write("##############################################################\n")
     
-    start_RT_step_ramp_run  (initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power)
+    start_RT_step_ramp_run  (initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power, pre_stabilization_delay, post_stabilization_delay, monitoring_period, tolerance)
 
     write("\n##############################################################")
     write("                   Run ends")
@@ -256,22 +265,59 @@ def cables_connected_check (test_object, cryostat):
     while (response != 'y' and response != 'n'):
         response = raw_input ("Are the required cables already connected? : y/n\n")
     
-    if (response == 'y'):
+    if (response == 'n'):
         
         if (test_object == "Insert_RT_Puck"):
             
-            connect_cable('RT_Cable', test_object)
-            connect_cable('HT_Cable', test_object)
+             conn = raw_input("Are the cables connected elsewhere?")
+                
+             while (conn != 'y' and conn != 'n'):
+		conn = raw_input ("Are the required cables already connected? : y/n\n")
+        	
+             if (conn == 'n'):
+            	connect_cable('RT_Cable', test_object)
+            	connect_cable('HT_Cable', test_object)
+            
+             else:
+            	disconnect_cable("RT_Cable")
+            	disconnect_cable("HT_Cable")
+            	connect_cable('RT_Cable', test_object)
+            	connect_cable('HT_Cable', test_object)
         
         elif (test_object == "Puck_Board"):
             
-            connect_cable('RT_Cable', test_object)
+            conn = raw_input("Are the cables connected elsewhere?")
+                
+            while (conn != 'y' and conn != 'n'):
+		conn = raw_input ("Are the required cables already connected? : y/n\n")
+        	
+            if (conn == 'n'):
+            	connect_cable('RT_Cable', test_object)
+            
+            else:
+            	disconnect_cable("RT_Cable")
+            	connect_cable('RT_Cable', test_object)
+            
         
         elif (test_object == "Insert_RT_Old"):
             
             
             if (cryostat == "Double_Walled_Steel"):
-                connect_cable('HT_Cable', cryostat + " cryostat's HT connector")
+                conn = raw_input("Are the cables connected elsewhere?")
+                
+                while (conn != 'y' and conn != 'n'):
+			conn = raw_input ("Are the required cables already connected? : y/n\n")
+                
+                if (conn == 'n'):
+                	connect_cable('HT_Cable', cryostat + " cryostat's HT connector")
+                	connect_cable('RT_Cable', cryostat + " cryostat's RT connector")
+                
+                else:
+                	disconnect_cable("HT_Cable")
+                	connect_cable('HT_Cable', cryostat + " cryostat's HT connector")
+                	disconnect_cable("RT_Cable")
+                	connect_cable('RT_Cable', cryostat + " cryostat's RT connector")
+                	
             
             elif (cryostat == "Quartz" ):
                 throw_exception ("Can't use heater with " + cryostat + " cryostat and " + test_object)

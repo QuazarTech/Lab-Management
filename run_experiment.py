@@ -12,10 +12,11 @@ import lab_reset
 import CV_isothermal
 import AC_voltage_measure
 import susceptibility_experiment
+import remove_sample_from_cryostat
 
 #####################################################################
 
-experiments = ["IV_stepped_ramp", "RT_stepped_ramp", "R_Time_isothermal", "unload_sample", "RT_linear_ramp","CV_isothermal","AC_voltage_measure", "susceptibility_experiment"]
+experiments = ["IV_stepped_ramp", "RT_stepped_ramp", "R_Time_isothermal", "unload_sample", "RT_linear_ramp","CV_isothermal","AC_voltage_measure", "susceptibility_experiment", "remove_sample_from_cryostat"]
 
 #create and init and array for timestamps
 time_array = []
@@ -263,12 +264,12 @@ with open(read_file, "r") as fdata:
                 temp = experiment.time_in_ist('%H:%M:%S')
                 
                 if (user_input == "end"):
-                    string = abort_execution(experiment, log)
+                    string = abort_execution(experiment, log, temp)
                     put_in_folder(experiment, log.name, diff_file, new_dbase)
                     sys.exit(string)
                 
                 elif (user_input == "pause"):
-                    pause_execution(log)
+                    pause_execution(log, temp)
                     
                 else:
                     print temp + '\n'
