@@ -271,14 +271,14 @@ def cables_connected_check (test_object, cryostat):
             
              conn = raw_input("Are the cables connected elsewhere?")
                 
-        	while (conn != 'y' and conn != 'n'):
-    			conn = raw_input ("Are the required cables already connected? : y/n\n")
+             while (conn != 'y' and conn != 'n'):
+		conn = raw_input ("Are the required cables already connected? : y/n\n")
         	
-        	if (conn == 'n'):
+             if (conn == 'n'):
             	connect_cable('RT_Cable', test_object)
             	connect_cable('HT_Cable', test_object)
             
-            else:
+             else:
             	disconnect_cable("RT_Cable")
             	disconnect_cable("HT_Cable")
             	connect_cable('RT_Cable', test_object)
@@ -288,10 +288,10 @@ def cables_connected_check (test_object, cryostat):
             
             conn = raw_input("Are the cables connected elsewhere?")
                 
-        	while (conn != 'y' and conn != 'n'):
-    			conn = raw_input ("Are the required cables already connected? : y/n\n")
+            while (conn != 'y' and conn != 'n'):
+		conn = raw_input ("Are the required cables already connected? : y/n\n")
         	
-        	if (conn == 'n'):
+            if (conn == 'n'):
             	connect_cable('RT_Cable', test_object)
             
             else:
@@ -306,7 +306,7 @@ def cables_connected_check (test_object, cryostat):
                 conn = raw_input("Are the cables connected elsewhere?")
                 
                 while (conn != 'y' and conn != 'n'):
-        			conn = raw_input ("Are the required cables already connected? : y/n\n")
+			conn = raw_input ("Are the required cables already connected? : y/n\n")
                 
                 if (conn == 'n'):
                 	connect_cable('HT_Cable', cryostat + " cryostat's HT connector")
