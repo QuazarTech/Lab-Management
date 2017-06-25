@@ -59,8 +59,4 @@ experiment.run()
 
 #####################################################################
 
-#read, execute and update log for each step of the experiment procedure
-
 #put_in_folder(experiment, log.name, diff_file, new_dbase)
-
-#close all open files
