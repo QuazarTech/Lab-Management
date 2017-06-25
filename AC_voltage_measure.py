@@ -3,7 +3,8 @@ from wrapper_functions import *
 
 name = "AC_voltage_measure"
 
-def run (Sample, Sample_Box, sample_description, address):
+def run ():
+    
     
     turn_on_computer()
     turn_on_PQMS_modules()
@@ -44,8 +45,8 @@ def run (Sample, Sample_Box, sample_description, address):
     
     ####################
     
-    write       ("execute : Connect positive probe of the oscilloscope to Pin number 6 of the 8 pin connector")
-    write       ("execute : Connect the negative probe of the oscilloscope to Pin number 7 of the 8 pin connector")
+    write       ("execute : Connect positive probe of the oscilloscope to Pin number 1 of the 8 pin connector")
+    write       ("execute : Connect the negative probe of the oscilloscope to Pin number 5 of the 8 pin connector")
     
     write       ("execute : Oscilloscope should give an AC signal with desired settings shifted by a DC offset")
     write       ("execute : If yes, enter 'end' and abort the program. If no, do the following checks")
@@ -89,8 +90,8 @@ def AC_voltage_measure_checks():
 def XSMU_check():
     
     move      ("Multimeter", "XSMU")
-    write     ("execute : Connect positive probe of multimeter to the XSMU R_Terminal V+ pin (the pin that corresponds to pin no 2 of PQMS Voltage Adder Cable 5 pin connector")
-    write     ("execute : Connect negative probe of multimeter to the XSMU R_Terminal V- pin (the pin that corresponds to pin no 4 of PQMS Voltage Adder Cable 5 pin connector")
+    write     ("execute : Connect positive probe of multimeter to the XSMU R_Terminal V+ pin (the pin that corresponds to pin no 1 of PQMS Voltage Adder Cable 5 pin connector")
+    write     ("execute : Connect negative probe of multimeter to the XSMU R_Terminal V- pin (the pin that corresponds to pin no 5 of PQMS Voltage Adder Cable 5 pin connector")
     
     write     ("execute : Check the multimeter reading, it should correspond to the DC Voltage Value set previously. If not, abort the program")
     
