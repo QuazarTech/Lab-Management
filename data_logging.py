@@ -64,7 +64,7 @@ def write_to_database(param_array, data):
         
 def print_states (log, line, new_dbase):
 	print(line + '\n')
-        param_array, data = read_database(new_dbase, 25)
+        param_array, data = read_database(line, new_dbase, 25)
         z = data["Lab_Space"]
         for param in param_array[1:(len(param_array) - 1)]:
             z = z[param]
@@ -196,6 +196,6 @@ def write(line):
 	  time_stamp_and_comments(log, line, temp, user_input)
 
       else:
-	  print_states(experiment, log, line, new_dbase)
+	  print_states(log, line, new_dbase)
 
 initialize_database (database)
