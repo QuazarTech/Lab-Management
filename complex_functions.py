@@ -199,12 +199,12 @@ def mount_sample (Sample, Sample_Box, test_object):
         set_up_soldering_iron()
         
         move(Sample+'.Terminal_1', 'Insert_RT_Puck,Puck,Terminal_4')
-        solder(Sample +',Terminal_1', 'Insert_RT_Puck,Puck,Terminal_4', Sample, Sample_Box)
+        solder(Sample +',Terminal_1', 'Insert_RT_Puck,Puck,Terminal_4')
         
         write ("execute : Bend " + Sample + "'s terminals as required.")
 
         move(Sample+"'s Terminal_2", "Insert_RT_Puck,Puck,Terminal_1")
-        solder(Sample + "'s,Terminal_2", "Insert_RT_Puck,Puck,Terminal_1", Sample, Sample_Box)
+        solder(Sample + "'s,Terminal_2", "Insert_RT_Puck,Puck,Terminal_1")
 
         write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Puck,Sample_Mounted,YES")
         write("execute : Switch off the soldering iron")
@@ -234,12 +234,12 @@ def mount_sample (Sample, Sample_Box, test_object):
         set_up_soldering_iron()
         
         move(Sample+'.Terminal_1', 'Insert_RT_Old,Terminal_1')
-        solder(Sample + ',Terminal_1', 'Insert_RT_Old,Terminal_1', Sample, Sample_Box)
+        solder(Sample + ',Terminal_1', 'Insert_RT_Old,Terminal_1')
         
         write ("execute : Bend " + Sample + "'s terminals as required.")
 
         move(Sample+'.Terminal_2', 'Insert_RT_Old,Terminal_4')
-        solder(Sample+',Terminal_2', 'Insert_RT_Old,Terminal_4', Sample, Sample_Box)
+        solder(Sample+',Terminal_2', 'Insert_RT_Old,Terminal_4')
 
         write("Update_Database Lab_Space,PQMS,Insert_RT_Old,Sample_Mounted,YES")
         write("execute : Switch off the soldering iron")
