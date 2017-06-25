@@ -3,8 +3,9 @@ from wrapper_functions import *
 
 name = "CV_isothermal"
 
-def run (Sample, Sample_Box, sample_description, address):
+def run ():
 
+    address, Sample, Sample_Box, sample_description = get_sample_info()
     test_object = select_test_object()
     prepare_sample (Sample, Sample_Box, test_object)
     
