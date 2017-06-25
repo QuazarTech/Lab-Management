@@ -31,3 +31,6 @@ def rapid_movement():
 
 def end_rapid_movement():
     write("***********Rapid Movement period is over, steps can be performed at normal speed****************")
+
+###############################################################################
+	
