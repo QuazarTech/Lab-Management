@@ -127,8 +127,8 @@ def AC_cable_check():
     write     ("execute : Connect the PQMS Voltage Adder 1 pin cable to XLIA Ref Out")
     
     goto      ("Oscilloscope.Coordinates")
-    write     ("Connect the positive probe of the oscilloscope to the PQMS Voltage Adder 5 pin connector Terminal 4")
-    write     ("Connect the negative probe of the oscilloscope to the PQMS Voltage Adder 8 pin connector Terminal 7")
+    write     ("execute : Connect the positive probe of the oscilloscope to the PQMS Voltage Adder 5 pin connector Terminal 4")
+    write     ("execute : Connect the negative probe of the oscilloscope to the PQMS Voltage Adder 8 pin connector Terminal 7")
     
     write     ("execute : The oscilloscope should recreate the AC signal which the lock in amplifier is generating. If not, abort the program")
     
