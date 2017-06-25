@@ -1,5 +1,15 @@
 import yaml
+import os
+from pytz import timezone
+import datetime
+import time
 
+time_zone = timezone("Asia/Kolkata")
+
+def time_in_ist(param):
+    now_utc   = datetime.datetime.now(timezone("UTC"))
+    now_india = now_utc.astimezone(time_zone)
+    return now_india.strftime(param)
 
 def lab_reset(folder_name):
 
@@ -26,3 +36,12 @@ def get_differences(d, val_array):
                 get_differences(v , val_array)
             except AttributeError:
                 val_array.append(k + "," + str(v))
+
+def put_in_folder (experiment, log, diff_file, new_dbase):        
+	t = time_in_ist('%Y_%m_%d_%H:%M:%S')
+	folder_name = "run_data_" + experiment.name + "_" + t
+	os.system("mkdir " + folder_name)
+	os.system("mv " + log + " " + folder_name + "/")
+	os.system("mv " + diff_file + " " + folder_name + "/")
+	os.system("mv " + new_dbase + ".yaml " + folder_name + "/")
+	lab_reset(folder_name)
