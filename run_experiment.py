@@ -29,29 +29,6 @@ time_array = []
 
 #####################################################################
 
-def get_sample_info():
-    
-    sample_box = raw_input("\nSelect Sample box : (Box_Zener, Box_Resistor, YBCO)\n")
-    while((sample_box != "Box_Zener") and (sample_box != "Box_Resistor") and (sample_box != "YBCO")):
-        sample_box = raw_input("\nSelect Sample box : (Box_Zener, Box_Resistor, YBCO)\n")
-
-    if(sample_box=="Box_Zener"):
-        sample = raw_input("\nSelect sample : (Zener_1, Zener_2, Zener_3)\n")
-        while((sample != "Zener_1") and (sample != "Zener_2") and (sample != "Zener_3")):
-            sample = raw_input("\nSelect sample : (Zener_1, Zener_2, Zener_3)\n")
-    elif(sample_box=="Box_Resistor"):
-        sample = raw_input("\nSelect sample : (Res_1,Res_2,Res_3,Res_4,Res_5)\n")
-        while((sample != "Res_1") and (sample != "Res_2") and (sample != "Res_3") and (sample != "Res_4") and (sample != "Res_5")):
-            sample = raw_input("\nSelect sample : (Res_1,Res_2,Res_3,Res_4,Res_5)\n")
-    elif (sample_box == "YBCO"):
-        sample = raw_input("\nSelect sample : (YBCO_1,YBCO_2)\n")
-        while((sample != "YBCO_1") and (sample != "YBCO_2")):
-            sample = raw_input("\nSelect sample : (YBCO_1,YBCO_2)\n")
-            
-    sample_description  = raw_input("\nGive a brief sample desciption: \n")
-    address             = raw_input("\nGive the path where you want to store experimental data : \n")
-    return address, sample, sample_box, sample_description
-
 
 def get_experiment():
     
@@ -214,8 +191,6 @@ def create_duration_log (experiment, folder_name):
 
 #user inputs
 
-address, Sample, Sample_Box, sample_description = get_sample_info()
-    
 experiment  = eval(get_experiment())
 read_file   =  experiment.procedure
 
@@ -240,7 +215,7 @@ dbase.close()
 database = "lab_database"
 initialize_database (database)
 			
-experiment.run(Sample, Sample_Box, sample_description, address)
+experiment.run()
 
 #####################################################################
 
