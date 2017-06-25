@@ -40,7 +40,7 @@ def update_database(line, diff_file, new_dbase):
 	with open(diff_file, "a") as dbase:
             dbase.write(line[16:]+'\n')
         param_array, data = read_database(line, new_dbase, 16)
-        write_to_database(param_array, data)s
+        write_to_database(param_array, data)
 
 #####################################################################
 
