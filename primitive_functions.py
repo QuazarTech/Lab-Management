@@ -1,31 +1,5 @@
-import time
-from pylab import *
-from pytz import timezone
-import datetime
-
-###############################################################################
-
-procedure = "run_data_procedure.txt"
-f = open(procedure, 'w')
-f.close()
-
-time_zone = timezone("Asia/Kolkata")
-
-def time_in_ist(param):
-    now_utc   = datetime.datetime.now(timezone("UTC"))
-    now_india = now_utc.astimezone(time_zone)
-    return now_india.strftime(param)
-
-###############################################################################
-
-def write(command):
-    
-    with open(procedure, 'a') as f:
-        f.write(command + '\n')
-    f.close()
-    
-    #print (command)
-    #raw_input("Press Enter to continue")
+import data_logging
+from data_logging import write,time_in_ist
 
 ###############################################################################
 
