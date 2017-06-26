@@ -3,12 +3,12 @@ from wrapper_functions import *
 
 name = "remove_sample_from_cryostat"
 
-def run (Sample, Sample_Box, sample_description, address):
+def run ():
 
 
 	#####################
 	#select the test object and mount the sample on it
-    
+        
 	test_object = select_test_object()
         cryostat    = select_cryostat()
 

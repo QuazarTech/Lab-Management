@@ -3,9 +3,9 @@ from wrapper_functions import *
 
 name = "susceptibility_experiment"
 
-def run (Sample, Sample_Box, sample_description, address):
+def run ():
     
-    
+    address, Sample, Sample_Box, sample_description = get_sample_info()
     #####################
     #select the test object and mount the sample on it
     
