@@ -1,13 +1,14 @@
-import IV_stepped_ramp
-import RT_stepped_ramp
-import R_Time_isothermal
-import RT_linear_ramp
-import unload_sample
+import experiments/IV_stepped_ramp
+import experiments/RT_stepped_ramp
+import experiments/R_Time_isothermal
+import experiments/RT_linear_ramp
+import experiments/unload_sample
+import experiments/CV_isothermal
+import experiments/AC_voltage_measure
+import experiments/susceptibility_experiment
+import experiments/remove_sample_from_cryostat
+
 import lab_reset
-import CV_isothermal
-import AC_voltage_measure
-import susceptibility_experiment
-import remove_sample_from_cryostat
 
 #####################################################################
 
