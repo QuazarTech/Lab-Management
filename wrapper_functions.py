@@ -295,7 +295,7 @@ def cables_connected_check (test_object, cryostat):
              conn = raw_input("Are the cables connected elsewhere?")
                 
              while (conn != 'y' and conn != 'n'):
-		conn = raw_input ("Are the required cables already connected? : y/n\n")
+		      conn = raw_input ("Are the required cables already connected? : y/n\n")
         	
              if (conn == 'n'):
             	connect_cable('RT_Cable', test_object)
@@ -312,7 +312,7 @@ def cables_connected_check (test_object, cryostat):
             conn = raw_input("Are the cables connected elsewhere?")
                 
             while (conn != 'y' and conn != 'n'):
-		conn = raw_input ("Are the required cables already connected? : y/n\n")
+		      conn = raw_input ("Are the required cables already connected? : y/n\n")
         	
             if (conn == 'n'):
             	connect_cable('RT_Cable', test_object)
@@ -516,3 +516,43 @@ def turn_on_computer():
         
     if (response == 'n'):
         switch_on_computer()
+
+def take_photo_of_sample(Sample,Sample_Box):
+
+    write       ("execute : Cut and put a fresh sheet of tracing paper on sample_photography_area")
+
+    remove      ('cap',Sample_Box)
+    write       ("Update_Database Lab_Space,Sample_Table,Sample_Boxes,"+Sample_Box+",State,OPEN")
+
+    hold_sample (Sample, Sample_Box)
+    close_lid   (Sample_Box)
+    write       ("execute : Remove Sticky Tape from "+ Sample)
+    write   ("Update_Database Lab_Space,Sample_Table,Sample_Boxes,"+Sample_Box+","+Sample+",State,NOT_IN_USE")
+
+
+    goto        ('Sample_Photography_Area')
+    leave       (Sample)
+    write       ("execute : Light up the Sample_Photography_Area")
+    write       ("execute : Put a meter scale on the side of the photo")
+
+    take_photo  (Sample)
+    write   ("execute : straighten sample")
+    write   ("execute : put a sticky note on the sample")
+    
+    read_state("Lab_Space,Sample_Table,Sample_Boxes,"+Sample_Box)
+    
+    goto    (Sample_Box +"'s Cap")
+    hold    ("The Cap")
+    write   ("execute : With other hand hold the " + Sample_Box + " and keep it fixed")
+    write   ("execute : Pull the cap, and separate it from sample_box")
+    write   ("Update_Database Lab_Space,Sample_Table,Sample_Boxes,Box_Zener,State,OPEN")
+    goto    (Sample+"_Terminal_1")
+    hold    (Sample+"_terminal_1")
+    goto    (Sample+".Home_Coordinates")
+    leave   (Sample)
+    
+    write   ("Update_Database Lab_Space,Sample_Table,Sample_Boxes,"+Sample_Box+","+Sample+",State,NOT_IN_USE")
+    write   ("execute : close the lid of the box")
+    write   ("Update_Database Lab_Space,Sample_Table,Sample_Boxes,Box_Zener,State,CLOSED")
+    goto    ("Tweezer.Home_Coordinates")
+    leave   ("Tweezer")

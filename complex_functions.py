@@ -36,6 +36,9 @@ def close_lid(obj1):
     write ("execute : Close the lid of " + obj1)
     write ("Update_Database Lab_Space,Sample_Table,Sample_Boxes,Box_Zener,State,CLOSED")
 
+
+
+
 #####################################################################
 #runtime user response based functions
 
@@ -190,17 +193,28 @@ def mount_sample (Sample, Sample_Box, test_object):
 
         hold_sample (Sample, Sample_Box)
         close_lid   (Sample_Box)
-
         write       ("execute : Remove Sticky Tape from "+ Sample)
+        #####PHOTOGRAPH PRIOR TO MOUNTING
+        write       ("execute : Cut and put a fresh sheet of tracing paper on sample_photography_area")
+
+        goto        ('Sample_Photography_Area')
+        leave       (Sample)
+        write       ("execute : Light up the Sample_Photography_Area")
+        write       ("execute : Put a meter scale on the side of the photo")
+
+        take_photo  (Sample)
+        write 		("execute : Take sample back to Sample_Mounting_Coordinates")
+
+
         goto    ('Puck_Board')
         hold    ('Puck_Board')
-        
+
         #SOLDERING PROCESS
         set_up_soldering_iron()
-        
+
         move(Sample+'.Terminal_1', 'Insert_RT_Puck,Puck,Terminal_4')
         solder(Sample +',Terminal_1', 'Insert_RT_Puck,Puck,Terminal_4')
-        
+
         write ("execute : Bend " + Sample + "'s terminals as required.")
 
         move(Sample+"'s Terminal_2", "Insert_RT_Puck,Puck,Terminal_1")
@@ -216,7 +230,8 @@ def mount_sample (Sample, Sample_Box, test_object):
         
         move ('Puck_Board', 'Puck_Board.Home_Coordinates')
         leave('Puck_Board')
-        
+        take_photo('Mounted Sample')
+
     elif (test_object == "Insert_RT_Old"):
         
         remove      ('cap',Sample_Box)
@@ -224,18 +239,29 @@ def mount_sample (Sample, Sample_Box, test_object):
 
         hold_sample (Sample, Sample_Box)
         close_lid   (Sample_Box)
-
         write       ("execute : Remove Sticky Tape from "+ Sample)
-        
+        #####PHOTOGRAPH PRIOR TO MOUNTING
+        write       ("execute : Cut and put a fresh sheet of tracing paper on sample_photography_area")
+
+        goto        ('Sample_Photography_Area')
+        leave       (Sample)
+        write       ("execute : Light up the Sample_Photography_Area")
+        write       ("execute : Put a meter scale on the side of the photo")
+
+        take_photo  (Sample)
+        write 		("execute : Take sample back to Sample_Mounting_Coordinates")
+
+
+
         goto    ("Insert_RT_Old")
         hold    ("Insert_RT_Old")
-        
+
         #SOLDERING PROCESS
         set_up_soldering_iron()
-        
+
         move(Sample+'.Terminal_1', 'Insert_RT_Old,Terminal_1')
         solder(Sample + ',Terminal_1', 'Insert_RT_Old,Terminal_1')
-        
+
         write ("execute : Bend " + Sample + "'s terminals as required.")
 
         move(Sample+'.Terminal_2', 'Insert_RT_Old,Terminal_4')
@@ -245,12 +271,13 @@ def mount_sample (Sample, Sample_Box, test_object):
         write("execute : Switch off the soldering iron")
         write("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,Power,OFF")
         #SOLDERING PROCESS
-        
+
         write("execute : Stick " + Sample + "'s body to the mounting surface with Kapton tape")
         goto("Insert_RT_Old.Home_Coordinates")
-    
+
     goto('Tweezers.Home_Coordinates')
     leave('Tweezers')
+    take_photo('Mounted Sample')
 
 
 def load_sample(Sample, Sample_Box, test_object, cryostat):
