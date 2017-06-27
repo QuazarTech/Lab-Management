@@ -36,6 +36,9 @@ def close_lid(obj1):
     write ("execute : Close the lid of " + obj1)
     write ("Update_Database Lab_Space,Sample_Table,Sample_Boxes,Box_Zener,State,CLOSED")
 
+
+
+
 #####################################################################
 #runtime user response based functions
 
@@ -190,8 +193,19 @@ def mount_sample (Sample, Sample_Box, test_object):
 
         hold_sample (Sample, Sample_Box)
         close_lid   (Sample_Box)
-
         write       ("execute : Remove Sticky Tape from "+ Sample)
+        #####PHOTOGRAPH PRIOR TO MOUNTING
+        write       ("execute : Cut and put a fresh sheet of tracing paper on sample_photography_area")
+
+        goto        ('Sample_Photography_Area')
+	    leave       (Sample)
+	    write       ("execute : Light up the Sample_Photography_Area")
+	    write       ("execute : Put a meter scale on the side of the photo")
+
+	    take_photo  (Sample)
+	    write 		("execute : Take sample back to Sample_Mounting_Coordinates")
+
+
         goto    ('Puck_Board')
         hold    ('Puck_Board')
         
@@ -216,7 +230,8 @@ def mount_sample (Sample, Sample_Box, test_object):
         
         move ('Puck_Board', 'Puck_Board.Home_Coordinates')
         leave('Puck_Board')
-        
+        take_photo('Mounted Sample')
+
     elif (test_object == "Insert_RT_Old"):
         
         remove      ('cap',Sample_Box)
@@ -224,8 +239,19 @@ def mount_sample (Sample, Sample_Box, test_object):
 
         hold_sample (Sample, Sample_Box)
         close_lid   (Sample_Box)
-
         write       ("execute : Remove Sticky Tape from "+ Sample)
+        #####PHOTOGRAPH PRIOR TO MOUNTING
+        write       ("execute : Cut and put a fresh sheet of tracing paper on sample_photography_area")
+
+        goto        ('Sample_Photography_Area')
+	    leave       (Sample)
+	    write       ("execute : Light up the Sample_Photography_Area")
+	    write       ("execute : Put a meter scale on the side of the photo")
+
+	    take_photo  (Sample)
+	    write 		("execute : Take sample back to Sample_Mounting_Coordinates")
+
+
         
         goto    ("Insert_RT_Old")
         hold    ("Insert_RT_Old")
@@ -251,6 +277,7 @@ def mount_sample (Sample, Sample_Box, test_object):
     
     goto('Tweezers.Home_Coordinates')
     leave('Tweezers')
+    take_photo('Mounted Sample')
 
 
 def load_sample(Sample, Sample_Box, test_object, cryostat):
