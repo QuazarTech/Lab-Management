@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, '/home/vishnu/Desktop/Lab-Management/experiments')
+sys.path.insert(0, 'experiments/')
 
 import IV_stepped_ramp
 import RT_stepped_ramp
