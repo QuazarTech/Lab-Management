@@ -49,6 +49,7 @@ def run ():
     write       ("execute : Connect the negative probe of the oscilloscope to Pin number 5 of the 8 pin connector")
     
     write       ("execute : Oscilloscope should give an AC signal with desired settings shifted by a DC offset")
+    take_photo  ('Oscilloscope Screen')
     write       ("execute : If yes, enter 'end' and abort the program. If no, do the following checks")
     
     AC_voltage_measure_checks()
@@ -94,7 +95,7 @@ def XSMU_check():
     write     ("execute : Connect negative probe of multimeter to the XSMU R_Terminal V- pin (the pin that corresponds to pin no 5 of PQMS Voltage Adder Cable 5 pin connector")
     
     write     ("execute : Check the multimeter reading, it should correspond to the DC Voltage Value set previously. If not, abort the program")
-    
+    take_photo('Multimeter Reading')
     write     ("execute : Disconnect the probes")
     move      ("Multimeter", "Multimeter.Rest_Coordinates")
 
@@ -105,7 +106,7 @@ def XLIA_check():
     write     ("Connect the negative probe of the oscilloscope to the inner terminal of the XLIA Ref Out")
     
     write     ("execute : The oscilloscope should recreate the AC signal which the lock in amplifier is generating. If not, abort the program")
-    
+    take_photo('Oscilloscope screen')
     write     ("execute : Disconnect the probes")
 
 def DC_cable_check():
@@ -117,7 +118,7 @@ def DC_cable_check():
     write     ("execute : Connect negattive probe of multimeter to the PQMS Voltage Adder 8 pin cable Terminal 7")
     
     write     ("execute : Check the multimeter reading, it should correspond to the DC Voltage Value set previously. If not, abort the program")
-    
+    take_photo('Multimeter Reading')
     write     ("execute : Disconnect the probes")
     move      ("Multimeter", "Multimeter.Rest_Coordinates") 
     
@@ -131,6 +132,6 @@ def AC_cable_check():
     write     ("execute : Connect the negative probe of the oscilloscope to the PQMS Voltage Adder 8 pin connector Terminal 7")
     
     write     ("execute : The oscilloscope should recreate the AC signal which the lock in amplifier is generating. If not, abort the program")
-    
+    take_photo('Oscilloscope screen')
     write     ("execute : Disconnect the probes")
     
