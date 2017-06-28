@@ -10,9 +10,9 @@ import CV_isothermal
 import AC_voltage_measure
 import susceptibility_experiment
 import remove_sample_from_cryostat
+import take_photo_of_sample
 import test_run
 import turn_on_off
-import take_photo_of_sample
 import lab_reset
 
 #####################################################################
