@@ -1,13 +1,17 @@
-import experiments/IV_stepped_ramp
-import experiments/RT_stepped_ramp
-import experiments/R_Time_isothermal
-import experiments/RT_linear_ramp
-import experiments/unload_sample
-import experiments/CV_isothermal
-import experiments/AC_voltage_measure
-import experiments/susceptibility_experiment
-import experiments/remove_sample_from_cryostat
+import sys
+sys.path.insert(0, '/home/vishnu/Desktop/Lab-Management/experiments')
 
+import IV_stepped_ramp
+import RT_stepped_ramp
+import R_Time_isothermal
+import RT_linear_ramp
+import unload_sample
+import CV_isothermal
+import AC_voltage_measure
+import susceptibility_experiment
+import remove_sample_from_cryostat
+import test_run
+import turn_on_off
 import lab_reset
 
 #####################################################################
@@ -16,7 +20,7 @@ name       = "run_data_execution_log.txt"
 diff_file  = "run_data_diff.txt"
 new_dbase  = "run_data_new_database"
 
-experiments = ["IV_stepped_ramp", "RT_stepped_ramp", "R_Time_isothermal", "unload_sample", "RT_linear_ramp","CV_isothermal","AC_voltage_measure", "susceptibility_experiment", "remove_sample_from_cryostat"]
+experiments = ["IV_stepped_ramp", "RT_stepped_ramp", "R_Time_isothermal", "unload_sample", "RT_linear_ramp","CV_isothermal","AC_voltage_measure", "susceptibility_experiment", "remove_sample_from_cryostat", "test_run", "turn_on_off"]
 
 #create and init and array for timestamps
 time_array = []
