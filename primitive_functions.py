@@ -22,7 +22,11 @@ def click(obj):
     write("execute : Click on "+ obj)
 
 def move_cursor(obj):
-    write("execute : Move Cursor to "+ obj)    
+    write("execute : Move Cursor to "+ obj)  
+
+def take_photo(obj):
+	write("execute : Take photo of "+ obj)
+
 
 ###############################################################################
 
