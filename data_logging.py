@@ -1,4 +1,5 @@
 import time
+from lab_reset import put_in_folder_aborted
 from pylab import *
 from lab_reset import *
 import yaml as yaml
@@ -89,7 +90,7 @@ def abort_execution(line, log, temp):
         	log.write(string + '\n')
 		log.write("Execution has come to an end due to error in line: " + line + '\n')
 		log.write("ERROR - " + reason + '\n')
-	log.close()
+	log.close() 
 	return string
 
 
@@ -151,6 +152,7 @@ def write(line):
 			temp = time_in_ist('%H:%M:%S')
 			if (user_input == "end"):
 				string = abort_execution(line, log, temp)
+				put_in_folder_aborted (log, diff_file, new_dbase)
 				sys.exit(string)
 
 			elif (user_input == "pause"):
