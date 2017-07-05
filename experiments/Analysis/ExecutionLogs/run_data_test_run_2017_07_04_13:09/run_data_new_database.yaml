@@ -1,0 +1,564 @@
+Lab_Space:
+  Computer:
+    Keyboard:
+      USB_Cable: CONNECTED
+    Monitor:
+      Power_Cable: CONNECTED
+      State: false
+      USB_Cable: CONNECTED
+    Mouse:
+      USB_Cable: CONNECTED
+    State: NOT_IN_USE
+    USB_Power_Adaptor:
+      State: false
+  Equipment:
+    Gloves:
+      Disposal_Coodinate: TRASH
+      Home_Coordinates: UNDER_SAMPLE_TABLE
+      State: NOT_IN_USE
+    Lab_Coat:
+      Home_Coordinates: UNDER_SAMPLE_TABLE
+      State: NOT_IN_USE
+    Mask:
+      Home_Coordinates: UNDER_SAMPLE_TABLE
+      State: NOT_IN_USE
+    Safety_goggles:
+      Home_Coordinates: UNDER_SAMPLE_TABLE
+      State: NOT_IN_USE
+  Fan:
+    Speed: 0
+    State: false
+  PQMS:
+    Cables:
+      HT_Cable:
+        Cryostat_End: null
+        Home_Coordinates: null
+        PQMS_End: null
+        State: CONNECTED
+      PQMS_Voltage_Adder_Cable:
+        Cryostat_End: null
+        Home_Coordinates: null
+        PQMS_End: null
+      RT_Cable:
+        Cryostat_End: null
+        Home_Coordinates: null
+        PQMS_End: null
+        State: CONNECTED
+      XLIA_Sus_Cable:
+        Cryostat_End: null
+        Home_Coordinates: null
+        PQMS_End: null
+    Clamp:
+      Home_Coordinates: null
+      State: LOCKED
+    Cryocan_BA11:
+      Current_Coordinates: With Nishant
+      Home_Coordinates: Cryocan_BA11.HOME
+    Cryostat_Quartz:
+      Cryocan:
+        Liquid_Nitrogen: false
+      Helium: false
+      Insert: false
+      State: NOT_IN_USE
+      Vaccum: false
+    Cryostat_Steel:
+      Cryocan:
+        Liquid_Nitrogen: false
+      Helium: 'YES'
+      Insert: false
+      State: NOT_IN_USE
+      Vaccum: 'YES'
+    Current_Coordinates: PQMS_COORDINATES
+    Helium:
+      Main_Valve:
+        State: false
+      Pressure_Valve:
+        State: false
+    Home_Coordinates: PQMS_COORDINATES
+    Insert_AC_Susceptibility:
+      Current_Coordinates: null
+      HT_Cable_Terminal:
+        State: DISCONNECTED
+      Home_Coordinates: null
+      RT_Cable_Terminal:
+        State: DISCONNECTED
+      Sample_Mounted: false
+      XLIA_Sus_Terminal:
+        State: DISCONNECTED
+    Insert_RT_New:
+      Current_Coordinates: null
+      HT_Cable_Terminal:
+        State: DISCONNECTED
+      Home_Coordinates: null
+      RT_Cable_Terminal:
+        State: DISCONNECTED
+      Sample_Mounted: false
+      Terminal_1:
+        Soldered: false
+      Terminal_2:
+        Soldered: false
+      Terminal_3:
+        Soldered: false
+      Terminal_4:
+        Soldered: false
+    Insert_RT_Old:
+      Current_Coordinates: null
+      HT_Cable_Terminal:
+        State: DISCONNECTED
+      Home_Coordinates: null
+      RT_Cable_Terminal:
+        State: DISCONNECTED
+      Sample_Mounted: 'YES'
+      Terminal_1:
+        Soldered: false
+      Terminal_2:
+        Soldered: false
+      Terminal_3:
+        Soldered: false
+      Terminal_4:
+        Soldered: false
+    Insert_RT_Puck:
+      Current_Coordinates: null
+      HT_Cable_Terminal:
+        State: DISCONNECTED
+      Home_Coordinates: null
+      Insert2Puck_Cable:
+        Home_Coordinates: null
+        State: DISCONNECTED
+      Puck:
+        Home_Coordinates: null
+        Insert_Connection: DISCONNECTED
+        Puck_Board_Connection: CONNECTED
+        Sample_Mounted: false
+        State: NOT_IN_USE
+        Terminal_1:
+          Soldered: false
+        Terminal_2:
+          Soldered: null
+        Terminal_3:
+          Soldered: false
+        Terminal_4:
+          Soldered: false
+      RT_Cable_Terminal:
+        State: DISCONNECTED
+    Ladle:
+      Home_Coordinates: null
+      State: NOT_IN_USE
+    MGPS:
+      MGPS_CABLES: DISCONNECTED
+      Mode: CONST_H/CONST_I
+      Power_Cable: CONNECTED
+      Running: false
+      State: false
+      USB_Cable_Computer: CONNECTED
+      USB_Cable_Module: CONNECTED
+    Pirani_Gauge:
+      Power_Cable: CONNECTED
+      State: false
+    Puck Board:
+      Home_Coordinates: null
+      Puck_Connected: false
+    Pump:
+      Bellow: CONNECTED
+      Main_Valve:
+        State: 'ON'
+      Power_Cable: CONNECTED
+      Release_Valve:
+        State: false
+      State: false
+    Sample_Positioner:
+      Power_Cable: false
+      State: false
+      USB_Cable: CONNECTED
+    Stabilizer:
+      Power_Switch:
+        State: true
+    State: NOT_IN_USE
+    XLIA:
+      Power_Cable: CONNECTED
+      Running: false
+      State: false
+      USB_Cable_Computer: CONNECTED
+      USB_Cable_Module: CONNECTED
+      XLIA_Cables: DISCONNECTED
+    XPLORE_Power_Supply:
+      Power_Cable: CONNECTED
+      State: false
+      XSMU_Cable: CONNECTED
+      XTCON_Cable: CONNECTED
+    XSMU:
+      Mode: NA/CONST_V/CONST_I
+      Power_Cable: CONNECTED
+      Running: false
+      State: false
+      USB_Cable_Computer: CONNECTED
+      USB_Cable_Module: CONNECTED
+      XSMU_Cable: DISCONNECTED
+    XTCON:
+      Heater:
+        HT_Cable: DISCONNECTED
+        State: false
+      Mode: ISOTHERMAL/LINEAR_RAMP/STEPPED_RAMP
+      Power_Cable: CONNECTED
+      Running: false
+      Sensor:
+        RT_Cable: DISCONNECTED
+        USB_Cable_Computer: CONNECTED
+        USB_Cable_Module: CONNECTED
+      State: false
+  Physical_Parameters:
+    Atmospheric_Pressure: NA
+    Humidity: NA
+    Temperature: NA
+    Volume: NA
+  Sample_Table:
+    Clean: true
+    Physical_Parameters:
+      Area: 540 cm2
+      Home_Coordinates: SAMPLE_TABLE
+      Length: 90 cm
+      Width: 60 cm
+    Puck_Screwing_Coordinates: PUCK_SCREWING_COORDINATES
+    Sample_Boxes:
+      Box_Resistor:
+        Cap_Coordinates: SAMPLE_TABLE
+        Current_Coordinates: SAMPLE_TABLE
+        Home_Coordinates: SAMPLE_TABLE
+        No_of_Samples: 6
+        Res_1:
+          Current_Coordinates: SAMPLE_TABLE
+          Diameter: 1.8 mm
+          Home_Coordinates: SAMPLE_TABLE
+          Length: 6.5 mm
+          Photo: Sample Photo/Resistor_1.jpg
+          Resistance: null
+          Standard_Tolerance: null
+          State: NOT_IN_USE
+          Terminal_1:
+            Soldered: YES/NO
+          Terminal_2:
+            Soldered: YES/NO
+        Res_2:
+          Current_Coordinates: SAMPLE_TABLE
+          Diameter: 1.9 mm
+          Home_Coordinates: SAMPLE_TABLE
+          Length: 6.52 mm
+          Photo: Sample Photo/Resistor_2.jpg
+          Resistance: null
+          Standard_Tolerance: null
+          State: NOT_IN_USE
+          Terminal_1:
+            Soldered: YES/NO
+          Terminal_2:
+            Soldered: YES/NO
+        Res_3:
+          Current_Coordinates: SAMPLE_TABLE
+          Diameter: 1.74 mm
+          Home_Coordinates: SAMPLE_TABLE
+          Length: 6.3 mm
+          Photo: Sample Photo/Resistor_3.jpg
+          Resistance: null
+          Standard_Tolerance: null
+          State: NOT_IN_USE
+          Terminal_1:
+            Soldered: YES/NO
+          Terminal_2:
+            Soldered: YES/NO
+        Res_4:
+          Current_Coordinates: SAMPLE_TABLE
+          Diameter: 1.85 mm
+          Home_Coordinates: SAMPLE_TABLE
+          Length: 6.52 mm
+          Photo: Sample Photo/Resistor_4.jpg
+          Resistance: null
+          Standard_Tolerance: null
+          State: NOT_IN_USE
+          Terminal_1:
+            Soldered: YES/NO
+          Terminal_2:
+            Soldered: YES/NO
+        Res_5:
+          Current_Coordinates: SAMPLE_TABLE
+          Diameter: 1.86 mm
+          Home_Coordinates: SAMPLE_TABLE
+          Length: 6.21 mm
+          Photo: Sample Photo/Resistor_5.jpg
+          Resistance: null
+          Standard_Tolerance: null
+          State: NOT_IN_USE
+          Terminal_1:
+            Soldered: YES/NO
+          Terminal_2:
+            Soldered: YES/NO
+        Res_6:
+          Current_Coordinates: SAMPLE_TABLE
+          Diameter: 1.83 mm
+          Home_Coordinates: SAMPLE_TABLE
+          Length: 6.77 mm
+          Photo: Sample Photo/Resistor_6.jpg
+          Resistance: null
+          Standard_Tolerance: null
+          State: NOT_IN_USE
+          Terminal_1:
+            Soldered: YES/NO
+          Terminal_2:
+            Soldered: YES/NO
+        State: CLOSED
+      Box_Zener:
+        Cap_Coordinates: SAMPLE_TABLE
+        Current_Coordinates: SAMPLE_TABLE
+        Home_Coordinates: SAMPLE_TABLE
+        No_of_Samples: 3
+        State: CLOSED
+        Zener_1:
+          Current_Coordinates: Insert_RT_Old
+          Diameter: null
+          Home_Coordinates: SAMPLE_TABLE
+          Length: null
+          Part_Number: ZN0000
+          Photo: NOT_CLICKED
+          State: NOT_IN_USE
+          Terminal_1:
+            Diameter: null
+            Length: null
+            Soldered: false
+          Terminal_2:
+            Diameter: null
+            Length: null
+            Soldered: false
+        Zener_2:
+          Current_Coordinates: SAMPLE_TABLE
+          Diameter: 1.62 mm
+          Home_Coordinates: SAMPLE_TABLE
+          Length: 3.11 mm
+          Part_Number: ZN0000
+          Photo: Sample Photo/Zener_2.jpg
+          State: IN_USE
+          Terminal_1:
+            Diameter: 0.5 mm
+            Length: 9.91 mm
+            Soldered: false
+          Terminal_2:
+            Diameter: 0.47 mm
+            Length: 9.8  mm
+            Soldered: false
+        Zener_3:
+          Current_Coordinates: SAMPLE_TABLE
+          Diameter: null
+          Home_Coordinates: SAMPLE_TABLE
+          Length: null
+          Part_Number: ZN0000
+          Photo: NOT_CLICKED
+          State: NOT_IN_USE
+          Terminal_1:
+            Diameter: null
+            Length: null
+            Soldered: false
+          Terminal_2:
+            Diameter: null
+            Length: null
+            Soldered: false
+      Dessicator:
+        Silica_Crystals:
+          Amount: 500 gms
+          Home_Coordinates: Sample_Table
+          State: PUT IN DESSICATOR
+        YBCO_1:
+          Current_Coordinates: YBCO_1_B in SAMPLE_TABLE, YBCO_1_A with Nishant
+          Diameter: 9.89 mm
+          Home_Coordinates: SAMPLE_TABLE
+          Photo: Sample Photo/YBCO_1.jpg
+          Shape: CIRCULAR
+          State: CUT INTO YBCO_1_A , YBCO_1_B
+          Terminal_1:
+            Soldered: false
+          Terminal_2:
+            Soldered: false
+          Terminal_3:
+            Soldered: false
+          Terminal_4:
+            Soldered: false
+          Thickness:
+            Centre: 1.50 mm
+            Edge: 1.60 mm
+          Weight: 0.58 g
+        YBCO_1_A:
+          Current_Coordinates: DESSICATOR
+          Home_Coordinates: DESSICATOR
+          Outer_Length: 9.34 mm
+          Photo: Sample Photo/YBCO_1_A.jpg
+          Shape: SEMI_CIRCULAR
+          State: Broken into YBCO_1_Aa and YBCO_1Ab
+          Terminal_1:
+            Soldered: false
+          Terminal_2:
+            Soldered: false
+          Terminal_3:
+            Soldered: false
+          Terminal_4:
+            Soldered: false
+          Thickness: 1.60 mm
+          Weight: 0.16 g
+          Width: 3.50 mm
+        YBCO_1_Aa:
+          Current_Coordinates: DESSICATOR
+          Home_Coordinates: DESSICATOR
+          Outer_Length: null
+          Photo: null
+          Shape: HALF_SEMI_CIRCULAR
+          State: null
+          Terminal_1:
+            Soldered: false
+          Terminal_2:
+            Soldered: false
+          Terminal_3:
+            Soldered: false
+          Terminal_4:
+            Soldered: false
+          Thickness: null
+          Weight: null
+          Width: null
+        YBCO_1_Ab:
+          Current_Coordinates: DESSICATOR
+          Home_Coordinates: DESSICATOR
+          Outer_Length: null
+          Photo: null
+          Shape: HALF_SEMI_CIRCULAR
+          State: NOT_IN_USE
+          Terminal_1:
+            Soldered: false
+          Terminal_2:
+            Soldered: false
+          Terminal_3:
+            Soldered: false
+          Terminal_4:
+            Soldered: false
+          Thickness: null
+          Weight: null
+          Width: null
+        YBCO_1_B:
+          Current_Coordinates: DESSICATOR
+          Home_Coordinates: DESSICATOR
+          Outer_Length: 9.86 mm
+          Photo: Sample Photo/YBCO_1_B.jpg
+          Shape: SEMI_CIRCULAR
+          State: NOT_IN_USE
+          Terminal_1:
+            Soldered: false
+          Terminal_2:
+            Soldered: false
+          Terminal_3:
+            Soldered: false
+          Terminal_4:
+            Soldered: false
+          Thickness: 1.60 mm
+          Weight: 0.34 g
+          Width: 6.12 mm
+        YBCO_2:
+          Current_Coordinates: Insert_RT_New
+          Diameter: NOT_MEASURED
+          Home_Coordinates: DESSICATOR
+          Photo: NOT_CLICKED
+          Shape: CIRCULAR
+          State: IN_USE (R-Time)
+          Terminal_1:
+            Soldered: true
+          Terminal_2:
+            Soldered: true
+          Terminal_3:
+            Soldered: true
+          Terminal_4:
+            Soldered: true
+          Thickness: NOT_MEASURED
+    Sample_Mounting_Coordinates: SAMPLE_MOUNTING_COORDINATES
+    Sample_Photography_Area:
+      Cell_Length: 0.1 cm
+      Cell_Width: 0.1 cm
+      Length: 10 cm
+      Width: 10 cm
+    Soldering:
+      Cleaning_Pad:
+        Home_Coordinates: SOLDERING_STATION
+        Usable_Quantity: true
+      Flux:
+        Home_Coordinates: SOLDERING_STATION
+        Usable_Quantity: true
+      Solder:
+        Home_Coordinates: SOLDERING_STATION
+        Usable_Quantity: true
+      Soldering_Iron:
+        Current_Coordinates: SOLDERING_STATION
+        Exit_Coordinates: SOLDERING_STATION
+        Hold_Coordinates: SOLDERING_STATION
+        Home_Coordinates: SOLDERING_STATION
+        Power: 'OFF'
+        State: NOT_IN_USE
+    State: NOT_IN_USE
+    Tools:
+      Brown_Tape:
+        Current_Coordinates: SAMPLE_TABLE
+        Home_Coordinates: SAMPLE_TABLE
+        State: NOT_IN_USE
+        Usable_Quantity: true
+      Brush:
+        Current_Coordinates: SAMPLE_TABLE
+        Hold_Coordinates: SAMPLE_TABLE
+        Home_Coordinates: SAMPLE_TABLE
+        State: NOT_IN_USE
+      Ethanol:
+        Cap_Coordinates: SAMPLE_TABLE
+        Current_Coordinates: SAMPLE_TABLE
+        Home_Coordinates: SAMPLE_TABLE
+        State: NOT_IN_USE
+        Usable_Quantity: true
+      Mortar:
+        Clean: true
+        Current_Coordinates: SAMPLE_TABLE
+        Home_Coordinates: SAMPLE_TABLE
+        State: NOT_IN_USE
+      Pestle:
+        Clean: true
+        Current_Coordinates: SAMPLE_TABLE
+        Home_Coordinates: SAMPLE_TABLE
+        State: NOT_IN_USE
+      Polyvinyl_Alcohol:
+        Cap_Coordinates: SAMPLE_TABLE
+        Current_Coordinates: SAMPLE_TABLE
+        Home_Coordinates: SAMPLE_TABLE
+        State: NOT_IN_USE
+        Usable_Quantity: true
+      Spatula:
+        Current_Coordinates: SAMPLE_TABLE
+        Home_Coordinates: SAMPLE_TABLE
+        State: NOT_IN_USE
+      Transparent_Tape:
+        Current_Coordinates: SAMPLE_TABLE
+        Home_Coordinates: SAMPLE_TABLE
+        State: NOT_IN_USE
+        Usable_Quantity: true
+      Tweezers:
+        Current_Coordinates: SAMPLE_TABLE
+        Hold_Coordinates: SAMPLE_TABLE
+        Home_Coordinates: SAMPLE_TABLE
+        State: With Nishant
+  Tube_Light:
+    State: false
+  Windows:
+    Vent1:
+      Area: STANDARD_VENT_AREA
+      State: false
+    Vent2:
+      Area: STANDARD_VENT_AREA
+      State: false
+    Vent3:
+      Area: STANDARD_VENT_AREA
+      State: false
+    Window1:
+      Area: STANDARD_WINDOW_AREA
+      State: false
+    Window2:
+      Area: STANDARD_WINDOW_AREA
+      State: false
+    Window3:
+      Area: STANDARD_WINDOW_AREA
+      State: false
