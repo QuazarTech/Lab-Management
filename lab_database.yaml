@@ -303,6 +303,23 @@ Lab_Space:
                     Soldered                  : YES/NO
                   Terminal_2:
                     Soldered                  : YES/NO
+                    
+                Res_7: 
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Standard_Tolerance          : 0.1%
+                  Resistance                  : 1K
+                  Length                      : 6.90 mm
+                  Diameter                    : 2.33 mm
+                  Photo                       : Sample Photo/Resistor_7.jpg
+                  Datasheet                   : http://www.vishay.com/docs/31019/ptf.pdf
+                  Terminal_1:
+                    Soldered                  : YES/NO
+                    Length                    : 28 mm
+                  Terminal_2:
+                    Soldered                  : YES/NO
+                    Length                    : 28 mm
 
             Dessicator:
                  
