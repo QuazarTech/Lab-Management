@@ -321,7 +321,7 @@ Lab_Space:
                     Soldered                  : YES/NO
                     Length                    : 28 mm
                     
-                Res_7: 
+                Res_8: 
                   State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
