@@ -566,6 +566,17 @@ Lab_Space:
               XSMU_Cable                      : DISCONNECTED
               Running                         : NO
               Mode                            : NA/CONST_V/CONST_I
+              
+          XSMU_NANOVOLTMETER:
+
+              State                           : OFF
+              Power_Cable                     : DISCONNECTED
+              USB_Cable_Computer              : DISCONNECTED
+              USB_Cable_Module                : DISCONNECTED
+              XSMU_Cable                      : DISCONNECTED
+              Running                         : NO
+              Mode                            : NA/CONST_V/CONST_I
+
 
           XTCON:
 
