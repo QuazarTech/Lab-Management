@@ -17,9 +17,11 @@ def get_sample_info():
         while((sample != "Zener_1") and (sample != "Zener_2") and (sample != "Zener_3")):
             sample = raw_input("\nSelect sample : (Zener_1, Zener_2, Zener_3)\n")
     elif(sample_box=="Box_Resistor"):
-        sample = raw_input("\nSelect sample : (Res_1,Res_2,Res_3,Res_4,Res_5)\n")
-        while((sample != "Res_1") and (sample != "Res_2") and (sample != "Res_3") and (sample != "Res_4") and (sample != "Res_5")):
-            sample = raw_input("\nSelect sample : (Res_1,Res_2,Res_3,Res_4,Res_5)\n")
+        sample = raw_input("\nSelect sample : (Res_1,Res_2,Res_3,Res_4,Res_5,Res_6,Res_7,Res_8)\n")
+        while((sample != "Res_1") and (sample != "Res_2") and (sample != "Res_3") and \
+	    (sample != "Res_4") and (sample != "Res_5") \
+		and (sample != "Res_6") and (sample != "Res_7") and (sample != "Res_8")):
+            sample = raw_input("\nSelect sample : (Res_1,Res_2,Res_3,Res_4,Res_5,Res_6,Res_7,Res_8)\n")
     elif (sample_box == "Dessicator"):
         sample = raw_input("\nSelect sample : (YBCO_2,YBCO_1_A , YBCO_1_B)\n")
         while((sample != "YBCO_1") and (sample != "YBCO_2")and (sample != "YBCO_1_A")and (sample != "YBCO_1_B")):
