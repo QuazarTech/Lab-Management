@@ -5,10 +5,26 @@ name = "test_run"
 
 def run():
 
-	turn_on_computer()
-	test_object = select_test_object()
-	cryostat    = select_cryostat()
-	cables_connected_check (test_object, cryostat)
+	address, Sample, Sample_Box, sample_description = get_sample_info()
+    #####################
+    #select the test object and mount the sample on it
+    
+    test_object = select_test_object()
+    cryostat    = select_cryostat()
+    
+    prepare_sample (Sample, Sample_Box, test_object)
+    
+    #####################
+    #switch on and set up systems
+    turn_on_computer()
+    
+    turn_on_PQMS_modules()
+    set_up_pump()
+    
+    #####################
+    
+    is_the_sample_loaded (Sample, Sample_Box, test_object, cryostat)
+    cables_connected_check (test_object, cryostat)
    
 	goto  ('work/git/XPLORE/Qrius/ppsel/capacitance')
 	write ('execute : Open Terminal')
