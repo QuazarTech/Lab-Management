@@ -24,17 +24,17 @@ def click(obj):
 def move_cursor(obj):
     write("execute : Move Cursor to "+ obj)  
 
-def take_photo(obj):
-	write("execute : Take photo of "+ obj)
+def check (obj, condition):
+    write ("execute : Check if " + obj + " is " + condition)
+    
+def switch_on(obj):
+    write("execute : Press the " + obj + " switch to turn it on.")
+    
+def switch_off(obj):
+    write("execute : Press the " + obj + " switch to turn it off.")
 
-
-###############################################################################
-
-def rapid_movement():
-    write("***********Next few steps have to be performed rapidly********************")
-
-def end_rapid_movement():
-    write("***********Rapid Movement period is over, steps can be performed at normal speed****************")
-
-###############################################################################
-	
+def face(obj, direction):
+    write("execute : Face the " + obj + " towards " + direction)
+    
+def align(obj1, obj2):
+    write("execute : Align " + obj1 + " with " + obj2)
