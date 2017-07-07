@@ -88,7 +88,7 @@ def set_up_soldering_iron():
     
     goto('Soldering_Iron')
     wait("Soldering_Iron", "Free")
-    leave(test_object)
+    leave("test_object")
     
     switch_on("Soldering_Iron")
     write("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,Power,ON")
