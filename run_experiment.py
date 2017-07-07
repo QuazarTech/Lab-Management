@@ -10,9 +10,11 @@ import CV_isothermal
 import AC_voltage_measure
 import susceptibility_experiment
 import remove_sample_from_cryostat
+import take_photo_of_sample
 import test_run
 import turn_on_off
 import lab_reset
+import new_xsmu_test
 
 #####################################################################
 
@@ -20,7 +22,8 @@ name       = "run_data_execution_log.txt"
 diff_file  = "run_data_diff.txt"
 new_dbase  = "run_data_new_database"
 
-experiments = ["IV_stepped_ramp", "RT_stepped_ramp", "R_Time_isothermal", "unload_sample", "RT_linear_ramp","CV_isothermal","AC_voltage_measure", "susceptibility_experiment", "remove_sample_from_cryostat", "test_run", "turn_on_off"]
+experiments = ["IV_stepped_ramp", "RT_stepped_ramp", "R_Time_isothermal", "unload_sample", "RT_linear_ramp","CV_isothermal","AC_voltage_measure", "susceptibility_experiment", "remove_sample_from_cryostat", \
+               "take_photo_of_sample", "new_xsmu_test", "test_run", "turn_on_off"]
 
 #create and init and array for timestamps
 time_array = []

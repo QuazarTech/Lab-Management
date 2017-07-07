@@ -1,118 +1,148 @@
 import time
-import primitive_functions
 from primitive_functions import *
 
 #####################################################################
 #general user functions
 
 def move(obj, position):
-    goto (obj)
-    hold (obj)
-    goto (position)
+    '''Move obj to position'''
+    goto(obj)
+    hold(obj)
+    goto(position)
 
-def remove (obj1, obj2):
+def remove(obj1, obj2):
     '''Removes/separates obj1 from obj2'''
     
     read_state ('Lab_Space,Sample_Table')
 
-    goto (obj2 + "." + obj1)
-    hold (obj2 + "." + obj1)
+    goto(obj2 + "." + obj1)
+    hold(obj2 + "." + obj1)
 
-    write ("execute : With other hand hold " + obj2 + " and keep it fixed.")
-    write ("execute : Pull the " + obj1 + " and separate from " + obj2)
+    hold(obj2)
+    move(obj1, " away from " + obj2)
 
 def hold_sample(Sample, Sample_Box):
+    '''Correctly hold a sample using tweezers'''
 	
-    goto  ('Tweezers')
-    hold  ('Tweezers')
+    goto('Tweezers')
+    hold('Tweezers')
 
-    write ("execute : Goto " + Sample + ".Home_Coordinates")
-    write ("execute : Hold " + Sample + ".Terminal_1")
-    goto  ("Sample_Mounting_Coordinates")
+    goto(Sample + ".Home_Coordinates")
+    hold(Sample + ".Terminal_1")
+    goto("Sample_Mounting_Coordinates")
 
-    write ("Update_Database Lab_Space,Sample_Table,Sample_Boxes," + Sample_Box + "," + Sample + ",State,IN_USE")
+    write("Update_Database Lab_Space,Sample_Table,Sample_Boxes," + Sample_Box + "," + Sample + ",State,IN_USE")
 
-def close_lid(obj1):
-    write ("execute : Close the lid of " + obj1)
-    write ("Update_Database Lab_Space,Sample_Table,Sample_Boxes,Box_Zener,State,CLOSED")
+def close_lid(obj):
+    '''close lid of object'''
+    hold(obj + ".lid")
+    move(obj + ".lid", obj)
+    
+    write("Update_Database Lab_Space,Sample_Table,Sample_Boxes,Box_Zener,State,CLOSED")
+
+def take_photo(obj):
+    '''Capture photograph of obj''' 
+    move ("Camera", "camera_focal_length distance from " + obj)
+    face ("Camera", obj)
+    click("Capture Button")
+
 
 #####################################################################
 #runtime user response based functions
 
 def sample_is_mounted():
-    write ("Sample is already mounted. Continuing to next step...") 
+    write("Sample is already mounted. Continuing to next step...") 
 
 def do_not_unmount():
-    write ("Not unmounting the sample")
+    write("Not unmounting the sample")
+
+def wait (obj, condition):
+    check (obj, condition)
+    response = raw_input ("Is the " + obj + condition + "? : y/n")
+    while ((response != 'y') and (response != 'n')):
+        response = raw_input ("Is the " + obj + condition + "? : y/n")
+    if (response == 'n'):
+        write("\n########### WAITING ###########\n")
+        write("Waiting for " + obj + "->" + condition)
+        raw_input ("Press enter when the wait is complete")
+        write("\n######### WAIT COMPETE ########\n")
     
 def throw_exception (error):
-    write ("\n########### ERROR ###########\n")
-    write (error)
-    write ("\n#############################\n")
-    
-#####################################################################
+    write("\n########### ERROR ###########\n")
+    write(error)
+    write("\n#############################\n")
+
+###############################################################################
+
+def rapid_movement():
+    write("***********Next few steps have to be performed rapidly********************")
+
+def end_rapid_movement():
+    write("***********Rapid Movement period is over, steps can be performed at normal speed****************")
+
+###############################################################################
 #soldering iron related functions
 
 def set_up_soldering_iron():
     '''Set up soldering space and iron for use'''
     
-    goto('SOLDERING_STATION')
-    write("execute : Check if soldering station is free or not")
-    write("execute : If 'Free' then Leave test_object or else wait until it gets free and then Leave test_object")
-    write("execute Switch On Soldering_Iron")
+    goto('Soldering_Iron')
+    wait("Soldering_Iron", "Free")
+    leave("test_object")
+    
+    switch_on("Soldering_Iron")
     write("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,Power,ON")
-    write("execute : Wait for the soldering iron LED to start blinking.")
+    wait("soldering iron LED", "blinking.")
     
 def solder (terminal_a, terminal_b):
     '''Solder terminal_b onto terminal_b, given Sample from Sample_Box'''
     
     write("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,State,IN_USE")
     
-    goto   ('Soldering_Iron.Home_Coordinates')
-    hold   ('Soldering_Iron')
+    goto("Soldering_Iron.Home_Coordinates")
+    hold("Soldering_Iron")
     
-    goto   ('Flux.Home_Coordinates')
-    write  ("execute : Plunge the Tip into the Flux")
-    write  ("execute : Retract the Tip")
+    goto("Flux.Home_Coordinates")
+    move("Soldering_Iron.Tip", "Flux")
+    move("Soldering_Iron.Tip", "Out of Flux")
     
-    goto   ('Solder.Home_Coordinates')
-    write  ("execute : Move the Soldering_Iron along the Solder")
+    goto("Solder.Home_Coordinates")
+    move("Soldering_Iron.Tip", "Solder_Wire.Tip")
     
-    write  ("execute : Goto juntion of " + terminal_a + " and " + terminal_b)
-    write  ("execute : Wait until sensor deems soldering between " + terminal_a + " and " + terminal_b + " to be complete")
+    goto("Juntion of " + terminal_a + " and " + terminal_b)
+    wait("soldering between " + terminal_a + " and " + terminal_b, "complete")
     
-    goto   ('Cleaning_Pad.Home_Coordinates')
-    write  ("execute : Plunge Tip in Cleaning Pad")
-    write  ("execute : Retract Tip")
+    goto('Cleaning_Pad.Home_Coordinates')
+    move("Soldering_Iron.Tip", "Cleaning_Pad")
+    move("Soldering_Iron.Tip", "Out of Cleaning_Pad")
     
-    goto   ('Soldering_Iron.Home_Coordinates')
-    leave  ('Soldering_Iron')
+    goto ('Soldering_Iron.Home_Coordinates')
+    leave('Soldering_Iron')
     
-    write  ("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,State,NOT_IN_USE")
+    write("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,State,NOT_IN_USE")
     
 def desolder(terminal, Sample, Sample_Box):
     '''Desolder terminal of Sample'''
     
-    write       ("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,State,IN_USE")
+    write("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,State,IN_USE")
     
-    goto        ("Soldering_Iron")
-    hold        ("Soldering_Iron")
+    goto("Soldering_Iron")
+    hold("Soldering_Iron")
     
-    goto        ("Flux.Home_Coordinates")
-    write       ("execute : Plunge the tip into the flux")
-    write       ("execute : Retract the tip")
+    goto("Flux.Home_Coordinates")
+    move("Soldering_Iron.Tip", "Flux")
+    move("Soldering_Iron.Tip", "Out of Flux")
     
-    goto        (Sample + "_" + terminal)
-    write       ("execute : Wait until sensor deems desoldering complete")
+    goto(Sample + "." + terminal)
+    wait("desoldering", "complete")
     
-    goto        ("Cleaning_Pad.Home_Coordinates")
-    write       ("execute : Plunge tip in Cleaning_Pad")
-    write       ("execute : Retract Tip")
+    goto("Cleaning_Pad.Home_Coordinates")
+    move("Soldering_Iron.Tip", "Cleaning_Pad")
+    move("Soldering_Iron.Tip", "Out of Cleaning_Pad")
     
-    write       ("Update_Database Lab_Space,Sample_Table,Sample_Boxes," + Sample_Box + "," + Sample + ",Terminal_1,Soldered,NO")
-    write       ("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Puck,Terminal_1,Soldered,NO")
-    
-    write       ("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,State,NOT_IN_USE")
+    write("Update_Database Lab_Space,Sample_Table,Sample_Boxes," + Sample_Box + "," + Sample + ",Terminal_1,Soldered,NO")
+    write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Puck,Terminal_1,Soldered,NO")
+    write("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,State,NOT_IN_USE")
 
 
 #####################################################################
@@ -190,17 +220,28 @@ def mount_sample (Sample, Sample_Box, test_object):
 
         hold_sample (Sample, Sample_Box)
         close_lid   (Sample_Box)
-
         write       ("execute : Remove Sticky Tape from "+ Sample)
+        #####PHOTOGRAPH PRIOR TO MOUNTING
+        write       ("execute : Cut and put a fresh sheet of tracing paper on sample_photography_area")
+
+        goto        ('Sample_Photography_Area')
+        leave       (Sample)
+        write       ("execute : Light up the Sample_Photography_Area")
+        write       ("execute : Put a meter scale on the side of the photo")
+
+        take_photo  (Sample)
+        write 		("execute : Take sample back to Sample_Mounting_Coordinates")
+
+
         goto    ('Puck_Board')
         hold    ('Puck_Board')
-        
+
         #SOLDERING PROCESS
         set_up_soldering_iron()
-        
+
         move(Sample+'.Terminal_1', 'Insert_RT_Puck,Puck,Terminal_4')
         solder(Sample +',Terminal_1', 'Insert_RT_Puck,Puck,Terminal_4')
-        
+
         write ("execute : Bend " + Sample + "'s terminals as required.")
 
         move(Sample+"'s Terminal_2", "Insert_RT_Puck,Puck,Terminal_1")
@@ -216,7 +257,8 @@ def mount_sample (Sample, Sample_Box, test_object):
         
         move ('Puck_Board', 'Puck_Board.Home_Coordinates')
         leave('Puck_Board')
-        
+        take_photo('Mounted Sample')
+
     elif (test_object == "Insert_RT_Old"):
         
         remove      ('cap',Sample_Box)
@@ -224,18 +266,29 @@ def mount_sample (Sample, Sample_Box, test_object):
 
         hold_sample (Sample, Sample_Box)
         close_lid   (Sample_Box)
-
         write       ("execute : Remove Sticky Tape from "+ Sample)
-        
+        #####PHOTOGRAPH PRIOR TO MOUNTING
+        write       ("execute : Cut and put a fresh sheet of tracing paper on sample_photography_area")
+
+        goto        ('Sample_Photography_Area')
+        leave       (Sample)
+        write       ("execute : Light up the Sample_Photography_Area")
+        write       ("execute : Put a meter scale on the side of the photo")
+
+        take_photo  (Sample)
+        write 		("execute : Take sample back to Sample_Mounting_Coordinates")
+
+
+
         goto    ("Insert_RT_Old")
         hold    ("Insert_RT_Old")
-        
+
         #SOLDERING PROCESS
         set_up_soldering_iron()
-        
+
         move(Sample+'.Terminal_1', 'Insert_RT_Old,Terminal_1')
         solder(Sample + ',Terminal_1', 'Insert_RT_Old,Terminal_1')
-        
+
         write ("execute : Bend " + Sample + "'s terminals as required.")
 
         move(Sample+'.Terminal_2', 'Insert_RT_Old,Terminal_4')
@@ -245,12 +298,13 @@ def mount_sample (Sample, Sample_Box, test_object):
         write("execute : Switch off the soldering iron")
         write("Update_Database Lab_Space,Sample_Table,Soldering,Soldering_Iron,Power,OFF")
         #SOLDERING PROCESS
-        
+
         write("execute : Stick " + Sample + "'s body to the mounting surface with Kapton tape")
         goto("Insert_RT_Old.Home_Coordinates")
-    
+
     goto('Tweezers.Home_Coordinates')
     leave('Tweezers')
+    take_photo('Mounted Sample')
 
 
 def load_sample(Sample, Sample_Box, test_object, cryostat):
@@ -456,10 +510,16 @@ def unload_sample(Sample, Sample_Box, test_object, cryostat):
         
         unclamp()
         
-        goto("Insert_RT_Puck")
+        move("Insert_RT_Puck", "Cryostat.Exit_Coordinates")
         hold("Insert_RT_Puck")
-      
-        goto("Cryostat.Exit_Coordinates")
+        
+        move ("Cryostat.cover", "Cryostat Opening")
+        leave("Cryostat.cover")
+        
+        create_vaccum ("Sample_Chamber")
+    	if (cryostat == "Double_Walled_Steel"):
+            create_vaccum('Heater_Chamber')
+        
         goto("Sample_Table.Puck_Screwing_Coordinates")
         remove("Insert2Puck_Cable", "Insert_RT_Puck")
         
@@ -472,33 +532,46 @@ def unload_sample(Sample, Sample_Box, test_object, cryostat):
         rotate('Puck','14 turns','anticlockwise')
         leave("Puck")
         
-        goto("Insert_RT_Puck.Home_Coordinates")
-        leave("Insert_RT_Puck")
+        goto(test_object + ".Home_Coordinates")
+        leave(test_object)
         
         goto("Sample_Table.Puck_Screwing_Coordinates")
         hold("Insert_RT_Puck.Puck")
         goto("Puck_Board.Home_Coordinates")
-        write("execute : Align Puck pins with Puck_Board")
+        align ("Puck.pins", "Puck_Board")
         write("execute : Insert Puck into Puck_Board")
         leave("Puck")
+        
+        clamp()
         
         write("Update_Database Lab_Space,PQMS,Insert_RT_Puck,Puck,Puck_Board_Connection,CONNECTED")
         
     elif (test_object == "Puck_Board"):
         
-        move (test_object, test_object + ".Home_Coordinates")
+        move(test_object, test_object + ".Home_Coordinates")
         
     elif (test_object == "Insert_RT_Old"):
         
+        flush_helium('Sample_Chamber')
+        
         unclamp()
-        move (test_object, test_object + ".Home_Coordinates")
+        move (test_object, test_object + ".Exit_Coordinates")
+        
+        move ("Cryostat.cover", "Cryostat Opening")
+        leave("Cryostat.cover")
+        
+        create_vaccum ("Sample_Chamber")
+    	if (cryostat == "Double_Walled_Steel"):
+            create_vaccum('Heater_Chamber')
+            
+        clamp()
+        
+        goto (test_object + ".Home_Coordinates")
+        
         
     elif (test_object == "Insert_Susceptibility"):
         
         flush_helium('Sample_Chamber')
-        if (cryostat == "Double_Walled_Steel"):
-            create_vaccum('Heater_Chamber')
-    	
         
         move ("Collar_Screw, ", "away from Sample_Positioner_Collar")
         write("execute : Unfasten the collar screw with the LN Key")
@@ -545,106 +618,108 @@ ROBOT_2 : Leave sample stage, Place the sample in its pouch, put it the dessicat
 def switch_on_PQMS_modules():
     read_state("Lab_Space,PQMS")
     
-    goto   ('Stabilizer.Power_Switch')
-    write  ("execute : Switch On Stabilizer.Power_Switch")
-    write  ("Update_Database Lab_Space,PQMS,Stabilizer,Power_Switch,State,ON")
+    goto     ('Stabilizer.Power_Switch')
+    switch_on("Stabilizer")
+    write    ("Update_Database Lab_Space,PQMS,Stabilizer,Power_Switch,State,ON")
     
-    goto   ("PQMS.XPLORE_Power_Supply.Power_Cable")
-    write  ("execute : Switch on XPLORE_Power_Supply.Power_Cable")
-    write  ("Update_Database Lab_Space,PQMS,XPLORE_Power_Supply,State,ON")
-    write  ("Update_Database Lab_Space,PQMS,XSMU,State,ON")
+    goto     ("PQMS.XPLORE_Power_Supply.Power_Cable")
+    switch_on("XPLORE_Power_Supply")
     
-    goto   ("PQMS.XTCON.Power_Cable")
-    write  ("execute : Switch on XTCON.Power_Cable")
-    write  ("Update_Database Lab_Space,PQMS,XTCON,State,ON")
+    write    ("Update_Database Lab_Space,PQMS,XPLORE_Power_Supply,State,ON")
+    write    ("Update_Database Lab_Space,PQMS,XSMU,State,ON")
+    write    ("Update_Database Lab_Space,PQMS,XTCON,State,ON")
     
-    goto   ("PQMS.XLIA.Power_Cable")
-    write  ("execute : Switch on XLIA.Power_Cable")
-    write  ("Update_Database Lab_Space,PQMS,XLIA,State,ON")
+    goto     ("PQMS.XTCON.Power_Cable")
+    switch_on("XTCON")
+    write    ("execute : Switch on XTCON.Power_Cable")
     
-    goto   ("PQMS.Sample_Positioner.Power_Cable")
-    write  ("execute : Switch on Sample_Positioner.Power_Cable")
-    write  ("Update_Database Lab_Space,PQMS,Sample_Positioner,State,ON")
+    goto     ("PQMS.XLIA.Power_Cable")
+    switch_on("XLIA")
+    write    ("Update_Database Lab_Space,PQMS,XLIA,State,ON")
     
-    goto    ("PQMS.Pump.Power_Cable")
-    write   ("execute : Switch on Pump.Power_Cable")
-    write   ("Update_Database Lab_Space,PQMS,Pump,State,ON")
+    goto     ("PQMS.Sample_Positioner.Power_Cable")
+    switch_on("Sample_Positioner")
+    write    ("Update_Database Lab_Space,PQMS,Sample_Positioner,State,ON")
     
-    goto    ("PQMS.Pirani_Gauge.Power_Cable")
-    write   ("execute : Switch on Pirani_Gauge.Power_Cable")
-    write   ("Update_Database Lab_Space,PQMS,Pump,State,ON")
+    goto     ("PQMS.Pump.Power_Cable")
+    switch_on("Pump")
+    write    ("Update_Database Lab_Space,PQMS,Pump,State,ON")
+    
+    goto     ("PQMS.Pirani_Gauge.Power_Cable")
+    switch_on("Pirani_Gauge.Power_Cable")
+    write    ("Update_Database Lab_Space,PQMS,Pump,State,ON")
 
 def set_up_PQMS_modules ():
 
     write ("execute : In the Qrius window, click on 'Modules Manager'.")
     
     click ("Temperature Controller")
-    write("execute : Check if XTCON PC Connection has been established")
+    check ("XTCON PC Connection ", "Established")
     write("execute : If No, then click on 'File->Connect'. If Yes, do nothing.")
    
     click ("IV Source and Measurement")
-    write("execute : Check if XSMU PC Connection has been established")
+    check ("XSMU PC Connection ", "Established")
     write("execute : If No, then click on 'File->Connect'. If Yes, do nothing.")
 
     click ("Lockin Amplifier")
-    write("execute : Check if XLIA PC Connection has been established")
+    check ("XLIA PC Connection ", "Established")
     write("execute : If No, then click on 'File->Connect'. If Yes, do nothing.")
     
     click ("Sample Positioner")
-    write("execute : Check if Sample_Positioner PC Connection has been established")
+    check ("Sample Positioner PC Connection ", "Established")
     write("execute : If No, then click on 'File->Connect'. If Yes, do nothing.")
     
 
 def switch_off_PQMS_modules():
     read_state ("Lab_Space,PQMS")
 
-    goto   ("PQMS.XPLORE_Power_Supply.Power_Cable")
-    write  ("execute : Switch off XPLORE_Power_Supply.Power_Cable")
-    write  ("Update_Database Lab_Space,PQMS,XPLORE_Power_Supply,State,OFF")
-    write  ("Update_Database Lab_Space,PQMS,XSMU,State,OFF")
+    goto      ("PQMS.XPLORE_Power_Supply.Power_Cable")
+    switch_off("XPLORE_Power_Supply")
+    write     ("Update_Database Lab_Space,PQMS,XPLORE_Power_Supply,State,OFF")
+    write     ("Update_Database Lab_Space,PQMS,XSMU,State,OFF")
     
-    goto   ("PQMS.XTCON.Power_Cable")
-    write  ("execute : Switch off XTCON.Power_Cable")
-    write  ("Update_Database Lab_Space,PQMS,XTCON,State,OFF")
+    goto      ("PQMS.XTCON.Power_Cable")
+    switch_off("XTCON")
+    write     ("Update_Database Lab_Space,PQMS,XTCON,State,OFF")
     
-    goto   ("PQMS.XLIA.Power_Cable")
-    write  ("execute : Switch off XLIA.Power_Cable")
-    write  ("Update_Database Lab_Space,PQMS,XLIA,State,OFF")
+    goto      ("PQMS.XLIA.Power_Cable")
+    switch_off("XLIA")
+    write     ("Update_Database Lab_Space,PQMS,XLIA,State,OFF")
     
-    goto   ("PQMS.Sample_Positioner.Power_Cable")
-    write  ("execute : Switch off Sample_Positioner.Power_Cable")
-    write  ("Update_Database Lab_Space,PQMS,Sample_Positioner,State,OFF")
+    goto      ("PQMS.Sample_Positioner.Power_Cable")
+    switch_off("Sample_Positioner")
+    write     ("Update_Database Lab_Space,PQMS,Sample_Positioner,State,OFF")
     
-    write   ("execute : Ensure that Pump.Release_Valve, Pump.Main_Valve, Sample_Chamber.Flush_Valve, Sample_Chamber.Evacuation_Valve, \
+    write     ("execute : Ensure that Pump.Release_Valve, Pump.Main_Valve, Sample_Chamber.Flush_Valve, Sample_Chamber.Evacuation_Valve, \
                     Heater_Chamber.Flush_Valve, Heater_Chamber.Evacuation_Valve and all other valves connected to Helium_Cylinder are closed")
     
-    goto   ("PQMS.Pump.Power_Cable")
-    write  ("execute : Switch off Pump.Power_Cable")
-    write  ("Update_Database Lab_Space,PQMS,Pump,State,OFF")
-    write  ("Update_Database Lab_Space,PQMS,Pirani_Gauge,State,OFF")
+    goto      ("PQMS.Pump.Power_Cable")
+    switch_off("PQMS.Pump")
+    write     ("Update_Database Lab_Space,PQMS,Pump,State,OFF")
+    write     ("Update_Database Lab_Space,PQMS,Pirani_Gauge,State,OFF")
     
-    goto   ('Stabilizer.Power_Switch')
-    write  ("execute : Switch OFF Stabilizer.Power_Switch")
-    write  ("Update_Database Lab_Space,PQMS,Stabilizer,Power_Switch,State,OFF")
+    goto      ('Stabilizer.Power_Switch')
+    switch_off("Stabilizer")
+    write     ("Update_Database Lab_Space,PQMS,Stabilizer,Power_Switch,State,OFF")
     
 ###############################################################################    
 #Computer functions
 
 def switch_on_computer():
     
-    write ("execute : Switch on Computer.Switch")
-    write("execute : Press CPU Power Button")
-    write("execute : Switch on the USB_Power_Adaptor")
-    write("execute : Login to user account")
-    write("execute : Open Qrius ")
+    switch_on("Computer.Switch")
+    write    ("execute : Press CPU Power Button")
+    switch_on("USB_Power_Adaptor")
+    write    ("execute : Login to user account")
+    write    ("execute : Open Qrius ")
     
 def switch_off_computer():
     
-    write ("execute : Exit Qrius")
-    write("execute : Shutdown Computer")
-    write("execute : Switch off the USB_Power_Adaptor")
-    write("execute : Wait for computer to Shutdown")
-    write ("execute : Switch off Computer.Switch")
+    write     ("execute : Exit Qrius")
+    write     ("execute : Shutdown Computer")
+    switch_off("USB_Power_Adaptor")
+    wait      ("computer", "Shutdown")
+    switch_off("Computer")
     
 ###############################################################################
 #Sample Positioner Functions
@@ -684,7 +759,7 @@ def set_XTCON_temperature (temperature_set_point):
     write       ("execute : Set 'Heater Set point' Temperature to " + str(temperature_set_point) + " K")
     move_cursor ('Toolbar')
     click       ('File->Apply')
-    write       ("execute : Wait till sample temperature stabilizes")
+    wait ("Sample Temperature", "Stable")
 
 def stop_XTCON_run():
     click       ('Temperature Controller Window')
@@ -722,10 +797,10 @@ def set_XSMU_constant_volatge(voltage_set_point):
     move_cursor ('Toolbar')
     click       ('Settings->Source Parameters')
     write       ("execute : Set 'Source Mode'  to constant voltage")
-    write       ("execute : Set 'Voltage Vakue'  to "+ str(voltage_set_point) +"mV")
+    write       ("execute : Set 'Voltage Value'  to "+ str(voltage_set_point) +"mV")
     move_cursor ('Toolbar')
     click       ('File->Apply')
-    write       ("execute : Wait till Voltage stabilizes")
+    wait       ("Voltage", "Stable")
 
 def init_XLIA_isothermal_constant_voltage(test_object):
     click('Lock-In Amplifier Window')
@@ -836,7 +911,7 @@ def start_XL_run (final_temperature, ramp_rate, max_depth, step_size, amplitude,
     
     click ('Start Button')
     write ("Update_Database Lab_Space,PQMS,XLIA,Running,True")
-    write ("execute : Wait until run comes to an end")
+    wait ("Run", "Finished")
     
     write ("Update_Database Lab_Space,PQMS,XLIA,Running,False")
     save_graph()
@@ -850,9 +925,9 @@ def start_XT_linear_ramp_run (final_temperature, ramp_rate, max_depth, step_size
     set_XT_linear_ramp_measurement_settings(final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase, delay, filter_length, drive_mode, drive_value)
     write("Update_Database Lab_Space,PQMS,XTCON,Mode,Linear_Ramp")
     
-    click ('Start Button')
-    write ("Update_Database Lab_Space,PQMS,XLIA,Running,True")
-    write ("execute : Wait until run comes to an end")
+    click('Start Button')
+    write("Update_Database Lab_Space,PQMS,XLIA,Running,True")
+    wait ("Run", "Finished")
     
     write ("Update_Database Lab_Space,PQMS,XSMU,Running,False")
     save_graph()
@@ -917,7 +992,7 @@ def start_IV_step_ramp_run (initial_temperature, final_temperature, temperature_
     
     click ('Start Button')
     write ("Update_Database Lab_Space,PQMS,XSMU,Running,True")
-    write ("execute : Wait until graph comes to an end")
+    wait ("Run", "Finished")
     
     write ("Update_Database Lab_Space,PQMS,XSMU,Running,False")
     save_graph()
@@ -927,45 +1002,45 @@ def start_IV_step_ramp_run (initial_temperature, final_temperature, temperature_
 
 def set_RT_step_ramp_measurement_settings(initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power, pre_stabilization_delay, post_stabilization_delay, monitoring_period, tolerance):
     
-    move_cursor ('Run control')
-    click       ('drop down menu')
-    click       ('R-T (Step ramp)')
+    move_cursor('Run control')
+    click      ('drop down menu')
+    click      ('R-T (Step ramp)')
     
-    move_cursor ('Toolbar')
-    click       ('Settings->Temperature controller-Step ramp settings')
+    move_cursor('Toolbar')
+    click      ('Settings->Temperature controller-Step ramp settings')
     
     #####       set step ramp settings here
     
-    write       ("execute : Set Ramp index as '0'.")
-    write       ("execute : Set Initial Temperature to " + str(initial_temperature) + " K")
-    write       ("execute : Set Final Temperature to " + str(final_temperature) + " K")
-    write       ("execute : Temperature Step to " + str(temperature_step) + " K")
+    write("execute : Set Ramp index as '0'.")
+    write("execute : Set Initial Temperature to " + str(initial_temperature) + " K")
+    write("execute : Set Final Temperature to " + str(final_temperature) + " K")
+    write("execute : Temperature Step to " + str(temperature_step) + " K")
     
-    write       ("execute : Set Pre-stabilization Delay to " + str(pre_stabilization_delay))
-    write       ("execute : Set Post-stabilization Delay to " + str(post_stabilization_delay))
-    write       ("execute : Set Temperature Tolerance to " + str(tolerance))
-    write       ("execute : Set Monitoring Period to " + str(monitoring_period))
+    write("execute : Set Pre-stabilization Delay to " + str(pre_stabilization_delay))
+    write("execute : Set Post-stabilization Delay to " + str(post_stabilization_delay))
+    write("execute : Set Temperature Tolerance to " + str(tolerance))
+    write("execute : Set Monitoring Period to " + str(monitoring_period))
     
     ################################
     click       ('File->Apply')
     
     
-    move_cursor ('Toolbar')
-    click       ('Settings->I-V Source and Measurement Unit')
-    click       ("Settings-IV Source and Meaurement Unit->Resistance Measurement Settings")
-    write       ("execute : Set voltage max as " + V_range + " mV")
-    write       ("execute : Set current max as " + I_range + " uA")
-    write       ("execute : Set power max as " + max_power + " mW")
-    write       ("execute : Ensure that Bipolar option is set to \'Yes\'")
-    move_cursor ("Top menu")
-    click       ("\'File->Done\'")    
+    move_cursor('Toolbar')
+    click      ('Settings->I-V Source and Measurement Unit')
+    click      ("Settings-IV Source and Meaurement Unit->Resistance Measurement Settings")
+    write      ("execute : Set voltage max as " + V_range + " mV")
+    write      ("execute : Set current max as " + I_range + " uA")
+    write      ("execute : Set power max as " + max_power + " mW")
+    write      ("execute : Ensure that Bipolar option is set to \'Yes\'")
+    move_cursor("Top menu")
+    click      ("\'File->Done\'")    
 
 
 def start_RT_step_ramp_run (initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power, pre_stabilization_delay, post_stabilization_delay, monitoring_period, tolerance):
     
-    goto        ("Qrius Main Window")
-    click       ('Measurement Mode settings')
-    click       ('Electrical DC Conductivity')
+    goto ("Qrius Main Window")
+    click('Measurement Mode Settings')
+    click('Electrical DC Conductivity')
     
     set_RT_step_ramp_measurement_settings(initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power, pre_stabilization_delay, post_stabilization_delay, monitoring_period, tolerance)
     write("Update_Database Lab_Space,PQMS,XSMU,Mode,R-T")
@@ -973,7 +1048,7 @@ def start_RT_step_ramp_run (initial_temperature, final_temperature, temperature_
     
     click ('Start Button')
     write ("Update_Database Lab_Space,PQMS,XSMU,Running,True")
-    write ("execute : Wait until graph comes to an end")
+    wait ("Run", "Finished")
     
     write ("Update_Database Lab_Space,PQMS,XSMU,Running,False")
     save_graph()
@@ -1023,13 +1098,13 @@ def start_RT_linear_ramp (initial_temperature, final_temperature, ramp_rate, run
     write("Update_Database Lab_Space,PQMS,XSMU,Mode,RT")
     write("Update_Database Lab_Space,PQMS,XTCON,Mode,Linear_Ramp")
     
-    write       ("execute : Wait for heater temperature to reach"  + str(initial_temperature))
+    wait("Heater temperature", str(initial_temperature) + " K")
     
     click       ('Start')
     write       ("Update_Database Lab_Space,PQMS,XTCON,Running,True")
     write       ("Update_Database Lab_Space,PQMS,XSMU,Running,True")
     
-    write       ("execute : Wait until graph comes to an end")
+    wait("Run", "Finished")
     
     write       ("Update_Database Lab_Space,PQMS,XTCON,Running,False")
     write       ("Update_Database Lab_Space,PQMS,XSMU,Running,False")
@@ -1063,7 +1138,7 @@ def start_R_Time_isothermal( I_range, V_range, max_power, run_mode):
     write("Update_Database Lab_Space,PQMS,XSMU,Mode,R-Time")
     click ('Start Button')
     write ("Update_Database Lab_Space,PQMS,XSMU,Running,True")
-    write ("execute : Wait until graph comes to an end")
+    wait ("Run", "Finished")
     write ("Update_Database Lab_Space,PQMS,XSMU,Running,False")
     save_graph()
 
@@ -1072,42 +1147,41 @@ def start_R_Time_isothermal( I_range, V_range, max_power, run_mode):
 
 def set_up_pump ():
     
-    write   ("execute : Ensure that any Insert is in the cryostat, and clamp is tightly fixed.")
-    write   ("execute : Ensure that Pump.Release_Valve, Pump.Main_Valve, Sample_Chamber.Flush_Valve, Sample_Chamber.Evacuation_Valve, \
-                        Heater_Chamber.Flush_Valve and Heater_Chamber.Evacuation_Valve are closed and all other valves connected to the pump are closed.")
-    goto    ("Pump.Main_Valve")
-    write   ("execute : Rotate Pump.Main_Valve in anticlockwise direction to turn the valve on.")
-    write   ("Update_Database Lab_Space,PQMS,Pump,Main_Valve,State,ON")
+    write("execute : Ensure that any Insert is in the cryostat, and clamp is tightly fixed.")
+    write("execute : Ensure that Pump.Release_Valve, Pump.Main_Valve, Sample_Chamber.Flush_Valve, Sample_Chamber.Evacuation_Valve, \
+                     Heater_Chamber.Flush_Valve and Heater_Chamber.Evacuation_Valve are closed and all other valves connected to the pump are closed.")
+    goto ("Pump.Main_Valve")
+    write("execute : Rotate Pump.Main_Valve in anticlockwise direction to turn the valve on.")
+    write("Update_Database Lab_Space,PQMS,Pump,Main_Valve,State,ON")
 
 def create_vaccum (chamber):
     
-    write   ("execute : Turn on " + chamber + ".Evacuation_Valve by rotating in anticlockwise direction.")
-    write   ("execute : Observe the Pirani Guage needle, and let it stabilize.")
-    write   ("Update_Database Lab_Space,PQMS,Cryostat_Steel,Vaccum,YES")
+    write("execute : Turn on " + chamber + ".Evacuation_Valve by rotating in anticlockwise direction.")
+    wait ("Pirani Guage needle", "Stable")
+    write("Update_Database Lab_Space,PQMS,Cryostat_Steel,Vaccum,YES")
     
 def release_pressure (chamber):
     
         
-    write   ("execute : Ensure that Pump.Release_Valve, Pump.Main_Valve, Sample_Chamber.Flush_Valve, Sample_Chamber.Evacuation_Valve, \
-                    Heater_Chamber.Flush_Valve, Heater_Chamber.Evacuation_Valve and all other valves connected to Helium_Cylinder are closed")
-    goto    ("Pump.Main_Valve")
-    write   ("execute : Turn off Pump.Main_Valve by rotating it in clockwise direction.")
-    write   ("execute : Turn on " + chamber + ".Evacuation_Valve by rotating in clockwise direction")
-    write   ("execute : Open Pump.Release_Valve by turning in anticlockwise direction.")
-    write   ("execute : Close the Pump.Release_Valve by turning in clockwise direction.")
-    write   ("execute : Turn off " + chamber + ".Evacuation_Valve by rotating in anticlockwise direction")
-    write   ("execute : Turn on Pump.Main_Valve by rotating it in anticlockwise direction.")
-    write   ("Update_Database Lab_Space,PQMS,Cryostat_Steel,Vaccum,NO")
-    write   ("Update_Database Lab_Space,PQMS,Cryostat_Steel,Helium,NO")
+    write("execute : Ensure that Pump.Release_Valve, Pump.Main_Valve, Sample_Chamber.Flush_Valve, Sample_Chamber.Evacuation_Valve, \
+                 Heater_Chamber.Flush_Valve, Heater_Chamber.Evacuation_Valve and all other valves connected to Helium_Cylinder are closed")
+    goto ("Pump.Main_Valve")
+    write("execute : Turn off Pump.Main_Valve by rotating it in clockwise direction.")
+    write("execute : Turn on " + chamber + ".Evacuation_Valve by rotating in clockwise direction")
+    write("execute : Open Pump.Release_Valve by turning in anticlockwise direction.")
+    write("execute : Close the Pump.Release_Valve by turning in clockwise direction.")
+    write("execute : Turn off " + chamber + ".Evacuation_Valve by rotating in anticlockwise direction")
+    write("execute : Turn on Pump.Main_Valve by rotating it in anticlockwise direction.")
+    write("Update_Database Lab_Space,PQMS,Cryostat_Steel,Vaccum,NO")
+    write("Update_Database Lab_Space,PQMS,Cryostat_Steel,Helium,NO")
     
 def restore_vaccum ():
     
-    goto    ("Cryostat Cover")
-    hold    ("Cryostat Cover")
-    write   ("execute : Fix Cryostat cover on the cryostat opening")
-    clamp   ()
-    create_vaccum ("Sample_Chamber")
-    create_vaccum ("Heater_Chamber")
+    move         ("Cryostat Cover", "Cryostat opening")
+    create_vaccum("Sample_Chamber")
+    create_vaccum("Heater_Chamber")
+    
+    clamp()
     
 def flush_helium (chamber):
     
@@ -1131,11 +1205,11 @@ def flush_helium (chamber):
     write   ("execute : Open " + chamber + ".Flush_Valve by rotating in anticlockwise direction.")
     write   ("execute : After 2 seconds, turn off " + chamber + ".Flush_Valve by rotating in clockwise direction")
     
-    goto    ("Helium_Cylinder.Pressure_Valve")
-    write   ("execute : Close Helium_Cylinder.Pressure_Valve by rotating in anticlockwise direction until completely unscrewed loose.")
-    
     write   ("execute : Open Pump.Release_Valve by turning in anticlockwise direction.")
     write   ("execute : Immediately, close the Pump.Release_Valve by turning in clockwise direction.")
+    
+    goto    ("Helium_Cylinder.Pressure_Valve")
+    write   ("execute : Close Helium_Cylinder.Pressure_Valve by rotating in anticlockwise direction until completely unscrewed loose.")
     
     write   ("execute : Close " + chamber + ".Evacuation_Valve by rotating in clockwise direction")
     write   ("execute : Turn on Pump.Main_Valve by rotating it in anticlockwise direction.")

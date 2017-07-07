@@ -45,3 +45,12 @@ def put_in_folder (experiment, log, diff_file, new_dbase):
 	os.system("mv " + diff_file + " " + folder_name + "/")
 	os.system("mv " + new_dbase + ".yaml " + folder_name + "/")
 	lab_reset(folder_name)
+
+def put_in_folder_aborted (log, diff_file, new_dbase):        
+	t = time_in_ist('%Y_%m_%d_%H:%M:%S')
+	folder_name = "run_data_aborted_run"  + "_" + t
+	os.system("mkdir " + folder_name)
+	os.system("mv " + log.name + " " + folder_name + "/")
+	os.system("mv " + diff_file + " " + folder_name + "/")
+	os.system("mv " + new_dbase + ".yaml " + folder_name + "/")
+	lab_reset(folder_name)

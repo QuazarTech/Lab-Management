@@ -8,22 +8,24 @@ CHAMBERS        = ["Sample_Chamber", "Heater_Chamber"]
 
 def get_sample_info():
     
-    sample_box = raw_input("\nSelect Sample box : (Box_Zener, Box_Resistor, YBCO)\n")
-    while((sample_box != "Box_Zener") and (sample_box != "Box_Resistor") and (sample_box != "YBCO")):
-        sample_box = raw_input("\nSelect Sample box : (Box_Zener, Box_Resistor, YBCO)\n")
+    sample_box = raw_input("\nSelect Sample box : (Box_Zener, Box_Resistor, Dessicator)\n")
+    while((sample_box != "Box_Zener") and (sample_box != "Box_Resistor") and (sample_box != "Dessicator")):
+        sample_box = raw_input("\nSelect Sample box : (Box_Zener, Box_Resistor, Dessicator)\n")
 
     if(sample_box=="Box_Zener"):
         sample = raw_input("\nSelect sample : (Zener_1, Zener_2, Zener_3)\n")
         while((sample != "Zener_1") and (sample != "Zener_2") and (sample != "Zener_3")):
             sample = raw_input("\nSelect sample : (Zener_1, Zener_2, Zener_3)\n")
     elif(sample_box=="Box_Resistor"):
-        sample = raw_input("\nSelect sample : (Res_1,Res_2,Res_3,Res_4,Res_5)\n")
-        while((sample != "Res_1") and (sample != "Res_2") and (sample != "Res_3") and (sample != "Res_4") and (sample != "Res_5")):
-            sample = raw_input("\nSelect sample : (Res_1,Res_2,Res_3,Res_4,Res_5)\n")
-    elif (sample_box == "YBCO"):
-        sample = raw_input("\nSelect sample : (YBCO_1,YBCO_2)\n")
-        while((sample != "YBCO_1") and (sample != "YBCO_2")):
-            sample = raw_input("\nSelect sample : (YBCO_1,YBCO_2)\n")
+        sample = raw_input("\nSelect sample : (Res_1,Res_2,Res_3,Res_4,Res_5,Res_6,Res_7,Res_8)\n")
+        while((sample != "Res_1") and (sample != "Res_2") and (sample != "Res_3") and \
+	    (sample != "Res_4") and (sample != "Res_5") \
+		and (sample != "Res_6") and (sample != "Res_7") and (sample != "Res_8")):
+            sample = raw_input("\nSelect sample : (Res_1,Res_2,Res_3,Res_4,Res_5,Res_6,Res_7,Res_8)\n")
+    elif (sample_box == "Dessicator"):
+        sample = raw_input("\nSelect sample : (YBCO_2,YBCO_1_A , YBCO_1_B)\n")
+        while((sample != "YBCO_1") and (sample != "YBCO_2")and (sample != "YBCO_1_A")and (sample != "YBCO_1_B")):
+            sample = raw_input("\nSelect sample : (YBCO_2,YBCO_1_A , YBCO_1_B)\n")
             
     sample_description  = raw_input("\nGive a brief sample desciption: \n")
     address             = raw_input("\nGive the path where you want to store experimental data : \n")
@@ -295,7 +297,7 @@ def cables_connected_check (test_object, cryostat):
              conn = raw_input("Are the cables connected elsewhere?")
                 
              while (conn != 'y' and conn != 'n'):
-		conn = raw_input ("Are the required cables already connected? : y/n\n")
+		      conn = raw_input ("Are the required cables already connected? : y/n\n")
         	
              if (conn == 'n'):
             	connect_cable('RT_Cable', test_object)
@@ -312,7 +314,7 @@ def cables_connected_check (test_object, cryostat):
             conn = raw_input("Are the cables connected elsewhere?")
                 
             while (conn != 'y' and conn != 'n'):
-		conn = raw_input ("Are the required cables already connected? : y/n\n")
+		      conn = raw_input ("Are the required cables already connected? : y/n\n")
         	
             if (conn == 'n'):
             	connect_cable('RT_Cable', test_object)
@@ -516,3 +518,43 @@ def turn_on_computer():
         
     if (response == 'n'):
         switch_on_computer()
+
+def take_photo_of_sample(Sample,Sample_Box):
+
+    write       ("execute : Cut and put a fresh sheet of tracing paper on sample_photography_area")
+
+    remove      ('cap',Sample_Box)
+    write       ("Update_Database Lab_Space,Sample_Table,Sample_Boxes,"+Sample_Box+",State,OPEN")
+
+    hold_sample (Sample, Sample_Box)
+    close_lid   (Sample_Box)
+    write       ("execute : Remove Sticky Tape from "+ Sample)
+    write   ("Update_Database Lab_Space,Sample_Table,Sample_Boxes,"+Sample_Box+","+Sample+",State,NOT_IN_USE")
+
+
+    goto        ('Sample_Photography_Area')
+    leave       (Sample)
+    write       ("execute : Light up the Sample_Photography_Area")
+    write       ("execute : Put a meter scale on the side of the photo")
+
+    take_photo  (Sample)
+    write   ("execute : straighten sample")
+    write   ("execute : put a sticky note on the sample")
+    
+    read_state("Lab_Space,Sample_Table,Sample_Boxes,"+Sample_Box)
+    
+    goto    (Sample_Box +"'s Cap")
+    hold    ("The Cap")
+    write   ("execute : With other hand hold the " + Sample_Box + " and keep it fixed")
+    write   ("execute : Pull the cap, and separate it from sample_box")
+    write   ("Update_Database Lab_Space,Sample_Table,Sample_Boxes,Box_Zener,State,OPEN")
+    goto    (Sample+"_Terminal_1")
+    hold    (Sample+"_terminal_1")
+    goto    (Sample+".Home_Coordinates")
+    leave   (Sample)
+    
+    write   ("Update_Database Lab_Space,Sample_Table,Sample_Boxes,"+Sample_Box+","+Sample+",State,NOT_IN_USE")
+    write   ("execute : close the lid of the box")
+    write   ("Update_Database Lab_Space,Sample_Table,Sample_Boxes,Box_Zener,State,CLOSED")
+    goto    ("Tweezer.Home_Coordinates")
+    leave   ("Tweezer")
