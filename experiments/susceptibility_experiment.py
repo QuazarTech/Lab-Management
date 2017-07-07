@@ -23,7 +23,7 @@ def run ():
     #####################
     
     is_the_sample_loaded (Sample, Sample_Box, test_object, cryostat)
-    cables_connected_check (test_object)
+    cables_connected_check (test_object, cryostat)
     
     previous_run_temperature = ""
     step_size, max_depth                                                            = get_experimental_parameters_XL()
