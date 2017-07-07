@@ -320,6 +320,24 @@ Lab_Space:
                   Terminal_2:
                     Soldered                  : YES/NO
                     Length                    : 28 mm
+                    
+                Res_8: 
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Standard_Tolerance          : 0.05%
+                  Resistance                  : 5.76K
+                  Length                      : 7.17 mm
+                  Diameter                    : 2.61 mm
+                  Photo                       : Sample Photo/Resistor_8.jpg
+                  Datasheet                   : http://www.vishay.com/docs/31019/ptf.pdf
+                  Terminal_1:
+                    Soldered                  : YES/NO
+                    Length                    : 25 mm
+                  Terminal_2:
+                    Soldered                  : YES/NO
+                    Length                    : 28 mm
+
 
             Dessicator:
                  
@@ -566,6 +584,17 @@ Lab_Space:
               XSMU_Cable                      : DISCONNECTED
               Running                         : NO
               Mode                            : NA/CONST_V/CONST_I
+              
+          XSMU_NANOVOLTMETER:
+
+              State                           : OFF
+              Power_Cable                     : DISCONNECTED
+              USB_Cable_Computer              : DISCONNECTED
+              USB_Cable_Module                : DISCONNECTED
+              XSMU_Cable                      : DISCONNECTED
+              Running                         : NO
+              Mode                            : NA/CONST_V/CONST_I
+
 
           XTCON:
 
