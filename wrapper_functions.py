@@ -1,7 +1,7 @@
 from complex_functions import *
 
 TEST_OBJECTS    = ["Insert_Susceptibility", "Insert_RT_Puck", "Insert_RT_Old", "Puck_Board"]
-CRYOSTATS       = ["Quartz", "Double_Walled_Steel"]
+CRYOSTATS       = ["Cryostat_Quartz", "Cryostat_Steel"]
 CHAMBERS        = ["Sample_Chamber", "Heater_Chamber"]
 
 ###############################################################################
@@ -327,7 +327,7 @@ def cables_connected_check (test_object, cryostat):
         elif (test_object == "Insert_RT_Old"):
             
             
-            if (cryostat == "Double_Walled_Steel"):
+            if (cryostat == "Cryostat_Steel"):
                 conn = raw_input("Are the cables connected elsewhere?")
                 
                 while (conn != 'y' and conn != 'n'):
@@ -351,7 +351,7 @@ def cables_connected_check (test_object, cryostat):
         
         elif (test_object == "Insert_Susceptibility"):
             
-            if (cryostat == "Double_Walled_Steel"):
+            if (cryostat == "Cryostat_Steel"):
                 connect_cable('HT_Cable', cryostat + " cryostat's HT connector")
             
             elif (cryostat == "Quartz" ):
@@ -439,7 +439,7 @@ def reset_cryostat_environment (previous_run_temperature, temperature_set_point,
   response = raw_input("Do you want to reset the cryostat environment?\n")
   while ((response != 'y') and (response != 'n')):
     response = raw_input ("Do you want to reset the cryostat environment?\n")
-  if(response == 'y') and (cryostat == "Double_Walled_Steel"):
+  if(response == 'y') and (cryostat == "Cryostat_Steel"):
   	double_walled_steel_cryostat_environment_setup(previous_run_temperature, temperature_set_point)
   if(response == 'y') and (cryostat == "Quartz"):
   	quartz_cryostat_environment_setup(previous_run_temperature, temperature_set_point)      
@@ -450,7 +450,7 @@ def release_PQMS_vaccum (cryostat):
     print ("\nIt is NOT reccomended to release vaccum if there is still liquid nitrogen left in the cryocan.")
     response = raw_input ("Do you want to release vaccum? : y/n\n")
     
-    if (cryostat == "Double_Walled_Steel"):
+    if (cryostat == "Cryostat_Steel"):
         
         while ((response != 'y') and (response != 'n')):
             print ("\nIt is NOT reccomended to release vaccum if there is still liquid nitrogen left in the cryocan.")
@@ -469,7 +469,7 @@ def release_PQMS_vaccum (cryostat):
         release_pressure ("Sample_Chamber")
                         
 
-def liquid_nitrogen_remaining ():
+def liquid_nitrogen_remaining (cryostat):
     
     response = raw_input ("Is liquid nitrogen left in the cryocan? : y/n\n")
     
@@ -477,7 +477,7 @@ def liquid_nitrogen_remaining ():
         response = raw_input ("Is liquid nitrogen left in the cryocan? : y/n\n")
         
     if (response == 'y'):
-        restore_vaccum ()
+        restore_vaccum (cryostat)
 
 def turn_on_PQMS_modules():
     
@@ -497,7 +497,7 @@ def turn_off_PQMS_modules():
         response = raw_input ("Do you want to turn off the PQMS? : y/n\n")
         
     if (response == 'y'):
-        switch_off_PQMS_modules()
+        switch_off_PQMS_modules(cryostat)
 
 def turn_off_computer ():
     
