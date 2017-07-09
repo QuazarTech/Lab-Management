@@ -6,37 +6,59 @@ import yaml as yaml
 import sys
 import os
 
-
+diff_file  = "run_data_diff.txt"
+new_dbase  = "run_data_new_database"
 time_array = []
 
+####################################################################
+
 def get_user_data():
-    robot = raw_input("\nEnter robot ID : \n")
-    sensor = raw_input("\nEnter sensor ID: \n")
+    robot    = raw_input("\nEnter robot ID : \n")
+    sensor   = raw_input("\nEnter sensor ID: \n")
     observer = raw_input("\nEnter observer ID: \n")
     return robot, sensor, observer
-    
-database = "lab_database"
+
+def initialize_database(database_name):
+	with open(database_name+".yaml", "r") as f:
+		data = yaml.load(f)
+		fbase = open(new_dbase + ".yaml", "w")
+		yaml.dump(data, fbase, default_flow_style=False)
+		fbase.close()
+		f.close()
+
+def check_database_validity(database):	
+	try:	
+		initialize_database (database)
+	except Exception as e:
+		print ("Invalid Database!!\n. Error : "+ str(e))
+		database  = raw_input("Enter the starting database (lab_database, if starting from scratch) :\n")
+		check_database_validity(database)
+
+####################################################################
+
+database  = raw_input("Enter the starting database (lab_database, if starting from scratch) :\n")
+check_database_validity (database)
 robot,sensor,observer = get_user_data()
 
 log = open ("run_data_execution_log.txt", "w")
-log.write("Robot : " + robot + "\n")
-log.write("Sensor : " + sensor + "\n")
-log.write("Observer : " + observer + "\n")
-log.write("Time : " + time_in_ist('%H:%M:%S') + "\n")
+log.write  ("Robot              : " + robot + "\n")
+log.write  ("Sensor             : " + sensor + "\n")
+log.write  ("Observer           : " + observer + "\n")
+log.write  ("Time               : " + time_in_ist('%H:%M:%S') + "\n")
+log.write  ("Starting Database  : " + database + "\n\n")
 log.close()
 
-diff_file = "run_data_diff.txt"
-new_dbase = "run_data_new_database"
 dbase = open(diff_file, "w")
 dbase.close()
 
-def update_database(line, diff_file, new_dbase):
+####################################################################
+    		
+def update_database(line):
 	with open(diff_file, "a") as dbase:
-            dbase.write(line[16:]+'\n')
-        param_array, data = read_database(line, new_dbase, 16)
+            dbase.write(line +'\n')
+        param_array, data = read_database(line, new_dbase, 0)
         write_to_database(param_array, data)
 
-#####################################################################
 
 def read_database(line, base, index):
 	fbase = open(base + ".yaml", "r")
@@ -46,6 +68,13 @@ def read_database(line, base, index):
         fbase.close()
         return param_array, data
 
+def return_value(param_array):
+	fbase = open(new_dbase + ".yaml", "r")
+	data = yaml.safe_load(fbase)
+	z = data['Lab_Space']
+        for param in param_array[1:(len(param_array) - 1)]:
+            z = z[param]
+        return z[param_array[len(param_array) - 1]]
 
 def write_to_database(param_array, data):
 	z = data['Lab_Space']
@@ -125,25 +154,14 @@ def time_stamp_and_comments(log, line, temp, user_input):
                 log.write("Comment : " + user_input + '\n\n')
             log.close()
 
-def initialize_database(database_name):
-	with open(database_name+".yaml", "r") as f:
-    		data = yaml.load(f)
-    		fbase = open(new_dbase + ".yaml", "w")
-    		yaml.dump(data, fbase, default_flow_style=False)
-    		fbase.close()
-    		f.close()
-
 
 def write(line):
 	log = open ("run_data_execution_log.txt", "a")
 	if (line[0:7] != 'execute'):
-		if(line[0:6] == 'Update'):
-			update_database(line, diff_file, new_dbase)
-		else :
-			print(line)
-			with open (log.name, "a") as log:
-				log.write(line + '\n')
-				log.close()
+		print(line)
+		with open (log.name, "a") as log:
+			log.write(line + '\n')
+			log.close()
 
 	else:
 		if(line[10:14] != 'Read'):
@@ -166,5 +184,3 @@ def write(line):
 
 		else:
 			print_states(log, line, new_dbase)
-	
-initialize_database (database)
