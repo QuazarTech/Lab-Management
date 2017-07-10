@@ -152,18 +152,6 @@ def PQMS_IV_run (initial_temperature, final_temperature, temperature_step, V_ran
     write("                   Run ends")
     write("##############################################################\n")
     
-    #previous_run_temperature = temperature_set_point
-    
-    #response = raw_input("Do you want to do another run? : y/n \n")
-    #while (response != 'y' and response != 'n'):
-    	#response = raw_input("Do you want to do another run? : y/n \n")
-    
-    #if (response == 'y'):
-    	 
-    	 #temperature_set_point, V_range, V_step, I_range, I_step, max_power = get_experimental_parameters()
-    	 #cryostat_environment_setup (previous_run_temperature, temperature_set_point)
-    	 
-    	 #PQMS_IV_run(temperature_set_point, V_range, V_step, I_range, I_step, max_power)
 
 def PQMS_RT_run_stepped_ramp (initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power, pre_stabilization_delay, post_stabilization_delay, monitoring_period, tolerance):
     
@@ -519,6 +507,12 @@ def turn_on_computer():
     if (response == 'n'):
         switch_on_computer()
 
+def is_XL_run_needed(final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase, delay, filter_length, drive_mode, drive_value):
+
+    condition = raw_input("Do you want to do X-L run? (y/n): \n")
+    if (condition == 'y'):
+    	start_XL_run(final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase, delay, filter_length, drive_mode, drive_value)
+    	
 def take_photo_of_sample(Sample,Sample_Box):
 
     write       ("execute : Cut and put a fresh sheet of tracing paper on sample_photography_area")
