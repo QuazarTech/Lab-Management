@@ -66,7 +66,7 @@ def take_photo(obj):
 
 
 #####################################################################
-#runtime user response based functions
+#runtime database checking functions
 
 def wait (obj, condition):
     check (obj, condition)
@@ -87,6 +87,11 @@ def ensure (key, value):
 	else:
 		throw_exception (key + " is not " + value + " , condition failed\n")
 
+def return_true (key,value):
+	if check_database (key, value):
+		return True
+	else:
+		return False
 
 ###############################################################################
 
@@ -923,13 +928,6 @@ def start_XT_linear_ramp_run (final_temperature, ramp_rate, max_depth, step_size
     
     update_database ("Lab_Space,PQMS,XSMU,Running,False")
     save_graph()
-
-def is_XL_run_needed(final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase, delay, filter_length, drive_mode, drive_value):
-
-    condition = raw_input("Do you want to do X-L run? (y/n): \n")
-    if (condition == 'y'):
-    	start_XL_run(final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase, delay, filter_length, drive_mode, drive_value)
-	
 	
 ###############################################################################
 #IV_step_ramp functions functions
