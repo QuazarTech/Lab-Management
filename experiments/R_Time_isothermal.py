@@ -10,7 +10,7 @@ def run ():
     prepare_sample (Sample, Sample_Box, test_object)
     
     switch_on_PQMS_modules()
-    set_up_pump()
+    set_up_pump(cryostat)
     
     is_the_sample_loaded (Sample, Sample_Box, test_object)
 
@@ -38,7 +38,7 @@ def run ():
     
     release_PQMS_vaccum ()
     
-    switch_off_PQMS_modules()    
+    switch_off_PQMS_modules(cryostat)    
     turn_off_computer()
     
 ####################################################################################################

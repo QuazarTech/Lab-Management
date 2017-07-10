@@ -639,6 +639,18 @@ Lab_Space:
            Helium                             : NO
            Cryocan:
               Liquid_Nitrogen                 : NO
+           
+           Sample_Chamber:
+              Evacuation_Valve:
+                 State                        : CLOSED
+              Flush_Valve:
+                 State                        : CLOSED
+           
+           Heater_Chamber:
+              Evacuation_Valve:
+                 State                        : CLOSED
+              Flush_Valve:
+                 State                        : CLOSED
 
           Cryostat_Quartz:
            State                              : NOT_IN_USE
@@ -647,6 +659,12 @@ Lab_Space:
            Helium                             : NO
            Cryocan:
               Liquid_Nitrogen                 : NO
+           
+           Sample_Chamber:
+              Evacuation_Valve:
+                 State                        : CLOSED
+              Flush_Valve:
+                 State                        : CLOSED
 
           Pump:
 
@@ -655,9 +673,9 @@ Lab_Space:
            Bellow                             : CONNECTED
 
            Main_Valve:
-             State                             : OFF
+             State                            : CLOSED
            Release_Valve:
-             State                             : OFF
+             State                            : CLOSED
 
           Pirani_Gauge: 
               State                           : OFF
@@ -666,6 +684,7 @@ Lab_Space:
           Cryocan_BA11:
             Home_Coordinates                  : Cryocan_BA11.HOME
             Current_Coordinates               : With Nishant
+            Liquid_Nitrogen                   : NO
           
           Ladle:
             State                             : NOT_IN_USE
@@ -675,6 +694,7 @@ Lab_Space:
 
             Main_Valve: 
               State                           : OFF
+              Gauge_Reading                   : 0
             Pressure_Valve: 
               State                           : OFF
 
@@ -689,7 +709,7 @@ Lab_Space:
 
           Clamp: 
 
-            State                             : UNLOCKED
+            State                             : LOCKED
             Home_Coordinates:
 
           Puck Board: 
