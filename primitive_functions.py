@@ -9,7 +9,7 @@ def read_state(obj):
     write ("execute : Read states of " + obj)
     
 def goto(coord):
-    write ("execute : Goto " + coord)
+    write ("execute : Go to " + coord)
 
 def hold(obj):
     write ("execute : Hold " + obj)
@@ -38,20 +38,23 @@ def face(obj, direction):
 def align(obj1, obj2):
     write("execute : Align " + obj1 + " with " + obj2)
 
-def enter(text):
+def type_text(text):
 	write("execute : Type " + text)
+
+def check(obj, condition):
+    write ("execute : Check if " + obj + " is " + condition)
+    
+def touch(obj1, obj2):
+    write ("execute : Touch " + obj1 + " to " + obj2)
+
+#################################################################################
+#Based on Run Time responses
 
 def sample_is_mounted():
     write("Sample is already mounted. Continuing to next step...") 
 
 def do_not_unmount():
     write("Not unmounting the sample")
-
-#################################################################################
-#Run Time responses
-
-def check (obj, condition):
-    write ("execute : Check if " + obj + " is " + condition)
 
 def throw_exception (error):
     write("\n########### ERROR ###########\n")

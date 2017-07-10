@@ -10,12 +10,12 @@ def run():
     cryostat = select_cryostat()
     
     turn_on_PQMS_modules()
-    set_up_pump()
+    set_up_pump(cryostat)
     cables_disconnected_check(test_object, cryostat)
     
     unload_sample (Sample, Sample_Box, test_object, cryostat)
     
-    turn_off_PQMS_modules()
+    turn_off_PQMS_modules(cryostat)
     
     remove_sample (Sample, Sample_Box, test_object)
     

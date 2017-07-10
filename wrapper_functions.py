@@ -41,7 +41,7 @@ def get_experimental_parameters_XL():
 def get_lockin_aquisition_settings():
 
     drive_mode                  = raw_input("Enter the drive mode (current/voltage) : \n")
-    drive_value                 = raw_input("Enter the " +drive_mode + " value : \n")
+    drive_value                 = raw_input("Enter the " + drive_mode + " value : \n")
     delay                       = raw_input("Enter the delay time : \n")
     filter_length               = raw_input("Enter the filter length: \n")
   
@@ -477,7 +477,7 @@ def turn_on_PQMS_modules():
     if (response == 'n'):
         switch_on_PQMS_modules()
     
-def turn_off_PQMS_modules():
+def turn_off_PQMS_modules(cryostat):
     
     response = raw_input ("Do you want to turn off the PQMS? : y/n\n")
     

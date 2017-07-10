@@ -7,20 +7,21 @@ from primitive_functions import *
 def set_option (parameter, menu, parameter_value):
     move_cursor(parameter + " " + menu)
     click (menu)
-    enter (parameter_value)
+    type_text (parameter_value)
+    type_text ('Enter')
 
 def open_valve (valve, direction):
-	rotate(valve, "maximum possible turns", direction)
-	update_database(valve + ",State,OPEN")
+    rotate(valve, "maximum possible turns", direction)
+    update_database(valve + ",State,OPEN")
 
 def close_valve (valve, direction):
-	goto(valve)
-	rotate(valve, "maximum possible turns", direction)
-	update_database(valve + ",State,CLOSED")
+    goto(valve)
+    rotate(valve, "maximum possible turns", direction)
+    update_database(valve + ",State,CLOSED")
 
 def open_slightly (valve, direction):
-	rotate(valve, "minimum no of turns", direction)
-	update_database(valve + ",State,OPEN")
+    rotate(valve, "minimum no of turns", direction)
+    update_database(valve + ",State,OPEN")
 	
 def move(obj, position):
     '''Move obj to position'''
@@ -53,7 +54,6 @@ def hold_sample(Sample, Sample_Box):
 
 def close_lid(obj):
     '''close lid of object'''
-    hold(obj + ".lid")
     move(obj + ".lid", obj)
     
     update_database ("Lab_Space,Sample_Table,Sample_Boxes,Box_Zener,State,CLOSED")
@@ -68,30 +68,28 @@ def take_photo(obj):
 #####################################################################
 #runtime database checking functions
 
-def wait (obj, condition):
-    check (obj, condition)
-    response = raw_input ("Is the " + obj + " " + condition + "? : y/n")
+def wait(obj, condition):
+    
+    check(obj, condition)
+    response = raw_input ("Is the " + obj + " " + condition + "? : y/n\n")
+    
     while ((response != 'y') and (response != 'n')):
-        response = raw_input ("Is the " + obj + " " + condition + "? : y/n")
+        response = raw_input ("Is the " + obj + " " + condition + "? : y/n\n")
+    
     if (response == 'n'):
         write("\n########### WAITING ###########\n")
         write("Waiting for " + obj + "->" + condition)
         raw_input ("Press enter when the wait is complete")
         write("\n######### WAIT COMPETE ########\n")
 
-def ensure (key, value):
+def ensure(key, value):
 	print ("Test : " + key + " --> " + value + "\n")
 	print ("Checking...........................\n")
+	
 	if check_database (key, value):
-		write(key + " is " + value + " , condition passed!!\n")
+		write(key + " is " + value + " : Check Passed\n")
 	else:
-		throw_exception (key + " is not " + value + " , condition failed\n")
-
-def return_true (key,value):
-	if check_database (key, value):
-		return True
-	else:
-		return False
+		throw_exception (key + " is not " + value + " : Check Failed\n")
 
 ###############################################################################
 
@@ -120,22 +118,17 @@ def solder (terminal_a, terminal_b):
     
     update_database ("Lab_Space,Sample_Table,Soldering,Soldering_Iron,State,IN_USE")
     
-    goto("Soldering_Iron.Home_Coordinates")
-    hold("Soldering_Iron")
+    move ("Soldering_Iron", "Flux.Home_Coordinates")
+    touch("Soldering_Iron.Tip", "Flux")
     
-    goto("Flux.Home_Coordinates")
-    move("Soldering_Iron.Tip", "Flux")
-    move("Soldering_Iron.Tip", "Out of Flux")
-    
-    goto("Solder.Home_Coordinates")
-    move("Soldering_Iron.Tip", "Solder_Wire.Tip")
+    goto ("Solder_Wire.Tip")
+    touch("Soldering_Iron.Tip", "Solder_Wire.Tip")
     
     goto("Juntion of " + terminal_a + " and " + terminal_b)
     wait("soldering between " + terminal_a + " and " + terminal_b, "complete")
     
-    goto('Cleaning_Pad.Home_Coordinates')
-    move("Soldering_Iron.Tip", "Cleaning_Pad")
-    move("Soldering_Iron.Tip", "Out of Cleaning_Pad")
+    goto ('Cleaning_Pad.Home_Coordinates')
+    touch("Soldering_Iron.Tip", "Cleaning_Pad")
     
     goto ('Soldering_Iron.Home_Coordinates')
     leave('Soldering_Iron')
@@ -147,19 +140,15 @@ def desolder(terminal, Sample, Sample_Box):
     
     update_database ("Lab_Space,Sample_Table,Soldering,Soldering_Iron,State,IN_USE")
     
-    goto("Soldering_Iron")
-    hold("Soldering_Iron")
+    move ("Soldering_Iron", "Flux.Home_Coordinates")
+    touch("Soldering_Iron.Tip", "Flux")
     
-    goto("Flux.Home_Coordinates")
-    move("Soldering_Iron.Tip", "Flux")
-    move("Soldering_Iron.Tip", "Out of Flux")
     
     goto(Sample + "." + terminal)
     wait("desoldering", "complete")
     
-    goto("Cleaning_Pad.Home_Coordinates")
-    move("Soldering_Iron.Tip", "Cleaning_Pad")
-    move("Soldering_Iron.Tip", "Out of Cleaning_Pad")
+    goto ("Cleaning_Pad.Home_Coordinates")
+    touch("Soldering_Iron.Tip", "Cleaning_Pad")
     
     update_database ("Lab_Space,Sample_Table,Sample_Boxes," + Sample_Box + "," + Sample + ",Terminal_1,Soldered,NO")
     update_database ("Lab_Space,PQMS,Insert_RT_Puck,Puck,Terminal_1,Soldered,NO")
@@ -177,20 +166,23 @@ def clamp():
     move       ('Clamp.Home_Coordinates', 'PQMS.Clamp_Coordinates')    
     write      ("execute : Use the other hand to revolve the clamp till 180 degrees")
     write      ("execute : Revolve the screw of the clamp till it is in closing position")
-    rotate     ('Screw','required turns','clockwise')
+    rotate     ('Clamp Screw','required turns','clockwise')
     update_database ("Lab_Space,PQMS,Clamp,State,LOCKED")
     
 def unclamp():
     '''Unclamp the PQMS insert to Cryostat'''
     
-    read_state  ("Lab_Space,PQMS,Clamp")
-    read_state  ("Lab_Space,PQMS,Insert_RT_Puck")
-    goto        ("Clamp.Current_Coordinates")
-    hold        ("the clamp with one hand")
-    write       ("execute : With other hand, Rotate the screw anti-clockwise for required number of turns")
-    write       ("execute : Revolve the screw of the clamp till it is in opening position")
-    write       ("execute : Use the other hand to revolve the clamp till it's straight.")
+    read_state("Lab_Space,PQMS,Clamp")
+    read_state("Lab_Space,PQMS,Insert_RT_Puck")
+    
+    goto  ("Clamp.Current_Coordinates")
+    hold  ("the clamp with one hand")
+    rotate("Clamp Screw", "required turns", "anti-clockwise")
+    write ("execute : Revolve the screw of the clamp till it is in opening position")
+    write ("execute : Use the other hand to revolve the clamp till it's straight.")
+    
     update_database ("Lab_Space,PQMS,Clamp,State,UNLOCKED")
+    
     goto        ("Clamp.Home_Coordinates")
     leave       ("Clamp")
 
@@ -202,11 +194,12 @@ def unclamp():
 def connect_cable (cable, test_object):
     '''Connects 'cable' to its respective connector on test_object.'''
     
-    read_state  ('Lab_Space,PQMS,Cables,' + cable)
-    move        (cable + ".Cryostat_End", test_object + "." + cable + "_Terminal")
-    write       ("execute : Align " + cable + "'s connector with "  + test_object + "'s connector")
-    write       ("execute : Insert and fasten " + cable)
-    leave       (cable)
+    read_state('Lab_Space,PQMS,Cables,' + cable)
+    move      (cable + ".Cryostat_End", test_object + "." + cable + "_Terminal")
+    align     (cable + "'s connector", test_object + "'s connector")
+    write     ("execute : Insert and fasten " + cable)
+    leave     (cable)
+    
     update_database ("Lab_Space,PQMS,Cables," + cable + ",State,CONNECTED")
     
 
@@ -218,7 +211,7 @@ def disconnect_cable (cable):
     hold        (cable + ".Cryostat_End")
     
     write       ("execute : Unfasten and remove " + cable)
-    move        (cable + ".Cryostat_End", cable + ".Home_Coordinates" )
+    goto        (cable + ".Home_Coordinates" )
     update_database ("Lab_Space,PQMS,Cables," + cable + ",State,DISCONNECTED")
     leave       (cable)
 
@@ -241,19 +234,19 @@ def mount_sample (Sample, Sample_Box, test_object):
 
         hold_sample (Sample, Sample_Box)
         close_lid   (Sample_Box)
-        write       ("execute : Remove Sticky Tape from "+ Sample)
+        write       ("execute : Remove Sticky Tape from " + Sample)
         #####PHOTOGRAPH PRIOR TO MOUNTING
         write       ("execute : Cut and put a fresh sheet of tracing paper on sample_photography_area")
 
         goto        ('Sample_Photography_Area')
         leave       (Sample)
         write       ("execute : Light up the Sample_Photography_Area")
-        write       ("execute : Put a meter scale on the side of the photo")
+        write       ("execute : Put a Scale on the side of the photo")
 
         take_photo  (Sample)
         write 		("execute : Take sample back to Sample_Mounting_Coordinates")
-
-
+        write 		("execute : Take Scale back to Scale.Home_Coordinates")
+        
         goto    ('Puck_Board')
         hold    ('Puck_Board')
 
@@ -265,7 +258,7 @@ def mount_sample (Sample, Sample_Box, test_object):
 
         write ("execute : Bend " + Sample + "'s terminals as required.")
 
-        move(Sample+"'s Terminal_2", "Insert_RT_Puck,Puck,Terminal_1")
+        move  (Sample+"'s Terminal_2", "Insert_RT_Puck,Puck,Terminal_1")
         solder(Sample + "'s,Terminal_2", "Insert_RT_Puck,Puck,Terminal_1")
 
         update_database ("Lab_Space,PQMS,Insert_RT_Puck,Puck,Sample_Mounted,YES")
@@ -347,21 +340,18 @@ def load_sample(Sample, Sample_Box, test_object, cryostat):
             read_state('Lab_Space,PQMS,Insert_RT_Puck')
             move(test_object, 'Cryostat.Exit_Coordinates')
             goto('Puck_Screwing_Coordinates')
-            hold('Puck')
-            write("execute : Align Puck for screwing")
+            hold ('Puck')
+            align("Puck", "Insert_RT_Puck.Cavity")
             rotate('Puck','14 turns','clockwise')
-            write("execute : Align Insert2Puck Cable with Puck Pins")
+            align ("Insert2Puck Cable", "Puck.Female_Connector")
             write("execute : Insert the pin_holes into the puck pins")
             update_database ("Lab_Space,PQMS,Insert_RT_Puck,Puck,Insert_Connection,CONNECTED")
             update_database ("Lab_Space,PQMS,Insert_RT_Puck,Insert2Puck_Cable,State,CONNECTED")
         
         flush_helium('Sample_Chamber', cryostat)
-        if (cryostat == "Cryostat_Steel"):
-            flush_helium('Heater_Chamber', cryostat)
     	unclamp()
         
-        write('execute : Remove Cryostat_Cover')
-    	goto('Cryostat_Cover.Home_Coordinates')
+        move ('Cryostat_Cover', 'Cryostat_Cover.Home_Coordinates')
     	leave('Cryostat_Cover')
         move (test_object, 'Cryostat.Exit_Coordinates')
         goto('Cryostat.Home_Coordinates')
@@ -377,12 +367,10 @@ def load_sample(Sample, Sample_Box, test_object, cryostat):
     elif (test_object == "Insert_RT_Old"):
         
         flush_helium('Sample_Chamber', cryostat)
-        if (cryostat == "Cryostat_Steel"):
-            flush_helium('Heater_Chamber', cryostat)
+
     	unclamp()
     	
-        write('execute : Remove Cryostat_Cover')
-    	goto('Cryostat_Cover.Home_Coordinates')
+        move ('Cryostat_Cover', 'Cryostat_Cover.Home_Coordinates')
     	leave('Cryostat_Cover')
     	
         move(test_object, 'Cryostat.Exit_Coordinates')
@@ -393,12 +381,10 @@ def load_sample(Sample, Sample_Box, test_object, cryostat):
     elif (test_object == "Insert_Susceptibility"):
         
         flush_helium('Sample_Chamber', cryostat)
-        if (cryostat == "Cryostat_Steel"):
-            flush_helium('Heater_Chamber', cryostat)
+
     	unclamp()
     	
-        write('execute : Remove Cryostat_Cover')
-    	goto('Cryostat_Cover.Home_Coordinates')
+        move ('Cryostat_Cover', 'Cryostat_Cover.Home_Coordinates')
     	leave('Cryostat_Cover')
     	
         move(test_object, 'Cryostat.Exit_Coordinates')
@@ -678,11 +664,13 @@ def switch_off_PQMS_modules(cryostat):
     switch_off_module("XTCON")
     switch_off_module('XLIA')
     switch_off_module('Sample_Positioner')
+    
+    close_valve ("Lab_Space,PQMS,Pump,Main_Valve", "clockwise")
 
     pre_pumping_checks(cryostat)
 
     switch_off_module('Pump')
-    switch_off_module('Pirani Gauge')
+    switch_off_module('Pirani_Gauge')
     switch_off_module('Stabilizer')
 
     
@@ -1112,11 +1100,10 @@ def start_RT_linear_ramp (initial_temperature, final_temperature, ramp_rate, run
 
 def set_R_Time_isothermal_measurement_settings (I_range, V_range, max_power, run_mode):
     move_cursor("Top Menu")
-    click ("Settings->Source Parametres")
-    move_cursor ("Mode Drop Down Menu")
+    click      ("Settings->Source Parameters")
+    move_cursor ("Source Mode")
     click       ("Drop Down Menu")
     click       ("Constant " + run_mode)
-    write ("execute : Set mode as constant " + run_mode)
     move_cursor("Top Menu")
     click("File->Done")
     move_cursor("Top Menu") 
@@ -1152,6 +1139,7 @@ def pre_pumping_checks(cryostat):
     ensure ("Lab_Space,PQMS,Clamp,State", "LOCKED")
     ensure ("Lab_Space,PQMS,Pump,Release_Valve,State", "CLOSED")
     ensure ("Lab_Space,PQMS,Pump,Main_Valve,State", "CLOSED")
+    
     if (cryostat == 'Cryostat_Steel'):
     	ensure ("Lab_Space,PQMS," + cryostat + ",Sample_Chamber,Flush_Valve,State", "CLOSED")
     	ensure ("Lab_Space,PQMS," + cryostat + ",Heater_Chamber,Flush_Valve,State", "CLOSED")
@@ -1172,6 +1160,7 @@ def create_vaccum (chamber, cryostat):
     open_valve ("Lab_Space,PQMS," + cryostat + "," + chamber + ",Evacuation_Valve", "anticlockwise")
     wait ("Pirani Guage needle", "Stable")
     update_database ("Lab_Space,PQMS,Cryostat_Steel,Vaccum,YES")
+    close_valve ("Lab_Space,PQMS," + cryostat + "," + chamber + ",Evacuation_Valve", "clockwise")
     
 def release_pressure (chamber, cryostat):
     
@@ -1198,58 +1187,56 @@ def restore_vaccum (cryostat):
 
 def release_residual_pressure(chamber, cryostat):
 
-	open_valve      ("Lab_Space,PQMS,"+cryostat+","+chamber+",Flush_Valve","anticlockwise")
-	wait            ("Helium Pressure Gauge Reading", "0")
-	close_valve     ("Lab_Space,PQMS,"+cryostat+","+chamber+",Flush_Valve", "clockwise") 
-	update_database ("Lab_Space,PQMS,Helium,Main_Valve,Gauge_Reading,0")
+    open_valve      ("Lab_Space,PQMS," + cryostat + "," + chamber + ",Flush_Valve", "anticlockwise")
+    wait            ("Helium Pressure Gauge Reading", "0")
+    close_valve     ("Lab_Space,PQMS," + cryostat + "," + chamber + ",Flush_Valve", "clockwise") 
+    update_database ("Lab_Space,PQMS,Helium,Main_Valve,Gauge_Reading,0")
 
 def initialize_flushing(pressure):
 
-	open_slightly ("Lab_Space,PQMS,Helium,Main_Valve", "anticlockwise")
-	write         ("Pressure to be flushed is " + str(pressure))
-	while True:
-		open_slightly ("Lab_Space,PQMS,Helium,Pressure_Valve",  "clockwise")
-		response = raw_input("What is the pressure gauge reading?")
-		if (float(response) != pressure):
-			update_database("Lab_Space,PQMS,Helium,Main_Valve,Gauge_Reading," + response)
-		else:
-			update_database("Lab_Space,PQMS,Helium,Main_Valve,Gauge_Reading," + response)
-			break
+    open_slightly ("Lab_Space,PQMS,Helium,Main_Valve", "anticlockwise")
+    write         ("Pressure to be flushed is " + str(pressure))
+    while True:
+            open_slightly ("Lab_Space,PQMS,Helium,Pressure_Valve",  "clockwise")
+            response = raw_input("What is the pressure gauge reading?")
+            while (response == ""):
+                response = raw_input("What is the pressure gauge reading?")
+                
+            update_database("Lab_Space,PQMS,Helium,Main_Valve,Gauge_Reading," + response)
+            
+            if (float(response) == pressure):
+                break
 
 def flushing_prerequisites(chamber, cryostat):
 
     create_vaccum (chamber, cryostat)
+    close_valve ("Lab_Space,PQMS," + cryostat + "," + chamber + ",Evacuation_Valve" ,"clockwise")
+    close_valve ("Lab_Space,PQMS,Pump,Main_Valve", "clockwise")
     pre_pumping_checks (cryostat)
     
-    open_valve  ("Lab_Space,PQMS,"+cryostat+","+chamber + ",Evacuation_Valve" ,"anticlockwise")
-    close_valve ("Lab_Space,PQMS,Pump,Main_Valve",  "clockwise")
+    open_valve  ("Lab_Space,PQMS," + cryostat + "," + chamber + ",Evacuation_Valve","anticlockwise")
+    ensure ("Lab_Space,PQMS,Helium,Pressure_Valve,State", "CLOSED")
     
-    ensure ("Lab_Space,PQMS,Helium,Pressure_Valve,State", "OFF")
-
-def release_excess_helium():
-	open_valve  ("Lab_Space,PQMS,Pump,Release_Valve",  "anticlockwise")
-	close_valve ("Lab_Space,PQMS,Pump,Release_Valve",  "clockwise")
-
-def restablish_pipe_vaccum(chamber, cryostat):
-	close_valve ("Lab_Space,PQMS," +cryostat+"," + chamber + ",Evacuation_Valve", "clockwise")
-	open_valve  ("Lab_Space,PQMS,Pump,Main_Valve","anticlockwise")    
 	    
 def flush_helium (chamber, cryostat):
     
     flushing_prerequisites    (chamber, cryostat)
     
     release_residual_pressure (chamber, cryostat)
-    initialize_flushing (10)
+    initialize_flushing (10) #psi
+    
     rapid_movement()
     
-    open_valve  ("Lab_Space,PQMS,"+cryostat+"," + chamber + ",Flush_Valve", "anticlockwise")
-    close_valve ("Lab_Space,PQMS,"+cryostat+"," + chamber + ",Flush_Valve" ,"clockwise")
+    open_valve  ("Lab_Space,PQMS," + cryostat + "," + chamber + ",Flush_Valve", "anticlockwise")
+    close_valve ("Lab_Space,PQMS," + cryostat + "," + chamber + ",Flush_Valve", "clockwise")
     
-    release_excess_helium()
+    open_valve  ("Lab_Space,PQMS,Pump,Release_Valve",  "anticlockwise")
+    close_valve ("Lab_Space,PQMS,Pump,Release_Valve",  "clockwise")
     
     close_valve ("Lab_Space,PQMS,Helium,Pressure_Valve", "anticlockwise")
     
-    restablish_pipe_vaccum(chamber, cryostat)
+    close_valve ("Lab_Space,PQMS," +cryostat+"," + chamber + ",Evacuation_Valve", "clockwise")
+    open_valve  ("Lab_Space,PQMS,Pump,Main_Valve","anticlockwise")
     
     close_valve ("Lab_Space,PQMS,Helium,Main_Valve", "anticlockwise")
     
@@ -1292,12 +1279,12 @@ def pour_liquid_nitrogen ():
 
 def save_graph(path, name):
    
-    move_cursor ("Toolbar below the graph")
-    click ("Save Icon")
+    move_cursor("Toolbar below the graph")
+    click      ("Save Icon")
     move_cursor('Path Text Box')
-    click ("Text Box")
-    enter ("path, and name")
-    click ("'Save'")
+    click      ("Text Box")
+    type_text  (path + " and" + name)
+    click      ("'Save'")
         
 def set_save_folder (sample_name, sample_number, sample_description, address):
     move_cursor ("Toolbar at the top of the Qrius Window")
