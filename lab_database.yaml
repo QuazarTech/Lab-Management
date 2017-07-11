@@ -587,7 +587,7 @@ Lab_Space:
               
           XSMU_NANOVOLTMETER:
 
-              State                           : NOT_IN_LABSPACE
+              State                           : OFF
               Power_Cable                     : DISCONNECTED
               USB_Cable_Computer              : DISCONNECTED
               USB_Cable_Module                : DISCONNECTED
