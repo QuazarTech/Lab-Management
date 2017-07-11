@@ -587,7 +587,7 @@ Lab_Space:
               
           XSMU_NANOVOLTMETER:
 
-              State                           : OFF
+              State                           : NOT_IN_LABSPACE
               Power_Cable                     : DISCONNECTED
               USB_Cable_Computer              : DISCONNECTED
               USB_Cable_Module                : DISCONNECTED
@@ -693,10 +693,10 @@ Lab_Space:
           Helium: 
 
             Main_Valve: 
-              State                           : OFF
+              State                           : CLOSED
               Gauge_Reading                   : 0
             Pressure_Valve: 
-              State                           : OFF
+              State                           : CLOSED
 
           Sample_Positioner: 
             State                             : OFF

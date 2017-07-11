@@ -36,5 +36,5 @@ def run ():
     
     release_PQMS_vaccum (cryostat)
     
-    switch_off_PQMS_modules()
+    switch_off_PQMS_modules(cryostat)
     turn_off_computer()
