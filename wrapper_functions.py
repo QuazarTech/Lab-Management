@@ -1,7 +1,7 @@
 from complex_functions import *
 
 TEST_OBJECTS    = ["Insert_Susceptibility", "Insert_RT_Puck", "Insert_RT_Old", "Puck_Board"]
-CRYOSTATS       = ["Quartz", "Double_Walled_Steel"]
+CRYOSTATS       = ["Cryostat_Quartz", "Cryostat_Steel"]
 CHAMBERS        = ["Sample_Chamber", "Heater_Chamber"]
 
 ###############################################################################
@@ -41,7 +41,7 @@ def get_experimental_parameters_XL():
 def get_lockin_aquisition_settings():
 
     drive_mode                  = raw_input("Enter the drive mode (current/voltage) : \n")
-    drive_value                 = raw_input("Enter the " +drive_mode + " value : \n")
+    drive_value                 = raw_input("Enter the " + drive_mode + " value : \n")
     delay                       = raw_input("Enter the delay time : \n")
     filter_length               = raw_input("Enter the filter length: \n")
   
@@ -152,18 +152,6 @@ def PQMS_IV_run (initial_temperature, final_temperature, temperature_step, V_ran
     write("                   Run ends")
     write("##############################################################\n")
     
-    #previous_run_temperature = temperature_set_point
-    
-    #response = raw_input("Do you want to do another run? : y/n \n")
-    #while (response != 'y' and response != 'n'):
-    	#response = raw_input("Do you want to do another run? : y/n \n")
-    
-    #if (response == 'y'):
-    	 
-    	 #temperature_set_point, V_range, V_step, I_range, I_step, max_power = get_experimental_parameters()
-    	 #cryostat_environment_setup (previous_run_temperature, temperature_set_point)
-    	 
-    	 #PQMS_IV_run(temperature_set_point, V_range, V_step, I_range, I_step, max_power)
 
 def PQMS_RT_run_stepped_ramp (initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power, pre_stabilization_delay, post_stabilization_delay, monitoring_period, tolerance):
     
@@ -327,7 +315,7 @@ def cables_connected_check (test_object, cryostat):
         elif (test_object == "Insert_RT_Old"):
             
             
-            if (cryostat == "Double_Walled_Steel"):
+            if (cryostat == "Cryostat_Steel"):
                 conn = raw_input("Are the cables connected elsewhere?")
                 
                 while (conn != 'y' and conn != 'n'):
@@ -351,7 +339,7 @@ def cables_connected_check (test_object, cryostat):
         
         elif (test_object == "Insert_Susceptibility"):
             
-            if (cryostat == "Double_Walled_Steel"):
+            if (cryostat == "Cryostat_Steel"):
                 connect_cable('HT_Cable', cryostat + " cryostat's HT connector")
             
             elif (cryostat == "Quartz" ):
@@ -439,7 +427,7 @@ def reset_cryostat_environment (previous_run_temperature, temperature_set_point,
   response = raw_input("Do you want to reset the cryostat environment?\n")
   while ((response != 'y') and (response != 'n')):
     response = raw_input ("Do you want to reset the cryostat environment?\n")
-  if(response == 'y') and (cryostat == "Double_Walled_Steel"):
+  if(response == 'y') and (cryostat == "Cryostat_Steel"):
   	double_walled_steel_cryostat_environment_setup(previous_run_temperature, temperature_set_point)
   if(response == 'y') and (cryostat == "Quartz"):
   	quartz_cryostat_environment_setup(previous_run_temperature, temperature_set_point)      
@@ -450,7 +438,7 @@ def release_PQMS_vaccum (cryostat):
     print ("\nIt is NOT reccomended to release vaccum if there is still liquid nitrogen left in the cryocan.")
     response = raw_input ("Do you want to release vaccum? : y/n\n")
     
-    if (cryostat == "Double_Walled_Steel"):
+    if (cryostat == "Cryostat_Steel"):
         
         while ((response != 'y') and (response != 'n')):
             print ("\nIt is NOT reccomended to release vaccum if there is still liquid nitrogen left in the cryocan.")
@@ -469,7 +457,7 @@ def release_PQMS_vaccum (cryostat):
         release_pressure ("Sample_Chamber")
                         
 
-def liquid_nitrogen_remaining ():
+def liquid_nitrogen_remaining (cryostat):
     
     response = raw_input ("Is liquid nitrogen left in the cryocan? : y/n\n")
     
@@ -477,7 +465,7 @@ def liquid_nitrogen_remaining ():
         response = raw_input ("Is liquid nitrogen left in the cryocan? : y/n\n")
         
     if (response == 'y'):
-        restore_vaccum ()
+        restore_vaccum (cryostat)
 
 def turn_on_PQMS_modules():
     
@@ -489,7 +477,7 @@ def turn_on_PQMS_modules():
     if (response == 'n'):
         switch_on_PQMS_modules()
     
-def turn_off_PQMS_modules():
+def turn_off_PQMS_modules(cryostat):
     
     response = raw_input ("Do you want to turn off the PQMS? : y/n\n")
     
@@ -497,7 +485,7 @@ def turn_off_PQMS_modules():
         response = raw_input ("Do you want to turn off the PQMS? : y/n\n")
         
     if (response == 'y'):
-        switch_off_PQMS_modules()
+        switch_off_PQMS_modules(cryostat)
 
 def turn_off_computer ():
     
@@ -519,6 +507,12 @@ def turn_on_computer():
     if (response == 'n'):
         switch_on_computer()
 
+def is_XL_run_needed(final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase, delay, filter_length, drive_mode, drive_value):
+
+    condition = raw_input("Do you want to do X-L run? (y/n): \n")
+    if (condition == 'y'):
+    	start_XL_run(final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase, delay, filter_length, drive_mode, drive_value)
+    	
 def take_photo_of_sample(Sample,Sample_Box):
 
     write       ("execute : Cut and put a fresh sheet of tracing paper on sample_photography_area")

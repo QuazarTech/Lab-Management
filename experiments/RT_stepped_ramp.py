@@ -50,6 +50,6 @@ def run ():
     if (cryostat == "Double_Walled_Steel"):
         create_vaccum ("Heater_Chamber")
     
-    turn_off_PQMS_modules()
+    turn_off_PQMS_modules(cryostat)
     turn_off_computer()
     

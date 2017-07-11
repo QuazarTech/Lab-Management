@@ -21,10 +21,10 @@ def run ():
     
     turn_on_PQMS_modules()
     set_up_PQMS_modules()
-    set_up_pump()
     
     #####################
     
+    set_up_pump(cryostat)
     is_the_sample_loaded (Sample, Sample_Box, test_object, cryostat)
     cables_connected_check (test_object, cryostat)
     
@@ -47,10 +47,10 @@ def run ():
     #####################
     
     cables_disconnected_check (test_object, cryostat)
-    create_vaccum("Sample_Chamber")
+    create_vaccum("Sample_Chamber", cryostat)
     if (cryostat == "Double_Walled_Steel"):
-        create_vaccum ("Heater_Chamber")
+        create_vaccum ("Heater_Chamber", cryostat)
     
-    turn_off_PQMS_modules()
+    turn_off_PQMS_modules(cryostat)
     turn_off_computer()
     
