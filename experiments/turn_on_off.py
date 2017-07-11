@@ -14,5 +14,5 @@ def run():
     
     cables_disconnected_check(test_object, cryostat)
    
-    turn_off_PQMS_modules()
+    turn_off_PQMS_modules(cryostat)
     turn_off_computer()
