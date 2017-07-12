@@ -81,7 +81,7 @@ Lab_Space:
               Usable_Quantity                 : YES
             
             Ethanol: 
-              State                           : NOT_IN_USE
+              State                           : NOT_IN_LABSPACE
               Home_Coordinates                : SAMPLE_TABLE
               Current_Coordinates             : SAMPLE_TABLE
               Cap_Coordinates                 : SAMPLE_TABLE
@@ -106,7 +106,7 @@ Lab_Space:
 
             
             Tweezers: 
-              State                           : With Nishant
+              State                           : NOT_IN_USE
               Home_Coordinates                : SAMPLE_TABLE
               Hold_Coordinates                : SAMPLE_TABLE
               Current_Coordinates             : SAMPLE_TABLE
