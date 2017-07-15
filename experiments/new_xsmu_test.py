@@ -13,7 +13,11 @@ def run():
     
     write ("execute : Turn on the power cable for XSMU_NANOVOLTMETER and XTCON_NANOVOLTMETER")
     write ("Update_Database Lab_Space,PQMS,XSMU_NANOVOLTMETER,State,ON")
-    write ("Update_Database Lab_Space,PQMS,XTCON_NANOVOLTMETER,State,ON"
+    write ("Update_Database Lab_Space,PQMS,XTCON_NANOVOLTMETER,State,ON")
+    
+    move  ("Cardboard_Box_NANOVOLTMETER", "XSMU_NANOVOLTMETER")
+    leave ("Cardboard_Box_NANOVOLTMETER")
+    take_photo ("XSMU_NANOVOLTMETER Setup")
     
     goto  ('Top Right Corner of the screen')
     click ('Power Button -> Service Engineer')
