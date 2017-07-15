@@ -587,7 +587,7 @@ Lab_Space:
               
           XSMU_NANOVOLTMETER:
 
-              State                           : NOT_IN_LABSPACE
+              State                           : OFF
               Power_Cable                     : DISCONNECTED
               USB_Cable_Computer              : DISCONNECTED
               USB_Cable_Module                : DISCONNECTED
@@ -597,7 +597,7 @@ Lab_Space:
 
           XTCON_NANOVOLTMETER:
 
-              State                           : NOT_IN_LABSPACE
+              State                           : OFF
               Power_Cable                     : CONNECTED
 
               Heater:
@@ -753,7 +753,7 @@ Lab_Space:
  
     Cardboard_Box_NANOVOLTMETER:
         
-        State                                 : NOT_IN_LABSPACE
+        State                                 : IN_USE
         Home_Coordinates                      : XSMU_NANOVOLTMETER
         Current_Coordinates                   : XSMU_NANOVOLTMETER
         Length                                : 25  #cm
