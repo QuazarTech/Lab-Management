@@ -73,3 +73,7 @@ In the Python Console, type
 This should launch the python script that generates the FreeCAD model for the core used in the Electromagnetic coupling experiment.
 
 If you want to save the model that has been generated, press `Ctrl + s`, and type in appropriate file name.
+
+Similarly you can generate CAD models using the other `.py` files.
+
+TO tweak the parameters of the experiment, open `experiment_params.py` in the directory `Lab-Management/freecad_models`, and change the values of the variables in that file.
