@@ -14,15 +14,15 @@ base_cut         = 10.0 #mm
 coil_thickness   = 5.00 #mm
 
 # Core-Experimental Setup Mount Parameters
-hole_diameter    = 10.0 #mm
-thread_pitch     = 1.00 #mm
+hole_diameter    = 8.50 #mm
+thread_pitch     = 1.50 #mm
 chamfer_length   = 4.00 #mm
 
 #####################
 ## Coil Parameters
-wire_radius      = 0.711/2                    # SWG 27 -> wire_radius = 0.711/2
-gap              = 0.00                       #mm  
-coil_height      = core_height                # Coil height will be modified slightly to accomodate an integral number of turns
+wire_radius      = 0.711/2                         # SWG 27 -> wire_radius = 0.711/2
+gap              = 0.00                            #mm  
+coil_height      = core_height                     # Coil height will be modified slightly to accomodate an integral number of turns
 coil_radius      = core_radius + wire_radius + gap # This is the radius of the inner most helix of the coil
 
 #####################
@@ -34,6 +34,13 @@ length_margin    = 25.0 #mm
 sheet_thickness  = 2.00 #mm
 bend_radius      = 1.00 #mm
 screw_diameter   = 2.00 #mm
+screw_length     = 10.0 #mm
+
+#Coaxial connector parameters
+coax_side_distance   = 5.00 #mm
+coax_bottom_distance = 55.0 #mm
+coax_base_width      = 5.75 #mm
+coax_radius          = 4.90 #mm
 
 ###############################################
 ## Calculated Parameters

@@ -115,7 +115,7 @@ Gui.activateWorkbench("PartWorkbench")
 App.ActiveDocument.addObject("Part::Cylinder","Cylinder")
 App.ActiveDocument.ActiveObject.Label = "Core Mount"
 
-FreeCAD.getDocument("cover_base").getObject("Cylinder").Radius = hole_diameter/2
+FreeCAD.getDocument("cover_base").getObject("Cylinder").Radius = screw_diameter/2
 FreeCAD.getDocument("cover_base").getObject("Cylinder").Height = base_length + 2*(sheet_thickness+bend_radius)
 FreeCAD.getDocument("cover_base").getObject("Cylinder").Placement = \
     App.Placement(App.Vector(-(sheet_thickness+bend_radius),base_width/2,wall_height/2),App.Rotation(App.Vector(0,1,0),90))
@@ -224,201 +224,65 @@ Gui.ActiveDocument.Cut004.ShapeColor=Gui.ActiveDocument.Cut003.ShapeColor
 Gui.ActiveDocument.Cut004.DisplayMode=Gui.ActiveDocument.Cut003.DisplayMode
 App.ActiveDocument.recompute()
 
-######################################
-#/////////////////Does not work in v0.17/////////////////////
+########################################
+## Create holes for Coaxial connector
 
-## Holes on top to screw on cover_top
+Gui.activateWorkbench("SketcherWorkbench")
+App.activeDocument().addObject('Sketcher::SketchObject','Sketch')
+App.activeDocument().Sketch.MapMode = "FlatFace"
+App.activeDocument().Sketch.Support = [(App.getDocument('cover_base').Cut004,'Face15')]
+App.activeDocument().recompute()
+Gui.activeDocument().setEdit('Sketch')
 
+#import Show.TempoVis
 
-### Create a sketch for 2 screw holes (left)
-#Gui.activateWorkbench("SketcherWorkbench")
-#hole1_sketch = App.activeDocument().addObject('Sketcher::SketchObject','Sketch')
-#hole1_sketch.Support = (bend4,["Face37"])
-#App.activeDocument().recompute()
+# Add base line
+ActiveSketch = App.ActiveDocument.getObject('Sketch')
 
-#Gui.activeDocument().setEdit(hole1_sketch.Name)
+App.ActiveDocument.Sketch.addGeometry(Part.LineSegment(App.Vector(51.036247,57.121452,0),App.Vector(6.999034,57.816776,0)),False)
 
-#hole1_sketch.addGeometry(Part.Circle(App.Vector(4.604599,49.614052,0),App.Vector(0,0,1),1.991505))
-#App.ActiveDocument.recompute()
-#hole1_sketch.addGeometry(Part.Circle(App.Vector(4.200179,22.113937,0),App.Vector(0,0,1),3.139092))
-#App.ActiveDocument.recompute()
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Horizontal',0)) 
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('DistanceX',-1,1,0,2,coax_side_distance)) 
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('DistanceX',-1,1,0,1,coax_side_distance+coax_base_width)) 
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('DistanceY',-1,1,0,2,coax_bottom_distance)) 
 
-#hole1_sketch.addConstraint(Sketcher.Constraint('DistanceX',0,3,1,3,0.00)) 
-#App.ActiveDocument.recompute()
+# Add Arc
+App.ActiveDocument.Sketch.addGeometry(Part.ArcOfCircle(Part.Circle(App.Vector(7.922558,56.798874,0),App.Vector(0,0,1),4.818108),6.245304,3.288062),False)
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Radius',1,coax_radius)) 
 
-#hole1_sketch.addConstraint(Sketcher.Constraint('Equal',0,1)) 
-#App.ActiveDocument.recompute()
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',1,2,0,2)) 
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',1,1,0,1)) 
 
-#hole1_sketch.addConstraint(Sketcher.Constraint('Radius',0,hole_diameter/2)) 
-#App.ActiveDocument.recompute()
+Gui.getDocument('cover_base').resetEdit()
+App.getDocument('cover_base').recompute()
 
-#hole1_sketch.addConstraint(Sketcher.Constraint('DistanceX',-1,1,1,3,top_flange_width/2)) 
-#App.ActiveDocument.recompute()
+# Extrude
+Gui.activateWorkbench("PartWorkbench")
+f = FreeCAD.getDocument('cover_base').addObject('Part::Extrusion', 'Extrude')
+f = App.getDocument('cover_base').getObject('Extrude')
+f.Base = App.getDocument('cover_base').getObject('Sketch')
+f.DirMode = "Normal"
+f.DirLink = None
+f.LengthFwd = base_length + 2*bend_radius + 2*sheet_thickness
+f.LengthRev = 0
+f.Solid = True
+f.Reversed = True
+f.Symmetric = False
+f.TaperAngle = 0.000000000000000
+f.TaperAngleRev = 0.000000000000000
+Gui.ActiveDocument.Extrude.ShapeColor=Gui.ActiveDocument.Sketch.ShapeColor
+Gui.ActiveDocument.Extrude.LineColor=Gui.ActiveDocument.Sketch.LineColor
+Gui.ActiveDocument.Extrude.PointColor=Gui.ActiveDocument.Sketch.PointColor
+f.Base.ViewObject.hide()
+App.ActiveDocument.recompute()
 
-#hole1_sketch.addConstraint(Sketcher.Constraint('DistanceY',-1,1,1,3,base_width/4)) 
-#App.ActiveDocument.recompute()
+# Cut
 
-#hole1_sketch.addConstraint(Sketcher.Constraint('DistanceY',0,3,1,3,-base_width/2))
-#App.ActiveDocument.recompute()
-
-#Gui.getDocument('cover_base').resetEdit()
-#App.getDocument('cover_base').recompute()
-
-## Create 2 screw holes
-
-#Gui.activateWorkbench("PartDesignWorkbench")
-#hole1 = App.activeDocument().addObject("PartDesign::Pocket","Pocket")
-#hole1.Sketch = hole1_sketch
-#App.ActiveDocument.recompute()
-
-#Gui.activeDocument().hide(hole1_sketch.Name)
-#Gui.activeDocument().hide(bend4.Name)
-
-#Gui.activeDocument().setEdit(hole1.Name)
-#Gui.ActiveDocument.Pocket.ShapeColor=Gui.ActiveDocument.Bend003.ShapeColor
-#Gui.ActiveDocument.Pocket.LineColor=Gui.ActiveDocument.Bend003.LineColor
-#Gui.ActiveDocument.Pocket.PointColor=Gui.ActiveDocument.Bend003.PointColor
-
-#hole1.Length = sheet_thickness
-#hole1.UpToFace = None
-#hole1.Type = 0
-
-#App.ActiveDocument.recompute()
-#Gui.activeDocument().resetEdit()
-
-#######################################
-
-### Create a sketch for 2 screw holes (right)
-#Gui.activateWorkbench("SketcherWorkbench")
-#hole2_sketch = App.activeDocument().addObject('Sketcher::SketchObject','Sketch001')
-#hole2_sketch.Support = (hole1,["Face5"])
-#App.activeDocument().recompute()
-
-#Gui.activeDocument().setEdit(hole2_sketch.Name)
-
-#hole2_sketch.addGeometry(Part.Circle(App.Vector(95.134468,50.632896,0),App.Vector(0,0,1),2.805983))
-#hole2_sketch.addGeometry(Part.Circle(App.Vector(94.397575,21.894218,0),App.Vector(0,0,1),3.846672))
-
-#hole2_sketch.addConstraint(Sketcher.Constraint('DistanceX',0,3,1,3,0.00))
-#hole2_sketch.addConstraint(Sketcher.Constraint('Equal',1,0)) 
-#hole2_sketch.addConstraint(Sketcher.Constraint('Radius',0,hole_diameter/2)) 
-#hole2_sketch.addConstraint(Sketcher.Constraint('DistanceX',-1,1,1,3,base_length-top_flange_width/2)) 
-#App.ActiveDocument.recompute()
-
-#App.ActiveDocument.Sketch001.addConstraint(Sketcher.Constraint('DistanceY',1,3,0,3,base_width/2))
-#App.ActiveDocument.Sketch001.addConstraint(Sketcher.Constraint('DistanceY',-1,1,1,3,base_width/4)) 
-#App.ActiveDocument.recompute()
-
-#Gui.getDocument('cover_base').resetEdit()
-#App.getDocument('cover_base').recompute()
-
-## Create 2 screw holes
-
-#Gui.activateWorkbench("PartDesignWorkbench")
-#hole2 = App.activeDocument().addObject("PartDesign::Pocket","Pocket001")
-#hole2.Sketch = hole2_sketch
-#App.ActiveDocument.recompute()
-
-#Gui.activeDocument().hide(hole2_sketch.Name)
-#Gui.activeDocument().hide(hole1.Name)
-
-#Gui.activeDocument().setEdit(hole2.Name)
-#Gui.ActiveDocument.Pocket001.ShapeColor=Gui.ActiveDocument.Pocket.ShapeColor
-#Gui.ActiveDocument.Pocket001.LineColor=Gui.ActiveDocument.Pocket.LineColor
-#Gui.ActiveDocument.Pocket001.PointColor=Gui.ActiveDocument.Pocket.PointColor
-
-#hole2.Length = sheet_thickness
-#hole2.Type = 0
-#hole2.UpToFace = None
-
-#App.ActiveDocument.recompute()
-#Gui.activeDocument().resetEdit()
-
-#######################################
-### Create a sketch for hole to mount the coil core (right)
-
-#Gui.activateWorkbench("SketcherWorkbench")
-#side_hole_r_sketch = App.activeDocument().addObject('Sketcher::SketchObject','Sketch002')
-#side_hole_r_sketch.Support = (hole2,["Face15"])
-#App.activeDocument().recompute()
-
-#Gui.activeDocument().setEdit(side_hole_r_sketch.Name)
-#side_hole_r_sketch.addGeometry(Part.Circle(App.Vector(33.284668,41.694569,0),App.Vector(0,0,1),5.224906))
-#App.ActiveDocument.recompute()
-
-#side_hole_r_sketch.addConstraint(Sketcher.Constraint('DistanceX',-1,1,0,3,base_width/2)) 
-#App.ActiveDocument.recompute()
-
-#side_hole_r_sketch.addConstraint(Sketcher.Constraint('DistanceY',-1,1,0,3,wall_height/2)) 
-#App.ActiveDocument.recompute()
-
-#side_hole_r_sketch.addConstraint(Sketcher.Constraint('Radius',0,hole_diameter/2)) 
-#App.ActiveDocument.recompute()
-
-#######################################
-#Gui.activateWorkbench("PartDesignWorkbench")
-#side_hole_r = App.activeDocument().addObject("PartDesign::Pocket","Pocket002")
-#side_hole_r.Sketch = side_hole_r_sketch
-#App.ActiveDocument.recompute()
-
-#Gui.activeDocument().hide(side_hole_r_sketch.Name)
-#Gui.activeDocument().hide(hole2.Name)
-
-#Gui.activeDocument().setEdit(side_hole_r.Name)
-#Gui.ActiveDocument.Pocket002.ShapeColor=Gui.ActiveDocument.Pocket001.ShapeColor
-#Gui.ActiveDocument.Pocket002.LineColor=Gui.ActiveDocument.Pocket001.LineColor
-#Gui.ActiveDocument.Pocket002.PointColor=Gui.ActiveDocument.Pocket001.PointColor
-
-#side_hole_r.Length = sheet_thickness
-#side_hole_r.Type = 0
-#side_hole_r.UpToFace = None
-
-#App.ActiveDocument.recompute()
-#Gui.activeDocument().resetEdit()
-
-#######################################
-### Create a sketch for hole to mount the coil core (left)
-
-#Gui.activateWorkbench("SketcherWorkbench")
-#side_hole_l_sketch = App.activeDocument().addObject('Sketcher::SketchObject','Sketch003')
-#side_hole_l_sketch.Support = (side_hole_r,["Face32"])
-#App.activeDocument().recompute()
-
-#Gui.activeDocument().setEdit('Sketch003')
-#side_hole_l_sketch.addGeometry(Part.Circle(App.Vector(-38.298714,37.472206,0),App.Vector(0,0,1),7.026811))
-#App.ActiveDocument.recompute()
-
-#side_hole_l_sketch.addConstraint(Sketcher.Constraint('DistanceX',-1,1,0,3,-base_width/2)) 
-#App.ActiveDocument.recompute()
-
-#side_hole_l_sketch.addConstraint(Sketcher.Constraint('Radius',0,hole_diameter/2)) 
-#App.ActiveDocument.recompute()
-
-#side_hole_l_sketch.addConstraint(Sketcher.Constraint('DistanceY',-1,1,0,3,wall_height/2)) 
-#App.ActiveDocument.recompute()
-
-#######################################
-#Gui.activateWorkbench("PartDesignWorkbench")
-
-#side_hole_l = App.activeDocument().addObject("PartDesign::Pocket","Pocket003")
-#side_hole_l.Sketch = side_hole_l_sketch
-#App.ActiveDocument.recompute()
-
-#Gui.activeDocument().hide(side_hole_l_sketch.Name)
-#Gui.activeDocument().hide(side_hole_r.Name)
-#Gui.activeDocument().setEdit(side_hole_l.Name)
-
-#Gui.ActiveDocument.Pocket003.ShapeColor=Gui.ActiveDocument.Pocket002.ShapeColor
-#Gui.ActiveDocument.Pocket003.LineColor=Gui.ActiveDocument.Pocket002.LineColor
-#Gui.ActiveDocument.Pocket003.PointColor=Gui.ActiveDocument.Pocket002.PointColor
-
-
-#side_hole_l.Length = sheet_thickness
-#side_hole_l.Type = 0
-#side_hole_l.UpToFace = None
-
-#App.ActiveDocument.recompute()
-#Gui.activeDocument().resetEdit()
-
-#/////////////////Does not work in v0.17/////////////////////
-
+App.activeDocument().addObject("Part::Cut","Cut005")
+App.activeDocument().Cut005.Base = App.activeDocument().Cut004
+App.activeDocument().Cut005.Tool = App.activeDocument().Extrude
+Gui.activeDocument().Cut004.Visibility=False
+Gui.activeDocument().Extrude.Visibility=False
+Gui.ActiveDocument.Cut005.ShapeColor=Gui.ActiveDocument.Cut004.ShapeColor
+Gui.ActiveDocument.Cut005.DisplayMode=Gui.ActiveDocument.Cut004.DisplayMode
+App.ActiveDocument.recompute()

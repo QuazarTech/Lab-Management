@@ -24,7 +24,7 @@ App.ActiveDocument.recompute()
 Gui.SendMsgToActiveView("ViewFit")
 
 FreeCAD.getDocument("mount").getObject("Cylinder").Radius = hole_diameter/2
-FreeCAD.getDocument("mount").getObject("Cylinder").Height = 2*(total_core_height + length_margin + bend_radius + sheet_thickness)
+FreeCAD.getDocument("mount").getObject("Cylinder").Height = 2*(total_core_height + length_margin + bend_radius)
 FreeCAD.getDocument("mount").getObject("Cylinder").Placement = App.Placement(App.Vector(0,0,0),App.Rotation(App.Vector(0,0,1),0))
 
 Gui.SendMsgToActiveView("ViewFit")
@@ -99,4 +99,100 @@ Gui.activeDocument().Cylinder.Visibility=False
 Gui.activeDocument().Sweep.Visibility=False
 Gui.ActiveDocument.Cut.ShapeColor=Gui.ActiveDocument.Cylinder.ShapeColor
 Gui.ActiveDocument.Cut.DisplayMode=Gui.ActiveDocument.Cylinder.DisplayMode
+App.ActiveDocument.recompute()
+
+
+################################################
+## Side Holes to mount the rod onto the cover
+
+# Sketch for hole
+App.activeDocument().addObject('Sketcher::SketchObject','Sketch001')
+App.activeDocument().Sketch001.MapMode = "FlatFace"
+App.activeDocument().Sketch001.Support = [(App.getDocument('mount').Cut,'Face329')]
+App.activeDocument().recompute()
+Gui.activeDocument().setEdit('Sketch001')
+ActiveSketch = App.ActiveDocument.getObject('Sketch001')
+
+App.ActiveDocument.Sketch001.addGeometry(Part.Circle(App.Vector(-0.834407,-0.768209,0),App.Vector(0,0,1),0.758518),False)
+App.ActiveDocument.Sketch001.addConstraint(Sketcher.Constraint('Coincident',0,3,-1,1)) 
+App.ActiveDocument.Sketch001.addConstraint(Sketcher.Constraint('Radius',0,screw_diameter/2)) 
+
+Gui.getDocument('mount').resetEdit()
+App.getDocument('mount').recompute()
+
+# Extrude Sketch
+Gui.activateWorkbench("PartWorkbench")
+f = FreeCAD.getDocument('mount').addObject('Part::Extrusion', 'Extrude')
+f = App.getDocument('mount').getObject('Extrude')
+f.Base = App.getDocument('mount').getObject('Sketch001')
+f.DirMode = "Normal"
+f.DirLink = None
+f.LengthFwd = screw_length
+f.LengthRev = 0.000000000000000
+f.Solid = True
+f.Reversed = True
+f.Symmetric = False
+f.TaperAngle = 0.000000000000000
+f.TaperAngleRev = 0.000000000000000
+Gui.ActiveDocument.Extrude.ShapeColor=Gui.ActiveDocument.Sketch001.ShapeColor
+Gui.ActiveDocument.Extrude.LineColor=Gui.ActiveDocument.Sketch001.LineColor
+Gui.ActiveDocument.Extrude.PointColor=Gui.ActiveDocument.Sketch001.PointColor
+f.Base.ViewObject.hide()
+App.ActiveDocument.recompute()
+
+# Cut the hole
+Gui.getDocument("mount").getObject("Cut").Visibility=False
+Gui.getDocument("mount").getObject("Cut").Visibility=True
+App.activeDocument().addObject("Part::Cut","Cut001")
+App.activeDocument().Cut001.Base = App.activeDocument().Cut
+App.activeDocument().Cut001.Tool = App.activeDocument().Extrude
+Gui.activeDocument().Cut.Visibility=False
+Gui.activeDocument().Extrude.Visibility=False
+Gui.ActiveDocument.Cut001.ShapeColor=Gui.ActiveDocument.Cut.ShapeColor
+Gui.ActiveDocument.Cut001.DisplayMode=Gui.ActiveDocument.Cut.DisplayMode
+App.ActiveDocument.recompute()
+
+# Sketch for hole 2
+Gui.activateWorkbench("SketcherWorkbench")
+App.activeDocument().addObject('Sketcher::SketchObject','Sketch002')
+App.activeDocument().Sketch002.MapMode = "FlatFace"
+App.activeDocument().Sketch002.Support = [(App.getDocument('mount').Cut001,'Face5')]
+App.activeDocument().recompute()
+Gui.activeDocument().setEdit('Sketch002')
+ActiveSketch = App.ActiveDocument.getObject('Sketch002')
+
+App.ActiveDocument.Sketch002.addGeometry(Part.Circle(App.Vector(1.084989,-1.715090,0),App.Vector(0,0,1),0.740006),False)
+App.ActiveDocument.Sketch002.addConstraint(Sketcher.Constraint('Coincident',0,3,-1,1)) 
+App.ActiveDocument.Sketch002.addConstraint(Sketcher.Constraint('Radius',0,screw_diameter/2))
+Gui.getDocument('mount').resetEdit()
+App.getDocument('mount').recompute()
+
+#Extrude
+Gui.activateWorkbench("PartWorkbench")
+f = FreeCAD.getDocument('mount').addObject('Part::Extrusion', 'Extrude001')
+f = App.getDocument('mount').getObject('Extrude001')
+f.Base = App.getDocument('mount').getObject('Sketch002')
+f.DirMode = "Normal"
+f.DirLink = None
+f.LengthFwd = screw_length
+f.LengthRev = 0.000000000000000
+f.Solid = True
+f.Reversed = True
+f.Symmetric = False
+f.TaperAngle = 0.000000000000000
+f.TaperAngleRev = 0.000000000000000
+Gui.ActiveDocument.Extrude001.ShapeColor=Gui.ActiveDocument.Sketch002.ShapeColor
+Gui.ActiveDocument.Extrude001.LineColor=Gui.ActiveDocument.Sketch002.LineColor
+Gui.ActiveDocument.Extrude001.PointColor=Gui.ActiveDocument.Sketch002.PointColor
+f.Base.ViewObject.hide()
+App.ActiveDocument.recompute()
+
+#Cut
+App.activeDocument().addObject("Part::Cut","Cut002")
+App.activeDocument().Cut002.Base = App.activeDocument().Cut001
+App.activeDocument().Cut002.Tool = App.activeDocument().Extrude001
+Gui.activeDocument().Cut001.Visibility=False
+Gui.activeDocument().Extrude001.Visibility=False
+Gui.ActiveDocument.Cut002.ShapeColor=Gui.ActiveDocument.Cut001.ShapeColor
+Gui.ActiveDocument.Cut002.DisplayMode=Gui.ActiveDocument.Cut001.DisplayMode
 App.ActiveDocument.recompute()

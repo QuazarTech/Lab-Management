@@ -16,7 +16,7 @@ Gui.ActiveDocument=Gui.getDocument('coil')
 ###############################################################################
 #Modification of core_height to an integral number of turns
 
-conversion_factor = math.floor((core_height/2)/(2*wire_radius)) #Integral number of turns that can be accomodated in each coil
+conversion_factor = math.floor((core_height)/(2*wire_radius)) #Integral number of turns that can be accomodated in each coil
 coil_height = conversion_factor * (2*wire_radius)
 
 ###############################################################################
