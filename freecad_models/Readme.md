@@ -76,4 +76,4 @@ If you want to save the model that has been generated, press `Ctrl + s`, and typ
 
 Similarly you can generate CAD models using the other `.py` files.
 
-TO tweak the parameters of the experiment, open `experiment_params.py` in the directory `Lab-Management/freecad_models`, and change the values of the variables in that file.
+To tweak the parameters of the experiment, open `experiment_params.py` in the directory `Lab-Management/freecad_models`, and change the values of the variables in that file.
