@@ -49,7 +49,7 @@ Now type
 
 This will take some time (~3 hours). Make sure no errors are thrown up during the build.
 
-### Installing
+### Installing the Lab-Management Code
 
 Now go to a desired directory in your terminal, where you want to store the Lab-Management code
 
@@ -58,8 +58,10 @@ Clone the Lab-Management repo.
 
 This will download all the source code for Lab-Management in the folder called Lab-Management.
 
+### Running scripts for individual parts
+
 Now in the terminal navigate to the freecad_models directory
-`cd Lab-Management/freecad_models`
+`cd Lab-Management/freecad_models/EM_Coupling_Experiment`
 
 Run the FreeCAD application by typing
 `./relative_path_of_directory_where_you_cloned_the_freecad_code/free-cad-code/bin/FreeCAD`
@@ -72,8 +74,60 @@ In the Python Console, type
 
 This should launch the python script that generates the FreeCAD model for the core used in the Electromagnetic coupling experiment.
 
-If you want to save the model that has been generated, press `Ctrl + s`, and type in appropriate file name.
+Save the model that has been generated, press `Ctrl + s`, and type in `core.fcstd` file name.
 
 Similarly you can generate CAD models using the other `.py` files.
 
-To tweak the parameters of the experiment, open `experiment_params.py` in the directory `Lab-Management/freecad_models`, and change the values of the variables in that file.
+Once you generate all the FreeCAD models for the assembly, you can run the `EM_Coupling_Experiment/assembly.py` file to make a complete experimental setup of those parts.
+
+But in order to do so, you must save each .py file with a corresponding specific .fcstd file as follows:
+`coil_winding.py` : `freecad_models/models/coil.fcstd`
+`core.py` : `freecad_models/models/core.fcstd`
+`cover_base.py` : `freecad_models/models/cover_base.fcstd`
+`cover_top.py` : `freecad_models/models/cover_top.fcstd`
+`mount.py` : `freecad_models/models/mount.fcstd`
+
+To tweak the parameters of the experiment, open `experiment_params.py` in the directory `Lab-Management/freecad_models`, and change the values of the variables in that file. Then rebuild all the part files above, in order to make the assembly.
+
+### Running script for EM_Coupling_Experiment assembly
+
+The `EM_Coupling_Experiment/assembly.py` file creates an assembly of all the individual parts of the experiment.
+
+To use this script, each part must be saved as in the `models` directory as follows : 
+`coil_winding.py` : `freecad_models/models/coil.fcstd`
+`core.py` : `freecad_models/models/core.fcstd`
+`cover_base.py` : `freecad_models/models/cover_base.fcstd`
+`cover_top.py` : `freecad_models/models/cover_top.fcstd`
+`mount.py` : `freecad_models/models/mount.fcstd`
+
+To run the assembly script, in the terminal navigate to the freecad_models directory
+`cd Lab-Management/freecad_models/EM_Coupling_Experiment`
+
+Run the FreeCAD application by typing
+`./relative_path_of_directory_where_you_cloned_the_freecad_code/free-cad-code/bin/FreeCAD`
+
+Once inside FreeCAD, enable the python console by making sure that `View -> Panels -> Python Console` is checked.
+The Python Console should show up at the bottom of the screen.
+
+In the Python Console, type
+`execfile('assembly.py')`
+
+Save this file as follows : `freecad_models/models/experiment_assembly.fcstd`
+
+### Running script for Lab assembly
+First, the instructions to create the `experiment_assembly.fcstd` must be completed in order to build the Lab assembly.
+To run the assembly script, in the terminal navigate to the freecad_models directory
+`cd Lab-Management/freecad_models/`
+
+Run the FreeCAD application by typing
+`./relative_path_of_directory_where_you_cloned_the_freecad_code/free-cad-code/bin/FreeCAD`
+
+Once inside FreeCAD, enable the python console by making sure that `View -> Panels -> Python Console` is checked.
+The Python Console should show up at the bottom of the screen.
+
+In the Python Console, type
+`execfile('lab_assembly.py')`
+
+This should create an assembly of a computer and Lockin Amplifier on a table along with the EM Coupling Experiment assembly.
+Save this assembly wherever convinient.
+
