@@ -14,7 +14,7 @@ Gui.ActiveDocument = Gui.getDocument(assembly_file.Name)
 ## Import all parts into the assembly
 
 # import cover_bottom
-computer_assembly = importPart.importPart(filename = 'models/computer_assembly.fcstd', partName = None, doc_assembly = assembly_file)
+computer_assembly = importPart.importPart(filename = 'models/Computer_Assembly.fcstd', partName = None, doc_assembly = assembly_file)
 
 App.ActiveDocument.recompute()
 Gui.SendMsgToActiveView("ViewFit")
