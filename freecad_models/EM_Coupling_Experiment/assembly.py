@@ -56,7 +56,7 @@ bnc_conn_1 = importPart.importPart(filename = '../models/BNC_Conn.fcstd', partNa
 bnc_conn_2 = importPart.importPart(filename = '../models/BNC_Conn.fcstd', partName = None, doc_assembly = assembly_file)
 
 #import Lockin Amplifier
-xlia = importPart.importPart(filename = '../models/XPL-XLIA.fcstd', partName = None, doc_assembly = assembly_file) 
+xlia = importPart.importPart(filename = '../models/Lockin_base.STEP', partName = None, doc_assembly = assembly_file) 
 
 App.ActiveDocument.recompute()
 Gui.SendMsgToActiveView("ViewFit")
