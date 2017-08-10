@@ -43,6 +43,9 @@ Gui.activeDocument().activeView().viewAxometric()
 App.ActiveDocument.addObject("Part::Cylinder","Cylinder")
 App.ActiveDocument.ActiveObject.Label = "Cylinder"
 
+# Could you explain the purpose of the label since the declared object
+# is later referenced by Cylinder, Cylinder001 and not the assigned label
+
 # Recomputes the document - and updates all properties that have been changed 
 # inside the document.
 App.ActiveDocument.recompute()

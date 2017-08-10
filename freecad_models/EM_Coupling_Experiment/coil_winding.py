@@ -106,7 +106,8 @@ App.getDocument('coil').addObject('Part::Sweep','Sweep')
 App.getDocument('coil').ActiveObject.Sections=[App.getDocument('coil').Sketch, ]
 
 App.getDocument('coil').ActiveObject.Spine=(App.ActiveDocument.Helix,[])
-App.getDocument('coil').ActiveObject.Solid=True
+# What is Solid and Frenet?
+App.getDocument('coil').ActiveObject.Solid=True 
 App.getDocument('coil').ActiveObject.Frenet=True
 App.getDocument('coil').recompute()
 
