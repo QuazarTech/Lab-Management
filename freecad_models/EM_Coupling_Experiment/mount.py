@@ -62,6 +62,8 @@ Gui.SendMsgToActiveView("ViewFit")
 Gui.activateWorkbench("SketcherWorkbench")
 App.activeDocument().addObject('Sketcher::SketchObject','Sketch')
 App.activeDocument().Sketch.Placement = App.Placement(App.Vector(0.000000,0.000000,0.000000),App.Rotation(-0.707107,0.000000,0.000000,-0.707107))
+
+# What is map mode?
 App.activeDocument().Sketch.MapMode = "Deactivated"
 
 Gui.activeDocument().setEdit('Sketch')
@@ -132,6 +134,9 @@ App.getDocument('mount').recompute()
 Gui.activateWorkbench("PartWorkbench")
 f = FreeCAD.getDocument('mount').addObject('Part::Extrusion', 'Extrude')
 f = App.getDocument('mount').getObject('Extrude')
+
+# Could you please explain what is happening here?
+# Also why is 0 with several decimals being used? Doesn't 0 suffice?
 f.Base = App.getDocument('mount').getObject('Sketch001')
 f.DirMode = "Normal"
 f.DirLink = None
@@ -145,6 +150,8 @@ f.TaperAngleRev = 0.000000000000000
 Gui.ActiveDocument.Extrude.ShapeColor=Gui.ActiveDocument.Sketch001.ShapeColor
 Gui.ActiveDocument.Extrude.LineColor=Gui.ActiveDocument.Sketch001.LineColor
 Gui.ActiveDocument.Extrude.PointColor=Gui.ActiveDocument.Sketch001.PointColor
+
+# Is this hiding the older object from which the extruded object is derived?
 f.Base.ViewObject.hide()
 App.ActiveDocument.recompute()
 

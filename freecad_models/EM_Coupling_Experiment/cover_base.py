@@ -51,6 +51,7 @@ Gui.activateWorkbench("SMWorkbench")
 bend1 = FreeCAD.ActiveDocument.addObject("Part::FeaturePython","Bend")
 bend1.Label = "Left Wall"
 
+# What is referenced by Face1 here?
 FreeCADGui.Selection.clearSelection()
 FreeCADGui.Selection.addSelection(box, "Face1")
 
@@ -69,6 +70,7 @@ App.ActiveDocument.recompute()
 bend2 = FreeCAD.ActiveDocument.addObject("Part::FeaturePython","Bend001")
 bend2.Label = "Right Wall"
 
+# Again?
 FreeCADGui.Selection.clearSelection()
 FreeCADGui.Selection.addSelection(bend1, "Face14")
 
@@ -238,6 +240,8 @@ App.ActiveDocument.recompute()
 
 Gui.activateWorkbench("SketcherWorkbench")
 App.activeDocument().addObject('Sketcher::SketchObject','Sketch')
+
+# What is MapMode and Support
 App.activeDocument().Sketch.MapMode = "FlatFace"
 App.activeDocument().Sketch.Support = [(App.getDocument('cover_base').Cut004,'Face15')]
 App.activeDocument().recompute()
