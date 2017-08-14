@@ -4,251 +4,257 @@
 # which it will be mounted on the cover's bottom part (cover_base.fcstd)
 ############################################################################
 
-
+# Importing standard libraries
 import sys
+sys.path.insert(0, "${HOME}/work/git/Lab-Management/freecad_models/models")
 sys.path.insert(0, "${HOME}/.FreeCAD/Mod/SheetMetal")
+
+# Importing FreeCAD libraries
+from FreeCAD import Base
+import Part,PartGui
+
+# Sheet Metal Workbench, needs to be installed from https://github.com/shaise/FreeCAD_SheetMetal
 import SheetMetalCmd
 
-import sys
-sys.path.insert(0, "${HOME}/Downloads/BNC\ conn/code")
+# Importing experiment specific variables from file
+from experiment_params import base_length
+from experiment_params import base_width
+from experiment_params import wall_height
+from experiment_params import top_flange_width
+from experiment_params import bend_radius
 
-from experiment_params import *
+from experiment_params import sheet_thickness
+from experiment_params import screw_diameter
+
+# App and Gui are modules internal to FreeCAD:
+# App's methods give you access to defining the properties of shapes
+# Gui's methods can be used to change the way you want to represent the shape.
 
 ######################################
-## Create a new empty document and set it to be the active document in Freecad
+# Create a new document for the CAD model
 
 App.newDocument("cover_top")
 App.setActiveDocument("cover_top")
 App.ActiveDocument=App.getDocument("cover_top")
 Gui.ActiveDocument=Gui.getDocument("cover_top")
 
-######################################
-##Base Flange
-
-Gui.activateWorkbench("PartWorkbench")
-box = App.ActiveDocument.addObject("Part::Box","Box")
-box.Label = "Cube"
-
+# Tells the GUI to fit the object inside the screen
 Gui.SendMsgToActiveView("ViewFit")
+
+# Sets the view to axonometric- Isometric
 Gui.activeDocument().activeView().viewAxometric()
 
-box.Height = sheet_thickness
-box.Length = base_length
-box.Width  = base_width
+############################################################################
+# Create the Base Flange
 
+# Activate the Part workbench
+Gui.activateWorkbench("PartWorkbench")
+
+base_flange = App.ActiveDocument.addObject("Part::Box","Box")
+base_flange.Label = "Base Flange"
+
+base_flange.Height = sheet_thickness
+base_flange.Length = base_length
+base_flange.Width  = base_width
+
+# Recompute the document
 App.ActiveDocument.recompute()
 
-######################################
-## Front and Back walls
+############################################################################
+# Create the front and back walls using the sheetmetal workbench
 
-## Front Wall
-
-Gui.SendMsgToActiveView("ViewFit")
+# Activate Sheet Metal Workbench
 Gui.activateWorkbench("SMWorkbench")
 
-bend1 = FreeCAD.ActiveDocument.addObject("Part::FeaturePython","Bend")
-bend1.Label = "Front Wall"
+######################################
+# Front wall
+front_wall = FreeCAD.ActiveDocument.addObject("Part::FeaturePython","Bend")
+front_wall.Label = "Front Wall"
 
+# The Selection submodule is a part of the FreeCADGui module.
+# https://www.freecadweb.org/wiki/Selection_API
+
+# Clear the selection
 FreeCADGui.Selection.clearSelection()
-FreeCADGui.Selection.addSelection(box, "Face3")
+# Select the face on base_flange on from which front wall is to be created
+FreeCADGui.Selection.addSelection(base_flange, "Face3")
 
-SheetMetalCmd.SMBendWall(bend1)
-SheetMetalCmd.SMViewProviderTree(bend1.ViewObject)
-Gui.SendMsgToActiveView("ViewFit")
+# Create a Sheetmetal bend
+SheetMetalCmd.SMBendWall(front_wall)
+SheetMetalCmd.SMViewProviderTree(front_wall.ViewObject)
 
+# Invert the bend to go in downward direction
 FreeCAD.getDocument("cover_top").getObject("Bend").invert = True
+# Set length of front wall
 FreeCAD.getDocument("cover_top").getObject("Bend").length = wall_height + sheet_thickness
-App.ActiveDocument.recompute()
 
-
-## Back Wall
-
-Gui.SendMsgToActiveView("ViewFit")
-Gui.activateWorkbench("SMWorkbench")
-
-bend2 = FreeCAD.ActiveDocument.addObject("Part::FeaturePython","Bend001")
-bend2.Label = "Back Wall"
-
-FreeCADGui.Selection.clearSelection()
-FreeCADGui.Selection.addSelection(bend1, "Face14")
-
-SheetMetalCmd.SMBendWall(bend2)
-SheetMetalCmd.SMViewProviderTree(bend2.ViewObject)
-Gui.SendMsgToActiveView("ViewFit")
-
-FreeCAD.getDocument("cover_top").getObject("Bend001").invert = True
-FreeCAD.getDocument("cover_top").getObject("Bend001").length = wall_height + sheet_thickness
+# Recompute the document
 App.ActiveDocument.recompute()
 
 ######################################
+## Back Wall
+back_wall = FreeCAD.ActiveDocument.addObject("Part::FeaturePython","Bend001")
+back_wall.Label = "Back Wall"
 
-## Holes to Mount cover_bottom with screws
+# Clear the selection
+FreeCADGui.Selection.clearSelection()
+# Select the face on base_flange on from which front wall is to be created
+FreeCADGui.Selection.addSelection(front_wall, "Face14")
 
-App.ActiveDocument.addObject("Part::Cylinder","Cylinder001")
-App.ActiveDocument.ActiveObject.Label = "Cover Bottom Mount"
+# Create a Sheetmetal bend
+SheetMetalCmd.SMBendWall(back_wall)
+SheetMetalCmd.SMViewProviderTree(back_wall.ViewObject)
+
+# Invert the bend to go in downward direction
+FreeCAD.getDocument("cover_top").getObject("Bend001").invert = True
+# Set length of back wall
+FreeCAD.getDocument("cover_top").getObject("Bend001").length = wall_height + sheet_thickness
+
+# Recompute the document
+App.ActiveDocument.recompute()
+
+############################################################################
+# Holes to Mount cover_bottom with screws
+
+######################################
+# Top Hole 1
+top_hole_tool_1 = App.ActiveDocument.addObject("Part::Cylinder","Cylinder001")
+top_hole_tool_1.Label = "Top Hole Tool 1"
+
+# Recompute and fit to screen
 App.ActiveDocument.recompute()
 Gui.SendMsgToActiveView("ViewFit")
 
-FreeCAD.getDocument("cover_top").getObject("Cylinder001").Placement = \
+# Placement property consists of 3 things
+# 1. Position = (x,y,z) is a Vector describing the point from which the object's
+# geometry will be calculated (in effect, a "local origin" for the object).
+# 2. Yaw-Pitch-Roll = (y,p,r) is a tuple that specifies the attitude of the object.
+# Values for y,p,r specify degrees of rotation about each of the z,y,x axis (see note). 
+# In the above code it is the z axis (0, 0, 1) because x and y are 0, and z is 1
+# 3. Rotation Angle - This rotates the object by the specified angle along the axis 
+# specified above (Below the angle is 0 : final argument of App.Placement())
+
+top_hole_tool_1.Placement = \
     App.Placement(App.Vector(top_flange_width/2,base_width/4,0),App.Rotation(App.Vector(0,0,1),0))
 
-FreeCAD.getDocument("cover_top").getObject("Cylinder001").Radius = screw_diameter/2
-FreeCAD.getDocument("cover_top").getObject("Cylinder001").Height = sheet_thickness
+top_hole_tool_1.Radius = screw_diameter/2
+top_hole_tool_1.Height = sheet_thickness
 
-App.activeDocument().addObject("Part::Cut","Cut001")
-App.activeDocument().Cut001.Base = App.activeDocument().Bend001
-App.activeDocument().Cut001.Tool = App.activeDocument().Cylinder001
+######################################
+# Cut the hole
+cover_top_1_hole = App.activeDocument().addObject("Part::Cut","Cut001")
+
+cover_top_1_hole.Base = back_wall
+cover_top_1_hole.Tool = top_hole_tool_1
+
+# Toggling visibility of the older objects:
 Gui.activeDocument().Bend001.Visibility=False
 Gui.activeDocument().Cylinder001.Visibility=False
+
+# Setting the visual properties of the new generated part to be the same
+# as that of the base of the cut
 Gui.ActiveDocument.Cut001.ShapeColor=Gui.ActiveDocument.Bend001.ShapeColor
 Gui.ActiveDocument.Cut001.DisplayMode=Gui.ActiveDocument.Bend001.DisplayMode
+
+# Recompute the document
 App.ActiveDocument.recompute()
 
 ######################################
+# Top Hole 2
+top_hole_tool_2 = App.ActiveDocument.addObject("Part::Cylinder","Cylinder002")
+top_hole_tool_2.Label = "Top Hole Tool 2"
 
-App.ActiveDocument.addObject("Part::Cylinder","Cylinder002")
-App.ActiveDocument.ActiveObject.Label = "Cover Bottom Mount"
 App.ActiveDocument.recompute()
 Gui.SendMsgToActiveView("ViewFit")
 
-FreeCAD.getDocument("cover_top").getObject("Cylinder002").Placement = \
+top_hole_tool_2.Placement = \
     App.Placement(App.Vector(top_flange_width/2,3*base_width/4,0),App.Rotation(App.Vector(0,0,1),0))
 
-FreeCAD.getDocument("cover_top").getObject("Cylinder002").Radius = screw_diameter/2
-FreeCAD.getDocument("cover_top").getObject("Cylinder002").Height = sheet_thickness
+top_hole_tool_2.Radius = screw_diameter/2
+top_hole_tool_2.Height = sheet_thickness
 
-App.activeDocument().addObject("Part::Cut","Cut002")
-App.activeDocument().Cut002.Base = App.activeDocument().Cut001
-App.activeDocument().Cut002.Tool = App.activeDocument().Cylinder002
+######################################
+# Cut the hole
+cover_top_2_hole = App.activeDocument().addObject("Part::Cut","Cut002")
+
+cover_top_2_hole.Base = cover_top_1_hole
+cover_top_2_hole.Tool = top_hole_tool_2
+
+# Toggling visibility of the older objects:
 Gui.activeDocument().Cut001.Visibility=False
 Gui.activeDocument().Cylinder002.Visibility=False
+
+# Setting the visual properties of the new generated part to be the same
+# as that of the base of the cut
 Gui.ActiveDocument.Cut002.ShapeColor=Gui.ActiveDocument.Cut001.ShapeColor
 Gui.ActiveDocument.Cut002.DisplayMode=Gui.ActiveDocument.Cut001.DisplayMode
+
 App.ActiveDocument.recompute()
 
-
 ######################################
+# Top Hole 3
+top_hole_tool_3 = App.ActiveDocument.addObject("Part::Cylinder","Cylinder003")
+top_hole_tool_3.Label = "Top Hole Tool 3"
 
-App.ActiveDocument.addObject("Part::Cylinder","Cylinder003")
-App.ActiveDocument.ActiveObject.Label = "Cover Bottom Mount"
 App.ActiveDocument.recompute()
 Gui.SendMsgToActiveView("ViewFit")
 
-FreeCAD.getDocument("cover_top").getObject("Cylinder003").Placement = \
+top_hole_tool_3.Placement = \
     App.Placement(App.Vector(base_length-top_flange_width/2,base_width/4,0),App.Rotation(App.Vector(0,0,1),0))
 
-FreeCAD.getDocument("cover_top").getObject("Cylinder003").Radius = screw_diameter/2
-FreeCAD.getDocument("cover_top").getObject("Cylinder003").Height = sheet_thickness
+top_hole_tool_3.Radius = screw_diameter/2
+top_hole_tool_3.Height = sheet_thickness
 
-App.activeDocument().addObject("Part::Cut","Cut003")
-App.activeDocument().Cut003.Base = App.activeDocument().Cut002
-App.activeDocument().Cut003.Tool = App.activeDocument().Cylinder003
+######################################
+# Cut the hole
+cover_top_3_hole = App.activeDocument().addObject("Part::Cut","Cut003")
+
+cover_top_3_hole.Base = cover_top_2_hole
+cover_top_3_hole.Tool = top_hole_tool_3
+
+# Toggling visibility of the older objects:
 Gui.activeDocument().Cut002.Visibility=False
 Gui.activeDocument().Cylinder003.Visibility=False
+
+# Setting the visual properties of the new generated part to be the same
+# as that of the base of the cut
 Gui.ActiveDocument.Cut003.ShapeColor=Gui.ActiveDocument.Cut002.ShapeColor
 Gui.ActiveDocument.Cut003.DisplayMode=Gui.ActiveDocument.Cut002.DisplayMode
+
 App.ActiveDocument.recompute()
 
 ######################################
+# Top Hole 4
+top_hole_tool_4 = App.ActiveDocument.addObject("Part::Cylinder","Cylinder004")
+top_hole_tool_4.Label = "Cover Bottom Mount"
 
-App.ActiveDocument.addObject("Part::Cylinder","Cylinder004")
-App.ActiveDocument.ActiveObject.Label = "Cover Bottom Mount"
 App.ActiveDocument.recompute()
 Gui.SendMsgToActiveView("ViewFit")
 
-FreeCAD.getDocument("cover_top").getObject("Cylinder004").Placement = \
+top_hole_tool_4.Placement = \
     App.Placement(App.Vector(base_length-top_flange_width/2,3*base_width/4,0),App.Rotation(App.Vector(0,0,1),0))
 
-FreeCAD.getDocument("cover_top").getObject("Cylinder004").Radius = screw_diameter/2
-FreeCAD.getDocument("cover_top").getObject("Cylinder004").Height = sheet_thickness
+top_hole_tool_4.Radius = screw_diameter/2
+top_hole_tool_4.Height = sheet_thickness
 
-App.activeDocument().addObject("Part::Cut","Cut004")
-App.activeDocument().Cut004.Base = App.activeDocument().Cut003
-App.activeDocument().Cut004.Tool = App.activeDocument().Cylinder004
+######################################
+# Cut the hole
+cover_top_4_hole = App.activeDocument().addObject("Part::Cut","Cut004")
+
+cover_top_4_hole.Base = cover_top_3_hole
+cover_top_4_hole.Tool = top_hole_tool_4
+
+# Toggling visibility of the older objects:
 Gui.activeDocument().Cut003.Visibility=False
 Gui.activeDocument().Cylinder004.Visibility=False
+
+# Setting the visual properties of the new generated part to be the same
+# as that of the base of the cut
 Gui.ActiveDocument.Cut004.ShapeColor=Gui.ActiveDocument.Cut003.ShapeColor
 Gui.ActiveDocument.Cut004.DisplayMode=Gui.ActiveDocument.Cut003.DisplayMode
+
 App.ActiveDocument.recompute()
 
-# Make Transparent
+# Make the cover_top 80% Transparent
 FreeCADGui.getDocument("cover_top").getObject("Cut004").Transparency = 80
 ######################################
-#/////////////////Does not work in v0.17/////////////////////
-
-## Holes for mounting onto cover_top using screws
-
-#Gui.activateWorkbench("SketcherWorkbench")
-#hole_sketch = App.activeDocument().addObject('Sketcher::SketchObject','Sketch')
-#hole_sketch.Support = (App.ActiveDocument.Bend001,["Face12"])
-#App.activeDocument().recompute()
-
-#Gui.activeDocument().setEdit(hole_sketch.Name)
-
-#App.ActiveDocument.Sketch.addGeometry(Part.Circle(App.Vector(8.998930,58.524132,0),App.Vector(0,0,1),4.869736))
-#App.ActiveDocument.recompute()
-#App.ActiveDocument.Sketch.addGeometry(Part.Circle(App.Vector(10.538872,14.250669,0),App.Vector(0,0,1),5.236382))
-#App.ActiveDocument.recompute()
-#App.ActiveDocument.Sketch.addGeometry(Part.Circle(App.Vector(87.536179,59.294102,0),App.Vector(0,0,1),5.019615))
-#App.ActiveDocument.recompute()
-#App.ActiveDocument.Sketch.addGeometry(Part.Circle(App.Vector(89.846107,17.330564,0),App.Vector(0,0,1),5.019611))
-#App.ActiveDocument.recompute()
-
-## Radii of all holes set equal
-#App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Equal',0,2)) 
-#App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Equal',2,3)) 
-#App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Equal',3,1)) 
-#App.ActiveDocument.recompute()
-
-
-#App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Radius',2,screw_diameter/2)) 
-#App.ActiveDocument.recompute()
-
-#App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('DistanceX',0,3,1,3,0.00)) 
-#App.ActiveDocument.recompute()
-
-#App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('DistanceY',1,3,3,3,0.00)) 
-#App.ActiveDocument.recompute()
-
-#App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('DistanceY',2,3,0,3,0.00)) 
-#App.ActiveDocument.recompute()
-
-#App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('DistanceX',2,3,3,3,0.00)) 
-#App.ActiveDocument.recompute()
-
-#App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('DistanceX',-1,1,1,3,top_flange_width/2)) 
-#App.ActiveDocument.recompute()
-
-#App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('DistanceY',-1,1,1,3,base_width/4)) 
-#App.ActiveDocument.recompute()
-
-#App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('DistanceX',1,3,3,3,base_length-top_flange_width)) 
-#App.ActiveDocument.recompute()
-
-#App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('DistanceY',0,3,1,3,-base_width/2)) 
-#App.ActiveDocument.recompute()
-
-#Gui.getDocument('cover_top').resetEdit()
-#App.getDocument('cover_top').recompute()
-
-### Create Holes for screws
-#Gui.activateWorkbench("PartDesignWorkbench")
-#holes = App.activeDocument().addObject("PartDesign::Pocket","Pocket")
-#App.activeDocument().Pocket.Sketch = hole_sketch
-#App.activeDocument().Pocket.Length = sheet_thickness
-#App.ActiveDocument.recompute()
-
-#Gui.activeDocument().hide(hole_sketch.Name)
-#Gui.activeDocument().hide(bend2.Name)
-
-#Gui.activeDocument().setEdit(holes.Name)
-#Gui.ActiveDocument.Pocket.ShapeColor=Gui.ActiveDocument.Bend001.ShapeColor
-#Gui.ActiveDocument.Pocket.LineColor=Gui.ActiveDocument.Bend001.LineColor
-#Gui.ActiveDocument.Pocket.PointColor=Gui.ActiveDocument.Bend001.PointColor
-#App.ActiveDocument.Pocket.Type = 0
-#App.ActiveDocument.Pocket.UpToFace = None
-#App.ActiveDocument.recompute()
-#Gui.activeDocument().resetEdit()
-
-#Gui.activeDocument().activeView().viewAxometric()
-#FreeCADGui.getDocument("cover_top").getObject(holes.Name).Transparency = 80

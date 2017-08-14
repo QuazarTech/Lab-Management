@@ -1,18 +1,35 @@
+# Importing standard libs
 import sys
+
+# Insert this directory into the PYTHONPATH to import experimental parameters from experiment_params.py
+sys.path.insert(0, "${HOME}/work/git/Lab-Management/freecad_models/EM_Coupling_Experiment/code")
+
+# Insert this directoryinto the PYTHONPATH to import Assembly 2 module
 sys.path.append('${HOME}/.FreeCAD/Mod/FreeCAD_assembly2')
 
-from experiment_params import *
+# Importing Assembly 2 libraries
+# Assembly2 is an additional FreeCAD workbench (https://github.com/hamish2014/FreeCAD_assembly2)
+import importPart
+import planeConstraint
+import axialConstraint
 
+# Importing experiment specific parameters
+from experiment_params import base_height
+from experiment_params import base_width
+from experiment_params import base_length
+from experiment_params import wall_height
+from experiment_params import coil_height
+
+###############################################################################
 # Create and open a new file for assembly
+
 assembly_file = App.newDocument("experiment_assembly")
 App.setActiveDocument(assembly_file.Name)
 App.ActiveDocument = App.getDocument(assembly_file.Name)
 Gui.ActiveDocument = Gui.getDocument(assembly_file.Name)
 
 ###############################################################################
-## Import all parts into the assembly
-
-import importPart
+# Import all parts into the assembly
 
 # import cover_bottom
 cover_base = importPart.importPart(filename = '../models/cover_base.fcstd', partName = None, doc_assembly = assembly_file)
@@ -58,14 +75,17 @@ bnc_conn_2 = importPart.importPart(filename = '../models/BNC_Conn.fcstd', partNa
 #import Lockin Amplifier
 xlia = importPart.importPart(filename = '../models/Lockin_base.STEP', partName = None, doc_assembly = assembly_file) 
 
+
+# Recompute and fit to screen
 App.ActiveDocument.recompute()
 Gui.SendMsgToActiveView("ViewFit")
+
+# Set view to axonometric - Isometric
 Gui.activeDocument().activeView().viewAxonometric()
 
 ###############################################################################
 raw_input('All parts imported. Press Enter to assemble the Core Mounting Rod on the Cover Base.')
 ###############################################################################
-import axialConstraint
 
 ## Mate Mounting rod to cover_bottom
 
@@ -107,8 +127,6 @@ FreeCAD.getDocument("experiment_assembly").getObject("axialConstraint03").direct
 FreeCAD.ActiveDocument.recompute()
 
 ## Add plane constraint to fix the cores against the cover_base walls
-
-import planeConstraint
 
 Gui.Selection.clearSelection()
 Gui.Selection.addSelection(core_1    , "Face001")
