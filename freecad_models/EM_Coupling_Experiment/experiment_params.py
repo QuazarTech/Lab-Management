@@ -37,8 +37,10 @@ length_margin    = 25.0 #mm                       # Margin for relative movement
 
 sheet_thickness  = 2.00 #mm                       # Sheet metal thickness
 bend_radius      = 1.00 #mm                       # Sheet metal bend radius
-screw_diameter   = 2.00 #mm                       # Diameter of screw used
+screw_diameter   = 4.50 #mm                       # Diameter of screw used
 screw_length     = 10.0 #mm                       # Length of screw used
+csk_diameter     = 5.00 #mm                       # Diameter of Countersunk screw
+csk_chamfer      = 1.00 #mm                       # Chamfer length of Countersunk screw
 
 #Coaxial connector parameters
 coax_side_distance   = 5.00 #mm                   # Distance of coax connector from the side flange of cover
