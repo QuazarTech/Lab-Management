@@ -81,24 +81,24 @@ Similarly you can generate CAD models using the other `.py` files.
 Once you generate all the FreeCAD models for the assembly, you can run the `EM_Coupling_Experiment/assembly.py` file to make a complete experimental setup of those parts.
 
 But in order to do so, you must save each .py file with a corresponding specific .fcstd file as follows:
-`coil_winding.py` : `freecad_models/models/coil.fcstd`
-`core.py` : `freecad_models/models/core.fcstd`
-`cover_base.py` : `freecad_models/models/cover_base.fcstd`
-`cover_top.py` : `freecad_models/models/cover_top.fcstd`
-`mount.py` : `freecad_models/models/mount.fcstd`
+`coil_winding.py` : `freecad_models/EM_Coupling_Experiment/models/coil.fcstd`
+`core.py` : `freecad_models/EM_Coupling_Experiment/models/core.fcstd`
+`cover_base.py` : `freecad_models/EM_Coupling_Experiment/models/cover_base.fcstd`
+`cover_top.py` : `freecad_models/EM_Coupling_Experiment/models/cover_top.fcstd`
+`mount.py` : `freecad_models/EM_Coupling_Experiment/models/mount.fcstd`
 
-To tweak the parameters of the experiment, open `experiment_params.py` in the directory `Lab-Management/freecad_models`, and change the values of the variables in that file. Then rebuild all the part files above, in order to make the assembly.
+To tweak the parameters of the experiment, open `experiment_params.py` in the directory `Lab-Management/freecad_models/EM_Coupling_Experiment`, and change the values of the variables in that file. Then rebuild all the part files above, in order to make the assembly.
 
 ### Running script for EM_Coupling_Experiment assembly
 
 The `EM_Coupling_Experiment/assembly.py` file creates an assembly of all the individual parts of the experiment.
 
-To use this script, each part must be saved as in the `models` directory as follows : 
-`coil_winding.py` : `freecad_models/models/coil.fcstd`
-`core.py` : `freecad_models/models/core.fcstd`
-`cover_base.py` : `freecad_models/models/cover_base.fcstd`
-`cover_top.py` : `freecad_models/models/cover_top.fcstd`
-`mount.py` : `freecad_models/models/mount.fcstd`
+To use this script, each part must be saved as in the `EM_Coupling_Experiment/models` directory as follows : 
+`coil_winding.py` : `freecad_models/EM_Coupling_Experiment/models/coil.fcstd`
+`core.py` : `freecad_models/EM_Coupling_Experiment/models/core.fcstd`
+`cover_base.py` : `freecad_models/EM_Coupling_Experiment/models/cover_base.fcstd`
+`cover_top.py` : `freecad_models/EM_Coupling_Experiment/models/cover_top.fcstd`
+`mount.py` : `freecad_models/EM_Coupling_Experiment/models/mount.fcstd`
 
 To run the assembly script, in the terminal navigate to the freecad_models directory
 `cd Lab-Management/freecad_models/EM_Coupling_Experiment`
@@ -112,9 +112,9 @@ The Python Console should show up at the bottom of the screen.
 In the Python Console, type
 `execfile('assembly.py')`
 
-Save this file as follows : `freecad_models/models/experiment_assembly.fcstd`
+Save this file as follows : `freecad_models/EM_Coupling_Experiment/models/experiment_assembly.fcstd`
 
-### Running script for Lab assembly
+### Running script for Lab assembly (Not implemented yet - In Progress)
 First, the instructions to create the `experiment_assembly.fcstd` must be completed in order to build the Lab assembly.
 To run the assembly script, in the terminal navigate to the freecad_models directory
 `cd Lab-Management/freecad_models/`
