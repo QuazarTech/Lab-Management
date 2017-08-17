@@ -85,7 +85,7 @@ thread_spine.LocalCoord = 0    # Right-Handed Helix
 thread_spine.Style      = 1    # Clockwise
 
 thread_spine.Placement  = \
-    Base.Placement(Base.Vector(0.00,0.00,chamfer_length+sheet_thickness+bend_radius),
+    Base.Placement(Base.Vector(0.00,0.00,chamfer_length),
                    Base.Rotation(0.00,0.00,0.00,1.00))
 
 # Recompute and fit model to screen
@@ -128,7 +128,7 @@ thread_profile.addConstraint(Sketcher.Constraint('Angle',2,2,1,2,1.0472)) # 60 d
 # Set position perpendicular to the Helix starting point
 thread_profile.addConstraint(Sketcher.Constraint('DistanceX',-1,1,0,2, hole_diameter/2 + 0.1)) 
 thread_profile.addConstraint(Sketcher.Constraint('DistanceX',-1,1,1,2, hole_diameter/2 - 0.25))
-thread_profile.addConstraint(Sketcher.Constraint('DistanceY',-1,1,1,2, chamfer_length+sheet_thickness+bend_radius)) 
+thread_profile.addConstraint(Sketcher.Constraint('DistanceY',-1,1,1,2, chamfer_length)) 
 
 # Exit edit mode of thread_profile
 Gui.getDocument("mount").resetEdit()
