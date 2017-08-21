@@ -44,6 +44,7 @@ Gui.activeDocument().activeView().viewAxonometric()
 
 # Fix the position and orientation of computer_monitor with respect to computer_table
 
+# Place on table place
 Gui.Selection.clearSelection()
 Gui.Selection.addSelection(computer_monitor, "Face702")
 Gui.Selection.addSelection(computer_table  , "Face010")
@@ -51,7 +52,7 @@ Gui.Selection.addSelection(computer_table  , "Face010")
 selection = Gui.Selection.getSelectionEx()
 planeConstraint.parseSelection(selection, objectToUpdate=None)
 
-
+# Right Offset
 Gui.Selection.clearSelection()
 Gui.Selection.addSelection(computer_monitor, "Face499")
 Gui.Selection.addSelection(computer_table  , "Face005")
@@ -59,10 +60,10 @@ Gui.Selection.addSelection(computer_table  , "Face005")
 selection = Gui.Selection.getSelectionEx()
 planeConstraint.parseSelection(selection, objectToUpdate=None)
 
-App.ActiveDocument.getObject("planeConstraint02").offset = -50
+App.ActiveDocument.getObject("planeConstraint02").offset = -250
 App.ActiveDocument.recompute()
 
-
+# Front Offset
 Gui.Selection.clearSelection()
 Gui.Selection.addSelection(computer_monitor, "Face567")
 Gui.Selection.addSelection(computer_table  , "Face007")
@@ -89,7 +90,7 @@ Gui.Selection.addSelection(computer_table  , "Face010")
 selection = Gui.Selection.getSelectionEx()
 planeConstraint.parseSelection(selection, objectToUpdate=None)
 
-
+# Right Offset
 Gui.Selection.clearSelection()
 Gui.Selection.addSelection(computer_keyboard, "Face064")
 Gui.Selection.addSelection(computer_table  , "Face005")
@@ -97,7 +98,7 @@ Gui.Selection.addSelection(computer_table  , "Face005")
 selection = Gui.Selection.getSelectionEx()
 planeConstraint.parseSelection(selection, objectToUpdate=None)
 
-App.ActiveDocument.getObject("planeConstraint05").offset = 180
+App.ActiveDocument.getObject("planeConstraint05").offset = 380
 App.ActiveDocument.recompute()
 
 
@@ -138,7 +139,7 @@ planeConstraint.parseSelection(selection, objectToUpdate=None)
 App.ActiveDocument.getObject("planeConstraint08").offset = 10
 App.ActiveDocument.recompute()
 
-
+# Right Offset
 Gui.Selection.clearSelection()
 Gui.Selection.addSelection(computer_cpu, "Face113")
 Gui.Selection.addSelection(computer_table  , "Face005")
@@ -146,9 +147,8 @@ Gui.Selection.addSelection(computer_table  , "Face005")
 selection = Gui.Selection.getSelectionEx()
 planeConstraint.parseSelection(selection, objectToUpdate=None)
 
-App.ActiveDocument.getObject("planeConstraint09").offset = 650
+App.ActiveDocument.getObject("planeConstraint09").offset = 850
 App.ActiveDocument.recompute()
 
 ###############################################################################
 #Gui.Selection.getSelectionEx()[0].FullName
-
