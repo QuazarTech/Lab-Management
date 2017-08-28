@@ -25,7 +25,7 @@ Gui.ActiveDocument = Gui.getDocument(assembly_file.Name)
 
 ###############################################################################
 # Import cvd_electronics
-cvd_electronics = importPart.importPart(filename = 'models/CVD_electronics.STEP', partName = None, doc_assembly = assembly_file)
+cvd_electronics = importPart.importPart(filename = 'models/CVD_electronics.fcstd', partName = None, doc_assembly = assembly_file)
 
 App.ActiveDocument.recompute()
 Gui.SendMsgToActiveView("ViewFit")
@@ -35,7 +35,7 @@ cvd_electronics.Placement = App.Placement(App.Vector(0,0,0),App.Rotation(App.Vec
 
 ###############################################################################
 # Import cvd_oven
-cvd_oven = importPart.importPart(filename = 'models/CVD_oven.STEP', partName = None, doc_assembly = assembly_file)
+cvd_oven = importPart.importPart(filename = 'models/CVD_oven.fcstd', partName = None, doc_assembly = assembly_file)
 
 App.ActiveDocument.recompute()
 Gui.SendMsgToActiveView("ViewFit")
@@ -43,19 +43,19 @@ Gui.activeDocument().activeView().viewAxonometric()
 
 # Place on cvd_electronics top
 Gui.Selection.clearSelection()
-Gui.Selection.addSelection(cvd_electronics, "Face2680")
+Gui.Selection.addSelection(cvd_electronics, "Face1391")
 Gui.Selection.addSelection(cvd_oven       , "Face037")
 
 selection = Gui.Selection.getSelectionEx()
 planeConstraint.parseSelection(selection, objectToUpdate=None)
 
-App.ActiveDocument.getObject("planeConstraint01_mirror").directionConstraint = u"opposed"
+App.ActiveDocument.getObject("planeConstraint01").directionConstraint = u"opposed"
 App.ActiveDocument.recompute()
 
 # Front offset
 Gui.Selection.clearSelection()
-Gui.Selection.addSelection(cvd_electronics, "Face2680")
-Gui.Selection.addSelection(cvd_oven       , "Face037")
+Gui.Selection.addSelection(cvd_electronics, "Face3109")
+Gui.Selection.addSelection(cvd_oven       , "Face296")
 
 selection = Gui.Selection.getSelectionEx()
 planeConstraint.parseSelection(selection, objectToUpdate=None)
@@ -70,7 +70,7 @@ Gui.activeDocument().activeView().viewAxonometric()
 
 # Place on ground
 Gui.Selection.clearSelection()
-Gui.Selection.addSelection(cvd_electronics, "Face1309")
+Gui.Selection.addSelection(cvd_electronics, "Face1630")
 Gui.Selection.addSelection(cvd_pump       , "Face025")
 
 selection = Gui.Selection.getSelectionEx()
