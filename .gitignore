@@ -1,3 +1,5 @@
 # Python compiled bytecode files #
 *.pyc
 *.txt
+*.fcstd1
+*.fcstd2
