@@ -899,7 +899,6 @@ def start_XL_run (final_temperature, ramp_rate, max_depth, step_size, amplitude,
     wait ("Run", "Finished")
     
     update_database ("Lab_Space,PQMS,XLIA,Running,False")
-    save_graph()
 
 def start_XT_linear_ramp_run (final_temperature, ramp_rate, max_depth, step_size, amplitude, frequency, phase, delay, filter_length, drive_mode, drive_value):
     
@@ -915,7 +914,6 @@ def start_XT_linear_ramp_run (final_temperature, ramp_rate, max_depth, step_size
     wait ("Run", "Finished")
     
     update_database ("Lab_Space,PQMS,XSMU,Running,False")
-    save_graph()
 	
 ###############################################################################
 #IV_step_ramp functions functions
@@ -974,7 +972,6 @@ def start_IV_step_ramp_run (initial_temperature, final_temperature, temperature_
     wait ("Run", "Finished")
     
     update_database ("Lab_Space,PQMS,XSMU,Running,False")
-    save_graph()
 
 ###############################################################################
 # RT_stepped ramp functions
@@ -1031,7 +1028,6 @@ def start_RT_step_ramp_run (initial_temperature, final_temperature, temperature_
     wait ("Run", "Finished")
     
     update_database ("Lab_Space,PQMS,XSMU,Running,False")
-    save_graph()
 
 
 
@@ -1092,7 +1088,6 @@ def start_RT_linear_ramp (initial_temperature, final_temperature, ramp_rate, run
     
     update_database ("Lab_Space,PQMS,XTCON,Running,False")
     update_database ("Lab_Space,PQMS,XSMU,Running,False")
-    save_graph()
 
 ###############################################################################
 #R_Tme_isothermal functions
@@ -1129,7 +1124,7 @@ def start_R_Time_isothermal( I_range, V_range, max_power, run_mode):
     update_database ("Lab_Space,PQMS,XSMU,Running,True")
     wait ("Run", "Finished")
     update_database ("Lab_Space,PQMS,XSMU,Running,False")
-    save_graph()
+    
 
 ###############################################################################
 #cryostat environment control functions - Vacuum
@@ -1248,7 +1243,7 @@ def flush_helium (chamber, cryostat):
 
 def pour_liquid_nitrogen ():
     
-    ensure  ("Lab_Space,PQMS,Cryocan_BA11,Liquid_Nitrogen" , "YES")
+    ensure  ("Lab_Space,PQMS,Cryocan_BA11,Liquid_Nitrogen" , "PRESENT")
     
     start_XTCON_monitor()
     
