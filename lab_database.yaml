@@ -699,7 +699,7 @@ Lab_Space:
 
           Cryocan_BA11:
             Home_Coordinates                  : Cryocan_BA11.HOME
-            Current_Coordinates               : With Nishant
+            Current_Coordinates               : Cryocan_BA11.HOME
             Liquid_Nitrogen                   : PRESENT
           
           Ladle:
