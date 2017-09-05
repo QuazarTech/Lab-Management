@@ -21,7 +21,7 @@ def run ():
     
     turn_on_PQMS_modules()
     set_up_PQMS_modules()
-    set_up_pump()
+    set_up_pump(cryostat)
     
     #####################
     
@@ -29,11 +29,13 @@ def run ():
     cables_connected_check (test_object, cryostat)
     
     previous_run_temperature = ""
-    initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power = get_experimental_parameters_RT_stepped_ramp()
+    initial_temperature, final_temperature, \
+    temperature_step, V_range, I_range, max_power = get_experimental_parameters_RT_stepped_ramp()
     
-    pre_stabilization_delay, post_stabilization_delay, monitoring_period, tolerance = get_step_ramp_details()
+    pre_stabilization_delay, post_stabilization_delay, \
+    monitoring_period, tolerance = get_step_ramp_details()
     
-    current_run_temperature = initial_temperature
+    current_run_temperature      = initial_temperature
     
     reset_cryostat_environment (previous_run_temperature, current_run_temperature, cryostat)
     need_liquid_nitrogen()
@@ -41,14 +43,16 @@ def run ():
     
     #####################
     #Actual measurements take place here
-    PQMS_RT_run_stepped_ramp (initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power, pre_stabilization_delay, post_stabilization_delay, monitoring_period, tolerance)
+    PQMS_RT_run_stepped_ramp (initial_temperature, final_temperature, \
+    	temperature_step, V_range, I_range, max_power, pre_stabilization_delay, \
+    	post_stabilization_delay, monitoring_period, tolerance)
     
     #####################
 
     cables_disconnected_check (test_object, cryostat)    
-    create_vaccum("Sample_Chamber")
+    create_vaccum("Sample_Chamber", cryostat)
     if (cryostat == "Double_Walled_Steel"):
-        create_vaccum ("Heater_Chamber")
+        create_vaccum ("Heater_Chamber", cryostat)
     
     turn_off_PQMS_modules(cryostat)
     turn_off_computer()

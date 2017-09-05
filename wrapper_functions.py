@@ -396,25 +396,25 @@ def need_liquid_nitrogen ():
         pour_liquid_nitrogen()
 
 
-def double_walled_steel_cryostat_environment_setup (previous_run_temperature, current_run_temperature):
+def double_walled_steel_cryostat_environment_setup (previous_run_temperature, current_run_temperature, cryostat):
     
-    flush_helium("Sample_Chamber")
-    flush_helium("Heater_Chamber")
+    flush_helium("Sample_Chamber", cryostat)
+    flush_helium("Heater_Chamber", cryostat)
         
     if (previous_run_temperature == "" and current_run_temperature > 150):
-        create_vaccum ("Heater_Chamber")
+        create_vaccum ("Heater_Chamber", cryostat)
     
     #switch cases
     elif (previous_run_temperature <=150 and current_run_temperature > 150):
-        create_vaccum ("Heater_Chamber")
+        create_vaccum ("Heater_Chamber", cryostat)
     
 
-def quartz_cryostat_environment_setup(previous_run_temperature, current_run_temperature):
+def quartz_cryostat_environment_setup(previous_run_temperature, current_run_temperature, cryostat):
     
-    flush_helium("Sample_Chamber")
+    flush_helium("Sample_Chamber", cryostat)
         
     if (previous_run_temperature == "" and current_run_temperature > 150):
-        create_vaccum ("Sample_Chamber")
+        create_vaccum ("Sample_Chamber", cryostat)
     
     #switch cases
     elif (previous_run_temperature <=150 and current_run_temperature > 150):
@@ -428,9 +428,9 @@ def reset_cryostat_environment (previous_run_temperature, temperature_set_point,
   while ((response != 'y') and (response != 'n')):
     response = raw_input ("Do you want to reset the cryostat environment?\n")
   if(response == 'y') and (cryostat == "Cryostat_Steel"):
-  	double_walled_steel_cryostat_environment_setup(previous_run_temperature, temperature_set_point)
+  	double_walled_steel_cryostat_environment_setup(previous_run_temperature, temperature_set_point, cryostat)
   if(response == 'y') and (cryostat == "Quartz"):
-  	quartz_cryostat_environment_setup(previous_run_temperature, temperature_set_point)      
+  	quartz_cryostat_environment_setup(previous_run_temperature, temperature_set_point, cryostat)      
 
 
 def release_PQMS_vaccum (cryostat):
