@@ -563,20 +563,54 @@ Lab_Space:
  
                 Puck: 
 
+                    State                     : DAMAGED
+                    Home_Coordinates          : 
+                    Current_Coordinates       :
+                    Insert_Connection         : DISCONNECTED
+                    Puck_Board_Connection     : CONNECTED
+                    Sample_Mounted            : ZENER_3
+                    Terminal_1:
+                        Soldered              : YES
+                    Terminal_2:
+                        Soldered              : YES
+                    Terminal_3:
+                        Soldered              : YES
+                    Terminal_4:
+                        Soldered              : YES
+                
+                Puck_YBCO: 
+
                     State                     : NOT_IN_USE
                     Home_Coordinates          :
+                    Current_Coordinates       :
+                    Insert_Connection         : DISCONNECTED
+                    Puck_Board_Connection     : CONNECTED
+                    Sample_Mounted            : YBCO_2
+                    Terminal_1:
+                        Soldered              : YES
+                    Terminal_2:
+                        Soldered              : YES
+                    Terminal_3:
+                        Soldered              : YES
+                    Terminal_4:
+                        Soldered              : YES
+                        
+                Puck_Old: 
+
+                    State                     : NOT_IN_USE
+                    Home_Coordinates          :
+                    Current_Coordinates       :
                     Insert_Connection         : DISCONNECTED
                     Puck_Board_Connection     : CONNECTED
                     Sample_Mounted            : NO
                     Terminal_1:
                         Soldered              : NO
                     Terminal_2:
-                        Soldered              : 
+                        Soldered              : NO
                     Terminal_3:
                         Soldered              : NO
                     Terminal_4:
                         Soldered              : NO
-
 
                 Insert2Puck_Cable: 
 
@@ -779,8 +813,9 @@ Lab_Space:
 
           Puck Board: 
 
-            Home_Coordinates                  :
-            Puck_Connected                    : NO
+            Home_Coordinates                  : Puck_Board_Home_Coordinates
+            Current_Coordinates               : Puck_Board_Home_Coordinates
+            Puck_Connected                    : YES
 
 
     Computer:
