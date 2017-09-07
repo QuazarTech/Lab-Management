@@ -461,7 +461,7 @@ Lab_Space:
     
     VSTM: 
           nanoREV Electronics:
-              State                          : OFF
+              State                           : OFF
               Power_Cable                     : CONNECTED
               USB_Cable_Computer              : CONNECTED
               TCA_Cable                       : CONNECTED
