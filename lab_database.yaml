@@ -459,15 +459,33 @@ Lab_Space:
                   Terminal_4:
                     Soldered                  : NO
     
-    VSTM:
-          State                               : OFF
-          Contains_Sample                     : FALSE
+    VSTM: 
+          nanoREV Electronics:
+              State                          : OFF
+              Power_Cable                     : CONNECTED
+              USB_Cable_Computer              : CONNECTED
+              TCA_Cable                       : CONNECTED
+              Scanner_Cable                   : CONNECTED
+              Walker_Cable                    : CONNECTED
+              Running                         : NO
           
-          Clamp:
-               State                          : CLAMPED
-               Current_Coordinates            : VSTM
+          Vaccum_VIB:
+              Home_Coordinates                : Vaccum_VIB_Home_Coordinates
+              Current_Coordinates             : Vaccum_VIB_Home_Coordinates
+              TCA_Cable                       : CONNECTED
+              Scanner_Cable                   : CONNECTED
+              Walker_Cable                    : CONNECTED
+              Vaccum                          : NO
+          
+          Scanhead:
+              Home_Coordinates                : Vaccum_VIB_Home_Coordinates
+              Current_Coordinates             : Vaccum_VIB_Home_Coordinates
+              Contains_Sample                 : FALSE
           
           Pump:
+               State                          : OFF
+          
+          Pirani Gauge:
                State                          : OFF
               
     PQMS:  
