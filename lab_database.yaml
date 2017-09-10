@@ -458,7 +458,36 @@ Lab_Space:
                     Soldered                  : NO
                   Terminal_4:
                     Soldered                  : NO
-                
+    
+    VSTM: 
+          nanoREV Electronics:
+              State                           : OFF
+              Power_Cable                     : CONNECTED
+              USB_Cable_Computer              : CONNECTED
+              TCA_Cable                       : CONNECTED
+              Scanner_Cable                   : CONNECTED
+              Walker_Cable                    : CONNECTED
+              Running                         : NO
+          
+          Vaccum_VIB:
+              Home_Coordinates                : Vaccum_VIB_Home_Coordinates
+              Current_Coordinates             : Vaccum_VIB_Home_Coordinates
+              TCA_Cable                       : CONNECTED
+              Scanner_Cable                   : CONNECTED
+              Walker_Cable                    : CONNECTED
+              Vaccum                          : NO
+          
+          Scanhead:
+              Home_Coordinates                : Vaccum_VIB_Home_Coordinates
+              Current_Coordinates             : Vaccum_VIB_Home_Coordinates
+              Contains_Sample                 : FALSE
+          
+          Pump:
+               State                          : OFF
+          
+          Pirani Gauge:
+               State                          : OFF
+              
     PQMS:  
           State                               : NOT_IN_USE
           Home_Coordinates                    : PQMS_COORDINATES
@@ -512,6 +541,17 @@ Lab_Space:
                     State                     : DISCONNECTED
                 Sample_Mounted                : NO
           
+          Insert_HiRES:
+                Home_Coordinates              : 
+                Current_Coordinates           :
+                
+                HiRES_Cable_Terminal:
+                    State                     : DISCONNECTED
+                HT_Cable_Terminal:
+                    State                     : DISCONNECTED
+                
+                Sample_Mounted                : NO
+          
           Insert_RT_Puck: 
                 Home_Coordinates              :
                 Current_Coordinates           :
@@ -523,20 +563,54 @@ Lab_Space:
  
                 Puck: 
 
+                    State                     : DAMAGED
+                    Home_Coordinates          : 
+                    Current_Coordinates       :
+                    Insert_Connection         : DISCONNECTED
+                    Puck_Board_Connection     : CONNECTED
+                    Sample_Mounted            : ZENER_3
+                    Terminal_1:
+                        Soldered              : YES
+                    Terminal_2:
+                        Soldered              : YES
+                    Terminal_3:
+                        Soldered              : YES
+                    Terminal_4:
+                        Soldered              : YES
+                
+                Puck_YBCO: 
+
                     State                     : NOT_IN_USE
                     Home_Coordinates          :
+                    Current_Coordinates       :
+                    Insert_Connection         : DISCONNECTED
+                    Puck_Board_Connection     : CONNECTED
+                    Sample_Mounted            : YBCO_2
+                    Terminal_1:
+                        Soldered              : YES
+                    Terminal_2:
+                        Soldered              : YES
+                    Terminal_3:
+                        Soldered              : YES
+                    Terminal_4:
+                        Soldered              : YES
+                        
+                Puck_Old: 
+
+                    State                     : NOT_IN_USE
+                    Home_Coordinates          :
+                    Current_Coordinates       :
                     Insert_Connection         : DISCONNECTED
                     Puck_Board_Connection     : CONNECTED
                     Sample_Mounted            : NO
                     Terminal_1:
                         Soldered              : NO
                     Terminal_2:
-                        Soldered              : 
+                        Soldered              : NO
                     Terminal_3:
                         Soldered              : NO
                     Terminal_4:
                         Soldered              : NO
-
 
                 Insert2Puck_Cable: 
 
@@ -584,10 +658,19 @@ Lab_Space:
               XSMU_Cable                      : DISCONNECTED
               Running                         : NO
               Mode                            : NA/CONST_V/CONST_I
-              
+          
+          HiRES:
+              State                           : OFF
+              Power_Cable                     : CONNECTED
+              USB_Cable_Computer              : CONNECTED
+              USB_Cable_Module                : CONNECTED
+              HiRES_Cable                     : DISCONNECTED 
+              Running                         : NO
+              Mode                            : NA/CONST_V
+          
           XSMU_NANOVOLTMETER:
 
-              State                           : OFF
+              State                           : NOT_IN_LABSPACE
               Power_Cable                     : DISCONNECTED
               USB_Cable_Computer              : DISCONNECTED
               USB_Cable_Module                : DISCONNECTED
@@ -597,7 +680,7 @@ Lab_Space:
 
           XTCON_NANOVOLTMETER:
 
-              State                           : OFF
+              State                           : NOT_IN_LABSPACE
               Power_Cable                     : CONNECTED
 
               Heater:
@@ -699,7 +782,7 @@ Lab_Space:
 
           Cryocan_BA11:
             Home_Coordinates                  : Cryocan_BA11.HOME
-            Current_Coordinates               : With Nishant
+            Current_Coordinates               : Cryocan_BA11.HOME
             Liquid_Nitrogen                   : PRESENT
           
           Ladle:
@@ -730,8 +813,9 @@ Lab_Space:
 
           Puck Board: 
 
-            Home_Coordinates                  :
-            Puck_Connected                    : NO
+            Home_Coordinates                  : Puck_Board_Home_Coordinates
+            Current_Coordinates               : Puck_Board_Home_Coordinates
+            Puck_Connected                    : YES
 
 
     Computer:
@@ -755,7 +839,7 @@ Lab_Space:
         
         State                                 : IN_USE
         Home_Coordinates                      : XSMU_NANOVOLTMETER
-        Current_Coordinates                   : XSMU_NANOVOLTMETER
+        Current_Coordinates                   : NOT_IN_LABSPACE
         Length                                : 25  #cm
         Width                                 : 16  #cm
         Height                                : 8.5 #cm
