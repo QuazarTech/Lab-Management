@@ -74,20 +74,13 @@ def move():
 ########################################################################################
 #Rotation Functions
 
-def euler2Quaternion(roll_x, yaw_z, pitch_y):
-	a = np.cos(roll_x/2)*np.cos(pitch_y/2)*np.cos(yaw_z/2) + np.sin(roll_x/2)*np.sin(pitch_y/2)*np.sin(yaw_z/2)
-	b = np.sin(roll_x/2)*np.cos(pitch_y/2)*np.cos(yaw_z/2) - np.cos(roll_x/2)*np.sin(pitch_y/2)*np.sin(yaw_z/2)
-	c = np.cos(roll_x/2)*np.sin(pitch_y/2)*np.cos(yaw_z/2) + np.sin(roll_x/2)*np.cos(pitch_y/2)*np.sin(yaw_z/2)
-	d = np.cos(roll_x/2)*np.cos(pitch_y/2)*np.sin(yaw_z/2) - np.sin(roll_x/2)*np.sin(pitch_y/2)*np.cos(yaw_z/2)
-	return (a, b, c, d)
-
 def get_current_euler_angles(obj):
 	p = FreeCAD.ActiveDocument.getObject(obj).Placement.Rotation
 	return p.toEuler()
 
 def rotate_along_direction (obj, roll_x, yaw_z, pitch_y):
-	quaternion = euler2Quaternion(roll_x, yaw_z, pitch_y)
-	FreeCAD.ActiveDocument.getObject(obj).Placement.Rotation.Q = quaternion
+	rot = FreeCAD.Rotation(yaw_z, pitch_y, roll_x)
+	FreeCAD.ActiveDocument.getObject(obj).Placement.Rotation = rot
 
 def update_rotation (initParams):
 	obj, final_angles, unit                  = initParams
@@ -95,21 +88,27 @@ def update_rotation (initParams):
 	unit_roll, unit_pitch, unit_yaw          = unit
 	roll_x, yaw_z, pitch_y                   = final_angles
 
-	if  np.abs(yaw_current   - yaw_z  ) < 0.01 \
-	and np.abs(roll_current  - roll_x ) < 0.01 \
-	and np.abs(pitch_current - pitch_y) < 0.01:
+	if np.abs(roll_current  - roll_x ) < 0.1 and np.abs(yaw_current - yaw_z) < 0.1 and np.abs(roll_current - roll_x) < 0.1:
 		timer.stop()
-
-	rotate_along_direction(obj, roll_current  + unit_roll, yaw_current + unit_yaw, pitch_current + unit_pitch)
+	
+	rotate_along_direction(obj, (roll_current  + unit_roll),\
+	 (yaw_current + unit_yaw), (pitch_current + unit_pitch))
 
 
 def get_units_rotation(obj, samples, final_angles):
 	yaw_current, pitch_current, roll_current = get_current_euler_angles(obj)
 	roll_x, yaw_z, pitch_y                   = final_angles
 
-	unit_roll  = (roll_x  - roll_current) /samples
-	unit_yaw   = (yaw_z   - yaw_current ) /samples
-	unit_pitch = (pitch_y - pitch_current)/samples    
+	if np.abs(roll_x - roll_current) < 0.01:
+		roll_x = roll_current
+	if np.abs(yaw_z - yaw_current) < 0.01:
+		yaw_z  = yaw_current
+	if np.abs(pitch_y - pitch_current) < 0.01:
+		pitch_y = pitch_current
+				
+	unit_roll  = ((roll_x  - roll_current)) /samples
+	unit_yaw   = ((yaw_z   - yaw_current)) /samples
+	unit_pitch = ((pitch_y - pitch_current))/samples    
 
 	return (unit_roll, unit_pitch, unit_yaw)
 
@@ -126,5 +125,8 @@ def rotate():
 	timerCallback = functools.partial(update_rotation, initParams)
 	timer.timeout.connect(timerCallback)
 	timer.start(1)
+
+########################################################################################
+########################################################################################
 
 rotate()
