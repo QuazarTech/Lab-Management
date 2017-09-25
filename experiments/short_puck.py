@@ -40,6 +40,27 @@ def run():
     press("Wire cutter handle")
     
     take_photo ("copper_wire")
+
+##########################################################################
+    # Remove enamel coating from ends
+    
+    ######### Take Precautions while performing following steps ##########
+    move ("E-SOL Enamel remover flask's cap away from experiment")
+    leave ("E-SOL Enamel remover flask's cap")
+    
+    write ("execute : Using toothpick, carefully exctract 2 drops of enamel remover onto a glass slide")
+    move ("Flask's cap", "Flask's opening")
+    
+    hold ("tweezers")
+    hold ("copper_wire")
+    
+    touch ("copper_wire.tip_1", "E-SOL Enamel Remover")
+    hold ("Balled up Tissue Paper")
+    touch ("copper_wire.tip_1", "Balled up Tissue Paper")
+    
+    touch ("copper_wire.tip_2", "E-SOL Enamel Remover")
+    hold ("Balled up Tissue Paper")
+    touch ("copper_wire.tip_2", "Balled up Tissue Paper")
     
 ##########################################################################
     # Mount on Sample Stage
