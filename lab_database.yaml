@@ -465,7 +465,7 @@ Lab_Space:
                   Current_Coordinates         : DESSICATOR
                   Shape                       : CYLINDRICAL
                   Length                      : 10.0 mm
-                  Radius                      : YTD
+                  Diameter                    : 2.642 mm
                   Photo                       : Sample Photo/copper_wire.jpg
                   Terminal_1:
                     Soldered                  : NO
