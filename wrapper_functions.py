@@ -23,9 +23,9 @@ def get_sample_info():
 		and (sample != "Res_6") and (sample != "Res_7") and (sample != "Res_8")):
             sample = raw_input("\nSelect sample : (Res_1,Res_2,Res_3,Res_4,Res_5,Res_6,Res_7,Res_8)\n")
     elif (sample_box == "Dessicator"):
-        sample = raw_input("\nSelect sample : (YBCO_2,YBCO_1_A , YBCO_1_B)\n")
-        while((sample != "YBCO_1") and (sample != "YBCO_2")and (sample != "YBCO_1_A")and (sample != "YBCO_1_B")):
-            sample = raw_input("\nSelect sample : (YBCO_2,YBCO_1_A , YBCO_1_B)\n")
+        sample = raw_input("\nSelect sample : (YBCO_2,YBCO_1_A , YBCO_1_B, copper_wire)\n")
+        while((sample != "YBCO_1") and (sample != "YBCO_2")and (sample != "YBCO_1_A")and (sample != "YBCO_1_B") and (sample != "copper_wire")):
+            sample = raw_input("\nSelect sample : (YBCO_2,YBCO_1_A , YBCO_1_B, copper_wire)\n")
             
     sample_description  = raw_input("\nGive a brief sample desciption: \n")
     address             = raw_input("\nGive the path where you want to store experimental data : \n")
