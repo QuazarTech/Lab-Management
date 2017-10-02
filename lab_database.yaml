@@ -337,12 +337,174 @@ Lab_Space:
                   Terminal_2:
                     Soldered                  : YES/NO
                     Length                    : 28 mm
+                    
+                Res_9: 
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Standard_Tolerance          : 3%
+                  Resistance                  : 0.01
+                  Length                      :
+                  Diameter                    :
+                  Photo                       :
+                  Part_Number                 : 605HR010E
+                  Datasheet                   : http://www.mouser.com/ds/2/303/60_series-2144.pdf
+                  Terminal_1:
+                    Soldered                  : YES/NO
+                    Length                    :
+                  Terminal_2:
+                    Soldered                  : YES/NO
+                    Length                    :
 
+                Res_10: 
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Standard_Tolerance          : 3%
+                  Resistance                  : 0.05
+                  Length                      :
+                  Diameter                    :
+                  Photo                       :
+                  Part_Number                 : 605HR050E
+                  Datasheet                   : http://www.mouser.com/ds/2/303/60_series-2144.pdf
+                  Terminal_1:
+                    Soldered                  : YES/NO
+                    Length                    :
+                  Terminal_2:
+                    Soldered                  : YES/NO
+                    Length                    :
+                    
+                Res_11: 
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Standard_Tolerance          : 3%
+                  Resistance                  : 0.1
+                  Length                      :
+                  Diameter                    :
+                  Photo                       :
+                  Part_Number                 : 605HR100E
+                  Datasheet                   : http://www.mouser.com/ds/2/303/60_series-2144.pdf
+                  Terminal_1:
+                    Soldered                  : YES/NO
+                    Length                    :
+                  Terminal_2:
+                    Soldered                  : YES/NO
+                    Length                    :
+                    
+                Res_12: 
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Standard_Tolerance          : 0.1%
+                  Resistance                  : 50
+                  Length                      :
+                  Diameter                    :
+                  Photo                       :
+                  Part_Number                 : PTF5650R000BZEK
+                  Datasheet                   : http://www.vishay.com/docs/31019/ptf.pdf
+                  Terminal_1:
+                    Soldered                  : YES/NO
+                    Length                    :
+                  Terminal_2:
+                    Soldered                  : YES/NO
+                    Length                    :
+                    
+                Res_13: 
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Standard_Tolerance          : 0.1%
+                  Resistance                  : 100
+                  Length                      :
+                  Diameter                    :
+                  Photo                       :
+                  Part_Number                 : PTF56100R00BYEB
+                  Datasheet                   : http://www.vishay.com/docs/31019/ptf.pdf
+                  Terminal_1:
+                    Soldered                  : YES/NO
+                    Length                    :
+                  Terminal_2:
+                    Soldered                  : YES/NO
+                    Length                    :
+                    
+                Res_14: 
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Standard_Tolerance          : 0.1%
+                  Resistance                  : 1K
+                  Length                      :
+                  Diameter                    :
+                  Photo                       :
+                  Part_Number                 : PTF561K0000BZEB
+                  Datasheet                   : http://www.vishay.com/docs/31019/ptf.pdf
+                  Terminal_1:
+                    Soldered                  : YES/NO
+                    Length                    :
+                  Terminal_2:
+                    Soldered                  : YES/NO
+                    Length                    :
+                    
+                Res_15: 
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Standard_Tolerance          : 0.1%
+                  Resistance                  : 10K
+                  Length                      :
+                  Diameter                    :
+                  Photo                       :
+                  Part_Number                 : PTF5610K000BZEB
+                  Datasheet                   : http://www.vishay.com/docs/31019/ptf.pdf
+                  Terminal_1:
+                    Soldered                  : YES/NO
+                    Length                    :
+                  Terminal_2:
+                    Soldered                  : YES/NO
+                    Length                    :
+                    
+                Res_16: 
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Standard_Tolerance          : 0.1%
+                  Resistance                  : 100K
+                  Length                      :
+                  Diameter                    :
+                  Photo                       :
+                  Part_Number                 : PTF56100K00BEEB
+                  Datasheet                   : http://www.vishay.com/docs/31019/ptf.pdf
+                  Terminal_1:
+                    Soldered                  : YES/NO
+                    Length                    :
+                  Terminal_2:
+                    Soldered                  : YES/NO
+                    Length                    :
 
+                Res_17: 
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Standard_Tolerance          : 0.1%
+                  Resistance                  : 1M
+                  Length                      :
+                  Diameter                    :
+                  Photo                       :
+                  Part_Number                 : PTF561M0000BZEK
+                  Datasheet                   : http://www.vishay.com/docs/31019/ptf.pdf
+                  Terminal_1:
+                    Soldered                  : YES/NO
+                    Length                    :
+                  Terminal_2:
+                    Soldered                  : YES/NO
+                    Length                    :
+
+                    
             Dessicator:
                  
                 Silica_Crystals:
-                  State                       : PUT IN DESSICATOR 
+                  State                       : DESSICATOR 
                   Home_Coordinates            : Sample_Table
                   Amount                      : 500 gms
             
@@ -487,7 +649,46 @@ Lab_Space:
           
           Pirani Gauge:
                State                          : OFF
+    
+    AFM: 
+          nanoREV Electronics:
+              State                           : OFF
+              Power_Cable                     : CONNECTED
+              USB_Cable_Computer              : CONNECTED
+              QTFA_Cable                      : CONNECTED
+              Scanner_Cable                   : CONNECTED
+              Walker_Cable                    : CONNECTED
+              Running                         : NO
               
+          QOKE:
+              State                           : OFF
+              Power_Cable                     : CONNECTED
+              USB_Cable_Computer              : CONNECTED
+              RF_Cable                        : CONNECTED
+              RM_Cable                        : CONNECTED
+              DF_Cable                        : CONNECTED
+              RE_Cable                        : CONNECTED
+              FB_Cable                        : CONNECTED
+              QD_Cable                        : CONNECTED
+              Running                         : NO  
+          
+          VIB:
+              Home_Coordinates                : VIB_Home_Coordinates
+              Current_Coordinates             : VIB_Home_Coordinates
+              QTFA_Cable                      : CONNECTED
+              Scanner_Cable                   : CONNECTED
+              Walker_Cable                    : CONNECTED
+              Vaccum                          : NO
+              
+          Air Shield:
+              Home_Coordinates                : VIB_Home_Coordinates
+              Current_Coordinates             : VIB_Home_Coordinates
+          
+          Scanhead:
+              Home_Coordinates                : VIB_Home_Coordinates
+              Current_Coordinates             : VIB_Home_Coordinates
+              Contains_Sample                 : FALSE
+
     PQMS:  
           State                               : NOT_IN_USE
           Home_Coordinates                    : PQMS_COORDINATES
