@@ -1,137 +1,137 @@
-Lab_Space: 
+Lab_Space:
     Physical_Parameters:
         Atmospheric_Pressure                  : NA
         Temperature                           : NA
         Volume                                : NA
         Humidity                              : NA
 
-    Fan: 
+    Fan:
         State                                 : OFF
         Speed                                 : 0
 
-    Tube_Light: 
+    Tube_Light:
         State                                 : OFF
 
-    Windows: 
-       Window1: 
+    Windows:
+       Window1:
            State                              : OFF
            Area                               : STANDARD_WINDOW_AREA
-       Window2: 
+       Window2:
           State                               : OFF
           Area                                : STANDARD_WINDOW_AREA
-       Window3: 
+       Window3:
           State                               : OFF
           Area                                : STANDARD_WINDOW_AREA
-       Vent1: 
+       Vent1:
           State                               : OFF
           Area                                : STANDARD_VENT_AREA
-       Vent2: 
+       Vent2:
           State                               : OFF
           Area                                : STANDARD_VENT_AREA
-       Vent3: 
+       Vent3:
           State                               : OFF
           Area                                : STANDARD_VENT_AREA
 
-    Equipment: 
- 
-        Lab_Coat: 
+    Equipment:
+
+        Lab_Coat:
             State                             : NOT_IN_USE
             Home_Coordinates                  : UNDER_SAMPLE_TABLE
 
-        Safety_goggles: 
+        Safety_goggles:
             State                             : NOT_IN_USE
             Home_Coordinates                  : UNDER_SAMPLE_TABLE
 
-        Mask: 
+        Mask:
             State                             : NOT_IN_USE
             Home_Coordinates                  : UNDER_SAMPLE_TABLE
 
-        Gloves: 
+        Gloves:
             State                             : NOT_IN_USE
             Home_Coordinates                  : UNDER_SAMPLE_TABLE
             Disposal_Coodinate                : TRASH
 
-    Sample_Table: 
-    
+    Sample_Table:
+
         State                                 : NOT_IN_USE
         Clean                                 : YES
         Sample_Mounting_Coordinates           : SAMPLE_MOUNTING_COORDINATES
         Puck_Screwing_Coordinates             : PUCK_SCREWING_COORDINATES
-        
-        
-        Physical_Parameters: 
+
+
+        Physical_Parameters:
             Home_Coordinates                  : SAMPLE_TABLE
             Length                            : 90 cm
             Width                             : 60 cm
             Area                              : 540 cm2
-        
+
         Sample_Photography_Area:
-            Length                            : 10 cm 
+            Length                            : 10 cm
             Width                             : 10 cm
             Cell_Length                       : 0.1 cm
             Cell_Width                        : 0.1 cm
-                            
-        Tools: 
-        
-            Polyvinyl_Alcohol: 
+
+        Tools:
+
+            Polyvinyl_Alcohol:
               State                           : NOT_IN_USE
               Home_Coordinates                : SAMPLE_TABLE
               Current_Coordinates             : SAMPLE_TABLE
               Cap_Coordinates                 : SAMPLE_TABLE
               Usable_Quantity                 : YES
-            
-            Ethanol: 
+
+            Ethanol:
               State                           : NOT_IN_USE
               Home_Coordinates                : SAMPLE_TABLE
               Current_Coordinates             : SAMPLE_TABLE
               Cap_Coordinates                 : SAMPLE_TABLE
-              Usable_Quantity                 : YES            
-            
-            Transparent_Tape: 
-              State                           : NOT_IN_USE          
-              Home_Coordinates                : SAMPLE_TABLE
-              Current_Coordinates             : SAMPLE_TABLE
               Usable_Quantity                 : YES
-            
-            Brown_Tape: 
+
+            Transparent_Tape:
               State                           : NOT_IN_USE
               Home_Coordinates                : SAMPLE_TABLE
               Current_Coordinates             : SAMPLE_TABLE
               Usable_Quantity                 : YES
-            
-            Spatula: 
+
+            Brown_Tape:
+              State                           : NOT_IN_USE
+              Home_Coordinates                : SAMPLE_TABLE
+              Current_Coordinates             : SAMPLE_TABLE
+              Usable_Quantity                 : YES
+
+            Spatula:
               State                           : NOT_IN_USE
               Home_Coordinates                : SAMPLE_TABLE
               Current_Coordinates             : SAMPLE_TABLE
 
-            
-            Tweezers: 
+
+            Tweezers:
               State                           : NOT_IN_USE
               Home_Coordinates                : SAMPLE_TABLE
               Hold_Coordinates                : SAMPLE_TABLE
               Current_Coordinates             : SAMPLE_TABLE
-            
-            Brush: 
+
+            Brush:
               State                           : NOT_IN_USE
               Home_Coordinates                : SAMPLE_TABLE
               Current_Coordinates             : SAMPLE_TABLE
               Hold_Coordinates                : SAMPLE_TABLE
-            
-            Mortar: 
+
+            Mortar:
               State                           : NOT_IN_USE
               Home_Coordinates                : SAMPLE_TABLE
               Current_Coordinates             : SAMPLE_TABLE
               Clean                           : YES
-            
-            Pestle: 
+
+            Pestle:
               State                          : NOT_IN_USE
               Home_Coordinates                : SAMPLE_TABLE
               Current_Coordinates             : SAMPLE_TABLE
               Clean                           : YES
-                
-        Soldering: 
-        
-            Soldering_Iron: 
+
+        Soldering:
+
+            Soldering_Iron:
                State                          : NOT_IN_USE
                Power                          : OFF
                Home_Coordinates               : SOLDERING_STATION
@@ -139,46 +139,46 @@ Lab_Space:
                Hold_Coordinates               : SOLDERING_STATION
                Exit_Coordinates               : SOLDERING_STATION
 
-            Solder: 
+            Solder:
                Home_Coordinates               : SOLDERING_STATION
                Usable_Quantity                : YES
 
-            Flux: 
+            Flux:
                Home_Coordinates               : SOLDERING_STATION
                Usable_Quantity                : YES
 
-            Cleaning_Pad: 
+            Cleaning_Pad:
                Home_Coordinates               : SOLDERING_STATION
                Usable_Quantity                : YES
 
-        Sample_Boxes: 
+        Sample_Boxes:
 
-            Box_Zener: 
-            
+            Box_Zener:
+
                 State                         : CLOSED
                 Home_Coordinates              : SAMPLE_TABLE
                 Current_Coordinates           : SAMPLE_TABLE
                 Cap_Coordinates               : SAMPLE_TABLE
                 No_of_Samples                 : 3
 
-                Zener_1: 
+                Zener_1:
                   State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : Insert_RT_Old
                   Part_Number                 : ZN0000
-                  Length                      : 
+                  Length                      :
                   Diameter                    :
                   Photo                       : NOT_CLICKED
                   Terminal_1:
                     Soldered                  : NO
-                    Length                    : 
-                    Diameter                  : 
+                    Length                    :
+                    Diameter                  :
                   Terminal_2:
                     Soldered                  : NO
-                    Length                    : 
-                    Diameter                  : 
-                    
-                Zener_2: 
+                    Length                    :
+                    Diameter                  :
+
+                Zener_2:
                   State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
@@ -194,47 +194,47 @@ Lab_Space:
                     Soldered                  : NO
                     Length                    : 9.8  mm
                     Diameter                  : 0.47 mm
-                  
-                Zener_3: 
+
+                Zener_3:
                   State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
                   Part_Number                 : ZN0000
-                  Length                      : 
+                  Length                      :
                   Diameter                    :
                   Photo                       : NOT_CLICKED
                   Terminal_1:
                     Soldered                  : NO
-                    Length                    : 
-                    Diameter                  : 
+                    Length                    :
+                    Diameter                  :
                   Terminal_2:
                     Soldered                  : NO
-                    Length                    : 
-                    Diameter                  : 
-                
-            Box_Resistor: 
-            
+                    Length                    :
+                    Diameter                  :
+
+            Box_Resistor:
+
                 State                         : CLOSED
                 Home_Coordinates              : SAMPLE_TABLE
                 Current_Coordinates           : SAMPLE_TABLE
                 Cap_Coordinates               : SAMPLE_TABLE
                 No_of_Samples                 : 6
-              
-                Res_1: 
+
+                Res_1:
                   State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
                   Standard_Tolerance          :
                   Resistance                  :
                   Length                      : 6.5 mm
-                  Diameter                    : 1.8 mm 
+                  Diameter                    : 1.8 mm
                   Photo                       : Sample Photo/Resistor_1.jpg
                   Terminal_1:
                     Soldered                  : YES/NO
                   Terminal_2:
                     Soldered                  : YES/NO
-                  
-                Res_2: 
+
+                Res_2:
                   State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
@@ -247,8 +247,8 @@ Lab_Space:
                     Soldered                  : YES/NO
                   Terminal_2:
                     Soldered                  : YES/NO
-                
-                Res_3: 
+
+                Res_3:
                   State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
@@ -261,8 +261,8 @@ Lab_Space:
                     Soldered                  : YES/NO
                   Terminal_2:
                     Soldered                  : YES/NO
-                    
-                Res_4: 
+
+                Res_4:
                   State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
@@ -275,8 +275,8 @@ Lab_Space:
                     Soldered                  : YES/NO
                   Terminal_2:
                     Soldered                  : YES/NO
-            
-                Res_5: 
+
+                Res_5:
                   State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
@@ -289,8 +289,8 @@ Lab_Space:
                     Soldered                  : YES/NO
                   Terminal_2:
                     Soldered                  : YES/NO
-                    
-                Res_6: 
+
+                Res_6:
                   State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
@@ -303,8 +303,8 @@ Lab_Space:
                     Soldered                  : YES/NO
                   Terminal_2:
                     Soldered                  : YES/NO
-                    
-                Res_7: 
+
+                Res_7:
                   State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
@@ -320,8 +320,8 @@ Lab_Space:
                   Terminal_2:
                     Soldered                  : YES/NO
                     Length                    : 28 mm
-                    
-                Res_8: 
+
+                Res_8:
                   State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
@@ -337,8 +337,8 @@ Lab_Space:
                   Terminal_2:
                     Soldered                  : YES/NO
                     Length                    : 28 mm
-                    
-                Res_9: 
+
+                Res_9:
                   State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
@@ -356,7 +356,7 @@ Lab_Space:
                     Soldered                  : YES/NO
                     Length                    :
 
-                Res_10: 
+                Res_10:
                   State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
@@ -373,8 +373,8 @@ Lab_Space:
                   Terminal_2:
                     Soldered                  : YES/NO
                     Length                    :
-                    
-                Res_11: 
+
+                Res_11:
                   State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
@@ -391,8 +391,8 @@ Lab_Space:
                   Terminal_2:
                     Soldered                  : YES/NO
                     Length                    :
-                    
-                Res_12: 
+
+                Res_12:
                   State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
@@ -409,8 +409,8 @@ Lab_Space:
                   Terminal_2:
                     Soldered                  : YES/NO
                     Length                    :
-                    
-                Res_13: 
+
+                Res_13:
                   State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
@@ -427,8 +427,8 @@ Lab_Space:
                   Terminal_2:
                     Soldered                  : YES/NO
                     Length                    :
-                    
-                Res_14: 
+
+                Res_14:
                   State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
@@ -445,8 +445,8 @@ Lab_Space:
                   Terminal_2:
                     Soldered                  : YES/NO
                     Length                    :
-                    
-                Res_15: 
+
+                Res_15:
                   State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
@@ -463,8 +463,8 @@ Lab_Space:
                   Terminal_2:
                     Soldered                  : YES/NO
                     Length                    :
-                    
-                Res_16: 
+
+                Res_16:
                   State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
@@ -482,7 +482,7 @@ Lab_Space:
                     Soldered                  : YES/NO
                     Length                    :
 
-                Res_17: 
+                Res_17:
                   State                       : NOT_IN_USE
                   Home_Coordinates            : SAMPLE_TABLE
                   Current_Coordinates         : SAMPLE_TABLE
@@ -500,14 +500,31 @@ Lab_Space:
                     Soldered                  : YES/NO
                     Length                    :
 
-                    
+                Res_18:
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Standard_Tolerance          : 0.06%
+                  Resistance                  : 100
+                  Length                      :
+                  Diameter                    :
+                  Photo                       :
+                  Part_Number                 : PPG101A1
+                  Datasheet                   :
+                  Terminal_1:
+                    Soldered                  : YES/NO
+                    Length                    :
+                  Terminal_2:
+                    Soldered                  : YES/NO
+                    Length                    :
+
             Dessicator:
-                 
+
                 Silica_Crystals:
-                  State                       : DESSICATOR 
+                  State                       : DESSICATOR
                   Home_Coordinates            : Sample_Table
                   Amount                      : 500 gms
-            
+
                 YBCO_1:
                   State                       : CUT INTO YBCO_1_A , YBCO_1_B
                   Home_Coordinates            : SAMPLE_TABLE
@@ -527,7 +544,7 @@ Lab_Space:
                     Soldered                  : NO
                   Terminal_4:
                     Soldered                  : NO
-                
+
                 YBCO_2:
                   State                       : IN_USE (R-Time)
                   Home_Coordinates            : DESSICATOR
@@ -544,7 +561,7 @@ Lab_Space:
                     Soldered                  : YES
                   Terminal_4:
                     Soldered                  : YES
-                
+
                 YBCO_1_A:
                   State                       : Broken into YBCO_1_Aa and YBCO_1Ab
                   Home_Coordinates            : DESSICATOR
@@ -563,7 +580,7 @@ Lab_Space:
                     Soldered                  : NO
                   Terminal_4:
                     Soldered                  : NO
-                
+
                 YBCO_1_Aa:
                   State                       :
                   Home_Coordinates            : DESSICATOR
@@ -601,7 +618,7 @@ Lab_Space:
                     Soldered                  : NO
                   Terminal_4:
                     Soldered                  : NO
-                
+
                 YBCO_1_B:
                   State                       : NOT_IN_USE
                   Home_Coordinates            : DESSICATOR
@@ -620,8 +637,8 @@ Lab_Space:
                     Soldered                  : NO
                   Terminal_4:
                     Soldered                  : NO
-    
-    VSTM: 
+
+    VSTM:
           nanoREV Electronics:
               State                           : OFF
               Power_Cable                     : CONNECTED
@@ -630,7 +647,7 @@ Lab_Space:
               Scanner_Cable                   : CONNECTED
               Walker_Cable                    : CONNECTED
               Running                         : NO
-          
+
           Vaccum_VIB:
               Home_Coordinates                : Vaccum_VIB_Home_Coordinates
               Current_Coordinates             : Vaccum_VIB_Home_Coordinates
@@ -638,19 +655,19 @@ Lab_Space:
               Scanner_Cable                   : CONNECTED
               Walker_Cable                    : CONNECTED
               Vaccum                          : NO
-          
+
           Scanhead:
               Home_Coordinates                : Vaccum_VIB_Home_Coordinates
               Current_Coordinates             : Vaccum_VIB_Home_Coordinates
               Contains_Sample                 : FALSE
-          
+
           Pump:
                State                          : OFF
-          
+
           Pirani Gauge:
                State                          : OFF
-    
-    AFM: 
+
+    AFM:
           nanoREV Electronics:
               State                           : OFF
               Power_Cable                     : CONNECTED
@@ -659,7 +676,7 @@ Lab_Space:
               Scanner_Cable                   : CONNECTED
               Walker_Cable                    : CONNECTED
               Running                         : NO
-              
+
           QOKE:
               State                           : OFF
               Power_Cable                     : CONNECTED
@@ -670,8 +687,8 @@ Lab_Space:
               RE_Cable                        : CONNECTED
               FB_Cable                        : CONNECTED
               QD_Cable                        : CONNECTED
-              Running                         : NO  
-          
+              Running                         : NO
+
           VIB:
               Home_Coordinates                : VIB_Home_Coordinates
               Current_Coordinates             : VIB_Home_Coordinates
@@ -679,40 +696,22 @@ Lab_Space:
               Scanner_Cable                   : CONNECTED
               Walker_Cable                    : CONNECTED
               Vaccum                          : NO
-              
+
           Air Shield:
               Home_Coordinates                : VIB_Home_Coordinates
               Current_Coordinates             : VIB_Home_Coordinates
-          
+
           Scanhead:
               Home_Coordinates                : VIB_Home_Coordinates
               Current_Coordinates             : VIB_Home_Coordinates
               Contains_Sample                 : FALSE
 
-    PQMS:  
+    PQMS:
           State                               : NOT_IN_USE
           Home_Coordinates                    : PQMS_COORDINATES
           Current_Coordinates                 : PQMS_COORDINATES
-          
-          Insert_RT_Old: 
-                Home_Coordinates              :
-                Current_Coordinates           :
 
-                RT_Cable_Terminal:
-                    State                     : DISCONNECTED
-                HT_Cable_Terminal:
-                    State                     : DISCONNECTED
-                Sample_Mounted                : NO
-                Terminal_1:
-                    Soldered                  : NO
-                Terminal_2:
-                    Soldered                  : NO
-                Terminal_3:
-                    Soldered                  : NO
-                Terminal_4:
-                    Soldered                  : NO
-          
-          Insert_RT_New: 
+          Insert_RT_Old:
                 Home_Coordinates              :
                 Current_Coordinates           :
 
@@ -730,7 +729,25 @@ Lab_Space:
                 Terminal_4:
                     Soldered                  : NO
 
-          Insert_AC_Susceptibility: 
+          Insert_RT_New:
+                Home_Coordinates              :
+                Current_Coordinates           :
+
+                RT_Cable_Terminal:
+                    State                     : DISCONNECTED
+                HT_Cable_Terminal:
+                    State                     : DISCONNECTED
+                Sample_Mounted                : NO
+                Terminal_1:
+                    Soldered                  : NO
+                Terminal_2:
+                    Soldered                  : NO
+                Terminal_3:
+                    Soldered                  : NO
+                Terminal_4:
+                    Soldered                  : NO
+
+          Insert_AC_Susceptibility:
                 Home_Coordinates              :
                 Current_Coordinates           :
 
@@ -741,19 +758,19 @@ Lab_Space:
                 XLIA_Sus_Terminal:
                     State                     : DISCONNECTED
                 Sample_Mounted                : NO
-          
+
           Insert_HiRES:
-                Home_Coordinates              : 
+                Home_Coordinates              :
                 Current_Coordinates           :
-                
+
                 HiRES_Cable_Terminal:
                     State                     : DISCONNECTED
                 HT_Cable_Terminal:
                     State                     : DISCONNECTED
-                
+
                 Sample_Mounted                : NO
-          
-          Insert_RT_Puck: 
+
+          Insert_RT_Puck:
                 Home_Coordinates              :
                 Current_Coordinates           :
 
@@ -761,8 +778,8 @@ Lab_Space:
                     State                     : DISCONNECTED
                 HT_Cable_Terminal:
                     State                     : DISCONNECTED
- 
-                Puck: 
+
+                Puck:
 
                     State                     : NOT_IN_USE
                     Home_Coordinates          :
@@ -772,14 +789,14 @@ Lab_Space:
                     Terminal_1:
                         Soldered              : NO
                     Terminal_2:
-                        Soldered              : 
+                        Soldered              :
                     Terminal_3:
                         Soldered              : NO
                     Terminal_4:
                         Soldered              : NO
 
 
-                Insert2Puck_Cable: 
+                Insert2Puck_Cable:
 
                     State                     :  DISCONNECTED
                     Home_Coordinates          :
@@ -825,16 +842,16 @@ Lab_Space:
               XSMU_Cable                      : DISCONNECTED
               Running                         : NO
               Mode                            : NA/CONST_V/CONST_I
-          
+
           HiRES:
               State                           : OFF
               Power_Cable                     : CONNECTED
               USB_Cable_Computer              : CONNECTED
               USB_Cable_Module                : CONNECTED
-              HiRES_Cable                     : DISCONNECTED 
+              HiRES_Cable                     : DISCONNECTED
               Running                         : NO
               Mode                            : NA/CONST_V
-          
+
           XSMU_NANOVOLTMETER:
 
               State                           : NOT_IN_LABSPACE
@@ -905,13 +922,13 @@ Lab_Space:
            Helium                             : NO
            Cryocan:
               Liquid_Nitrogen                 : NO
-           
+
            Sample_Chamber:
               Evacuation_Valve:
                  State                        : CLOSED
               Flush_Valve:
                  State                        : CLOSED
-           
+
            Heater_Chamber:
               Evacuation_Valve:
                  State                        : CLOSED
@@ -925,7 +942,7 @@ Lab_Space:
            Helium                             : NO
            Cryocan:
               Liquid_Nitrogen                 : NO
-           
+
            Sample_Chamber:
               Evacuation_Valve:
                  State                        : CLOSED
@@ -943,7 +960,7 @@ Lab_Space:
            Release_Valve:
              State                            : CLOSED
 
-          Pirani_Gauge: 
+          Pirani_Gauge:
               State                           : OFF
               Power_Cable                     : CONNECTED
 
@@ -951,20 +968,20 @@ Lab_Space:
             Home_Coordinates                  : Cryocan_BA11.HOME
             Current_Coordinates               : Cryocan_BA11.HOME
             Liquid_Nitrogen                   : PRESENT
-          
+
           Ladle:
             State                             : NOT_IN_USE
             Home_Coordinates                  :
 
-          Helium: 
+          Helium:
 
-            Main_Valve: 
+            Main_Valve:
               State                           : CLOSED
               Gauge_Reading                   : 0
-            Pressure_Valve: 
+            Pressure_Valve:
               State                           : CLOSED
 
-          Sample_Positioner: 
+          Sample_Positioner:
             State                             : OFF
             Power_Cable                       : OFF
             USB_Cable                         : CONNECTED
@@ -973,12 +990,12 @@ Lab_Space:
             Power_Switch:
              State                            : ON
 
-          Clamp: 
+          Clamp:
 
             State                             : LOCKED
             Home_Coordinates:
 
-          Puck Board: 
+          Puck Board:
 
             Home_Coordinates                  :
             Puck_Connected                    : NO
@@ -993,16 +1010,20 @@ Lab_Space:
           Power_Cable                         : CONNECTED
           USB_Cable                           : CONNECTED
 
-        Mouse: 
+        Mouse:
           USB_Cable                           : CONNECTED
 
-        Keyboard: 
+        Keyboard:
           USB_Cable                           : CONNECTED
         USB_Power_Adaptor:
           State                               : OFF
- 
+
+    Laser_Egg_Air_Quality_Monitor:
+        State                                 : IN_USE
+        USB_Cable                             : CONNECTED
+
     Cardboard_Box_NANOVOLTMETER:
-        
+
         State                                 : IN_USE
         Home_Coordinates                      : XSMU_NANOVOLTMETER
         Current_Coordinates                   : NOT_IN_LABSPACE
