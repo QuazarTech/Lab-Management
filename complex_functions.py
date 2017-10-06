@@ -220,7 +220,7 @@ def disconnect_cable (cable):
 #sample unloading and loading functions
 
 def mount_sample (Sample, Sample_Box, test_object):
-    '''Mount 'Sample' from 'Sample_Box' onto Puck_Board'''
+    '''Mount 'Sample' from 'Sample_Box' onto Sample Puck'''
 
     read_state  ('Lab_Space,Sample_Table')
     read_state  ('Lab_Space,PQMS')
@@ -235,9 +235,9 @@ def mount_sample (Sample, Sample_Box, test_object):
         hold_sample (Sample, Sample_Box)
         close_lid   (Sample_Box)
         write       ("execute : Remove Sticky Tape from " + Sample)
-        #####PHOTOGRAPH PRIOR TO MOUNTING
-        write       ("execute : Cut and put a fresh sheet of tracing paper on sample_photography_area")
 
+        #Photograph prior to mounting
+        write       ("execute : Cut and put a fresh sheet of tracing paper on sample_photography_area")
         goto        ('Sample_Photography_Area')
         leave       (Sample)
         write       ("execute : Light up the Sample_Photography_Area")
