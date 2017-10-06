@@ -795,6 +795,53 @@ Lab_Space:
                     Terminal_4:
                         Soldered              : NO
 
+                Puck_2:
+
+                    State                     : NOT_IN_USE
+                    Home_Coordinates          :
+                    Insert_Connection         : DISCONNECTED
+                    Puck_Board_Connection     : CONNECTED
+                    Sample_Mounted            : NO
+                    Terminal_1:
+                        Soldered              : NO
+                    Terminal_2:
+                        Soldered              :
+                    Terminal_3:
+                        Soldered              : NO
+                    Terminal_4:
+                        Soldered              : NO
+
+                Puck_3:
+
+                    State                     : NOT_IN_USE
+                    Home_Coordinates          :
+                    Insert_Connection         : DISCONNECTED
+                    Puck_Board_Connection     : CONNECTED
+                    Sample_Mounted            : NO
+                    Terminal_1:
+                        Soldered              : NO
+                    Terminal_2:
+                        Soldered              :
+                    Terminal_3:
+                        Soldered              : NO
+                    Terminal_4:
+                        Soldered              : NO
+
+                Puck_4:
+
+                    State                     : NOT_IN_USE
+                    Home_Coordinates          :
+                    Insert_Connection         : DISCONNECTED
+                    Puck_Board_Connection     : CONNECTED
+                    Sample_Mounted            : NO
+                    Terminal_1:
+                        Soldered              : NO
+                    Terminal_2:
+                        Soldered              :
+                    Terminal_3:
+                        Soldered              : NO
+                    Terminal_4:
+                        Soldered              : NO
 
                 Insert2Puck_Cable:
 
