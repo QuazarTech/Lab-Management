@@ -251,19 +251,43 @@ def mount_sample (Sample, Sample_Box, test_object):
         hold    ('Puck_Board')
 
         #SOLDERING PROCESS
+
         set_up_soldering_iron()
 
-        move(Sample+'.Terminal_1', 'Insert_RT_Puck,Puck,Terminal_4')
-        solder(Sample +',Terminal_1', 'Insert_RT_Puck,Puck,Terminal_4')
+        move(Sample+'.Terminal_1', 'Insert_RT_Puck,Puck,Terminal_1')
+        solder(Sample +',Terminal_1', 'Insert_RT_Puck,Puck,Terminal_1')
 
         write ("execute : Bend " + Sample + "'s terminals as required.")
 
-        move  (Sample+"'s Terminal_2", "Insert_RT_Puck,Puck,Terminal_1")
-        solder(Sample + "'s,Terminal_2", "Insert_RT_Puck,Puck,Terminal_1")
+        move  (Sample+"'s Terminal_2", "Insert_RT_Puck,Puck,Terminal_4")
+        solder(Sample + "'s,Terminal_2", "Insert_RT_Puck,Puck,Terminal_4")
+
+        ############# 4-probe vs 2-probe topology selection ##############
+        response = raw_input ("Do you want to mount in 4-probe topology? : y/n")
+        while ((response != 'y') and (response != 'n')):
+            response = raw_input ("Do you want to mount in 4-probe topology? : y/n")
+
+        if response == 'y':
+            move ("copper_wire_1_terminal_1", "Insert_RT_Puck,Puck,Terminal_2")
+            solder ("copper_wire_1_terminal_1", "Insert_RT_Puck,Puck,Terminal_2")
+            move ("copper_wire_2_terminal_1", "Insert_RT_Puck,Puck,Terminal_3")
+            solder ("copper_wire_2_terminal_1", "Insert_RT_Puck,Puck,Terminal_3")
+
+            move ("copper_wire_1_terminal_2", Sample + ".Terminal_1_interior")
+            solder ("copper_wire_1_terminal_2", Sample + ".Terminal_1_interior")
+            move ("copper_wire_2_terminal_2", Sample + ".Terminal_2_interior")
+            solder ("copper_wire_2_terminal_2", Sample + ".Terminal_2_interior")
+
+
+        elif response == 'n':
+            solder ("Insert_RT_Puck,Puck,Terminal_1", "Insert_RT_Puck,Puck,Terminal_2")
+            solder ("Insert_RT_Puck,Puck,Terminal_3", "Insert_RT_Puck,Puck,Terminal_4")
+
 
         update_database ("Lab_Space,PQMS,Insert_RT_Puck,Puck,Sample_Mounted,YES")
         write("execute : Switch off the soldering iron")
         update_database ("Lab_Space,Sample_Table,Soldering,Soldering_Iron,Power,OFF")
+
         #SOLDERING PROCESS
 
         read_state('Lab_Space,Sample_Table')
