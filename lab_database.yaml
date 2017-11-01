@@ -638,6 +638,41 @@ Lab_Space:
                   Terminal_4:
                     Soldered                  : NO
 
+                HOPG:
+                  State                       : LENT_TO_JOSHUA
+                  Home_Coordinates            : DESSICATOR
+                  Current_Coordinates         : DESSICATOR
+                  Shape                       : RECTANGULAR
+                  Photo                       : Sample Photo/HOPG.jpg
+
+                Bi2Te3:
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : DESSICATOR
+                  Current_Coordinates         : DESSICATOR
+                  Shape                       : RECTANGULAR
+                  Photo                       : Sample Photo/Bi2Te3.jpg
+
+                ITO:
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : DESSICATOR
+                  Current_Coordinates         : DESSICATOR
+                  Shape                       : RECTANGULAR
+                  Photo                       : Sample Photo/ITO.jpg
+
+    STM:
+
+          VIB:
+              Home_Coordinates                : VIB_Home_Coordinates
+              Current_Coordinates             : VIB_Home_Coordinates
+              TCA_Cable                       : CONNECTED
+              Scanner_Cable                   : CONNECTED
+              Walker_Cable                    : CONNECTED
+              Vaccum                          : NO
+
+          AirShield:
+              Home_Coordinates                : VIB_Home_Coordinates
+              Current_Coordinates             : VIB_Home_Coordinates
+
     VSTM:
           nanoREV Electronics:
               State                           : OFF
@@ -873,6 +908,12 @@ Lab_Space:
                      Cryostat_End             :
                      PQMS_End                 :
 
+                 NVM_Cable:
+                     Home_Coordinates         :
+                     Cryostat_End             :
+                     TCON_End                 :
+                     XSMU_End                 :
+
           XPLORE_Power_Supply:
 
               State                           : OFF
@@ -899,7 +940,7 @@ Lab_Space:
               Running                         : NO
               Mode                            : NA/CONST_V
 
-          XSMU_NANOVOLTMETER:
+          NVM_R0:
 
               State                           : NOT_IN_LABSPACE
               Power_Cable                     : DISCONNECTED
@@ -908,23 +949,6 @@ Lab_Space:
               XSMU_Cable                      : DISCONNECTED
               Running                         : NO
               Mode                            : NA/CONST_V/CONST_I
-
-          XTCON_NANOVOLTMETER:
-
-              State                           : NOT_IN_LABSPACE
-              Power_Cable                     : CONNECTED
-
-              Heater:
-                State                         : OFF
-                HT_Cable                      : DISCONNECTED
-
-              Sensor:
-                RT_Cable                      : DISCONNECTED
-                USB_Cable_Computer            : CONNECTED
-                USB_Cable_Module              : CONNECTED
-
-              Running                         : NO
-              Mode                            : ISOTHERMAL/LINEAR_RAMP/STEPPED_RAMP
 
           XTCON:
 
@@ -1068,12 +1092,3 @@ Lab_Space:
     Laser_Egg_Air_Quality_Monitor:
         State                                 : IN_USE
         USB_Cable                             : CONNECTED
-
-    Cardboard_Box_NANOVOLTMETER:
-
-        State                                 : IN_USE
-        Home_Coordinates                      : XSMU_NANOVOLTMETER
-        Current_Coordinates                   : NOT_IN_LABSPACE
-        Length                                : 25  #cm
-        Width                                 : 16  #cm
-        Height                                : 8.5 #cm
