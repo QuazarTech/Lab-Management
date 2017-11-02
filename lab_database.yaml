@@ -637,6 +637,19 @@ Lab_Space:
                     Soldered                  : NO
                   Terminal_4:
                     Soldered                  : NO
+                
+                copper_wire:
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : DESSICATOR
+                  Current_Coordinates         : DESSICATOR
+                  Shape                       : CYLINDRICAL
+                  Length                      : 10.0 mm
+                  Diameter                    : 2.642 mm
+                  Photo                       : Sample Photo/copper_wire.jpg
+                  Terminal_1:
+                    Soldered                  : NO
+                  Terminal_2:
+                    Soldered                  : NO
 
                 HOPG:
                   State                       : NOT_IN_USE
@@ -660,7 +673,6 @@ Lab_Space:
                   Photo                       : Sample Photo/ITO.jpg
 
     STM:
-
           VIB:
               Home_Coordinates                : VIB_Home_Coordinates
               Current_Coordinates             : VIB_Home_Coordinates
