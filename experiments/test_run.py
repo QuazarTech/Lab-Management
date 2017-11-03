@@ -19,39 +19,44 @@ def run():
     turn_on_computer()
 
     turn_on_PQMS_modules()
-    set_up_pump()
 
     #####################
 
+    set_up_pump(cryostat)
     is_the_sample_loaded (Sample, Sample_Box, test_object, cryostat)
     cables_connected_check (test_object, cryostat)
 
-    goto  ('work/git/XPLORE/Qrius/ppsel/capacitance')
-    write ('execute : Open Terminal')
-    write ('execute : type python current_measurement_w_tcon.py')
-    write ('execute : press enter')
+    #####################
+    # Check resistance of sample PT100 using SMU while measuring Sample Temp
 
-    write ('execute : set temperature setpoint as 310')
-    write ('execute : set tolerance as 0.05')    
-    write ('execute : press enter')
+    goto  ('Qrius Main Window')
 
-    write ('execute : Wait for temperature to stabilize')
+    click ('Modules Manager -> IV Source and Measurement Unit')
+    click ('Run Mode -> R-Time')
+    click ('Start')
 
-    write('execute :  goto Qrius') 
-    write('execute :  goto Modules Manager->IV Source and Measurement')
-    write('execute :  set run control to IV')
-    move_cursor ('Toolbar')
-    click('Settings->IV_Measurement Settings')
-    write('execute :  Set Voltage Range as 1000')
-    write('execute :  Set Voltage Step as 100')
-    write('execute :  Set Bipolar as No')
-    move_cursor('Toolbar')
-    write('execute :  click file->apply') 
-    write('execute :  click on start button')
-    write('execute :  Press finish when required data is obtained')
+    click ('Modules Manager -> Temperature Controller')
+    click ('Run Mode -> Monitor')
+    click ('Start')
 
-    write ('execute : Go to terminal window again')
-    write ('execute : press enter, y and enter again')
+    write ('execute : Wait for 300 seconds')
+    click ('IV Source and Measurement Unit -> Finish')
+    click ('Temperature Controller -> Finish')
 
-    write ('execute : Exit Terminal')
+    click ('Exit Qrius')
 
+    #####################
+
+    write ('execute : Set Multimeter to resistance mode')
+
+    touch ('Multimeter probes', 'Sample PT100 terminals')
+    sample_PT100_res = float(raw_input ('What is the resistance of sample PT100?'))
+    write ('Sample PT100 Resistance : ', sample_PT100_res)
+
+    touch ('Multimeter probes', 'PQMS PT100 terminals')
+    PQMS_PT100_res = float(raw_input ('What is the resistance of PQMS PT100?'))
+    write ('PQMS PT100 Resistance : ', PQMS_PT100_res)
+
+    print ('Difference : ', abs(sample_PT100_res - PQMS_PT100_res))
+
+    #####################
