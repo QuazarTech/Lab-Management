@@ -15,6 +15,8 @@ import test_run
 import turn_on_off
 import lab_reset
 import new_xsmu_test
+import short_puck
+import test_sample_puck
 
 #####################################################################
 
@@ -23,8 +25,7 @@ diff_file  = "run_data_diff.txt"
 new_dbase  = "run_data_new_database"
 
 experiments = ["IV_stepped_ramp", "RT_stepped_ramp", "R_Time_isothermal", "unload_sample", "RT_linear_ramp","CV_isothermal","AC_voltage_measure", "susceptibility_experiment", "remove_sample_from_cryostat", \
-               "take_photo_of_sample", "new_xsmu_test", "test_run", "turn_on_off"]
-
+               "take_photo_of_sample", "new_xsmu_test", "test_run", "turn_on_off", "short_puck", "test_sample_puck"]
 #create and init and array for timestamps
 time_array = []
 
@@ -37,14 +38,14 @@ time_array = []
 #####################################################################
 
 def get_experiment():
-    
+
     print "\n\n Available Experiments: "
     print "______________________________\n"
     for item in experiments:
         print item
     print "______________________________\n"
     experiment = raw_input("Please select the experiment you want to do : \n")
-    
+
     while (experiment not in experiments):
         print "Experiment not in list."
         print "\n\n Available Experiments: "
@@ -53,7 +54,7 @@ def get_experiment():
             print item
         print "______________________________\n"
         experiment = raw_input("Please select the experiment you want to do : \n")
-    
+
     return experiment
 
 #####################################################################
