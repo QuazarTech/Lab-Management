@@ -637,7 +637,7 @@ Lab_Space:
                     Soldered                  : NO
                   Terminal_4:
                     Soldered                  : NO
-                
+
                 copper_wire:
                   State                       : NOT_IN_USE
                   Home_Coordinates            : DESSICATOR
@@ -652,7 +652,7 @@ Lab_Space:
                     Soldered                  : NO
 
                 HOPG:
-                  State                       : LENT_TO_JOSHUA
+                  State                       : NOT_IN_USE
                   Home_Coordinates            : DESSICATOR
                   Current_Coordinates         : DESSICATOR
                   Shape                       : RECTANGULAR
@@ -988,8 +988,16 @@ Lab_Space:
               Mode                            : NA/CONST_V
 
           NVM_R0:
+              State                           : NOT_IN_USE
+              Power_Cable                     : DISCONNECTED
+              USB_Cable_Computer              : DISCONNECTED
+              USB_Cable_Module                : DISCONNECTED
+              XSMU_Cable                      : DISCONNECTED
+              Running                         : NO
+              Mode                            : NA/CONST_V/CONST_I
 
-              State                           : NOT_IN_LABSPACE
+          NVM_R1:
+              State                           : NOT_IN_USE
               Power_Cable                     : DISCONNECTED
               USB_Cable_Computer              : DISCONNECTED
               USB_Cable_Module                : DISCONNECTED
