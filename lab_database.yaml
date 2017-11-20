@@ -518,6 +518,24 @@ Lab_Space:
                     Soldered                  : YES/NO
                     Length                    :
 
+                Res_19:
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Standard_Tolerance          : 0.06%
+                  Resistance                  : 100
+                  Length                      :
+                  Diameter                    :
+                  Photo                       :
+                  Part_Number                 : PPG101A1
+                  Datasheet                   :
+                  Terminal_1:
+                    Soldered                  : YES/NO
+                    Length                    :
+                  Terminal_2:
+                    Soldered                  : YES/NO
+                    Length                    :
+
             Dessicator:
 
                 Silica_Crystals:
