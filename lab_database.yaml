@@ -1005,6 +1005,24 @@ Lab_Space:
               Running                         : NO
               Mode                            : ISOTHERMAL/LINEAR_RAMP/STEPPED_RAMP
 
+          XTCON_019:
+
+              State                           : OFF
+              Power_Cable                     : CONNECTED
+
+              Heater:
+                State                         : OFF
+                HT_Cable                      : DISCONNECTED
+
+              Sensor:
+                RT_Cable                      : DISCONNECTED
+                USB_Cable_Computer            : CONNECTED
+                USB_Cable_Module              : CONNECTED
+
+              Running                         : NO
+              Mode                            : ISOTHERMAL/LINEAR_RAMP/STEPPED_RAMP
+
+
           XLIA:
 
               State                           : OFF
