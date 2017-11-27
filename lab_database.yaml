@@ -646,7 +646,7 @@ Lab_Space:
                   Width                       : 6.12 mm
                   Thickness                   : 1.60 mm
                   Weight                      : 0.34 g
-                  Photo                       : Sample Photo/YBCO_1_B.jpg
+                  Photo                       : Sample Photos/YBCO_1_B.jpg
                   Terminal_1:
                     Soldered                  : NO
                   Terminal_2:
@@ -663,7 +663,7 @@ Lab_Space:
                   Shape                       : CYLINDRICAL
                   Length                      : 10.0 mm
                   Diameter                    : 2.642 mm
-                  Photo                       : Sample Photo/copper_wire.jpg
+                  Photo                       : Sample Photos/copper_wire.jpg
                   Terminal_1:
                     Soldered                  : NO
                   Terminal_2:
@@ -674,21 +674,28 @@ Lab_Space:
                   Home_Coordinates            : DESSICATOR
                   Current_Coordinates         : DESSICATOR
                   Shape                       : RECTANGULAR
-                  Photo                       : Sample Photo/HOPG.jpg
+                  Photo                       : Sample Photos/HOPG.jpg
 
                 Bi2Te3:
                   State                       : NOT_IN_USE
                   Home_Coordinates            : DESSICATOR
                   Current_Coordinates         : DESSICATOR
                   Shape                       : RECTANGULAR
-                  Photo                       : Sample Photo/Bi2Te3.jpg
+                  Photo                       : Sample Photos/Bi2Te3.jpg
 
                 ITO:
                   State                       : NOT_IN_USE
                   Home_Coordinates            : DESSICATOR
                   Current_Coordinates         : DESSICATOR
                   Shape                       : RECTANGULAR
-                  Photo                       : Sample Photo/ITO.jpg
+                  Photo                       : Sample Photos/ITO.jpg
+
+                ZnO:
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : DESSICATOR
+                  Current_Coordinates         : DESSICATOR
+                  Shape                       : RECTANGULAR
+                  Photo                       : Sample Photos/ZnO.jpg
 
     STM:
           VIB:
