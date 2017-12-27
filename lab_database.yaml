@@ -971,7 +971,7 @@ Lab_Space:
                     State                     : DISCONNECTED
                 Sample_Mounted                : NO
 
-          Insert_HiRES:
+          Insert_HiRes:
                 Home_Coordinates              :
                 Current_Coordinates           :
 
@@ -1119,6 +1119,11 @@ Lab_Space:
                      Home_Coordinates         :
                      Cryostat_End             :
                      PQMS_End                 :
+                 
+                 HiRes_Cable:
+                     Home_Coordinates         :
+                     Cryostat_End             :
+                     PQMS_End                 :
 
                  NVM_Cable:
                      Home_Coordinates         :
@@ -1143,7 +1148,7 @@ Lab_Space:
               Running                         : NO
               Mode                            : NA/CONST_V/CONST_I
 
-          HiRES:
+          HiRes:
               State                           : OFF
               Power_Cable                     : CONNECTED
               USB_Cable_Computer              : CONNECTED

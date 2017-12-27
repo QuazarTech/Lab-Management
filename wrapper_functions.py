@@ -1,6 +1,6 @@
 from complex_functions import *
 
-TEST_OBJECTS    = ["Insert_Susceptibility", "Insert_RT_Puck", "Insert_RT_Old", "Puck_Board"]
+TEST_OBJECTS    = ["Insert_Susceptibility", "Insert_RT_Puck", "Insert_RT_Old", "Puck_Board", "Insert_HiRes"]
 CRYOSTATS       = ["Cryostat_Quartz", "Cryostat_Steel"]
 CHAMBERS        = ["Sample_Chamber", "Heater_Chamber"]
 
@@ -168,6 +168,18 @@ def PQMS_RT_run_stepped_ramp (initial_temperature, final_temperature, temperatur
     write("##############################################################\n")
 
     start_RT_step_ramp_run  (initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power, pre_stabilization_delay, post_stabilization_delay, monitoring_period, tolerance)
+
+    write("\n##############################################################")
+    write("                   Run ends")
+    write("##############################################################\n")
+
+def PQMS_HighRT_run_stepped_ramp (initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power, pre_stabilization_delay, post_stabilization_delay, monitoring_period, tolerance):
+
+    write("\n##############################################################")
+    write("                   Run starts")
+    write("##############################################################\n")
+
+    start_HighRT_step_ramp_run  (initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power, pre_stabilization_delay, post_stabilization_delay, monitoring_period, tolerance)
 
     write("\n##############################################################")
     write("                   Run ends")
@@ -355,6 +367,18 @@ def cables_connected_check (test_object, cryostat):
 
             connect_cable('RT_Cable', test_object + "RT_Terminal")
             connect_cable('XLIA_Sus_Cable', test_object + "XLIA_Sus_Terminal")
+            
+        elif (test_object == "Insert_HiRes"):
+            if (cryostat == "Cryostat_Steel"):
+                connect_cable('HT_Cable', cryostat + "'s HT connector")
+
+            elif (cryostat == "Quartz" ):
+                throw_exception ('HT_Cable', test_object + "'s HT connector")
+
+            connect_cable('RT_Cable', test_object + "RT_Terminal")
+            connect_cable('HiRes_Cable', test_object + "HiRes_Source_Terminal")
+            connect_cable('HiRes_Cable', test_object + "HiRes_Meter_Terminal")
+            
 
 def cables_disconnected_check (test_object, cryostat):
 
