@@ -12,13 +12,16 @@
 #include <typeinfo>
 #include <string>
 #include <fstream>
+#include <iomanip>
 //#include <cstdlib>
 //#include <memory>
 using namespace std;
 
 // Constant definitions
 #define SMOKE_SENS_THRESHOLD 0.7
-#define TEMP_SENS_THRESHOLD 1.0
+#define TEMP_SENS_THRESHOLD 115.0
+
+#define PRINT_PRECISION 8
 
 void send_alert (int channel);
 void add_status_to_email (std::string status);
@@ -82,13 +85,13 @@ int main (void)
                 if (live_data[i].chn() == 0)
                 {
                     // Display data on terminal
-                    std::cout <<  "Time : \a" << live_data[i].time() << "\t Chn 1:  " << live_data[i].data() ;
+                    std::cout << std::setprecision(PRINT_PRECISION) <<  "Time : \a" << live_data[i].time() << "\t Chn 1:  " << live_data[i].data() << "\t";
 
                     // Alert if signal is above threshold
                     if (live_data[i].data() > SMOKE_SENS_THRESHOLD)
                     {
                         send_alert (live_data[i].chn());
-                        continue;
+                        break;
                     }
 
                 }
@@ -96,13 +99,13 @@ int main (void)
                 // Data for Channel-2 (Smoke Sensor)
                 if (live_data[i].chn() == 1)
                 {
-                    std::cout << "Time : \a" << live_data[i].time() << "\t Chn 2:  " << live_data[i].data() << std::endl;
+                    std::cout << std::setprecision(PRINT_PRECISION) << "Time : \a" << live_data[i].time() << "\t Chn 2:  " << live_data[i].data() << std::endl;
 
                     // Alert if signal is above threshold
                     if (live_data[i].data() > SMOKE_SENS_THRESHOLD)
                     {
                         send_alert (live_data[i].chn());
-                        continue;
+                        break;
                     }
 
                 }
@@ -110,13 +113,13 @@ int main (void)
                 // Data for Channel-3 (Temperature Sensor)
                 if (live_data[i].chn() == 2)
                 {
-                    std::cout << "Time : \a" << live_data[i].time() << "\t Chn 3:  " << live_data[i].data() << std::endl;
+                    std::cout << std::setprecision(PRINT_PRECISION) << "Time : \a" << live_data[i].time() << "\t Chn 3:  " << live_data[i].data() << "\t";
 
                     // Alert if signal is above threshold
                     if (live_data[i].data() > TEMP_SENS_THRESHOLD)
                     {
                         send_alert (live_data[i].chn());
-                        continue;
+                        break;
                     }
 
                 }
@@ -124,13 +127,13 @@ int main (void)
                 // Data for Channel-4 (Temperature Sensor)
                 if (live_data[i].chn() == 3)
                 {
-                    std::cout << "Time : \a" << live_data[i].time() << "\t Chn 4:  " << live_data[i].data() << std::endl;
+                    std::cout << std::setprecision(PRINT_PRECISION) << "Time : \a" << live_data[i].time() << "\t Chn 4:  " << live_data[i].data() << "\n" << std::endl;
 
                     // Alert if signal is above threshold
                     if (live_data[i].data() > TEMP_SENS_THRESHOLD)
                     {
                         send_alert (live_data[i].chn());
-                        continue;
+                        break;
                     }
                 }
 
@@ -189,20 +192,20 @@ void send_alert (int channel)
     }
 
     // Display Alert status on terminal
-    std::cout << "\t\t ****** DANGER ******" << std::endl;
-    std::cout << "\n\t\tAlert Status" << std::endl;
+    std::cout << "\n\n\t\t ****** DANGER ******" << std::endl;
+    std::cout << "\nAlert Status" << std::endl;
     std::cout << "*********************" << std::endl;
-    std::cout << status << std::endl;
+    std::cout << status << "\n" << std::endl;
 
     // Update alert email with alert status
-    add_status_to_email ("\n Alert Status");
-    add_status_to_email ("*******************");
+    add_status_to_email ("\n\nAlert Status\n");
+    add_status_to_email ("*******************\n");
     add_status_to_email (status);
 
-    std::cout << "Sending alert mails..." << std::endl;
-    // Send email to gitansh@quazartech.com
-    system("ssmtp gitansh@quazartech.com < mail.txt");
-
+//     std::cout << "Sending alert mails..." << std::endl;
+//     // Send email to gitansh@quazartech.com
+//     system("ssmtp gitansh@quazartech.com < mail.txt");
+//
 //     // Send email to mani@quazartech.com
 //     system("ssmtp mani@quazartech.com < mail.txt");
 //
@@ -213,4 +216,5 @@ void send_alert (int channel)
 //     system("ssmtp nishant@quazartech.com < mail.txt");
 
     std::cout << "\t \t Alert mails sent." << std::endl;
+    system("aplay alarm.wav");
 }

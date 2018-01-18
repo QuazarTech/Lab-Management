@@ -26,6 +26,6 @@ The QDAL414B is connected to a computer using a USB interface.
 
 ## Usage
 
-- Compile `lab_safety_iQ.cxx` using `g++ -pthread -Wall -O3 -std=c++14 lab_safety_iQ.cxx -o run -lL412B -lftdi`. Make sure the QDAL41xB driver is installed before this step.
+- Compile using `make`. Make sure the QDAL41xB driver is installed before this step.
 - Make sure the QDAL414B is connected and powered on.
-- Use `./run` to execute the program
+- Use `./test` to execute the program
