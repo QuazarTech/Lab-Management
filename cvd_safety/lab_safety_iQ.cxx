@@ -202,18 +202,18 @@ void send_alert (int channel)
     add_status_to_email ("*******************\n");
     add_status_to_email (status);
 
-//     std::cout << "Sending alert mails..." << std::endl;
-//     // Send email to gitansh@quazartech.com
-//     system("ssmtp gitansh@quazartech.com < mail.txt");
-//
-//     // Send email to mani@quazartech.com
-//     system("ssmtp mani@quazartech.com < mail.txt");
-//
+    std::cout << "Sending alert mails..." << std::endl;
+    // Send email to gitansh@quazartech.com
+    system("ssmtp gitansh@quazartech.com < mail.txt");
+
+    // Send email to mani@quazartech.com
+    system("ssmtp mani@quazartech.com < mail.txt");
+
 //     // Send email to kc@quazartech.com
 //     system("ssmtp kc@quazartech.com < mail.txt");
-//
-//     // Send email to nishant@quazartech.com
-//     system("ssmtp nishant@quazartech.com < mail.txt");
+
+    // Send email to nishant@quazartech.com
+    system("ssmtp nishant@quazartech.com < mail.txt");
 
     std::cout << "\t \t Alert mails sent." << std::endl;
     system("aplay alarm.wav");
