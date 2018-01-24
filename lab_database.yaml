@@ -510,7 +510,7 @@ Lab_Space:
                   Diameter                    :
                   Photo                       :
                   Part_Number                 : PPG101A1
-                  Datasheet                   :
+                  Datasheet                   : http://www.mouser.com/ds/2/719/PPG101A1-769722.pdf
                   Terminal_1:
                     Soldered                  : YES/NO
                     Length                    :
@@ -528,13 +528,123 @@ Lab_Space:
                   Diameter                    :
                   Photo                       :
                   Part_Number                 : PPG101A1
-                  Datasheet                   :
+                  Datasheet                   : http://www.mouser.com/ds/2/719/PPG101A1-769722.pdf
                   Terminal_1:
                     Soldered                  : YES/NO
                     Length                    :
                   Terminal_2:
                     Soldered                  : YES/NO
                     Length                    :
+                    
+                Res_20:
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Standard_Tolerance          : 0.06%
+                  Resistance                  : 100
+                  Length                      :
+                  Diameter                    :
+                  Photo                       :
+                  Part_Number                 : PPG101A1
+                  Datasheet                   : http://www.mouser.com/ds/2/719/PPG101A1-769722.pdf
+                  Terminal_1:
+                    Soldered                  : YES/NO
+                    Length                    :
+                  Terminal_2:
+                    Soldered                  : YES/NO
+                    Length                    :
+                    
+                Res_21:
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Standard_Tolerance          : 0.06%
+                  Resistance                  : 100
+                  Length                      :
+                  Diameter                    :
+                  Photo                       :
+                  Part_Number                 : PPG101A1
+                  Datasheet                   : http://www.mouser.com/ds/2/719/PPG101A1-769722.pdf
+                  Terminal_1:
+                    Soldered                  : YES/NO
+                    Length                    :
+                  Terminal_2:
+                    Soldered                  : YES/NO
+                    Length                    :
+                    
+                Res_22:
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Standard_Tolerance          : 0.06%
+                  Resistance                  : 100
+                  Length                      :
+                  Diameter                    :
+                  Photo                       :
+                  Part_Number                 : PPG101A1
+                  Datasheet                   : http://www.mouser.com/ds/2/719/PPG101A1-769722.pdf
+                  Terminal_1:
+                    Soldered                  : YES/NO
+                    Length                    :
+                  Terminal_2:
+                    Soldered                  : YES/NO
+                    Length                    :
+
+                Res_23:
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Standard_Tolerance          :
+                  Resistance                  : 100
+                  Length                      :
+                  Diameter                    :
+                  Photo                       :
+                  Part_Number                 : 1PT100KN815
+                  Datasheet                   : https://www.omega.com/temperature/pdf/1PT100KN_2PT100KN.pdf
+                  Terminal_1:
+                    Soldered                  : YES/NO
+                    Length                    :
+                  Terminal_2:
+                    Soldered                  : YES/NO
+                    Length                    :
+                    
+                Res_24:
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Standard_Tolerance          : 1%
+                  Resistance                  : 100G
+                  Length                      :
+                  Diameter                    :
+                  Photo                       :
+                  Part_Number                 : MOX1125231009FE
+                  Datasheet                   : http://www.mouser.com/ds/2/303/res_minimox-1149763.pdf
+                  Terminal_1:
+                    Soldered                  : YES/NO
+                    Length                    :
+                  Terminal_2:
+                    Soldered                  : YES/NO
+                    Length                    :
+
+                Res_25:
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : SAMPLE_TABLE
+                  Current_Coordinates         : SAMPLE_TABLE
+                  Standard_Tolerance          : 10%
+                  Resistance                  : 1T
+                  Length                      :
+                  Diameter                    :
+                  Photo                       :
+                  Part_Number                 : MOX112523100AK
+                  Datasheet                   : http://www.mouser.com/ds/2/303/res_minimox-1149763.pdf
+                  Terminal_1:
+                    Soldered                  : YES/NO
+                    Length                    :
+                  Terminal_2:
+                    Soldered                  : YES/NO
+                    Length                    :
+
+
 
             Dessicator:
 
@@ -663,11 +773,41 @@ Lab_Space:
                   Shape                       : CYLINDRICAL
                   Length                      : 10.0 mm
                   Diameter                    : 2.642 mm
+                  Config                      : 2-probe
                   Photo                       : Sample Photos/copper_wire.jpg
                   Terminal_1:
                     Soldered                  : NO
                   Terminal_2:
                     Soldered                  : NO
+                    
+                copper_wire_2:
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : DESSICATOR
+                  Current_Coordinates         : DESSICATOR
+                  Shape                       : CYLINDRICAL
+                  Length                      : 50.0 mm
+                  Diameter                    : 0.193 mm
+                  Config                      : 4-probe
+                  Photo                       : Sample Photos/copper_wire_2.jpg
+                  Terminal_1:
+                    Soldered                  : NO
+                  Terminal_2:
+                    Soldered                  : NO
+                
+                copper_wire_3:
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : DESSICATOR
+                  Current_Coordinates         : DESSICATOR
+                  Shape                       : CYLINDRICAL
+                  Length                      : 50.0 mm
+                  Diameter                    : 0.193 mm
+                  Config                      : 2-probe
+                  Photo                       : Sample Photos/copper_wire_3.jpg
+                  Terminal_1:
+                    Soldered                  : NO
+                  Terminal_2:
+                    Soldered                  : NO
+                
 
                 copper_film_1:
                   State                       : NOT_IN_USE
@@ -874,7 +1014,7 @@ Lab_Space:
                     State                     : DISCONNECTED
                 Sample_Mounted                : NO
 
-          Insert_HiRES:
+          Insert_HiRes:
                 Home_Coordinates              :
                 Current_Coordinates           :
 
@@ -912,15 +1052,50 @@ Lab_Space:
 
                 Puck_2:
 
+                    State                     : DAMAGED
+                    Home_Coordinates          : 
+                    Current_Coordinates       :
+                    Insert_Connection         : DISCONNECTED
+                    Puck_Board_Connection     : CONNECTED
+                    Sample_Mounted            : ZENER_3
+                    Terminal_1:
+                        Soldered              : YES
+                    Terminal_2:
+                        Soldered              : YES
+                    Terminal_3:
+                        Soldered              : YES
+                    Terminal_4:
+                        Soldered              : YES
+                
+                Puck_YBCO: 
+
                     State                     : NOT_IN_USE
                     Home_Coordinates          :
+                    Current_Coordinates       :
+                    Insert_Connection         : DISCONNECTED
+                    Puck_Board_Connection     : CONNECTED
+                    Sample_Mounted            : YBCO_2
+                    Terminal_1:
+                        Soldered              : YES
+                    Terminal_2:
+                        Soldered              : YES
+                    Terminal_3:
+                        Soldered              : YES
+                    Terminal_4:
+                        Soldered              : YES
+                        
+                Puck_Old: 
+
+                    State                     : NOT_IN_USE
+                    Home_Coordinates          :
+                    Current_Coordinates       :
                     Insert_Connection         : DISCONNECTED
                     Puck_Board_Connection     : CONNECTED
                     Sample_Mounted            : NO
                     Terminal_1:
                         Soldered              : NO
                     Terminal_2:
-                        Soldered              :
+                        Soldered              : NO
                     Terminal_3:
                         Soldered              : NO
                     Terminal_4:
@@ -987,6 +1162,11 @@ Lab_Space:
                      Home_Coordinates         :
                      Cryostat_End             :
                      PQMS_End                 :
+                 
+                 HiRes_Cable:
+                     Home_Coordinates         :
+                     Cryostat_End             :
+                     PQMS_End                 :
 
                  NVM_Cable:
                      Home_Coordinates         :
@@ -1011,7 +1191,7 @@ Lab_Space:
               Running                         : NO
               Mode                            : NA/CONST_V/CONST_I
 
-          HiRES:
+          HiRes:
               State                           : OFF
               Power_Cable                     : CONNECTED
               USB_Cable_Computer              : CONNECTED
@@ -1174,8 +1354,9 @@ Lab_Space:
 
           Puck Board:
 
-            Home_Coordinates                  :
-            Puck_Connected                    : NO
+            Home_Coordinates                  : Puck_Board_Home_Coordinates
+            Current_Coordinates               : Puck_Board_Home_Coordinates
+            Puck_Connected                    : YES
 
 
     Computer:

@@ -340,6 +340,47 @@ def mount_sample (Sample, Sample_Box, test_object):
         write("execute : Stick " + Sample + "'s body to the mounting surface with Kapton tape")
         goto("Insert_RT_Old.Home_Coordinates")
 
+    elif (test_object == "Insert_HiRes"):
+        remove      ('cap',Sample_Box)
+        update_database ("Lab_Space,Sample_Table,Sample_Boxes," + Sample_Box + ",State,OPEN")
+
+        hold_sample (Sample, Sample_Box)
+        close_lid   (Sample_Box)
+        write       ("execute : Remove Sticky Tape from " + Sample)
+        #####PHOTOGRAPH PRIOR TO MOUNTING
+        write       ("execute : Cut and put a fresh sheet of tracing paper on sample_photography_area")
+
+        goto        ('Sample_Photography_Area')
+        leave       (Sample)
+        write       ("execute : Light up the Sample_Photography_Area")
+        write       ("execute : Put a meter scale on the side of the photo")
+
+        take_photo  (Sample)
+        write 		("execute : Take sample back to Sample_Mounting_Coordinates")
+
+
+
+        goto    (test_object)
+        hold    (test_object)
+
+        #SOLDERING PROCESS
+        set_up_soldering_iron()
+
+        move(Sample+'.Terminal_1', 'Insert_HiRes,Terminal_1')
+        solder(Sample + ',Terminal_1', 'Insert_HiRes,Terminal_1')
+
+        write ("execute : Bend " + Sample + "'s terminals as required.")
+
+        move(Sample+'.Terminal_2', 'Insert_HiRes,Terminal_2')
+        solder(Sample+',Terminal_2', 'Insert_HiRes,Terminal_2')
+
+        update_database ("Lab_Space,PQMS,Insert_HiRes,Sample_Mounted,YES")
+        write("execute : Switch off the soldering iron")
+        update_database ("Lab_Space,Sample_Table,Soldering,Soldering_Iron,Power,OFF")
+        #SOLDERING PROCESS
+
+        goto("Insert_RT_Old.Home_Coordinates")
+
     goto('Tweezers.Home_Coordinates')
     leave('Tweezers')
     take_photo('Mounted Sample')
@@ -660,6 +701,7 @@ def switch_on_PQMS_modules():
     update_database ("Lab_Space,PQMS,XSMU,State,ON")
 
     switch_on_module('XTCON')
+    switch_on_module('HiRes')
     switch_on_module('XLIA')
     switch_on_module('Sample_Positioner')
     switch_on_module('Pump')
@@ -677,6 +719,7 @@ def set_up_PQMS_modules ():
     pc_connect ("Temperature Controller")
     pc_connect ("IV Source and Measurement")
     pc_connect ("Lockin Amplifier")
+    pc_connect ("Hi-Res Measurement Unit")
     pc_connect ("Sample Positioner")
 
 
@@ -1053,8 +1096,20 @@ def start_RT_step_ramp_run (initial_temperature, final_temperature, temperature_
 
     update_database ("Lab_Space,PQMS,XSMU,Running,False")
 
+def start_HighRT_step_ramp_run (initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power, pre_stabilization_delay, post_stabilization_delay, monitoring_period, tolerance):
 
+    goto ("Qrius Main Window")
+    click('Measurement Mode Settings')
+    click('Electrical High Resistivity')
 
+    set_RT_step_ramp_measurement_settings(initial_temperature, final_temperature, temperature_step, V_range, I_range, max_power, pre_stabilization_delay, post_stabilization_delay, monitoring_period, tolerance)
+    update_database ("Lab_Space,PQMS,XTCON,Mode,Stepped_Ramp")
+
+    click ('Start Button')
+    update_database ("Lab_Space,PQMS,HiRES,Running,True")
+    wait ("Run", "Finished")
+
+    update_database ("Lab_Space,PQMS,HiRES,Running,False")
 
 ###############################################################################
 #R_Tme_linear_ramp functions
@@ -1159,15 +1214,14 @@ def pre_pumping_checks(cryostat):
     ensure ("Lab_Space,PQMS,Pump,Release_Valve,State", "CLOSED")
     ensure ("Lab_Space,PQMS,Pump,Main_Valve,State", "CLOSED")
 
+    ensure ("Lab_Space,PQMS," + cryostat + ",Sample_Chamber,Evacuation_Valve,State", "CLOSED")
+    ensure ("Lab_Space,PQMS," + cryostat + ",Sample_Chamber,Flush_Valve,State", "CLOSED")
+    
     if (cryostat == 'Cryostat_Steel'):
-    	ensure ("Lab_Space,PQMS," + cryostat + ",Sample_Chamber,Flush_Valve,State", "CLOSED")
+    	
     	ensure ("Lab_Space,PQMS," + cryostat + ",Heater_Chamber,Flush_Valve,State", "CLOSED")
-    	ensure ("Lab_Space,PQMS," + cryostat + ",Sample_Chamber,Evacuation_Valve,State", "CLOSED")
     	ensure ("Lab_Space,PQMS," + cryostat + ",Heater_Chamber,Evacuation_Valve,State", "CLOSED")
-
-    else:
-    	ensure ("Lab_Space,PQMS," + cryostat + ",Sample_Chamber,Flush_Valve,State", "CLOSED")
-    	ensure ("Lab_Space,PQMS," + cryostat + ",Sample_Chamber,Evacuation_Valve,State", "CLOSED")
+    	
 
 def set_up_pump (cryostat):
 
