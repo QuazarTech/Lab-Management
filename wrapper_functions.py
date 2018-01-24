@@ -30,10 +30,11 @@ def get_sample_info():
             sample = raw_input("\nSelect sample : (Res_1,Res_2,Res_3,Res_4,Res_5,Res_6,Res_7, Res_8,Res_9,Res_10,Res_11,Res_12,Res_13,Res_14,Res_15,Res_16,Res_17,Res_18,Res_19,Res_20,Res_21,Res_22,Res_23,Res_24,Res_25)\n")
 
     elif (sample_box == "Dessicator"):
-        sample = raw_input("\nSelect sample : (YBCO_2, YBCO_1_A , YBCO_1_B, copper_wire, copper_wire_2, copper_wire_3)\n")
+        sample = raw_input("\nSelect sample : (YBCO_2, YBCO_1_A , YBCO_1_B, copper_wire, copper_wire_2, copper_wire_3, copper_film_1, copper_film_2, copper_film_3)\n")
         while((sample != "YBCO_1") and (sample != "YBCO_2")and (sample != "YBCO_1_A")and (sample != "YBCO_1_B") and \
-            (sample != "copper_wire") and (sample != "copper_wire_2") and (sample != "copper_wire_3")):
-            sample = raw_input("\nSelect sample : (YBCO_2,YBCO_1_A , YBCO_1_B, copper_wire, copper_wire_2, copper_wire_3)\n")
+              (sample != "copper_wire") and (sample != "copper_wire_2") and (sample != "copper_wire_3") and \
+              (sample != "copper_film_1")  and (sample != "copper_film_2")  and (sample != "copper_film_3")):
+            sample = raw_input("\nSelect sample : (YBCO_2,YBCO_1_A , YBCO_1_B, copper_wire, copper_wire_2, copper_wire_3, copper_film_1, copper_film_2, copper_film_3)\n")
 
     sample_description  = raw_input("\nGive a brief sample desciption: \n")
     address             = raw_input("\nGive the path where you want to store experimental data : \n")

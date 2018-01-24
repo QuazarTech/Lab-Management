@@ -809,6 +809,49 @@ Lab_Space:
                     Soldered                  : NO
                 
 
+                copper_film_1:
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : DESSICATOR
+                  Current_Coordinates         : DESSICATOR
+                  Shape                       : SQUARE
+                  Length                      :
+                  Width                       :
+                  Thickness                   :
+                  Photo                       : Sample Photos/copper_film_1.jpg
+                  Terminal_1:
+                    Soldered                  : NO
+                  Terminal_2:
+                    Soldered                  : NO
+
+                copper_film_2:
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : DESSICATOR
+                  Current_Coordinates         : DESSICATOR
+                  Shape                       : SQUARE
+                  Length                      :
+                  Width                       :
+                  Thickness                   :
+                  Photo                       : Sample Photos/copper_film_2.jpg
+                  Terminal_1:
+                    Soldered                  : NO
+                  Terminal_2:
+                    Soldered                  : NO
+
+                copper_film_3:
+                  State                       : NOT_IN_USE
+                  Home_Coordinates            : DESSICATOR
+                  Current_Coordinates         : DESSICATOR
+                  Shape                       : SQUARE
+                  Length                      :
+                  Width                       :
+                  Thickness                   :
+                  Photo                       : Sample Photos/copper_film_3.jpg
+                  Terminal_1:
+                    Soldered                  : NO
+                  Terminal_2:
+                    Soldered                  : NO
+
+
                 HOPG:
                   State                       : NOT_IN_USE
                   Home_Coordinates            : DESSICATOR
