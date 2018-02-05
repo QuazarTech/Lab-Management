@@ -13,8 +13,7 @@
 #include <string>
 #include <fstream>
 #include <iomanip>
-//#include <cstdlib>
-//#include <memory>
+
 using namespace std;
 
 // Constant definitions
@@ -25,54 +24,81 @@ using namespace std;
 
 void send_alert (int channel);
 void add_status_to_email (std::string status);
+void open_gas_valves (std::unique_ptr<L412B::Driver> &driver);
+void close_gas_valves (void);
 
 int main (void)
 {
 
-    // Scan for list of QDAL41xB devices connected
-	auto device_list = L412B::Driver::scan();
+    /***************************************************
+    * Looks for L41x type of devices.
+    ***************************************************/
+    auto device_list = L412B::Driver::scan();
 
-    // Terminate program if no QDAL41xB device found
+    /***************************************************
+    * If no device is detected, gracefully return
+    * with -1 exit status.
+    ***************************************************/
 	if (device_list.empty())
 	{
 		std::cout << "No QDA device found." << std::endl;
 		return (-1);
 	}
 
-    // Get the Serial number of the first QDAL41xB device found
-    // All subsequent instructions for data acquisition will refer to this QDAL41xB device
+    /***************************************************
+     * Get the Serial number of the first QDAL41xB device
+     * found. All subsequent instructions for data
+     * acquisition will refer to this QDAL41xB device
+     ***************************************************/
 	auto serialNo = device_list[0].serialNo();
 	std::cout << "Serial No:" << serialNo <<std::endl;
 
-    // Create a new instance of QDAL41xB driver and wraps it in a unique_ptr
+    /***************************************************
+     * Create a unique instance of QDAL41xB driver
+     ***************************************************/
     auto driver = std::make_unique<L412B::Driver>();
     std::cout << "driver type is " << typeid(driver).name() << std::endl;
 
-    // Connect to QDAL41xB device
+    /***************************************************
+     * Connect to QDAL41xB device
+     ***************************************************/
     driver->connect (serialNo);
 
-    // Start acquiring data from the QDAL41xB
+    std::cout << "Press Enter to open gas valves and start monitoring" << std::endl;
+    std::cin.ignore();
+    open_gas_valves(driver);
+
+    /***************************************************
+     * Start acquiring data from the QDAL41xB
+     ***************************************************/
 	driver->start_acquisition ();
 
 
     while(1)
     {
-        // Stream collected data from the QDAL41xB device
+        /***************************************************
+         * Stream collected data from the QDAL41xB device
+        ***************************************************/
         auto live_data = driver->live_data();
 
-        /* live_data is a std::vector<data::LiveData>
-         * LiveData is defined in driver/include/Data.h
-         * LiveData.time() : Returns the time axis value (double) of the data
-         * LiveData.chn() : QDAL41xB channel (int) where the data originated
-         * LiveData.data() : Returns the data value (float)
-         * LiveData.logical_chn() : float /Use : TODO/
-         */
+        /***************************************************
+        * live_data is a std::vector<data::LiveData>
+        * LiveData is defined in driver/include/Data.h
+        * LiveData.time() : Returns the time axis value (double) of the data
+        * LiveData.chn() : QDAL41xB channel (int) where the data originated
+        * LiveData.data() : Returns the data value (float)
+        * LiveData.logical_chn() : float /Use : TODO/
+        ***************************************************/
 
-        // Keep polling until data is available
+        /***************************************************
+         * Keep polling until data is available
+        ***************************************************/
         if (live_data.empty()) continue;
 
 
-        // If data is available, check for threshold violations
+        /***************************************************
+         * If data is available, check for threshold violations
+        ***************************************************/
         for (unsigned int i = 0; i < live_data.size(); i++)
         {
             // Checking data points spaced 1 second apart
@@ -90,6 +116,7 @@ int main (void)
                     // Alert if signal is above threshold
                     if (live_data[i].data() > SMOKE_SENS_THRESHOLD)
                     {
+                        close_gas_valves ();
                         send_alert (live_data[i].chn());
                         break;
                     }
@@ -104,6 +131,7 @@ int main (void)
                     // Alert if signal is above threshold
                     if (live_data[i].data() > SMOKE_SENS_THRESHOLD)
                     {
+                        close_gas_valves ();
                         send_alert (live_data[i].chn());
                         break;
                     }
@@ -118,6 +146,7 @@ int main (void)
                     // Alert if signal is above threshold
                     if (live_data[i].data() > TEMP_SENS_THRESHOLD)
                     {
+                        close_gas_valves ();
                         send_alert (live_data[i].chn());
                         break;
                     }
@@ -132,6 +161,7 @@ int main (void)
                     // Alert if signal is above threshold
                     if (live_data[i].data() > TEMP_SENS_THRESHOLD)
                     {
+                        close_gas_valves ();
                         send_alert (live_data[i].chn());
                         break;
                     }
@@ -143,10 +173,14 @@ int main (void)
 
     } // while (1)
 
-    // Stop acquisition
+    /***************************************************
+     * Stop acquisition
+     ***************************************************/
     driver->stop_acquisition ();
 
-    // Disconnect QDAL41xB device
+    /***************************************************
+     * Disconnect QDAL41xB device
+     ***************************************************/
     driver->disconnect();
 
     return 0;
@@ -173,6 +207,20 @@ void add_status_to_email (std::string status)
 
 }
 
+void open_gas_valves (std::unique_ptr<L412B::Driver> &driver)
+{
+    std::cout << "Switching on all gas supplies!" << std::endl;
+		uint8_t data = 0b00000001;
+		driver->clr_gpo (~data);
+}
+
+void close_gas_valves (void)
+{
+    std::cout << "Switching off all gas supplies!" << std::endl;
+		uint8_t data = 0b00000001;
+//		driver->set_gpo (~data);
+}
+
 void send_alert (int channel)
 {
     std::string status;
@@ -187,7 +235,7 @@ void send_alert (int channel)
                  break;
         case 3 : status = "Temperature Sensor 2 : HIGH";
                  break;
-        default : status = "Unknown Alert Message";
+        default : status = "Alert! Cause : Unknown";
                  break;
     }
 
