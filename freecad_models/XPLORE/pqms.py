@@ -251,12 +251,12 @@ Gui.activeDocument().activeView().viewAxonometric()
 # Place vaccum pipe on steel cryostat
 Gui.Selection.clearSelection()
 Gui.Selection.addSelection(vaccum_pipe   , "Face003")
-Gui.Selection.addSelection(steel_cryostat, "Face1587")
+Gui.Selection.addSelection(steel_cryostat, "Face694")
 
 selection = Gui.Selection.getSelectionEx()
 pipe_steel_cryostat_axial = axialConstraint.parseSelection(selection, objectToUpdate=None)
 
-pipe_steel_cryostat_axial.directionConstraint = u"opposed"
+pipe_steel_cryostat_axial.directionConstraint = u"aligned"
 App.ActiveDocument.recompute()
 
 # Change orientation of steel_cryostat
@@ -266,12 +266,17 @@ App.ActiveDocument.recompute()
 #  Mate Pipe with steel_cryostat (planar)
 Gui.Selection.clearSelection()
 Gui.Selection.addSelection(vaccum_pipe   , "Face003")
-Gui.Selection.addSelection(steel_cryostat, "Face1594")
+Gui.Selection.addSelection(steel_cryostat, "Face692")
 
 selection = Gui.Selection.getSelectionEx()
 pipe_steel_cryostat_planar = planeConstraint.parseSelection(selection, objectToUpdate=None)
 
 ## Has to be manually rotated through the GUI
+raw_input("Manually rotate the cryostat and press enter to continue.")
+
+pipe_steel_cryostat_axial.directionConstraint = u"aligned"
+App.ActiveDocument.recompute()
+
 
 ###############################################################################
 # Import Xplore quartz cryostat
@@ -283,7 +288,7 @@ Gui.activeDocument().activeView().viewAxonometric()
 
 # Place the cryostat on the ground surface
 Gui.Selection.clearSelection()
-Gui.Selection.addSelection(quartz_cryostat  , "Face019")
+Gui.Selection.addSelection(quartz_cryostat  , "Face021")
 Gui.Selection.addSelection(computer_table_setup, "Face022")
 
 selection = Gui.Selection.getSelectionEx()
@@ -292,164 +297,164 @@ quartz_cryostat_ground_surface = planeConstraint.parseSelection(selection, objec
 quartz_cryostat.Placement =  App.Placement(App.Vector(-300,-900,-609.6),App.Rotation(App.Vector(1,0,0),90))
 App.ActiveDocument.recompute()
 
-
 ## Has to be manually rotated through the GUI
+raw_input("Manually rotate the cryostat and press enter to continue.")
 
-###############################################################################
-# Import insert stand
-insert_stand = importPart.importPart(filename = 'models/insert_stand.fcstd')
+################################################################################
+## Import insert stand
+#insert_stand = importPart.importPart(filename = 'models/insert_stand.fcstd')
 
-App.ActiveDocument.recompute()
-Gui.SendMsgToActiveView("ViewFit")
-Gui.activeDocument().activeView().viewAxonometric()
+#App.ActiveDocument.recompute()
+#Gui.SendMsgToActiveView("ViewFit")
+#Gui.activeDocument().activeView().viewAxonometric()
 
-# Place on ground
-Gui.Selection.clearSelection()
-Gui.Selection.addSelection(insert_stand  , "Face034")
-Gui.Selection.addSelection(computer_table_setup, "Face022")
+## Place on ground
+#Gui.Selection.clearSelection()
+#Gui.Selection.addSelection(insert_stand  , "Face034")
+#Gui.Selection.addSelection(computer_table_setup, "Face022")
 
-selection = Gui.Selection.getSelectionEx()
-insert_stand_ground_surface = planeConstraint.parseSelection(selection, objectToUpdate=None)
-
-
-# Front Offset
-Gui.Selection.clearSelection()
-Gui.Selection.addSelection(insert_stand        , "Face026")
-Gui.Selection.addSelection(computer_table_setup, "Face003")
-
-selection = Gui.Selection.getSelectionEx()
-insert_stand_table_front = planeConstraint.parseSelection(selection, objectToUpdate=None)
-
-insert_stand_table_front.offset = -200
-App.ActiveDocument.recompute()
+#selection = Gui.Selection.getSelectionEx()
+#insert_stand_ground_surface = planeConstraint.parseSelection(selection, objectToUpdate=None)
 
 
-# Side Offset
-Gui.Selection.clearSelection()
-Gui.Selection.addSelection(insert_stand  , "Face031")
-Gui.Selection.addSelection(computer_table_setup, "Face005")
+## Front Offset
+#Gui.Selection.clearSelection()
+#Gui.Selection.addSelection(insert_stand        , "Face026")
+#Gui.Selection.addSelection(computer_table_setup, "Face003")
 
-selection = Gui.Selection.getSelectionEx()
-insert_stand_table_side = planeConstraint.parseSelection(selection, objectToUpdate=None)
+#selection = Gui.Selection.getSelectionEx()
+#insert_stand_table_front = planeConstraint.parseSelection(selection, objectToUpdate=None)
 
-insert_stand_table_side.offset = 150
-App.ActiveDocument.recompute()
-
-###############################################################################
-# Import mgps insert
-mgps_insert = importPart.importPart(filename = 'models/MGPS_Insert.fcstd')
-
-App.ActiveDocument.recompute()
-Gui.SendMsgToActiveView("ViewFit")
-Gui.activeDocument().activeView().viewAxonometric()
+#insert_stand_table_front.offset = -200
+#App.ActiveDocument.recompute()
 
 
-# Mount on insert stand
-Gui.Selection.clearSelection()
-Gui.Selection.addSelection(insert_stand, "Face001")
-Gui.Selection.addSelection(mgps_insert , "Face228")
+## Side Offset
+#Gui.Selection.clearSelection()
+#Gui.Selection.addSelection(insert_stand  , "Face031")
+#Gui.Selection.addSelection(computer_table_setup, "Face005")
 
-selection = Gui.Selection.getSelectionEx()
-mgps_insert_stand_planar = planeConstraint.parseSelection(selection, objectToUpdate=None)
+#selection = Gui.Selection.getSelectionEx()
+#insert_stand_table_side = planeConstraint.parseSelection(selection, objectToUpdate=None)
 
-mgps_insert_stand_planar.directionConstraint = u"opposed"
-App.ActiveDocument.recompute()
+#insert_stand_table_side.offset = 150
+#App.ActiveDocument.recompute()
 
+################################################################################
+## Import mgps insert
+#mgps_insert = importPart.importPart(filename = 'models/MGPS_Insert.fcstd')
 
-# Make concentric
-Gui.Selection.clearSelection()
-Gui.Selection.addSelection(insert_stand, "Face012")
-Gui.Selection.addSelection(mgps_insert , "Face228")
-
-selection = Gui.Selection.getSelectionEx()
-mgps_insert_stand_axial = axialConstraint.parseSelection(selection, objectToUpdate=None)
-
-###############################################################################
-# Import sus insert
-sus_insert = importPart.importPart(filename = 'models/Susceptibility_Insert.fcstd')
-
-App.ActiveDocument.recompute()
-Gui.SendMsgToActiveView("ViewFit")
-Gui.activeDocument().activeView().viewAxonometric()
+#App.ActiveDocument.recompute()
+#Gui.SendMsgToActiveView("ViewFit")
+#Gui.activeDocument().activeView().viewAxonometric()
 
 
-# Mount on insert stand
-Gui.Selection.clearSelection()
-Gui.Selection.addSelection(insert_stand, "Face001")
-Gui.Selection.addSelection(sus_insert , "Face048")
+## Mount on insert stand
+#Gui.Selection.clearSelection()
+#Gui.Selection.addSelection(insert_stand, "Face001")
+#Gui.Selection.addSelection(mgps_insert , "Face228")
 
-selection = Gui.Selection.getSelectionEx()
-sus_insert_stand_planar = planeConstraint.parseSelection(selection, objectToUpdate=None)
+#selection = Gui.Selection.getSelectionEx()
+#mgps_insert_stand_planar = planeConstraint.parseSelection(selection, objectToUpdate=None)
 
-sus_insert_stand_planar.directionConstraint = u"opposed"
-App.ActiveDocument.recompute()
-
-
-# Make concentric
-Gui.Selection.clearSelection()
-Gui.Selection.addSelection(insert_stand, "Face022")
-Gui.Selection.addSelection(sus_insert , "Face048")
-
-selection = Gui.Selection.getSelectionEx()
-sus_insert_stand_axial = axialConstraint.parseSelection(selection, objectToUpdate=None)
-
-###############################################################################
-# Import RT insert
-RT_insert = importPart.importPart(filename = 'models/RT_Insert.fcstd')
-
-App.ActiveDocument.recompute()
-Gui.SendMsgToActiveView("ViewFit")
-Gui.activeDocument().activeView().viewAxonometric()
+#mgps_insert_stand_planar.directionConstraint = u"opposed"
+#App.ActiveDocument.recompute()
 
 
-# Mount on insert stand
-Gui.Selection.clearSelection()
-Gui.Selection.addSelection(insert_stand, "Face001")
-Gui.Selection.addSelection(RT_insert , "Face070")
+## Make concentric
+#Gui.Selection.clearSelection()
+#Gui.Selection.addSelection(insert_stand, "Face012")
+#Gui.Selection.addSelection(mgps_insert , "Face228")
 
-selection = Gui.Selection.getSelectionEx()
-RT_insert_stand_planar = planeConstraint.parseSelection(selection, objectToUpdate=None)
+#selection = Gui.Selection.getSelectionEx()
+#mgps_insert_stand_axial = axialConstraint.parseSelection(selection, objectToUpdate=None)
 
-RT_insert_stand_planar.directionConstraint = u"opposed"
-App.ActiveDocument.recompute()
+################################################################################
+## Import sus insert
+#sus_insert = importPart.importPart(filename = 'models/Susceptibility_Insert.fcstd')
 
-
-# Make concentric
-Gui.Selection.clearSelection()
-Gui.Selection.addSelection(insert_stand, "Face017")
-Gui.Selection.addSelection(RT_insert , "Face070")
-
-selection = Gui.Selection.getSelectionEx()
-RT_insert_stand_axial = axialConstraint.parseSelection(selection, objectToUpdate=None)
-
-###############################################################################
-# Import Hires insert
-hires_insert = importPart.importPart(filename = 'models/Hires_Insert.fcstd')
-
-App.ActiveDocument.recompute()
-Gui.SendMsgToActiveView("ViewFit")
-Gui.activeDocument().activeView().viewAxonometric()
+#App.ActiveDocument.recompute()
+#Gui.SendMsgToActiveView("ViewFit")
+#Gui.activeDocument().activeView().viewAxonometric()
 
 
-# Mount on insert stand
-Gui.Selection.clearSelection()
-Gui.Selection.addSelection(insert_stand, "Face001")
-Gui.Selection.addSelection(hires_insert , "Face244")
+## Mount on insert stand
+#Gui.Selection.clearSelection()
+#Gui.Selection.addSelection(insert_stand, "Face001")
+#Gui.Selection.addSelection(sus_insert , "Face048")
 
-selection = Gui.Selection.getSelectionEx()
-hires_insert_stand_planar = planeConstraint.parseSelection(selection, objectToUpdate=None)
+#selection = Gui.Selection.getSelectionEx()
+#sus_insert_stand_planar = planeConstraint.parseSelection(selection, objectToUpdate=None)
 
-hires_insert_stand_planar.directionConstraint = u"opposed"
-App.ActiveDocument.recompute()
+#sus_insert_stand_planar.directionConstraint = u"opposed"
+#App.ActiveDocument.recompute()
 
 
-# Make concentric
-Gui.Selection.clearSelection()
-Gui.Selection.addSelection(insert_stand, "Face009")
-Gui.Selection.addSelection(hires_insert , "Face244")
+## Make concentric
+#Gui.Selection.clearSelection()
+#Gui.Selection.addSelection(insert_stand, "Face022")
+#Gui.Selection.addSelection(sus_insert , "Face048")
 
-selection = Gui.Selection.getSelectionEx()
-hires_insert_stand_axial = axialConstraint.parseSelection(selection, objectToUpdate=None)
+#selection = Gui.Selection.getSelectionEx()
+#sus_insert_stand_axial = axialConstraint.parseSelection(selection, objectToUpdate=None)
+
+################################################################################
+## Import RT insert
+#RT_insert = importPart.importPart(filename = 'models/RT_Insert.fcstd')
+
+#App.ActiveDocument.recompute()
+#Gui.SendMsgToActiveView("ViewFit")
+#Gui.activeDocument().activeView().viewAxonometric()
+
+
+## Mount on insert stand
+#Gui.Selection.clearSelection()
+#Gui.Selection.addSelection(insert_stand, "Face001")
+#Gui.Selection.addSelection(RT_insert , "Face070")
+
+#selection = Gui.Selection.getSelectionEx()
+#RT_insert_stand_planar = planeConstraint.parseSelection(selection, objectToUpdate=None)
+
+#RT_insert_stand_planar.directionConstraint = u"opposed"
+#App.ActiveDocument.recompute()
+
+
+## Make concentric
+#Gui.Selection.clearSelection()
+#Gui.Selection.addSelection(insert_stand, "Face017")
+#Gui.Selection.addSelection(RT_insert , "Face070")
+
+#selection = Gui.Selection.getSelectionEx()
+#RT_insert_stand_axial = axialConstraint.parseSelection(selection, objectToUpdate=None)
+
+################################################################################
+## Import Hires insert
+#hires_insert = importPart.importPart(filename = 'models/Hires_Insert.fcstd')
+
+#App.ActiveDocument.recompute()
+#Gui.SendMsgToActiveView("ViewFit")
+#Gui.activeDocument().activeView().viewAxonometric()
+
+
+## Mount on insert stand
+#Gui.Selection.clearSelection()
+#Gui.Selection.addSelection(insert_stand, "Face001")
+#Gui.Selection.addSelection(hires_insert , "Face244")
+
+#selection = Gui.Selection.getSelectionEx()
+#hires_insert_stand_planar = planeConstraint.parseSelection(selection, objectToUpdate=None)
+
+#hires_insert_stand_planar.directionConstraint = u"opposed"
+#App.ActiveDocument.recompute()
+
+
+## Make concentric
+#Gui.Selection.clearSelection()
+#Gui.Selection.addSelection(insert_stand, "Face009")
+#Gui.Selection.addSelection(hires_insert , "Face244")
+
+#selection = Gui.Selection.getSelectionEx()
+#hires_insert_stand_axial = axialConstraint.parseSelection(selection, objectToUpdate=None)
 
 
 
@@ -471,7 +476,7 @@ table_clamp_table_surface = planeConstraint.parseSelection(selection, objectToUp
 
 #Side offset
 Gui.Selection.clearSelection()
-Gui.Selection.addSelection(computer_table_setup, "Face005")
+Gui.Selection.addSelection(computer_table_setup, "Face007")
 Gui.Selection.addSelection(table_clamp         , "Face098")
 
 selection = Gui.Selection.getSelectionEx()
@@ -482,17 +487,17 @@ App.ActiveDocument.recompute()
 
 # Front offset
 Gui.Selection.clearSelection()
-Gui.Selection.addSelection(computer_table_setup, "Face003")
+Gui.Selection.addSelection(computer_table_setup, "Face005")
 Gui.Selection.addSelection(table_clamp         , "Face115")
 
 selection = Gui.Selection.getSelectionEx()
 table_clamp_table_front = planeConstraint.parseSelection(selection, objectToUpdate=None)
 
-table_clamp_table_front.offset = 600
+table_clamp_table_front.offset = 300
 App.ActiveDocument.recompute()
 
 
-###############################################################################
+##############################################################################
 # Import VSM
 
 vsm = importPart.importPart(filename = '../VSM/models/VSM.fcstd', partName = None, doc_assembly = assembly_file)
@@ -531,10 +536,202 @@ vsm_table_front = planeConstraint.parseSelection(selection, objectToUpdate=None)
 vsm_table_front.offset = '-400 mm'
 App.ActiveDocument.recompute()
 
-################################################################################
-###Gui.Selection.getSelectionEx()[0].FullName
+###############################################################################
+# Add valve knobs to cryostats
 
-#################################################################################
+# Heater chamber Evacuation valve
+heater_chamber_evacuation_valve = importPart.importPart(filename = 'models/Knob.STEP', partName = None, doc_assembly = assembly_file)
+
+App.ActiveDocument.recompute()
+Gui.SendMsgToActiveView("ViewFit")
+Gui.activeDocument().activeView().viewAxonometric()
+
+# Mate heater_chamber_evacuation_valve to steel_cryostat (axial)
+Gui.Selection.clearSelection()
+Gui.Selection.addSelection(heater_chamber_evacuation_valve, "Face011")
+Gui.Selection.addSelection(steel_cryostat                 , "Face532")
+
+selection = Gui.Selection.getSelectionEx()
+steel_cryostat_heater_chamber_evacuation_valve_axial = axialConstraint.parseSelection(selection, objectToUpdate=None)
+
+
+# Mate sample_chamber_evacuation_valve to steel_cryostat (planar)
+Gui.Selection.clearSelection()
+Gui.Selection.addSelection(heater_chamber_evacuation_valve, "Face011")
+Gui.Selection.addSelection(steel_cryostat                 , "Face532")
+
+selection = Gui.Selection.getSelectionEx()
+steel_cryostat_heater_chamber_evacuation_valve_planar = planeConstraint.parseSelection(selection, objectToUpdate=None)
+
+##############################################
+# Sample chamber Evacuation valve
+sample_chamber_evacuation_valve = importPart.importPart(filename = 'models/Knob.STEP', partName = None, doc_assembly = assembly_file)
+
+App.ActiveDocument.recompute()
+Gui.SendMsgToActiveView("ViewFit")
+Gui.activeDocument().activeView().viewAxonometric()
+
+# Mate sample_chamber_evacuation_valve to steel_cryostat (axial)
+Gui.Selection.clearSelection()
+Gui.Selection.addSelection(sample_chamber_evacuation_valve, "Face011")
+Gui.Selection.addSelection(steel_cryostat                 , "Face787")
+
+selection = Gui.Selection.getSelectionEx()
+steel_cryostat_sample_chamber_evacuation_valve_axial = axialConstraint.parseSelection(selection, objectToUpdate=None)
+
+
+# Mate sample_chamber_evacuation_valve to steel_cryostat (planar)
+Gui.Selection.clearSelection()
+Gui.Selection.addSelection(sample_chamber_evacuation_valve, "Face011")
+Gui.Selection.addSelection(steel_cryostat                 , "Face787")
+
+selection = Gui.Selection.getSelectionEx()
+steel_cryostat_sample_chamber_evacuation_valve_planar = planeConstraint.parseSelection(selection, objectToUpdate=None)
+
+##############################################
+# Sample chamber flush valve
+sample_chamber_flush_valve = importPart.importPart(filename = 'models/Knob.STEP', partName = None, doc_assembly = assembly_file)
+
+App.ActiveDocument.recompute()
+Gui.SendMsgToActiveView("ViewFit")
+Gui.activeDocument().activeView().viewAxonometric()
+
+# Mate sample_chamber_flush_valve to steel_cryostat (axial)
+Gui.Selection.clearSelection()
+Gui.Selection.addSelection(sample_chamber_flush_valve, "Face011")
+Gui.Selection.addSelection(steel_cryostat            , "Face1735")
+
+selection = Gui.Selection.getSelectionEx()
+steel_cryostat_sample_chamber_flush_valve_axial = axialConstraint.parseSelection(selection, objectToUpdate=None)
+
+steel_cryostat_sample_chamber_flush_valve_axial.directionConstraint = u"opposed"
+App.ActiveDocument.recompute()
+
+# Mate sample_chamber_flush_valve to steel_cryostat (planar)
+Gui.Selection.clearSelection()
+Gui.Selection.addSelection(sample_chamber_flush_valve, "Face011")
+Gui.Selection.addSelection(steel_cryostat            , "Face1735")
+
+selection = Gui.Selection.getSelectionEx()
+steel_cryostat_sample_chamber_flush_valve_planar = planeConstraint.parseSelection(selection, objectToUpdate=None)
+
+##############################################
+# Heater chamber flush valve
+heater_chamber_flush_valve = importPart.importPart(filename = 'models/Knob.STEP', partName = None, doc_assembly = assembly_file)
+
+App.ActiveDocument.recompute()
+Gui.SendMsgToActiveView("ViewFit")
+Gui.activeDocument().activeView().viewAxonometric()
+
+# Mate heater_chamber_flush_valve to steel_cryostat (axial)
+Gui.Selection.clearSelection()
+Gui.Selection.addSelection(heater_chamber_flush_valve, "Face011")
+Gui.Selection.addSelection(steel_cryostat            , "Face1644")
+
+selection = Gui.Selection.getSelectionEx()
+steel_cryostat_heater_chamber_flush_valve_axial = axialConstraint.parseSelection(selection, objectToUpdate=None)
+
+
+# Mate heater_chamber_flush_valve to steel_cryostat (planar)
+Gui.Selection.clearSelection()
+Gui.Selection.addSelection(heater_chamber_flush_valve, "Face011")
+Gui.Selection.addSelection(steel_cryostat            , "Face1644")
+
+selection = Gui.Selection.getSelectionEx()
+steel_cryostat_heater_chamber_flush_valve_planar = planeConstraint.parseSelection(selection, objectToUpdate=None)
+
+
+# TODO : Add quartz cryostat valve knobs
+
+
+###############################################################################
+# Add KF-25 O-ring
+
+o_ring_steel_cryostat = importPart.importPart(filename = 'models/KF-25_O-ring.fcstd', partName = None, doc_assembly = assembly_file)
+
+App.ActiveDocument.recompute()
+Gui.SendMsgToActiveView("ViewFit")
+Gui.activeDocument().activeView().viewAxonometric()
+
+# Mate O-ring to steel_cryostat (axial)
+Gui.Selection.clearSelection()
+Gui.Selection.addSelection(o_ring_steel_cryostat, "Face007")
+Gui.Selection.addSelection(steel_cryostat       , "Face294")
+
+selection = Gui.Selection.getSelectionEx()
+steel_cryostat_o_ring_axial = axialConstraint.parseSelection(selection, objectToUpdate=None)
+
+steel_cryostat_o_ring_axial.directionConstraint = u"opposed"
+App.ActiveDocument.recompute()
+
+# Mate O-ring to steel_cryostat (planar)
+Gui.Selection.clearSelection()
+Gui.Selection.addSelection(o_ring_steel_cryostat, "Face007")
+Gui.Selection.addSelection(steel_cryostat       , "Face294")
+
+selection = Gui.Selection.getSelectionEx()
+steel_cryostat_o_ring_planar = planeConstraint.parseSelection(selection, objectToUpdate=None)
+
+# TODO : Add O-ring for quartz cryostat
+
+##############################################################################
+# Import mgps insert
+mgps_insert = importPart.importPart(filename = 'models/MGPS_Insert.fcstd')
+
+App.ActiveDocument.recompute()
+Gui.SendMsgToActiveView("ViewFit")
+Gui.activeDocument().activeView().viewAxonometric()
+
+
+# Mount on steel_cryostat (planar)
+Gui.Selection.clearSelection()
+Gui.Selection.addSelection(o_ring_steel_cryostat, "Face011")
+Gui.Selection.addSelection(mgps_insert          , "Face228")
+
+selection = Gui.Selection.getSelectionEx()
+mgps_insert_steel_cryostat_planar = planeConstraint.parseSelection(selection, objectToUpdate=None)
+
+mgps_insert_steel_cryostat_planar.directionConstraint = u"opposed"
+App.ActiveDocument.recompute()
+
+
+# Make concentric
+Gui.Selection.clearSelection()
+Gui.Selection.addSelection(o_ring_steel_cryostat, "Face011")
+Gui.Selection.addSelection(mgps_insert          , "Face228")
+
+selection = Gui.Selection.getSelectionEx()
+mgps_insert_steel_cryostat_axial = axialConstraint.parseSelection(selection, objectToUpdate=None)
+
+##############################################################################
+# Import clamps
+clamp_steel_cryostat = importPart.importPart(filename = 'models/clamp.fcstd')
+
+App.ActiveDocument.recompute()
+Gui.SendMsgToActiveView("ViewFit")
+Gui.activeDocument().activeView().viewAxonometric()
+
+
+# Mount on steel_cryostat (planar)
+Gui.Selection.clearSelection()
+Gui.Selection.addSelection(clamp_steel_cryostat, "Face012")
+Gui.Selection.addSelection(steel_cryostat      , "Face294")
+
+selection = Gui.Selection.getSelectionEx()
+clamp_steel_cryostat_planar = planeConstraint.parseSelection(selection, objectToUpdate=None)
+
+clamp_steel_cryostat_planar.offset = 13
+App.ActiveDocument.recompute()
+
+# Make concentric
+Gui.Selection.clearSelection()
+Gui.Selection.addSelection(clamp_steel_cryostat, "Face235")
+Gui.Selection.addSelection(steel_cryostat      , "Face284")
+
+selection = Gui.Selection.getSelectionEx()
+clamp_steel_cryostat_axial = axialConstraint.parseSelection(selection, objectToUpdate=None)
+
+###############################################################################
 ### Import EM_Coupling_Experiment setup
 ##em_coupling_setup = importPart.importPart(filename = '../EM_Coupling_Experiment/models/assembly.fcstd', partName = None, doc_assembly = assembly_file)
 

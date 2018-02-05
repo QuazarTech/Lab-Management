@@ -34,121 +34,121 @@ Gui.activeDocument().activeView().viewAxonometric()
 # Fix the position and orientation of computer_table
 computer_table.Placement = App.Placement(App.Vector(0,0,0),App.Rotation(App.Vector(1,0,0),90))
 
-################################################################################
-## Import computer_monitor
-#computer_monitor = importPart.importPart(filename = '../models/Monitor.STEP', partName = None, doc_assembly = assembly_file)
+###############################################################################
+# Import computer_monitor
+computer_monitor = importPart.importPart(filename = '../models/monitor.fcstd', partName = None, doc_assembly = assembly_file)
 
-#App.ActiveDocument.recompute()
-#Gui.SendMsgToActiveView("ViewFit")
-#Gui.activeDocument().activeView().viewAxonometric()
+App.ActiveDocument.recompute()
+Gui.SendMsgToActiveView("ViewFit")
+Gui.activeDocument().activeView().viewAxonometric()
 
-## Fix the position and orientation of computer_monitor with respect to computer_table
+# Fix the position and orientation of computer_monitor with respect to computer_table
 
-## Place on table place
-#Gui.Selection.clearSelection()
-#Gui.Selection.addSelection(computer_monitor, "Face702")
-#Gui.Selection.addSelection(computer_table  , "Face010")
+# Place on table place
+Gui.Selection.clearSelection()
+Gui.Selection.addSelection(computer_monitor, "Face701")
+Gui.Selection.addSelection(computer_table  , "Face010")
 
-#selection = Gui.Selection.getSelectionEx()
-#planeConstraint.parseSelection(selection, objectToUpdate=None)
+selection = Gui.Selection.getSelectionEx()
+planeConstraint.parseSelection(selection, objectToUpdate=None)
 
-## Right Offset
-#Gui.Selection.clearSelection()
-#Gui.Selection.addSelection(computer_monitor, "Face499")
-#Gui.Selection.addSelection(computer_table  , "Face005")
+# Right Offset
+Gui.Selection.clearSelection()
+Gui.Selection.addSelection(computer_monitor, "Face499")
+Gui.Selection.addSelection(computer_table  , "Face005")
 
-#selection = Gui.Selection.getSelectionEx()
-#planeConstraint.parseSelection(selection, objectToUpdate=None)
+selection = Gui.Selection.getSelectionEx()
+planeConstraint.parseSelection(selection, objectToUpdate=None)
 
-#App.ActiveDocument.getObject("planeConstraint02").offset = -250
-#App.ActiveDocument.recompute()
+App.ActiveDocument.getObject("planeConstraint02").offset = -250
+App.ActiveDocument.recompute()
 
-## Front Offset
-#Gui.Selection.clearSelection()
-#Gui.Selection.addSelection(computer_monitor, "Face567")
-#Gui.Selection.addSelection(computer_table  , "Face007")
+# Front Offset
+Gui.Selection.clearSelection()
+Gui.Selection.addSelection(computer_monitor, "Face671")
+Gui.Selection.addSelection(computer_table  , "Face007")
 
-#selection = Gui.Selection.getSelectionEx()
-#planeConstraint.parseSelection(selection, objectToUpdate=None)
+selection = Gui.Selection.getSelectionEx()
+planeConstraint.parseSelection(selection, objectToUpdate=None)
 
-#App.ActiveDocument.getObject("planeConstraint03").offset = -600
-#App.ActiveDocument.recompute()
+App.ActiveDocument.getObject("planeConstraint03").offset = -600
+App.ActiveDocument.recompute()
 
-################################################################################
-## Import computer_keyboard
-#computer_keyboard = importPart.importPart(filename = '../models/Keyboard.STEP', partName = None, doc_assembly = assembly_file)
+###############################################################################
+# Import computer_keyboard
+computer_keyboard = importPart.importPart(filename = '../models/Keyboard.STEP', partName = None, doc_assembly = assembly_file)
 
-#App.ActiveDocument.recompute()
-#Gui.SendMsgToActiveView("ViewFit")
-#Gui.activeDocument().activeView().viewAxonometric()
+App.ActiveDocument.recompute()
+Gui.SendMsgToActiveView("ViewFit")
+Gui.activeDocument().activeView().viewAxonometric()
 
-## Fix the position and orientation of computer_keyboard with respect to computer_table
-#Gui.Selection.clearSelection()
-#Gui.Selection.addSelection(computer_keyboard, "Face242")
-#Gui.Selection.addSelection(computer_table  , "Face010")
+# Fix the position and orientation of computer_keyboard with respect to computer_table
+Gui.Selection.clearSelection()
+Gui.Selection.addSelection(computer_keyboard, "Face242")
+Gui.Selection.addSelection(computer_table  , "Face010")
 
-#selection = Gui.Selection.getSelectionEx()
-#planeConstraint.parseSelection(selection, objectToUpdate=None)
+selection = Gui.Selection.getSelectionEx()
+planeConstraint.parseSelection(selection, objectToUpdate=None)
 
-## Right Offset
-#Gui.Selection.clearSelection()
-#Gui.Selection.addSelection(computer_keyboard, "Face064")
-#Gui.Selection.addSelection(computer_table  , "Face005")
+# Right Offset
+Gui.Selection.clearSelection()
+Gui.Selection.addSelection(computer_keyboard, "Face064")
+Gui.Selection.addSelection(computer_table  , "Face005")
 
-#selection = Gui.Selection.getSelectionEx()
-#planeConstraint.parseSelection(selection, objectToUpdate=None)
+selection = Gui.Selection.getSelectionEx()
+planeConstraint.parseSelection(selection, objectToUpdate=None)
 
-#App.ActiveDocument.getObject("planeConstraint05").offset = 380
-#App.ActiveDocument.recompute()
-
-
-#Gui.Selection.clearSelection()
-#Gui.Selection.addSelection(computer_keyboard, "Face063")
-#Gui.Selection.addSelection(computer_table  , "Face003")
-
-#selection = Gui.Selection.getSelectionEx()
-#planeConstraint.parseSelection(selection, objectToUpdate=None)
-
-#App.ActiveDocument.getObject("planeConstraint06").offset = 400
-#App.ActiveDocument.recompute()
-
-################################################################################
-## Import computer_cpu
-#computer_cpu = importPart.importPart(filename = '../models/CPU.STEP', partName = None, doc_assembly = assembly_file)
-
-#App.ActiveDocument.recompute()
-#Gui.SendMsgToActiveView("ViewFit")
-#Gui.activeDocument().activeView().viewAxonometric()
-
-## Fix the position and orientation of computer_cpu with respect to computer_table
-#Gui.Selection.clearSelection()
-#Gui.Selection.addSelection(computer_cpu, "Face114")
-#Gui.Selection.addSelection(computer_table  , "Face010")
-
-#selection = Gui.Selection.getSelectionEx()
-#planeConstraint.parseSelection(selection, objectToUpdate=None)
+App.ActiveDocument.getObject("planeConstraint05").offset = 380
+App.ActiveDocument.recompute()
 
 
-#Gui.Selection.clearSelection()
-#Gui.Selection.addSelection(computer_cpu, "Face142")
-#Gui.Selection.addSelection(computer_table  , "Face003")
+Gui.Selection.clearSelection()
+Gui.Selection.addSelection(computer_keyboard, "Face063")
+Gui.Selection.addSelection(computer_table  , "Face003")
 
-#selection = Gui.Selection.getSelectionEx()
-#planeConstraint.parseSelection(selection, objectToUpdate=None)
+selection = Gui.Selection.getSelectionEx()
+planeConstraint.parseSelection(selection, objectToUpdate=None)
 
-#App.ActiveDocument.getObject("planeConstraint08").offset = 10
-#App.ActiveDocument.recompute()
+App.ActiveDocument.getObject("planeConstraint06").offset = 400
+App.ActiveDocument.recompute()
 
-## Right Offset
-#Gui.Selection.clearSelection()
-#Gui.Selection.addSelection(computer_cpu, "Face113")
-#Gui.Selection.addSelection(computer_table  , "Face005")
+###############################################################################
+# Import computer_cpu
+computer_cpu = importPart.importPart(filename = '../models/CPU.STEP', partName = None, doc_assembly = assembly_file)
 
-#selection = Gui.Selection.getSelectionEx()
-#planeConstraint.parseSelection(selection, objectToUpdate=None)
+App.ActiveDocument.recompute()
+Gui.SendMsgToActiveView("ViewFit")
+Gui.activeDocument().activeView().viewAxonometric()
 
-#App.ActiveDocument.getObject("planeConstraint09").offset = 850
-#App.ActiveDocument.recompute()
+# Fix the position and orientation of computer_cpu with respect to computer_table
+Gui.Selection.clearSelection()
+Gui.Selection.addSelection(computer_cpu, "Face114")
+Gui.Selection.addSelection(computer_table  , "Face010")
+
+selection = Gui.Selection.getSelectionEx()
+planeConstraint.parseSelection(selection, objectToUpdate=None)
+
+
+Gui.Selection.clearSelection()
+Gui.Selection.addSelection(computer_cpu, "Face142")
+Gui.Selection.addSelection(computer_table  , "Face003")
+
+selection = Gui.Selection.getSelectionEx()
+planeConstraint.parseSelection(selection, objectToUpdate=None)
+
+App.ActiveDocument.getObject("planeConstraint08").offset = 10
+App.ActiveDocument.recompute()
+
+# Right Offset
+Gui.Selection.clearSelection()
+Gui.Selection.addSelection(computer_cpu, "Face113")
+Gui.Selection.addSelection(computer_table  , "Face005")
+
+selection = Gui.Selection.getSelectionEx()
+planeConstraint.parseSelection(selection, objectToUpdate=None)
+
+App.ActiveDocument.getObject("planeConstraint09").offset = 850
+App.ActiveDocument.recompute()
 
 ################################################################################
 ##Gui.Selection.getSelectionEx()[0].FullName

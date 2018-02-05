@@ -7,51 +7,45 @@ def run():
 
     address, Sample, Sample_Box, sample_description = get_sample_info()
     #####################
-    #select the test object and mount the sample on it
+    #Connect the sample with BNC Male pins
 
-    test_object = select_test_object()
-    cryostat    = select_cryostat()
+    take_photo  (Sample)
 
-    prepare_sample (Sample, Sample_Box, test_object)
+    move (Sample, 'Soldering Station')
+    solder ("BNC1.Wire (I+)", Sample + ".Terminal_1(Outer)")
+    solder ("BNC2.Wire (I-)", Sample + ".Terminal_2(Outer)")
+    solder ("BNC3.Wire (V+)", Sample + ".Terminal_1(Inner)")
+    solder ("BNC4.Wire (V-)", Sample + ".Terminal_2(Inner)")
+
+    take_photo  (Sample)
+
+    #####################
+    #Connect with SMU
+    press ("BNC1_Conn into SMU I+")
+    press ("BNC2_Conn into SMU I-")
+    press ("BNC3_Conn into SMU V+")
+    press ("BNC4_Conn into SMU V-")
 
     #####################
     #switch on and set up systems
     turn_on_computer()
-
     turn_on_PQMS_modules()
-    set_up_pump()
 
     #####################
+    # Check IV of sample using SMU
 
-    is_the_sample_loaded (Sample, Sample_Box, test_object, cryostat)
-    cables_connected_check (test_object, cryostat)
+    goto  ('Qrius Main Window')
+    click ('Modules Manager -> IV Source and Measurement Unit')
 
-    goto  ('work/git/XPLORE/Qrius/ppsel/capacitance')
-    write ('execute : Open Terminal')
-    write ('execute : type python current_measurement_w_tcon.py')
-    write ('execute : press enter')
+    click ('Run Mode -> IV')
+    click ('Settings->IV Measurement Settings')
+    write ('execute : Set V : 10000 mV')
+    write ('execute : Set I : 10000 uA')
+    write ('execute : Set V_step : 100 mV')
+    write ('execute : Set I_step : 100 uA')
 
-    write ('execute : set temperature setpoint as 310')
-    write ('execute : set tolerance as 0.05')    
-    write ('execute : press enter')
+    click ('Start')
+    write ('execute : Wait for run to finish')
+    click ('Exit Qrius')
 
-    write ('execute : Wait for temperature to stabilize')
-
-    write('execute :  goto Qrius') 
-    write('execute :  goto Modules Manager->IV Source and Measurement')
-    write('execute :  set run control to IV')
-    move_cursor ('Toolbar')
-    click('Settings->IV_Measurement Settings')
-    write('execute :  Set Voltage Range as 1000')
-    write('execute :  Set Voltage Step as 100')
-    write('execute :  Set Bipolar as No')
-    move_cursor('Toolbar')
-    write('execute :  click file->apply') 
-    write('execute :  click on start button')
-    write('execute :  Press finish when required data is obtained')
-
-    write ('execute : Go to terminal window again')
-    write ('execute : press enter, y and enter again')
-
-    write ('execute : Exit Terminal')
-
+    #####################
