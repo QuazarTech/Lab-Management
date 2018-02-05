@@ -1201,9 +1201,9 @@ Lab_Space:
               Mode                            : NA/CONST_V
 
           NVM_R0:
-              State                           : NOT_IN_USE
-              Power_Cable                     : DISCONNECTED
-              USB_Cable_Computer              : DISCONNECTED
+              State                           : RETURNED_TO_WORKSHOP
+              Power_Cable                     : RETURNED_TO_WORKSHOP
+              USB_Cable_Computer              : RETURNED_TO_WORKSHOP
               USB_Cable_Module                : DISCONNECTED
               XSMU_Cable                      : DISCONNECTED
               Running                         : NO
@@ -1237,8 +1237,8 @@ Lab_Space:
 
           XTCON_019:
 
-              State                           : OFF
-              Power_Cable                     : CONNECTED
+              State                           : RETURNED_TO_WORKSHOP
+              Power_Cable                     : RETURNED_TO_WORKSHOP
 
               Heater:
                 State                         : OFF
@@ -1246,7 +1246,7 @@ Lab_Space:
 
               Sensor:
                 RT_Cable                      : DISCONNECTED
-                USB_Cable_Computer            : CONNECTED
+                USB_Cable_Computer            : RETURNED_TO_WORKSHOP
                 USB_Cable_Module              : CONNECTED
 
               Running                         : NO
