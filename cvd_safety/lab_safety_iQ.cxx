@@ -17,7 +17,7 @@
 using namespace std;
 
 // Constant definitions
-#define SMOKE_SENS_THRESHOLD 0.7
+#define SMOKE_SENS_THRESHOLD 1.15
 #define TEMP_SENS_THRESHOLD 115.0
 
 #define PRINT_PRECISION 8
@@ -25,7 +25,7 @@ using namespace std;
 void send_alert (int channel);
 void add_status_to_email (std::string status);
 void open_gas_valves (std::unique_ptr<L412B::Driver> &driver);
-void close_gas_valves (void);
+void close_gas_valves (std::unique_ptr<L412B::Driver> &driver);
 
 int main (void)
 {
@@ -116,7 +116,7 @@ int main (void)
                     // Alert if signal is above threshold
                     if (live_data[i].data() > SMOKE_SENS_THRESHOLD)
                     {
-                        close_gas_valves ();
+                        close_gas_valves (driver);
                         send_alert (live_data[i].chn());
                         break;
                     }
@@ -131,7 +131,7 @@ int main (void)
                     // Alert if signal is above threshold
                     if (live_data[i].data() > SMOKE_SENS_THRESHOLD)
                     {
-                        close_gas_valves ();
+                        close_gas_valves (driver);
                         send_alert (live_data[i].chn());
                         break;
                     }
@@ -146,7 +146,7 @@ int main (void)
                     // Alert if signal is above threshold
                     if (live_data[i].data() > TEMP_SENS_THRESHOLD)
                     {
-                        close_gas_valves ();
+                        close_gas_valves (driver);
                         send_alert (live_data[i].chn());
                         break;
                     }
@@ -161,7 +161,7 @@ int main (void)
                     // Alert if signal is above threshold
                     if (live_data[i].data() > TEMP_SENS_THRESHOLD)
                     {
-                        close_gas_valves ();
+                        close_gas_valves (driver);
                         send_alert (live_data[i].chn());
                         break;
                     }
@@ -210,15 +210,15 @@ void add_status_to_email (std::string status)
 void open_gas_valves (std::unique_ptr<L412B::Driver> &driver)
 {
     std::cout << "Switching on all gas supplies!" << std::endl;
-		uint8_t data = 0b00000001;
-		driver->clr_gpo (~data);
+    uint8_t data = 0b00000001;
+    driver->clr_gpo (data);
 }
 
-void close_gas_valves (void)
+void close_gas_valves (std::unique_ptr<L412B::Driver> &driver)
 {
     std::cout << "Switching off all gas supplies!" << std::endl;
-		uint8_t data = 0b00000001;
-//		driver->set_gpo (~data);
+    uint8_t data = 0b00000001;
+    driver->set_gpo (data);
 }
 
 void send_alert (int channel)
